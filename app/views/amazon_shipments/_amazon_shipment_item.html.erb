@@ -9,5 +9,5 @@
   <td><%= amazon_shipment_item.fulfilment_network_sku %></td>
   <td><%= amazon_shipment_item.created_at %></td>
   <td><%= amazon_shipment_item.updated_at %></td>
-  <td><%= amazon_shipment_item.reconciled %></td>
+  <td><span class="badge badge-<%= amazon_shipment_item.reconciled ? 'success' : 'danger' %>"><%= amazon_shipment_item.reconciled ? 'Yes' : 'No' %></span></td>
 </tr>
