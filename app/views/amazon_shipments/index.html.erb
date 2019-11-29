@@ -7,16 +7,42 @@
   </div>
 </div>
 <div class="table-responsive">
+  <div class="row">
+    <div class="col-sm">
+      <div class="input-group">
+        <select class="custom-select" id="inputGroupSelect04">
+          <option selected>Show no. of entries...</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm"></div>
+    <div class="col-sm">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search ..." aria-label="Search ..." aria-describedby="basic-addon2">
+      </div>
+    </div>
+  </div>
+  <div>
+    <%= will_paginate @amazon_shipment_items, list_classes: %w(pagination justify-content-end)  %>
+  </div>
   <table class="table text-center">
     <thead>
       <%= render partial: 'amazon_shipment_table_header' %>
     </thead>
-    <%=
-    render partial: 'amazon_shipment_item',
-    collection: @amazon_shipment_items
-    %>
+    <tbody>
+      <%=
+      render partial: 'amazon_shipment_item',
+      collection: @amazon_shipment_items
+      %>
+    </tbody>
     <tfoot>
     <%= render partial: 'amazon_shipment_table_header' %>
     </tfoot>
   </table>
+  <div>
+    <%= will_paginate @amazon_shipment_items, list_classes: %w(pagination justify-content-end)  %>
+  </div>
 </div>

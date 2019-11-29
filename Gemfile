@@ -47,3 +47,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'pundit', '~> 2.1'
+gem 'will_paginate', '~> 3.2', '>= 3.2.1'
+gem 'will_paginate-bootstrap4', '~> 0.2.2'
