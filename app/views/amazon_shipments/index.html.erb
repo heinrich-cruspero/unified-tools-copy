@@ -1,13 +1,22 @@
-<h1>Amazon Shipment List</h1>
-<table class="table text-center">
-  <thead>
-  <%= render partial: 'amazon_shipment_table_header' %>
-  </thead>
-  <%=
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+  <h1 class="h2">Amazon Shipments</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+      <button class="btn btn-sm btn-outline-secondary"><i class="fa fa-plus"></i>&nbsp;Import</button>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table text-center">
+    <thead>
+      <%= render partial: 'amazon_shipment_table_header' %>
+    </thead>
+    <%=
     render partial: 'amazon_shipment_item',
     collection: @amazon_shipment_items
-  %>
-  <tfoot>
-  <%= render partial: 'amazon_shipment_table_header' %>
-  </tfoot>
-</table>
+    %>
+    <tfoot>
+    <%= render partial: 'amazon_shipment_table_header' %>
+    </tfoot>
+  </table>
+</div>
