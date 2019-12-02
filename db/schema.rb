@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_143650) do
+ActiveRecord::Schema.define(version: 2019_12_02_122142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 2019_11_25_143650) do
     t.string "isbn"
     t.string "shipment_id"
     t.string "sku"
-    t.integer "quantity_shipped"
-    t.integer "quantity_in_case"
-    t.integer "quantity_in_received"
+    t.integer "quantity_shipped", default: 0
+    t.integer "quantity_in_case", default: 0
+    t.integer "quantity_in_received", default: 0
     t.string "fulfilment_network_sku"
     t.boolean "reconciled"
     t.datetime "created_at", precision: 6, null: false

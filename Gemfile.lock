@@ -153,6 +153,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    smarter_csv (1.2.6)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -205,6 +206,7 @@ DEPENDENCIES
   pundit (~> 2.1)
   rails (~> 6.0.1)
   sass-rails (>= 6)
+  smarter_csv (~> 1.2, >= 1.2.6)
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)

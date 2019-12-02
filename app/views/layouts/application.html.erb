@@ -4,10 +4,8 @@
     <title>UnifiedTools</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
     <% if current_user.is_a?(User) %>
       <%= render 'shared/nav' %>
@@ -15,11 +13,21 @@
         <div class="row">
           <%= render 'shared/sidebar' %>
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <% if notice %>
+            <div class="alert alert-dark" role="alert">
+              <%= notice %>
+            </div>
+            <% end %>
             <%= yield %>
           </main>
         </div>
       </div>
     <% else %>
+      <% if notice %>
+      <div class="alert alert-dark" role="alert">
+        <%= notice %>
+      </div>
+      <% end %>
       <%= yield %>
     <% end %>
   </body>
