@@ -9,6 +9,22 @@
   </head>
 
   <body class="text-center">
-    <%= yield %>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm">
+          <% flash.each do |key, value| %>
+            <div class="<%= flash_class(key) %>">
+              <%= value %>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-sm"></div>
+      </div>
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

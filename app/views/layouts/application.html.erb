@@ -8,27 +8,27 @@
   </head>
   <body>
     <% if current_user.is_a?(User) %>
-      <%= render 'shared/nav' %>
-      <div class="container-fluid">
-        <div class="row">
-          <%= render 'shared/sidebar' %>
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <% if notice %>
-            <div class="alert alert-dark" role="alert">
-              <%= notice %>
+    <%= render 'shared/nav' %>
+    <div class="container-fluid">
+      <div class="row">
+        <%= render 'shared/sidebar' %>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <% flash.each do |key, value| %>
+            <div class="<%= flash_class(key) %>">
+              <%= value %>
             </div>
-            <% end %>
-            <%= yield %>
-          </main>
-        </div>
+          <% end %>
+          <%= yield %>
+        </main>
       </div>
+    </div>
     <% else %>
-      <% if notice %>
-      <div class="alert alert-dark" role="alert">
-        <%= notice %>
-      </div>
-      <% end %>
-      <%= yield %>
+    <% flash.each do |key, value| %>
+    <div class="<%= flash_class(key) %>">
+      <%= value %>
+    </div>
+    <% end %>
+    <%= yield %>
     <% end %>
   </body>
 </html>

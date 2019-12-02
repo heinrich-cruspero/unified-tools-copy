@@ -13,9 +13,9 @@ class AmazonShipmentsController < ApplicationController
 
       if uploaded_file
         self.process_csv uploaded_file
-        redirect_to amazon_shipments_url, notice: 'Successfully imported file.'
+        redirect_to amazon_shipments_url, flash: { success: 'Successfully imported file.'}
       else
-        redirect_to import_amazon_shipments_url, notice: 'Missing csv file.'
+        redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }
       end
     end
   end
