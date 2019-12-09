@@ -34,6 +34,15 @@
   </div>
 </div>
 <div class="row">
+  <div class="col-sm">
+    <div class="input-group mb-3 float-left">
+      <button type="button" class="btn btn-secondary">Pending</button>
+      <button type="button" class="btn btn-secondary">20 Days Pending</button>
+      <button type="button" class="btn btn-secondary">Combine Shipments</button>
+    </div>
+  </div>
+</div>
+<div class="row">
   <div class="col-sm float-right">
     <%= will_paginate @amazon_shipment_items, list_classes: %w(pagination justify-content-end)  %>
   </div>
