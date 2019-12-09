@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2019_12_09_054419) do
     t.string "fulfillment_network_sku"
     t.integer "quantity_shipped", default: 0
     t.integer "quantity_in_case", default: 0
-    t.integer "quantity_in_received", default: 0
+    t.integer "quantity_received", default: 0
     t.boolean "reconciled"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

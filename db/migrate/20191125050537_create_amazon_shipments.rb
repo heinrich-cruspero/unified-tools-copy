@@ -6,7 +6,7 @@ class CreateAmazonShipments < ActiveRecord::Migration[6.0]
       t.string :sku
       t.integer :quantity_shipped
       t.integer :quantity_in_case
-      t.integer :quantity_in_received
+      t.integer :quantity_received
       t.string :fulfillment_network_sku
       t.boolean :reconciled
 

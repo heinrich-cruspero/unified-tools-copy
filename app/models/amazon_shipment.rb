@@ -1,16 +1,17 @@
 class AmazonShipment < ApplicationRecord
+  # instance methods
   def quantity_difference
-    self.quantity_shipped - self.quantity_in_received
+    self.quantity_shipped - self.quantity_received
   end
 
-  # managers
+  # class managers
   def self.pending
-    where('quantity_shipped != quantity_in_received')
+    where('quantity_shipped != quantity_received')
   end
 
   def self.twenty_days_pending
     where(
-      'quantity_shipped != quantity_in_received AND
+      'quantity_shipped != quantity_received AND
       created_at::date <= :start_date AND
       created_at::date >= :end_date',
       {

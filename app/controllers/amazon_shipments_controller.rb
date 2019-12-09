@@ -4,7 +4,17 @@ class AmazonShipmentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @amazon_shipment_items = AmazonShipment.paginate(page: params[:page], per_page: 25)
+    if params[:filter] == 'pending'
+      amazon_shipment_items = AmazonShipment.pending
+    elsif params[:filter] == 'twenty_days_pending'
+      amazon_shipment_items = AmazonShipment.twenty_days_pending
+    elsif params[:filter] == 'twenty_days_pending'
+      amazon_shipment_items = AmazonShipment.twenty_days_pending
+    else
+      amazon_shipment_items = AmazonShipment.all
+    end
+
+    @amazon_shipment_items = amazon_shipment_items.paginate(page: params[:page], per_page: 25)
   end
 
   def import
