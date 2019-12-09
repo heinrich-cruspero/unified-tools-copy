@@ -20,7 +20,7 @@
       </div>
       <select class="custom-select" id="inputGroupSelect01">
         <option value="10" <% if params[:show] == '10' %> selected <% end %>>10</option>
-        <option value="25" <% if params[:show] == '25' %> selected <% end %>>25</option>
+        <option value="25" <% if params[:show] == '25' || params[:show].nil? %> selected <% end %>>25</option>
         <option value="50" <% if params[:show] == '50' %> selected <% end %>>50</option>
         <option value="100" <% if params[:show] == '100' %> selected <% end %>>100</option>
       </select>
@@ -28,8 +28,11 @@
   </div>
   <div class="col-sm"></div>
   <div class="col-sm">
-    <div class="input-group mb-3 float-right">
-      <input type="text" class="form-control" placeholder="Search..." aria-label="Search ..." aria-describedby="basic-addon2">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2" id="amazon-table-search-form">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" id="amazon-table-search-submit">Submit</button>
+      </div>
     </div>
   </div>
 </div>
