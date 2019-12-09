@@ -3,6 +3,7 @@
     $container
       .on('change', '#inputGroupSelect01', onShowEntriesSelect)
       .on('click', '#amazon-table-search-submit', onClickSearchSubmit)
+      .on('click', '#import-csv-submit', onImportCSVSubmit)
 
     function appendParamsToURL(key, value) {
       key = encodeURI(key);
@@ -37,4 +38,9 @@
     function onClickSearchSubmit(event) {
       appendParamsToURL('query', $('#amazon-table-search-form').val());
     };
+
+    function onImportCSVSubmit(event) {
+      $('#spinner').show();
+    }
+
 }();
