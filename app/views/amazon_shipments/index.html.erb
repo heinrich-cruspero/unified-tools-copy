@@ -1,51 +1,63 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-  <h1 class="h2">Amazon Shipments</h1>
-  <div class="btn-toolbar mb-2 mb-md-0">
-    <div class="btn-group mr-2">
-      <a class="btn btn-sm btn-outline-secondary" href="<%= import_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Import</a>
+<div class="row">
+  <div class="col-sm">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+      <h1 class="h2">Amazon Shipments</h1>
+    </div>
+  </div>
+  <div class="col-sm">
+    <div class="btn-toolbar mb-2 mb-md-0 float-right">
+      <div class="btn-group mr-2">
+        <a class="btn btn-sm btn-outline-secondary" href="<%= import_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Import</a>
+      </div>
     </div>
   </div>
 </div>
-<div class="table-responsive">
-  <div class="row">
-    <div class="col-sm">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="inputGroupSelect01"># of entries</label>
-        </div>
-        <select class="custom-select" id="inputGroupSelect01">
-          <option value="1">10</option>
-          <option value="2" selected>25</option>
-          <option value="2">50</option>
-          <option value="3">100</option>
-        </select>
+<div class="row">
+  <div class="col-sm">
+    <div class="input-group mb-3 float-left">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01"># of entries</label>
       </div>
-    </div>
-    <div class="col-sm"></div>
-    <div class="col-sm">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search..." aria-label="Search ..." aria-describedby="basic-addon2">
-      </div>
+      <select class="custom-select" id="inputGroupSelect01">
+        <option value="1">10</option>
+        <option value="2" selected>25</option>
+        <option value="2">50</option>
+        <option value="3">100</option>
+      </select>
     </div>
   </div>
-  <div>
+  <div class="col-sm"></div>
+  <div class="col-sm">
+    <div class="input-group mb-3 float-right">
+      <input type="text" class="form-control" placeholder="Search..." aria-label="Search ..." aria-describedby="basic-addon2">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm float-right">
     <%= will_paginate @amazon_shipment_items, list_classes: %w(pagination justify-content-end)  %>
   </div>
-  <table class="table text-center">
-    <thead>
+</div>
+<div class="row">
+  <div class="table-responsive">
+    <table class="table text-center">
+      <thead>
+        <%= render partial: 'amazon_shipment_table_header' %>
+      </thead>
+      <tbody>
+        <%=
+        render partial: 'amazon_shipment_item',
+        collection: @amazon_shipment_items
+        %>
+      </tbody>
+      <tfoot>
       <%= render partial: 'amazon_shipment_table_header' %>
-    </thead>
-    <tbody>
-      <%=
-      render partial: 'amazon_shipment_item',
-      collection: @amazon_shipment_items
-      %>
-    </tbody>
-    <tfoot>
-    <%= render partial: 'amazon_shipment_table_header' %>
-    </tfoot>
-  </table>
-  <div>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm float-right">
     <%= will_paginate @amazon_shipment_items, list_classes: %w(pagination justify-content-end)  %>
   </div>
 </div>

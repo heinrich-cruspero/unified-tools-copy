@@ -8,27 +8,25 @@
   </head>
   <body>
     <% if current_user.is_a?(User) %>
-    <%= render 'shared/nav' %>
-    <div class="container-fluid">
-      <div class="row">
-        <%= render 'shared/sidebar' %>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-          <% flash.each do |key, value| %>
+    <div class="wrapper">
+      <div>
+        <%= render 'shared/sidebar2' %>
+        <div id="content" class="active">
+          <%= render 'shared/nav' %>
+          <div class="main-content">
+            <% flash.each do |key, value| %>
             <div class="<%= flash_class(key) %>">
               <%= value %>
             </div>
-          <% end %>
-          <%= yield %>
-        </main>
+            <% end %>
+            <%= yield %>
+          </div>
+        </div>
       </div>
     </div>
-    <% else %>
-    <% flash.each do |key, value| %>
-    <div class="<%= flash_class(key) %>">
-      <%= value %>
+    <% end %>
+    <div id="footer">
+      <%= javascript_pack_tag 'sidebar', 'data-turbolinks-track': 'reload' %>
     </div>
-    <% end %>
-    <%= yield %>
-    <% end %>
   </body>
 </html>
