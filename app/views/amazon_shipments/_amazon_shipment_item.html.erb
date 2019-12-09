@@ -1,3 +1,12 @@
+<% if params[:filter] == 'combine_shipments' %>
+<tr>
+  <td><%= amazon_shipment_item.shipment_id %></td>
+  <td><%= amazon_shipment_item.quantity_shipped %></td>
+  <td><%= amazon_shipment_item.quantity_in_case %></td>
+  <td><%= amazon_shipment_item.quantity_received %></td>
+  <td><%= amazon_shipment_item.quantity_difference %></td>
+</tr>
+<% else %>
 <tr>
   <td><%= amazon_shipment_item.isbn %></td>
   <td><%= amazon_shipment_item.shipment_id %></td>
@@ -11,3 +20,4 @@
   <td><%= amazon_shipment_item.updated_at %></td>
   <td><span class="badge badge-<%= amazon_shipment_item.reconciled ? 'success' : 'danger' %>"><%= amazon_shipment_item.reconciled ? 'Yes' : 'No' %></span></td>
 </tr>
+<% end %>

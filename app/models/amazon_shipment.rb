@@ -21,8 +21,8 @@ class AmazonShipment < ApplicationRecord
     )
   end
 
-  # def self.combine_shipments
-  #   group('amazon_shipments.id').group('shipment_id')
-  # end
+  def self.combine_shipments
+    select("shipment_id, sum(quantity_shipped) as quantity_shipped, sum(quantity_in_case) as quantity_in_case, sum(quantity_received) as quantity_received").group(:shipment_id)
+  end
 
 end
