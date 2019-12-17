@@ -4,7 +4,6 @@ class AmazonShipment < ApplicationRecord
     :isbn,
     :shipment_id,
     :sku,
-    :fulfillment_network_sku,
     :quantity_shipped,
     :quantity_in_case,
     :quantity_received,
