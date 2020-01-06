@@ -57,3 +57,4 @@ gem 'pg_search', '~> 2.3'
 
 gem 'omniauth-google-oauth2', '~> 0.8.0'
 gem 'activerecord-session_store', '~> 1.1', '>= 1.1.3'
+gem 'simplecov', '~> 0.17.1'
