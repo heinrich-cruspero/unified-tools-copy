@@ -172,7 +172,7 @@ Devise.setup do |config|
   # one (and only one) @ exists in the given string. This is mainly
   # to give user feedback and not to assert the e-mail validity.
   # config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
-  config.email_regexp = /\A[^@\s]+@?(bba-corp.com)\z/
+  config.email_regexp = /\A[^@\s]+@?(bba-corp.com|rev365.com)\z/
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -262,7 +262,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
-  config.omniauth :google_oauth2, ENV['GOOGLE_APP_ID'], ENV['GOOGLE_APP_SECRET'], scope: 'userinfo.email,userinfo.profile'
+  config.omniauth :google_oauth2, ENV['GOOGLE_APP_ID'], ENV['GOOGLE_APP_SECRET'], scope: 'userinfo.email,userinfo.profile', hd: ['rev365.com', 'bba-corp.com',]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
