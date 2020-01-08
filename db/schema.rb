@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_23_114117) do
+ActiveRecord::Schema.define(version: 2020_01_08_152746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2019_12_23_114117) do
   create_table "amazon_shipments", force: :cascade do |t|
     t.string "isbn"
     t.string "shipment_id"
-    t.string "sku"
     t.integer "quantity_shipped", default: 0
     t.integer "quantity_in_case", default: 0
     t.integer "quantity_received", default: 0
@@ -26,7 +25,6 @@ ActiveRecord::Schema.define(version: 2019_12_23_114117) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "condition"
-    t.string "file_name"
     t.string "az_sku"
   end
 

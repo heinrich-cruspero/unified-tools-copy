@@ -8,8 +8,6 @@ module AmazonShipmentCsvModule
           az_sku: data_hash[:az_sku],
           quantity_shipped: data_hash[:qty],
           condition: data_hash[:condition],
-          file_name: data_hash[:file_name],
-          sku: data_hash[:sku],
         )
       end
     end
