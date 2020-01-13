@@ -1,16 +1,19 @@
+# frozen_string_literal: true
+
+##
 class AmazonShipmentsController < ApplicationController
   include AmazonShipmentCsvModule
 
-  before_action :authenticate_user!
-
   def index
-    params[:show].nil? ? per_page = 25 : per_page = params[:show]
+    authorize AmazonShipment
 
-    if params[:query].nil? || params[:query].empty?
-      amazon_shipment_items = AmazonShipment.all
-    else
-      amazon_shipment_items = AmazonShipment.search_by_fuzzy("#{params[:query]}")
-    end
+    per_page = params[:show].nil? ? 25 : params[:show]
+
+    amazon_shipment_items = if params[:query].nil? || params[:query].empty?
+                              AmazonShipment.all
+                            else
+                              AmazonShipment.search_by_fuzzy(params[:query].to_s)
+                            end
 
     if params[:filter] == 'pending'
       amazon_shipment_items = amazon_shipment_items.pending
@@ -26,16 +29,17 @@ class AmazonShipmentsController < ApplicationController
   end
 
   def import
+    authorize AmazonShipment
+
     if request.post?
       uploaded_file = params[:csv_file]
 
       if uploaded_file
-        self.process_csv uploaded_file
-        redirect_to amazon_shipments_url, flash: { success: 'Successfully imported file.'}
+        process_csv uploaded_file
+        redirect_to amazon_shipments_url, flash: { success: 'Successfully imported file.' }
       else
         redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }
       end
     end
   end
-
 end

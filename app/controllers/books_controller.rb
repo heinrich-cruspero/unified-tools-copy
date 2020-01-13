@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
+##
 class BooksController < ApplicationController
-
-  before_action :authenticate_user!
-
   def index
-    params[:show].nil? ? per_page = 25 : per_page = params[:show]
-    if params[:query].nil? || params[:query].empty?
-      books = Book.all
-    else
-      books = Book.search_by_fuzzy("#{params[:query]}")
-    end
+    authorize Book
+
+    per_page = params[:show].nil? ? 25 : params[:show]
+    books = if params[:query].nil? || params[:query].empty?
+              Book.all
+            else
+              Book.search_by_fuzzy(params[:query].to_s)
+            end
     @books = books.paginate(page: params[:page], per_page: per_page)
   end
 end

@@ -1,0 +1,15 @@
+AllCops:
+  TargetRubyVersion: 2.6
+  Exclude:
+    - 'db/**/*'
+    - bin/rails
+    - bin/rake
+    - bin/spring
+    - bin/bundle
+    - tmp/**/*
+    - spec/spec_helper.rb
+    - node_modules/**/*
+
+Metrics/LineLength:
+  Max: 80
+  IgnoredPatterns: ['(\A|\s)#']

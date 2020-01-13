@@ -1,7 +1,6 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-
-  devise_for :users,  path: '', path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' }, controllers: { omniauth_callbacks: 'users/omniauth' }
-
   resources :amazon_shipments do
     collection do
       get 'import'
@@ -9,10 +8,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :books
+  resources :books, only: [:index]
 
-  get 'about', to: 'pages#about'
-  get 'contact', to: 'pages#contact'
+  devise_for :users,
+             controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  root to: 'pages#home'
+  root to: 'books#index'
 end

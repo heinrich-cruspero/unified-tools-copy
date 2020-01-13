@@ -7,13 +7,16 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <% if current_user.is_a?(User) %>
     <div class="wrapper">
       <div class="spinner" id="spinner"></div>
       <div>
-        <%= render 'shared/sidebar2' %>
+        <% if user_signed_in? %>
+          <%= render 'shared/sidebar' %>
+        <% end %>
         <div id="content" class="active">
-          <%= render 'shared/nav' %>
+          <% if user_signed_in? %>
+            <%= render 'shared/nav' %>
+          <% end %>
           <div class="main-content">
             <% flash.each do |key, value| %>
             <div class="<%= flash_class(key) %>">
@@ -24,11 +27,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <% end %>
-    <div id="footer">
-      <%= javascript_pack_tag 'sidebar', 'data-turbolinks-track': 'reload' %>
-      <%= javascript_pack_tag 'amazon_table', 'data-turbolinks-track': 'reload' %>
     </div>
   </body>
 </html>
