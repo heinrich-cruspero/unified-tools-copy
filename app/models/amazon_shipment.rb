@@ -3,7 +3,6 @@ class AmazonShipment < ApplicationRecord
   pg_search_scope :search_by_fuzzy, against: [
     :isbn,
     :shipment_id,
-    :sku,
     :quantity_shipped,
     :quantity_in_case,
     :quantity_received,
@@ -11,7 +10,6 @@ class AmazonShipment < ApplicationRecord
     :created_at,
     :updated_at,
     :condition,
-    :file_name,
     :az_sku
   ]
 

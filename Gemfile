@@ -31,6 +31,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec', '~> 3.9'
+  gem 'rubocop', '~> 0.78.0'
 end
 
 group :development do
@@ -40,6 +42,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'dotenv', '~> 2.7', '>= 2.7.5'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -51,3 +54,7 @@ gem 'will_paginate', '~> 3.2', '>= 3.2.1'
 gem 'will_paginate-bootstrap4', '~> 0.2.2'
 gem 'smarter_csv', '~> 1.2', '>= 1.2.6'
 gem 'pg_search', '~> 2.3'
+
+gem 'omniauth-google-oauth2', '~> 0.8.0'
+gem 'activerecord-session_store', '~> 1.1', '>= 1.1.3'
+gem 'simplecov', '~> 0.17.1'
