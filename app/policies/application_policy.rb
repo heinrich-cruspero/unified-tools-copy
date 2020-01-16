@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+##
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -7,15 +10,15 @@ class ApplicationPolicy
   end
 
   def index?
-    false
+    user.is_admin?
   end
 
   def show?
-    false
+    user.is_admin?
   end
 
   def create?
-    false
+    user.is_admin?
   end
 
   def new?
@@ -23,7 +26,7 @@ class ApplicationPolicy
   end
 
   def update?
-    false
+    user.is_admin?
   end
 
   def edit?
@@ -31,9 +34,10 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    user.is_admin?
   end
 
+  ##
   class Scope
     attr_reader :user, :scope
 
@@ -43,7 +47,7 @@ class ApplicationPolicy
     end
 
     def resolve
-      scope.all
+      scope.all if user.is_admin?
     end
   end
 end
