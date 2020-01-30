@@ -29,8 +29,6 @@ RSpec.describe AmazonShipmentsController, type: :controller do
   #   skip("Add a hash of attributes invalid for your model")
   # }
 
-  let(:valid_session) { {} }
-
   describe "GET #index" do
     it "returns a found response" do
       AmazonShipment.create! valid_attributes
