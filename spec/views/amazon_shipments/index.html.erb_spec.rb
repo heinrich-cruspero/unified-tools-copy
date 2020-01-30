@@ -26,3 +26,19 @@ RSpec.describe "amazon_shipments/index", type: :view do
     assert_select "tr>td>span", :text => "No", :count => 2
   end
 end
+
+RSpec.describe 'Amazon Shipments Index Page', type: :feature do
+  before do
+    Rails.application.env_config["devise.mapping"] = Devise.mappings[:user] # If using Devise
+    Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:google_oauth2]
+  end
+
+  scenario 'index page' do
+    visit amazon_shipments_path
+    click_link "Sign in with Google"
+    expect(page).to have_content('Amazon Shipments')
+    click_link "20 Days Pending"
+    click_link "Pending"
+    click_link "Combine Shipments"
+  end
+end
