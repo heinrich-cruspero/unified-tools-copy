@@ -32,9 +32,24 @@ RSpec.describe AmazonShipmentsController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "returns a success response" do
+    it "returns a found response" do
       AmazonShipment.create! valid_attributes
       get :index
+      expect(response.code).to eq("302")
+    end
+
+    it "returns a success response with params 'pending'" do
+      get :index, :params => { :filter => 'pending' }
+      expect(response.code).to eq("302")
+    end
+
+    it "returns a success response with params 'twenty_days_pending'" do
+      get :index, :params => { :filter => 'twenty_days_pending' }
+      expect(response.code).to eq("302")
+    end
+
+    it "returns a success response with params 'combine_shipments'" do
+      get :index, :params => { :filter => 'combine_shipments' }
       expect(response.code).to eq("302")
     end
   end

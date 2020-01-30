@@ -19,8 +19,6 @@ class AmazonShipmentsController < ApplicationController
       amazon_shipment_items = amazon_shipment_items.pending
     elsif params[:filter] == 'twenty_days_pending'
       amazon_shipment_items = amazon_shipment_items.twenty_days_pending
-    elsif params[:filter] == 'twenty_days_pending'
-      amazon_shipment_items = amazon_shipment_items.twenty_days_pending
     elsif params[:filter] == 'combine_shipments'
       amazon_shipment_items = amazon_shipment_items.combine_shipments
     end
