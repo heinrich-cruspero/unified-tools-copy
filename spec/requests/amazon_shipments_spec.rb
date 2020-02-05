@@ -24,6 +24,11 @@ RSpec.describe "AmazonShipments", type: :request do
       get amazon_shipments_path, :params => { :filter => 'combine_shipments' }
       expect(response).to have_http_status(302)
     end
+
+    it "redirects to amazon with params 'combine_shipments'" do
+      get amazon_shipments_path, :params => { :filter => 'combine_shipments' }
+      expect(response).to have_http_status(302)
+    end
   end
 
 end

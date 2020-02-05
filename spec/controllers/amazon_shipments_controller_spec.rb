@@ -1,24 +1,26 @@
 require 'rails_helper'
+require 'faker'
 
 RSpec.describe AmazonShipmentsController, type: :controller do
+
   valid_attributes = {
-    isbn: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join,
-    shipment_id: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join,
-    quantity_shipped: rand(1..2),
-    quantity_in_case: rand(1..2),
-    quantity_received: rand(1..2),
-    az_sku: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join,
-    reconciled: [true, false].sample
+    isbn: Faker::Alphanumeric.alphanumeric(number: 10),
+    shipment_id: Faker::Alphanumeric.alphanumeric(number: 10),
+    quantity_shipped: Faker::Number.number(digits: 1),
+    quantity_in_case: Faker::Number.number(digits: 1),
+    quantity_received: Faker::Number.number(digits: 1),
+    az_sku: Faker::Alphanumeric.alphanumeric(number: 10),
+    reconciled: Faker::Boolean.boolean
   }
 
   invalid_attributes = {
-    isbn: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join,
-    shipment_id: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join,
-    quantity_shipped: '1',
-    quantity_in_case: '2',
-    quantity_received: '3',
-    az_sku: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join,
-    reconciled: [true, false].sample
+    isbn: Faker::Alphanumeric.alphanumeric(number: 10),
+    # shipment_id: Faker::Alphanumeric.alphanumeric(number: 10),
+    quantity_shipped: Faker::Number.number(digits: 1),
+    quantity_in_case: Faker::Number.number(digits: 1),
+    quantity_received: Faker::Number.number(digits: 1),
+    az_sku: Faker::Alphanumeric.alphanumeric(number: 10),
+    reconciled: Faker::Boolean.boolean
   }
 
   # let(:valid_attributes) {

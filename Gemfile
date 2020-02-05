@@ -20,6 +20,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'simplecov', require: false
+  gem 'faker', '~> 2.10', '>= 2.10.1'
 end
 
 group :development do
