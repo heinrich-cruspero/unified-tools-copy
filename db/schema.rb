@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_08_152746) do
+ActiveRecord::Schema.define(version: 2020_02_12_090801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_01_08_152746) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "condition"
     t.string "az_sku"
+    t.index ["isbn", "az_sku", "shipment_id"], name: "index_amazon_shipments_on_isbn_and_az_sku_and_shipment_id", unique: true
   end
 
   create_table "books", force: :cascade do |t|
@@ -539,6 +540,14 @@ ActiveRecord::Schema.define(version: 2020_01_08_152746) do
     t.index ["yearly_sold_quantity_all"], name: "index_books_on_yearly_sold_quantity_all"
   end
 
+  create_table "indaba_skus", force: :cascade do |t|
+    t.string "sku"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "amazon_shipment_id"
+    t.index ["amazon_shipment_id"], name: "index_indaba_skus_on_amazon_shipment_id"
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text "content"
     t.string "searchable_type"
@@ -563,4 +572,5 @@ ActiveRecord::Schema.define(version: 2020_01_08_152746) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "indaba_skus", "amazon_shipments"
 end

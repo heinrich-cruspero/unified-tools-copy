@@ -16,6 +16,12 @@ class AmazonShipment < ApplicationRecord
     az_sku
   ]
 
+  # foreign key 1-to-many
+  has_many :indaba_skus
+
+  # validation
+  validates :shipment_id, uniqueness: { scope: [:az_sku, :isbn] }
+
   # instance methods
   def quantity_difference
     quantity_shipped - quantity_received
