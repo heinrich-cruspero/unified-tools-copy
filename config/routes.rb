@@ -5,8 +5,10 @@ Rails.application.routes.draw do
     collection do
       get 'import'
       post 'import'
+      get 'indaba_skus'
     end
   end
+
 
   resources :books, only: [:index]
 

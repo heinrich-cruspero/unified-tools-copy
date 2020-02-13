@@ -40,4 +40,19 @@ class AmazonShipmentsController < ApplicationController
       end
     end
   end
+
+  def indaba_skus
+    authorize AmazonShipment
+
+    per_page = params[:show].nil? ? 25 : params[:show]
+
+    indaba_skus = if params[:query].nil? || params[:query].empty?
+                              IndabaSku.all
+                            else
+                              IndabaSku.search_by_fuzzy(params[:query].to_s)
+                            end
+
+    @indaba_skus = indaba_skus.paginate(page: params[:page], per_page: per_page)
+  end
+
 end
