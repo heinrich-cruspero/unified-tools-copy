@@ -2,7 +2,9 @@
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+   add_filter "spec/support/pundit_matcher.rb"
+end
 
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -67,4 +69,5 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.include Devise::Test::ControllerHelpers, type: :controller
 end
