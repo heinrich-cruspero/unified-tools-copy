@@ -2,9 +2,8 @@ class ProcessCsvJob < ApplicationJob
   include AmazonShipmentCsvModule
   queue_as :delayed_job
 
-  def perform(uploaded_file)
-    process_csv uploaded_file
+  def perform(*args)
+    process_csv(args[0], args[1])
   end
-  # handle_asynchronously :perform
 
 end
