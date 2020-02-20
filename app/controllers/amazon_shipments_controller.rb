@@ -6,7 +6,6 @@ class AmazonShipmentsController < ApplicationController
 
   def index
     authorize AmazonShipment
-
     per_page = params[:show].nil? ? 25 : params[:show]
 
     amazon_shipment_items = if params[:query].nil? || params[:query].empty?
@@ -33,7 +32,8 @@ class AmazonShipmentsController < ApplicationController
       uploaded_file = params[:csv_file]
 
       if uploaded_file
-        process_csv uploaded_file
+        # process_csv uploaded_file
+        ProcessCsvJob.perform_now uploaded_file
         redirect_to amazon_shipments_url, flash: { success: 'Successfully imported file.' }
       else
         redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }

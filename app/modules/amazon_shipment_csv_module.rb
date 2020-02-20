@@ -3,7 +3,6 @@
 ##
 module AmazonShipmentCsvModule
   def process_csv(uploaded_file, options = {})
-
     amazon_shipment_file = AmazonShipmentFile.create(
       name: "#{uploaded_file.original_filename}-#{DateTime.now}",
     )
