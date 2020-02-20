@@ -49,4 +49,5 @@ class AmazonShipment < ApplicationRecord
       sum(quantity_received) as quantity_received
     ').group('shipment_id')
   end
+
 end
