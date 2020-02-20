@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_12_090801) do
+ActiveRecord::Schema.define(version: 2020_02_20_080447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "amazon_shipment_files", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "amazon_shipments", force: :cascade do |t|
     t.string "isbn"
@@ -26,6 +32,8 @@ ActiveRecord::Schema.define(version: 2020_02_12_090801) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "condition"
     t.string "az_sku"
+    t.bigint "amazon_shipment_file_id"
+    t.index ["amazon_shipment_file_id"], name: "index_amazon_shipments_on_amazon_shipment_file_id"
     t.index ["isbn", "az_sku", "shipment_id"], name: "index_amazon_shipments_on_isbn_and_az_sku_and_shipment_id", unique: true
   end
 
@@ -545,6 +553,7 @@ ActiveRecord::Schema.define(version: 2020_02_12_090801) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "amazon_shipment_id"
+    t.integer "quantity"
     t.index ["amazon_shipment_id"], name: "index_indaba_skus_on_amazon_shipment_id"
   end
 
@@ -572,5 +581,6 @@ ActiveRecord::Schema.define(version: 2020_02_12_090801) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "amazon_shipments", "amazon_shipment_files"
   add_foreign_key "indaba_skus", "amazon_shipments"
 end
