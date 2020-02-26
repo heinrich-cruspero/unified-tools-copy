@@ -1,0 +1,15 @@
+/log/*
+!/log/.keep
+
+/tmp/*
+!/tmp/.keep
+
+/public/packs/*
+/public/packs-test/*
+.idea
+
+# Ignore node_modules
+/node_modules/*
+
+# Ignore .git
+.git

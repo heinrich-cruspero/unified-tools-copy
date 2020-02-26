@@ -83,3 +83,12 @@ production:
   database: unified_tools_production
   username: unified_tools
   password: <%= ENV['UNIFIED_TOOLS_DATABASE_PASSWORD'] %>
+
+staging:
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['POSTGRESQL_HOST'] %>
+  username: <%= ENV['POSTGRESQL_USER_NAME'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+  pool: 5
+  database: <%= ENV['POSTGRESQL_DB'] %>
