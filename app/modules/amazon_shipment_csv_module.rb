@@ -1,16 +1,26 @@
 # frozen_string_literal: true
 
-##
 module AmazonShipmentCsvModule
   def process_csv(chunks, filename)
-    amazon_shipment_file = AmazonShipmentFile.create(
-      name: "#{filename}-#{DateTime.now}",
+    parsed_filename = filename.split("_")
+
+    amazon_shipment_file = AmazonShipmentFile.where(
+      name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
+      date: "#{parsed_filename[1]}"
+    ).first_or_create(
+      name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
+      date: "#{parsed_filename[1]}"
     )
+    # check amazon_shipment_file (filename and date should be unique) .create_or_first
 
     chunks.each do |data_hash|
       amazon_shipment = AmazonShipment.find_by(shipment_id: data_hash[:ship_id],
                                                az_sku: data_hash[:az_sku],
-                                               isbn: data_hash[:isbn])
+                                               isbn: data_hash[:isbn],
+                                               amazon_shipment_file_id: amazon_shipment_file.id)
+
+      # add amazon_shipment_file in query for uniqueness else new record
+
       if amazon_shipment.nil?
         amazon_shipment = AmazonShipment.create(
           isbn: data_hash[:isbn],
@@ -25,7 +35,11 @@ module AmazonShipmentCsvModule
         amazon_shipment.save
       end
 
-      indaba_sku = IndabaSku.find_by(sku: data_hash[:sku])
+      indaba_sku = IndabaSku.find_by(sku: data_hash[:sku],
+                                     amazon_shipment_id:amazon_shipment.id)
+
+      # amazon_shipment_id and indaba_sku should be unique together
+
       if indaba_sku.nil?
         indaba_sku = IndabaSku.create(
           sku: data_hash[:sku],
