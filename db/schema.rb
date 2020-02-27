@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_094443) do
+ActiveRecord::Schema.define(version: 2020_02_27_120711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(version: 2020_02_27_094443) do
     t.string "condition"
     t.string "az_sku"
     t.bigint "amazon_shipment_file_id"
+    t.string "edition_status_code"
+    t.date "edition_status_date"
+    t.decimal "list_price"
+    t.decimal "used_wholesale_price"
+    t.decimal "nebraska_wh"
+    t.decimal "qa_aug_low"
+    t.decimal "lowest_good_price"
+    t.decimal "qa_low"
+    t.decimal "yearly_low"
+    t.decimal "qa_fba_low"
+    t.integer "monthly_sqf"
+    t.decimal "monthly_spf"
+    t.integer "monthly_rqf"
+    t.decimal "monthly_rpf"
+    t.decimal "one_year_highest_wholesale_price"
+    t.decimal "two_years_wh_max"
     t.index ["amazon_shipment_file_id"], name: "index_amazon_shipments_on_amazon_shipment_file_id"
     t.index ["isbn", "az_sku", "shipment_id"], name: "index_amazon_shipments_on_isbn_and_az_sku_and_shipment_id", unique: true
   end
