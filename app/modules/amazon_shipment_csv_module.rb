@@ -51,4 +51,28 @@ module AmazonShipmentCsvModule
       indaba_sku.save
     end
   end
+
+  def process_csv_deletion(chunks)
+    deleted_skus = []
+    unfound_skus = {}
+
+    chunks.each.with_index do |data_hash, index|
+      indaba_sku = IndabaSku.find_by(sku: data_hash[:sku])
+
+      if indaba_sku.nil?
+        unfound_skus = {sku: data_hash[:sku], row: index+1}
+        break
+      else
+        indaba_sku.quantity -= 1
+        indaba_sku.save
+
+        amazon_shipment = indaba_sku.amazon_shipment
+        amazon_shipment.quantity_shipped -= 1
+        amazon_shipment.save
+        deleted_skus.push(data_hash[:sku])
+      end
+    end
+
+    return {deleted_skus: deleted_skus, unfound_skus: unfound_skus}
+  end
 end

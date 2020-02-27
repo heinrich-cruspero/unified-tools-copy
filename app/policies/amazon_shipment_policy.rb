@@ -9,4 +9,8 @@ class AmazonShipmentPolicy < ApplicationPolicy
   def indaba_skus?
     user.is_admin?
   end
+
+  def delete_skus?
+    user.is_admin?
+  end
 end

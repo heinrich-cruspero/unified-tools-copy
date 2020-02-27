@@ -55,4 +55,26 @@ class AmazonShipmentsController < ApplicationController
     @indaba_skus = indaba_skus.paginate(page: params[:page], per_page: per_page)
   end
 
+  def delete_skus
+    authorize AmazonShipment
+
+    if request.post?
+      uploaded_file = params[:csv_file]
+      if uploaded_file
+        processed_file = SmarterCSV.process(uploaded_file)
+        return_hash = process_csv_deletion processed_file
+
+        if return_hash[:unfound_skus].empty?
+          redirect_to amazon_shipments_url, flash: { success: "Successfully updated SKU's" }
+        else
+          redirect_to amazon_shipments_url, flash: {
+            error: "SKU not found. '#{return_hash[:unfound_skus][:sku]}' in Row #{return_hash[:unfound_skus][:row]}"
+          }
+        end
+      else
+        redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }
+      end
+    end
+  end
+
 end

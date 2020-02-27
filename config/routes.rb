@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       get 'import'
       post 'import'
       get 'indaba_skus'
+      get 'delete_skus'
+      post 'delete_skus'
     end
   end
 
