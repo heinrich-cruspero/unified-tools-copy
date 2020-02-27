@@ -17,6 +17,7 @@ COPY Gemfile.lock /unified-tools/Gemfile.lock
 RUN gem install bundler:2.0.2
 RUN bundle install
 RUN yarn install --check-files
+RUN bundle exec rake assets:precompile
 
 # Copy the whole app
 COPY . /unified-tools
