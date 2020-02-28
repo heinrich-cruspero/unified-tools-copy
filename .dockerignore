@@ -1,15 +1,18 @@
-/log/*
-!/log/.keep
-
-/tmp/*
-!/tmp/.keep
-
-/public/packs/*
-/public/packs-test/*
-.idea
-
-# Ignore node_modules
-/node_modules/*
-
-# Ignore .git
+.dockerignore
 .git
+.gitignore
+.idea
+.rspec
+.rubocop.yml
+.ruby-version
+/config/master.key
+coverage
+docker
+log
+node_modules
+spec
+storage
+tmp
+README.md
+
+

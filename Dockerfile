@@ -1,22 +1,34 @@
-# gets the docker image of ruby 2.5 and lets us build on top of that
-FROM ruby:2.6.3-slim
+# gets the a base ruby docker image
+FROM ruby:2.6.5
 
-# install rails dependencies
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs npm
-RUN npm install -g yarn
+# app home directory
+ENV APP_HOME /unified-tools
 
-# create a folder /unified-tools in the docker container and go into that folder
-RUN mkdir /unified-tools
-WORKDIR /unified-tools
+# install dependencies
+ADD https://dl.yarnpkg.com/debian/pubkey.gpg /tmp/yarn-pubkey.gpg
+RUN apt-key add /tmp/yarn-pubkey.gpg && rm /tmp/yarn-pubkey.gpg
+RUN echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq
+RUN apt-get install -y build-essential libpq-dev nodejs npm yarn
+
+# clean up
+RUN apt-get clean autoclean && apt-get autoremove -y
+RUN rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+
+# create a folder APP_HOME in the docker container and go into that folder
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
 
 # Copy the Gemfile and Gemfile.lock from app root directory into the /myapp/ folder in the docker container
-COPY Gemfile /unified-tools/Gemfile
-COPY Gemfile.lock /unified-tools/Gemfile.lock
+COPY Gemfile* $APP_HOME/
 
 # Run bundle & yarn install to install gems inside the gemfile
 RUN gem install bundler:2.0.2
-RUN bundle install
+RUN bundle install --without development test
 RUN yarn install --check-files
 
 # Copy the whole app
-COPY . /unified-tools
+COPY . $APP_HOME
+
+EXPOSE 3000
+CMD bundle exec puma -C config/puma.rb
