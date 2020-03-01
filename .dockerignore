@@ -11,8 +11,6 @@ log
 node_modules
 spec
 storage
-!tmp/pids/.keep
 tmp
+!tmp/pids/.keep
 README.md
-
-

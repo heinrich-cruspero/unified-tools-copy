@@ -31,4 +31,5 @@ RUN bundle install --without development test
 # Copy the whole app
 COPY . $APP_HOME
 
+EXPOSE 3000
 CMD bundle exec puma -C config/puma.rb
