@@ -7,11 +7,11 @@
 .ruby-version
 /config/master.key
 coverage
-docker
 log
 node_modules
 spec
 storage
+!tmp/pids/.keep
 tmp
 README.md
 

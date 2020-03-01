@@ -21,14 +21,14 @@ WORKDIR $APP_HOME
 
 # Copy the Gemfile and Gemfile.lock from app root directory into the /myapp/ folder in the docker container
 COPY Gemfile* $APP_HOME/
+COPY yarn.lock $APP_HOME/
+COPY package.json $APP_HOME/
 
 # Run bundle & yarn install to install gems inside the gemfile
 RUN gem install bundler:2.0.2
 RUN bundle install --without development test
-RUN bundle exec rake assets:precompile RAILS_ENV=production
 
 # Copy the whole app
 COPY . $APP_HOME
 
-EXPOSE 3000
 CMD bundle exec puma -C config/puma.rb
