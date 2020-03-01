@@ -25,7 +25,7 @@ COPY Gemfile* $APP_HOME/
 # Run bundle & yarn install to install gems inside the gemfile
 RUN gem install bundler:2.0.2
 RUN bundle install --without development test
-RUN yarn install --check-files
+RUN bundle exec rake assets:precompile RAILS_ENV=production
 
 # Copy the whole app
 COPY . $APP_HOME
