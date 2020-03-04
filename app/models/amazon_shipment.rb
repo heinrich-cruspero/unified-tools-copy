@@ -24,6 +24,7 @@ class AmazonShipment < ApplicationRecord
 
   # fks
   belongs_to :amazon_shipment_file
+  belongs_to :book, optional: true
 
   # instance methods
   def quantity_difference
@@ -31,7 +32,7 @@ class AmazonShipment < ApplicationRecord
   end
 
   def quantity_shipped_related_sum
-    indaba_skus.sum(:quantity)
+    indaba_skus.all.sum(:quantity)
   end
 
   # object managers

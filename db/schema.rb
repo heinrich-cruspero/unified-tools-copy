@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_120711) do
+ActiveRecord::Schema.define(version: 2020_03_04_160532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,9 @@ ActiveRecord::Schema.define(version: 2020_02_27_120711) do
     t.decimal "monthly_rpf"
     t.decimal "one_year_highest_wholesale_price"
     t.decimal "two_years_wh_max"
+    t.bigint "book_id"
     t.index ["amazon_shipment_file_id"], name: "index_amazon_shipments_on_amazon_shipment_file_id"
+    t.index ["book_id"], name: "index_amazon_shipments_on_book_id"
     t.index ["isbn", "az_sku", "shipment_id"], name: "index_amazon_shipments_on_isbn_and_az_sku_and_shipment_id", unique: true
   end
 
@@ -310,6 +312,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_120711) do
     t.integer "manual_add", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "weight", precision: 20, scale: 2, default: "0.0"
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
@@ -614,5 +617,6 @@ ActiveRecord::Schema.define(version: 2020_02_27_120711) do
   end
 
   add_foreign_key "amazon_shipments", "amazon_shipment_files"
+  add_foreign_key "amazon_shipments", "books"
   add_foreign_key "indaba_skus", "amazon_shipments"
 end

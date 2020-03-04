@@ -67,8 +67,11 @@ class AmazonShipmentsController < ApplicationController
         if return_hash[:unfound_skus].empty?
           redirect_to amazon_shipments_url, flash: { success: "Successfully updated SKU's" }
         else
+          # redirect_to amazon_shipments_url, flash: {
+          #   error: "SKU not found. '#{return_hash[:unfound_skus][:sku]}' in Row #{return_hash[:unfound_skus][:row]}"
+          # }
           redirect_to amazon_shipments_url, flash: {
-            error: "SKU not found. '#{return_hash[:unfound_skus][:sku]}' in Row #{return_hash[:unfound_skus][:row]}"
+            error: "SKU not found. #{return_hash[:unfound_skus]}"
           }
         end
       else
