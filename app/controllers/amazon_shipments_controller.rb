@@ -46,10 +46,15 @@ class AmazonShipmentsController < ApplicationController
 
     per_page = params[:show].nil? ? 25 : params[:show]
 
-    indaba_skus = if params[:query].nil? || params[:query].empty?
+
+    indaba_skus = if params[:date].nil? || params[:date].empty?
                               IndabaSku.all
                             else
-                              IndabaSku.search_by_fuzzy(params[:query].to_s)
+                              dates = params['date'].split(' - ')
+                              from_date = Date.parse dates[0]
+                              to_date = Date.parse dates[1]
+
+                              IndabaSku.joins(:amazon_shipment => :amazon_shipment_file).where('amazon_shipment_files.date in (?)', from_date..to_date)
                             end
 
     @indaba_skus = indaba_skus.paginate(page: params[:page], per_page: per_page)
