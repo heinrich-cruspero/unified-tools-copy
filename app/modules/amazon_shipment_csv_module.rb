@@ -11,38 +11,21 @@ module AmazonShipmentCsvModule
       name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
       date: "#{parsed_filename[1]}"
     )
+
     # check amazon_shipment_file (filename and date should be unique) .create_or_first
 
     chunks.each do |data_hash|
       amazon_shipment = AmazonShipment.where(
+        isbn: data_hash[:isbn],
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
-        isbn: data_hash[:isbn],
         amazon_shipment_file_id: amazon_shipment_file.id
       ).first_or_create(
         isbn: data_hash[:isbn],
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
-        quantity_shipped: data_hash[:qty],
-        condition: data_hash[:condition],
         amazon_shipment_file_id: amazon_shipment_file.id,
       )
-
-      # add amazon_shipment_file in query for uniqueness else new record
-
-      # if amazon_shipment.nil?
-      #   amazon_shipment = AmazonShipment.create(
-      #     isbn: data_hash[:isbn],
-      #     shipment_id: data_hash[:ship_id],
-      #     az_sku: data_hash[:az_sku],
-      #     quantity_shipped: data_hash[:qty],
-      #     condition: data_hash[:condition],
-      #     amazon_shipment_file_id: amazon_shipment_file.id,
-      #   )
-      # else
-      #   amazon_shipment.quantity_shipped = (amazon_shipment.quantity_shipped + data_hash[:qty]) # change this too
-      #   amazon_shipment.save
-      # end
 
       indaba_sku = IndabaSku.where(
         sku: data_hash[:sku],
@@ -50,20 +33,7 @@ module AmazonShipmentCsvModule
       ).first_or_create(
         sku: data_hash[:sku],
         amazon_shipment_id:amazon_shipment.id,
-        quantity: 1,
       )
-
-      # amazon_shipment_id and indaba_sku should be unique together
-
-      # if indaba_sku.nil?
-      #   indaba_sku = IndabaSku.create(
-      #     sku: data_hash[:sku],
-      #     quantity: 1
-      #   )
-      # end
-
-      # indaba_sku.amazon_shipment_id = amazon_shipment.id
-      # indaba_sku.save
 
       book = Book.find_by(isbn: data_hash[:isbn])
 
@@ -87,7 +57,11 @@ module AmazonShipmentCsvModule
         amazon_shipment.two_years_wh_max = book.two_years_wh_max
       end
 
-      amazon_shipment.quantity_shipped = amazon_shipment.indaba_skus.all.sum('quantity') # change this too
+      indaba_sku.quantity = 1
+      indaba_sku.save
+
+      amazon_shipment.quantity_shipped = amazon_shipment.indaba_skus.all.sum('quantity')
+      amazon_shipment.condition = data_hash[:condition]
       amazon_shipment.save
     end
   end

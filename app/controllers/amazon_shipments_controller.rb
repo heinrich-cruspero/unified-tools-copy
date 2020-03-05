@@ -22,6 +22,9 @@ class AmazonShipmentsController < ApplicationController
       amazon_shipment_items = amazon_shipment_items.combine_shipments
     end
 
+    @checked = session[:tmp_checked]
+    session[:tmp_checked] = nil # THIS IS IMPORTANT. Without this, you still get the last checked value when the user come to the index action directly.
+
     @amazon_shipment_items = amazon_shipment_items.paginate(page: params[:page], per_page: per_page)
   end
 
@@ -72,12 +75,8 @@ class AmazonShipmentsController < ApplicationController
         if return_hash[:unfound_skus].empty?
           redirect_to amazon_shipments_url, flash: { success: "Successfully updated SKU's" }
         else
-          # redirect_to amazon_shipments_url, flash: {
-          #   error: "SKU not found. '#{return_hash[:unfound_skus][:sku]}' in Row #{return_hash[:unfound_skus][:row]}"
-          # }
-          redirect_to amazon_shipments_url, flash: {
-            error: "SKU not found. #{return_hash[:unfound_skus]}"
-          }
+          session[:tmp_checked] = return_hash[:unfound_skus]
+          redirect_to amazon_shipments_url, flash: { error: "SKUs not found." }
         end
       else
         redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }

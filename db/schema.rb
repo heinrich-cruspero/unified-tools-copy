@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_160532) do
+ActiveRecord::Schema.define(version: 2020_03_05_095517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2020_03_04_160532) do
     t.decimal "one_year_highest_wholesale_price"
     t.decimal "two_years_wh_max"
     t.bigint "book_id"
+    t.string "fulfillment_network_sku"
     t.index ["amazon_shipment_file_id"], name: "index_amazon_shipments_on_amazon_shipment_file_id"
     t.index ["book_id"], name: "index_amazon_shipments_on_book_id"
     t.index ["isbn", "az_sku", "shipment_id"], name: "index_amazon_shipments_on_isbn_and_az_sku_and_shipment_id", unique: true
