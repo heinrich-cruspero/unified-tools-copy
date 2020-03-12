@@ -46,5 +46,10 @@ RSpec.describe AmazonShipmentsController, type: :controller do
       get :index, :params => { :filter => 'combine_shipments' }
       expect(response.code).to eq("302")
     end
+
+    it "returns a success response with params 'indaba_skus'" do
+      get :indaba_skus
+      expect(response.code).to eq("302")
+    end
   end
 end

@@ -68,14 +68,13 @@ module AmazonShipmentCsvModule
 
   def process_csv_deletion(chunks)
     deleted_skus = []
-    unfound_skus = {}
-    unfound_skus1 = []
+    unfound_skus = []
 
     chunks.each.with_index do |data_hash, index|
       indaba_sku = IndabaSku.find_by(sku: data_hash[:sku])
 
       if indaba_sku.nil?
-        unfound_skus1.push(data_hash[:sku])
+        unfound_skus.push(data_hash[:sku])
       else
         indaba_sku.quantity = 0 # change to zero
         indaba_sku.save
@@ -87,7 +86,7 @@ module AmazonShipmentCsvModule
       end
     end
 
-    return {deleted_skus: deleted_skus, unfound_skus: unfound_skus1}
+    return {deleted_skus: deleted_skus, unfound_skus: unfound_skus}
   end
 end
 

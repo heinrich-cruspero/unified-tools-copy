@@ -36,16 +36,15 @@ RSpec.describe 'Amazon Shipments Index Page', type: :feature do
     visit amazon_shipments_path
     click_link "Sign in with Google"
     expect(page).to have_content('Amazon Shipments')
-    click_link "20 Days Pending"
-    click_link "Pending"
-    click_link "Combine Shipments"
+    click_link "Indaba SKU Level"
   end
 
-  scenario 'index page with search' do
+  scenario 'date filter' do
     visit amazon_shipments_path
     click_link "Sign in with Google"
     expect(page).to have_content('Amazon Shipments')
-    find_field('amazon-table-search-input').set Faker::Alphanumeric.alphanumeric(number: 10)
+    click_link "Indaba SKU Level"
+    find_field('daterange').set "2020-03-12 - 2020-03-12"
     click_button "Submit"
   end
 end
