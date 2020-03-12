@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_08_152746) do
+ActiveRecord::Schema.define(version: 2020_03_05_144507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "amazon_shipment_files", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.date "date"
+  end
 
   create_table "amazon_shipments", force: :cascade do |t|
     t.string "isbn"
@@ -26,6 +33,28 @@ ActiveRecord::Schema.define(version: 2020_01_08_152746) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "condition"
     t.string "az_sku"
+    t.bigint "amazon_shipment_file_id"
+    t.string "edition_status_code"
+    t.date "edition_status_date"
+    t.decimal "list_price"
+    t.decimal "used_wholesale_price"
+    t.decimal "nebraska_wh"
+    t.decimal "qa_aug_low"
+    t.decimal "lowest_good_price"
+    t.decimal "qa_low"
+    t.decimal "yearly_low"
+    t.decimal "qa_fba_low"
+    t.integer "monthly_sqf"
+    t.decimal "monthly_spf"
+    t.integer "monthly_rqf"
+    t.decimal "monthly_rpf"
+    t.decimal "one_year_highest_wholesale_price"
+    t.decimal "two_years_wh_max"
+    t.bigint "book_id"
+    t.string "fulfillment_network_sku"
+    t.index ["amazon_shipment_file_id"], name: "index_amazon_shipments_on_amazon_shipment_file_id"
+    t.index ["book_id"], name: "index_amazon_shipments_on_book_id"
+    t.index ["isbn", "az_sku", "shipment_id"], name: "index_amazon_shipments_on_isbn_and_az_sku_and_shipment_id", unique: true
   end
 
   create_table "books", force: :cascade do |t|
@@ -284,6 +313,7 @@ ActiveRecord::Schema.define(version: 2020_01_08_152746) do
     t.integer "manual_add", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "weight", precision: 20, scale: 2, default: "0.0"
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
@@ -539,6 +569,30 @@ ActiveRecord::Schema.define(version: 2020_01_08_152746) do
     t.index ["yearly_sold_quantity_all"], name: "index_books_on_yearly_sold_quantity_all"
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "indaba_skus", force: :cascade do |t|
+    t.string "sku"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "amazon_shipment_id"
+    t.integer "quantity"
+    t.index ["amazon_shipment_id"], name: "index_indaba_skus_on_amazon_shipment_id"
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text "content"
     t.string "searchable_type"
@@ -546,6 +600,15 @@ ActiveRecord::Schema.define(version: 2020_01_08_152746) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -563,4 +626,7 @@ ActiveRecord::Schema.define(version: 2020_01_08_152746) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "amazon_shipments", "amazon_shipment_files"
+  add_foreign_key "amazon_shipments", "books"
+  add_foreign_key "indaba_skus", "amazon_shipments"
 end

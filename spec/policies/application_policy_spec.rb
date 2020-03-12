@@ -4,7 +4,9 @@ require 'spec_helper'
 RSpec.describe ApplicationPolicy do
   subject { ApplicationPolicy.new(user, amazon_shipment) }
 
-  let(:amazon_shipment) { FactoryBot.create(:amazon_shipment) }
+  let(:amazon_shipment) {
+    FactoryBot.create(:amazon_shipment)
+  }
 
   context 'for a visitor' do
     let(:user) { FactoryBot.create(:user) }

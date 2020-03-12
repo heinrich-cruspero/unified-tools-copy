@@ -11,11 +11,37 @@
   <td><%= amazon_shipment_item.isbn %></td>
   <td><%= amazon_shipment_item.shipment_id %></td>
   <td><%= amazon_shipment_item.az_sku %></td>
-  <td><%= amazon_shipment_item.quantity_shipped %></td>
+  <td><%= amazon_shipment_item.quantity_shipped_related_sum %></td>
   <td><%= amazon_shipment_item.quantity_in_case %></td>
   <td><%= amazon_shipment_item.quantity_received %></td>
   <td><%= amazon_shipment_item.quantity_difference %></td>
   <td><%= amazon_shipment_item.condition %></td>
+  <td><%= amazon_shipment_item.fulfillment_network_sku %></td>
+
+  <td><%= amazon_shipment_item.book ? amazon_shipment_item.book.author : '' %></td>
+  <td><%= amazon_shipment_item.book ? amazon_shipment_item.book.title : '' %></td>
+  <td><%= amazon_shipment_item.book ? amazon_shipment_item.book.edition : '' %></td>
+  <td><%= amazon_shipment_item.book ? amazon_shipment_item.book.publisher : '' %></td>
+  <td><%= amazon_shipment_item.book ? amazon_shipment_item.book.publication_date : '' %></td>
+  <td><%= amazon_shipment_item.book ? amazon_shipment_item.book.weight : '' %></td>
+
+  <td><%= amazon_shipment_item.edition_status_code %></td>
+  <td><%= amazon_shipment_item.edition_status_date %></td>
+  <td><%= amazon_shipment_item.list_price %></td>
+  <td><%= amazon_shipment_item.used_wholesale_price %></td>
+  <td><%= amazon_shipment_item.nebraska_wh %></td>
+  <td><%= amazon_shipment_item.qa_aug_low %></td>
+  <td><%= amazon_shipment_item.lowest_good_price %></td>
+  <td><%= amazon_shipment_item.qa_low %></td>
+  <td><%= amazon_shipment_item.yearly_low %></td>
+  <td><%= amazon_shipment_item.qa_fba_low %></td>
+  <td><%= amazon_shipment_item.monthly_sqf %></td>
+  <td><%= amazon_shipment_item.monthly_spf %></td>
+  <td><%= amazon_shipment_item.monthly_rqf %></td>
+  <td><%= amazon_shipment_item.monthly_rpf %></td>
+  <td><%= amazon_shipment_item.one_year_highest_wholesale_price %></td>
+  <td><%= amazon_shipment_item.two_years_wh_max %></td>
+
   <td><%= amazon_shipment_item.created_at %></td>
   <td><%= amazon_shipment_item.updated_at %></td>
   <td><span class="badge badge-<%= amazon_shipment_item.reconciled ? 'success' : 'danger' %>"><%= amazon_shipment_item.reconciled ? 'Yes' : 'No' %></span></td>

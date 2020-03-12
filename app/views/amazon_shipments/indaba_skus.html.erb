@@ -17,7 +17,6 @@
     </div>
   </div>
 </div>
-
 <div class="row">
   <div class="col-sm">
     <div class="input-group mb-3 float-left">
@@ -35,9 +34,9 @@
   <div class="col-sm"></div>
   <div class="col-sm">
     <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2" name="amazon-table-search-input" id="amazon-table-search-form">
+      <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2" name="daterange" id="sku-table-search-form"/>
       <div class="input-group-append">
-        <button class="btn btn-secondary" type="button" id="amazon-table-search-submit">Submit</button>
+        <button class="btn btn-secondary" type="button" id="sku-table-date-search-submit">Submit</button>
       </div>
     </div>
   </div>
@@ -55,29 +54,29 @@
 </div>
 <div class="row">
   <div class="col-sm float-right">
-    <%= will_paginate @amazon_shipment_items, list_classes: %w(pagination justify-content-end)  %>
+    <%= will_paginate @indaba_skus, list_classes: %w(pagination justify-content-end)  %>
   </div>
 </div>
 <div class="row">
   <div class="table-responsive">
     <table class="table text-center">
       <thead>
-        <%= render partial: 'amazon_shipment_table_header' %>
+        <%= render partial: 'indaba_sku_table_header' %>
       </thead>
       <tbody>
         <%=
-        render partial: 'amazon_shipment_item',
-        collection: @amazon_shipment_items
+        render partial: 'indaba_sku_item',
+        collection: @indaba_skus
         %>
       </tbody>
       <tfoot>
-      <%= render partial: 'amazon_shipment_table_header' %>
+      <%= render partial: 'indaba_sku_table_header' %>
       </tfoot>
     </table>
   </div>
 </div>
 <div class="row">
   <div class="col-sm float-right">
-    <%= will_paginate @amazon_shipment_items, list_classes: %w(pagination justify-content-end)  %>
+    <%= will_paginate @indaba_skus, list_classes: %w(pagination justify-content-end)  %>
   </div>
 </div>

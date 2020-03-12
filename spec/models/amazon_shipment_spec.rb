@@ -15,8 +15,10 @@ RSpec.describe AmazonShipment, type: :model do
 
   context "AmazonShipment Test Cases" do
     it "adds valid entry" do
-      AmazonShipment.create! valid_attributes
-      expect(AmazonShipment.all.count).to eq(1)
+      amazon_shipment_file = FactoryBot.create(:amazon_shipment_file)
+      valid_attributes['amazon_shipment_file_id'] = amazon_shipment_file.id
+      amazon_shipment = AmazonShipment.create! valid_attributes
+      expect(AmazonShipment.last).to eq(amazon_shipment)
     end
   end
 end
