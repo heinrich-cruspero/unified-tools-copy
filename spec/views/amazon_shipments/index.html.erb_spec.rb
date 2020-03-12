@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "amazon_shipments/index", type: :view do
   before(:each) do
+    amazon_shipment_file = FactoryBot.create(:amazon_shipment_file)
     @amazon_shipments = WillPaginate::Collection.new(4,10,0)
     2.times do |index|
       @amazon_shipments << AmazonShipment.create!(:isbn => "Isbn #{index}",
@@ -9,7 +10,8 @@ RSpec.describe "amazon_shipments/index", type: :view do
                                                   :quantity_shipped => 2,
                                                   :quantity_in_case => 3,
                                                   :quantity_received => 4,
-                                                  :reconciled => false)
+                                                  :reconciled => false,
+                                                  :amazon_shipment_file_id => amazon_shipment_file.id)
     end
     assign(:test, @amazon_shipments) # for will_paginate
     assign(:amazon_shipment_items, @amazon_shipments)
@@ -20,9 +22,6 @@ RSpec.describe "amazon_shipments/index", type: :view do
     assert_select "tr>td", :text => "Isbn 0".to_s, :count => 1
     assert_select "tr>td", :text => "Isbn 1".to_s, :count => 1
     assert_select "tr>td", :text => "Shipment".to_s, :count => 2
-    assert_select "tr>td", :text => 2.to_s, :count => 2
-    assert_select "tr>td", :text => 3.to_s, :count => 2
-    assert_select "tr>td", :text => 4.to_s, :count => 2
     assert_select "tr>td>span", :text => "No", :count => 2
   end
 end

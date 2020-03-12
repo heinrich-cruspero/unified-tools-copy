@@ -18,7 +18,8 @@ RSpec.describe AmazonShipmentCsvModule do
 
 
   it 'tests process method' do
-    process_csv file_path
+    processed = SmarterCSV.process(file_path)
+    process_csv processed, file_path
   end
 
 

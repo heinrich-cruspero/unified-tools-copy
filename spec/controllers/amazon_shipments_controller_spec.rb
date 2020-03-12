@@ -3,6 +3,7 @@ require 'faker'
 
 RSpec.describe AmazonShipmentsController, type: :controller do
 
+
   valid_attributes = {
     isbn: Faker::Alphanumeric.alphanumeric(number: 10),
     shipment_id: Faker::Alphanumeric.alphanumeric(number: 10),
@@ -10,12 +11,11 @@ RSpec.describe AmazonShipmentsController, type: :controller do
     quantity_in_case: Faker::Number.number(digits: 1),
     quantity_received: Faker::Number.number(digits: 1),
     az_sku: Faker::Alphanumeric.alphanumeric(number: 10),
-    reconciled: Faker::Boolean.boolean
+    reconciled: Faker::Boolean.boolean,
   }
 
   invalid_attributes = {
     isbn: Faker::Alphanumeric.alphanumeric(number: 10),
-    # shipment_id: Faker::Alphanumeric.alphanumeric(number: 10),
     quantity_shipped: Faker::Number.number(digits: 1),
     quantity_in_case: Faker::Number.number(digits: 1),
     quantity_received: Faker::Number.number(digits: 1),
@@ -23,16 +23,10 @@ RSpec.describe AmazonShipmentsController, type: :controller do
     reconciled: Faker::Boolean.boolean
   }
 
-  # let(:valid_attributes) {
-  #   skip("Add a hash of attributes valid for your model")
-  # }
-
-  # let(:invalid_attributes) {
-  #   skip("Add a hash of attributes invalid for your model")
-  # }
-
   describe "GET #index" do
     it "returns a found response" do
+      amazon_shipment_file = FactoryBot.create(:amazon_shipment_file)
+      valid_attributes['amazon_shipment_file_id'] = amazon_shipment_file.id
       AmazonShipment.create! valid_attributes
       get :index
       expect(response.code).to eq("302")
