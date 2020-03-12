@@ -20,7 +20,7 @@ class AmazonShipment < ApplicationRecord
   has_many :indaba_skus
 
   # validation
-  validates :shipment_id, uniqueness: { scope: [:az_sku, :isbn] }
+  validates :shipment_id, uniqueness: { scope: %i[az_sku isbn] }
 
   # fks
   belongs_to :amazon_shipment_file
@@ -57,5 +57,4 @@ class AmazonShipment < ApplicationRecord
       sum(quantity_received) as quantity_received
     ').group('shipment_id')
   end
-
 end

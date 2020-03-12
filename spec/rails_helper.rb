@@ -3,7 +3,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'simplecov'
 SimpleCov.start do
-   add_filter "spec/support/pundit_matcher.rb"
+  add_filter 'spec/support/pundit_matcher.rb'
 end
 
 require 'spec_helper'

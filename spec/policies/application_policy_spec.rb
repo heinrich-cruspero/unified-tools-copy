@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe ApplicationPolicy do
   subject { ApplicationPolicy.new(user, amazon_shipment) }
 
-  let(:amazon_shipment) {
+  let(:amazon_shipment) do
     FactoryBot.create(:amazon_shipment)
-  }
+  end
 
   context 'for a visitor' do
     let(:user) { FactoryBot.create(:user) }

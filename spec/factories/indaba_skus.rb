@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   amazon_shipment = FactoryBot.create(:amazon_shipment)
   factory :indaba_sku do

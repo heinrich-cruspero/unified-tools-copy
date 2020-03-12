@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe IndabaSku, type: :model do
@@ -6,8 +8,8 @@ RSpec.describe IndabaSku, type: :model do
     quantity: 1
   }
 
-  context "IndabaSku Test Cases" do
-    it "adds valid entry" do
+  context 'IndabaSku Test Cases' do
+    it 'adds valid entry' do
       amazon_shipment = FactoryBot.create(:amazon_shipment)
       valid_attributes['amazon_shipment_id'] = amazon_shipment.id
       a = IndabaSku.create! valid_attributes

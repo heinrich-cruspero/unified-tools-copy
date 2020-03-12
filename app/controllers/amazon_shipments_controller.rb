@@ -46,15 +46,14 @@ class AmazonShipmentsController < ApplicationController
 
     per_page = params[:show].nil? ? 25 : params[:show]
 
-
     indaba_skus = if params[:date].nil? || params[:date].empty?
-                              IndabaSku.all
-                            else
-                              dates = params['date'].split(' - ')
-                              from_date = Date.parse dates[0]
-                              to_date = Date.parse dates[1]
+                    IndabaSku.all
+                  else
+                    dates = params['date'].split(' - ')
+                    from_date = Date.parse dates[0]
+                    to_date = Date.parse dates[1]
 
-                              IndabaSku.joins(:amazon_shipment => :amazon_shipment_file).where('amazon_shipment_files.date in (?)', from_date..to_date)
+                    IndabaSku.joins(amazon_shipment: :amazon_shipment_file).where('amazon_shipment_files.date in (?)', from_date..to_date)
                             end
 
     @indaba_skus = indaba_skus.paginate(page: params[:page], per_page: per_page)
@@ -72,12 +71,11 @@ class AmazonShipmentsController < ApplicationController
         if return_hash[:unfound_skus].empty?
           redirect_to amazon_shipments_url, flash: { success: "Successfully updated SKU's" }
         else
-          redirect_to amazon_shipments_url, flash: { error: "SKU's not found. <br/> #{return_hash[:unfound_skus].join("<br/>")}".html_safe }
+          redirect_to amazon_shipments_url, flash: { error: "SKU's not found. <br/> #{return_hash[:unfound_skus].join('<br/>')}".html_safe }
         end
       else
         redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }
       end
     end
   end
-
 end

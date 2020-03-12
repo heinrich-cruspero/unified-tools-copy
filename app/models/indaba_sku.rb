@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IndabaSku < ApplicationRecord
   include PgSearch::Model
   pg_search_scope :search_by_fuzzy, against: %i[

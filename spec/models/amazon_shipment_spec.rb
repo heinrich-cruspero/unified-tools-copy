@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'faker'
 
@@ -13,8 +15,8 @@ RSpec.describe AmazonShipment, type: :model do
     reconciled: Faker::Boolean.boolean
   }
 
-  context "AmazonShipment Test Cases" do
-    it "adds valid entry" do
+  context 'AmazonShipment Test Cases' do
+    it 'adds valid entry' do
       amazon_shipment_file = FactoryBot.create(:amazon_shipment_file)
       valid_attributes['amazon_shipment_file_id'] = amazon_shipment_file.id
       amazon_shipment = AmazonShipment.create! valid_attributes

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faker'
 
 FactoryBot.define do
@@ -6,4 +8,3 @@ FactoryBot.define do
     email { Faker::Internet.email }
   end
 end
-

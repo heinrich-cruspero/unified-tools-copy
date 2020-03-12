@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faker'
 
 FactoryBot.define do
@@ -12,4 +14,3 @@ FactoryBot.define do
     amazon_shipment_file_id { amazon_shipment_file.id }
   end
 end
-

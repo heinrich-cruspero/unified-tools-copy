@@ -2,14 +2,14 @@
 
 module AmazonShipmentCsvModule
   def process_csv(chunks, filename)
-    parsed_filename = filename.split("_")
+    parsed_filename = filename.split('_')
 
     amazon_shipment_file = AmazonShipmentFile.where(
       name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
-      date: "#{parsed_filename[1]}"
+      date: (parsed_filename[1]).to_s
     ).first_or_create(
       name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
-      date: "#{parsed_filename[1]}"
+      date: (parsed_filename[1]).to_s
     )
 
     # check amazon_shipment_file (filename and date should be unique) .create_or_first
@@ -24,15 +24,15 @@ module AmazonShipmentCsvModule
         isbn: data_hash[:isbn],
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
-        amazon_shipment_file_id: amazon_shipment_file.id,
+        amazon_shipment_file_id: amazon_shipment_file.id
       )
 
       indaba_sku = IndabaSku.where(
         sku: data_hash[:sku],
-        amazon_shipment_id:amazon_shipment.id
+        amazon_shipment_id: amazon_shipment.id
       ).first_or_create(
         sku: data_hash[:sku],
-        amazon_shipment_id:amazon_shipment.id,
+        amazon_shipment_id: amazon_shipment.id
       )
 
       book = Book.find_by(isbn: data_hash[:isbn])
@@ -70,7 +70,7 @@ module AmazonShipmentCsvModule
     deleted_skus = []
     unfound_skus = []
 
-    chunks.each.with_index do |data_hash, index|
+    chunks.each.with_index do |data_hash, _index|
       indaba_sku = IndabaSku.find_by(sku: data_hash[:sku])
 
       if indaba_sku.nil?
@@ -86,8 +86,6 @@ module AmazonShipmentCsvModule
       end
     end
 
-    return {deleted_skus: deleted_skus, unfound_skus: unfound_skus}
+    { deleted_skus: deleted_skus, unfound_skus: unfound_skus }
   end
 end
-
-

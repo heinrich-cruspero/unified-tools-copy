@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   resources :books, only: [:index]
 
   devise_for :users,
