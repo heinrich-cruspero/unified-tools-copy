@@ -27,7 +27,7 @@ import 'bootstrap';
 import 'bootstrap-table/dist/bootstrap-table';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import "@fortawesome/fontawesome-free/js/all";
-import './stylesheets/application.scss'
+import './../src/application.scss'
 
 
 global.$ = jQuery;
