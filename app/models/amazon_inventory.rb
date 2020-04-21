@@ -1,0 +1,2 @@
+class AmazonInventory < ApplicationRecord
+end
