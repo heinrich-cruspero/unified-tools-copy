@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 2020_04_21_161414) do
   enable_extension "plpgsql"
 
   create_table "amazon_inventories", force: :cascade do |t|
-    t.string "isbn"
-    t.string "condition"
-    t.string "fnsku"
-    t.integer "in_stock_supply_quantity"
-    t.integer "inbound_quantity"
+    t.string "isbn", null: false
+    t.string "condition", null: false
+    t.string "fnsku", null: false
+    t.integer "in_stock_supply_quantity", default: 0
+    t.integer "inbound_quantity", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["condition"], name: "index_amazon_inventories_on_condition"
