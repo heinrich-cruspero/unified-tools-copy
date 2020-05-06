@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-include AmazonShipmentCsvModule
 
 RSpec.describe AmazonShipmentCsvModule do
+  include AmazonShipmentCsvModule
+
   let(:header) { 'SKU' }
   let(:row2) { 'ABC-227-04929' }
   let(:rows) { [header, row2] }

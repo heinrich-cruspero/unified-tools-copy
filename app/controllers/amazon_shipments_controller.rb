@@ -54,7 +54,7 @@ class AmazonShipmentsController < ApplicationController
                     to_date = Date.parse dates[1]
 
                     IndabaSku.joins(amazon_shipment: :amazon_shipment_file).where('amazon_shipment_files.date in (?)', from_date..to_date)
-                            end
+                  end
 
     @indaba_skus = indaba_skus.paginate(page: params[:page], per_page: per_page)
   end

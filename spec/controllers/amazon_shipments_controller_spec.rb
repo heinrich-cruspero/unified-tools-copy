@@ -20,18 +20,6 @@ RSpec.describe AmazonShipmentsController, type: :controller do
     fulfillment_network_sku: Faker::Alphanumeric.alphanumeric
   }
 
-  invalid_attributes = {
-    isbn: Faker::Alphanumeric.alphanumeric(number: 10),
-    quantity_shipped: Faker::Number.number(digits: 1),
-    quantity_in_case: Faker::Number.number(digits: 1),
-    quantity_received: Faker::Number.number(digits: 1),
-    az_sku: Faker::Alphanumeric.alphanumeric(number: 10),
-    reconciled: Faker::Boolean.boolean,
-    condition: Faker::Alphanumeric.alphanumeric,
-    fulfillment_network_sku: Faker::Alphanumeric.alphanumeric
-
-  }
-
   describe 'GET #index' do
     it 'returns a found response' do
       amazon_shipment_file = FactoryBot.create(:amazon_shipment_file)
