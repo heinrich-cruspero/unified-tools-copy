@@ -11,7 +11,9 @@ RSpec.describe AmazonShipmentsController, type: :controller do
     quantity_in_case: Faker::Number.number(digits: 1),
     quantity_received: Faker::Number.number(digits: 1),
     az_sku: Faker::Alphanumeric.alphanumeric(number: 10),
-    reconciled: Faker::Boolean.boolean
+    reconciled: Faker::Boolean.boolean,
+    condition: Faker::Alphanumeric.alphanumeric,
+    fulfillment_network_sku: Faker::Alphanumeric.alphanumeric
   }
 
   invalid_attributes = {
@@ -20,13 +22,19 @@ RSpec.describe AmazonShipmentsController, type: :controller do
     quantity_in_case: Faker::Number.number(digits: 1),
     quantity_received: Faker::Number.number(digits: 1),
     az_sku: Faker::Alphanumeric.alphanumeric(number: 10),
-    reconciled: Faker::Boolean.boolean
+    reconciled: Faker::Boolean.boolean,
+    condition: Faker::Alphanumeric.alphanumeric,
+    fulfillment_network_sku: Faker::Alphanumeric.alphanumeric
+
   }
 
   describe 'GET #index' do
     it 'returns a found response' do
       amazon_shipment_file = FactoryBot.create(:amazon_shipment_file)
       valid_attributes['amazon_shipment_file_id'] = amazon_shipment_file.id
+      book = FactoryBot.create(:book)
+
+      valid_attributes['book_id'] = book.id
       AmazonShipment.create! valid_attributes
       get :index
       expect(response.code).to eq('302')

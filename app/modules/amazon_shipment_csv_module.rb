@@ -19,12 +19,19 @@ module AmazonShipmentCsvModule
         isbn: data_hash[:isbn],
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
-        amazon_shipment_file_id: amazon_shipment_file.id
+        amazon_shipment_file_id: amazon_shipment_file.id,
+        condition: Faker::Alphanumeric.alphanumeric,
+        az_sku: Faker::Alphanumeric.alphanumeric,
+        fulfillment_network_sku: Faker::Alphanumeric.alphanumeric
       ).first_or_create(
+        book: create(:book),
         isbn: data_hash[:isbn],
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
-        amazon_shipment_file_id: amazon_shipment_file.id
+        amazon_shipment_file_id: amazon_shipment_file.id,
+        condition: Faker::Alphanumeric.alphanumeric,
+        az_sku: Faker::Alphanumeric.alphanumeric,
+        fulfillment_network_sku: Faker::Alphanumeric.alphanumeric
       )
 
       indaba_sku = IndabaSku.where(

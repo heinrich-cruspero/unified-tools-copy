@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_20_105307) do
+ActiveRecord::Schema.define(version: 2020_02_12_084153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,260 +85,260 @@ ActiveRecord::Schema.define(version: 2020_02_20_105307) do
   end
 
   create_table "books", force: :cascade do |t|
-    t.string "author"
-    t.string "title"
-    t.string "edition"
-    t.string "copyright"
-    t.string "publisher"
-    t.string "binding"
-    t.string "edition_flag"
-    t.date "new_edition_date"
-    t.date "out_of_print_date"
-    t.string "grade"
-    t.string "trade_flag"
-    t.decimal "list_price", default: "0.0"
-    t.decimal "used_wholesale_price", default: "0.0"
-    t.decimal "new_wholesale_price", default: "0.0"
-    t.integer "copyright_year", default: 0
-    t.string "edition_status_code"
-    t.date "edition_status_date"
-    t.string "max_used_wholesale_price"
-    t.decimal "trade_in", default: "0.0"
-    t.integer "not_on_amazon", limit: 2, default: 0
     t.string "ean"
     t.string "isbn"
-    t.decimal "amazon_price", default: "0.0"
-    t.decimal "lowest_good_price", default: "0.0"
-    t.decimal "lowest_price", default: "0.0"
-    t.integer "sales_rank", default: 0
-    t.integer "total_offers", default: 0
-    t.decimal "amazon_rental", default: "0.0"
-    t.decimal "lowest_rental", default: "0.0"
-    t.decimal "fcb_price", default: "0.0"
-    t.string "image_url"
-    t.integer "not_in_guide", limit: 2, default: 0
-    t.date "publication_date"
-    t.decimal "fba_price", default: "0.0"
-    t.decimal "amazon_rental_average", default: "0.0"
-    t.decimal "lowest_rental_average", default: "0.0"
-    t.decimal "lowest_price_aug_average", default: "0.0"
-    t.integer "sales_rank_aug_average", default: 0
-    t.string "comments"
-    t.integer "fba_sellers", default: 0
-    t.decimal "lowest_price_jan_average", default: "0.0"
-    t.integer "sales_rank_jan_average", default: 0
-    t.decimal "lowest_rental_august_average", default: "0.0"
-    t.decimal "fba_august_average", default: "0.0"
-    t.integer "fba_sku_quantity", default: 0
-    t.integer "bz_j_sku_quantity", default: 0
-    t.integer "total_quantity_supplier", default: 0
-    t.decimal "pricing_custom_2", default: "0.0"
-    t.decimal "max_wholesale_price", default: "0.0"
-    t.date "pnep"
     t.string "oe_isbn"
+    t.string "author"
+    t.string "title"
+    t.string "publisher"
+    t.string "edition"
+    t.string "copyright"
+    t.string "grade"
+    t.string "binding"
+    t.string "edition_status_code"
+    t.string "edition_flag"
+    t.string "trade_flag"
+    t.string "max_used_wholesale_price"
+    t.string "comments"
     t.string "max_wholesale_comments"
-    t.integer "fbaq", default: 0
-    t.integer "inbq", default: 0
-    t.integer "orq", default: 0
-    t.integer "rental_history", limit: 2, default: 0
-    t.integer "total_quantity", default: 0
-    t.decimal "amazon_ca_listing", default: "0.0"
-    t.decimal "pricing_custom_15", default: "0.0"
-    t.decimal "average_turns", default: "0.0"
     t.string "qa_notes"
-    t.decimal "grid_lowest", default: "0.0"
-    t.integer "weekly_sqm", default: 0
-    t.decimal "weekly_spm", default: "0.0"
-    t.integer "monthly_sqm", default: 0
-    t.decimal "monthly_spm", default: "0.0"
-    t.integer "weekly_sqf", default: 0
-    t.decimal "weekly_spf", default: "0.0"
-    t.integer "weekly_rqf", default: 0
-    t.decimal "weekly_rpf", default: "0.0"
-    t.integer "monthly_sqf", default: 0
-    t.decimal "monthly_spf", default: "0.0"
-    t.integer "monthly_rqf", default: 0
-    t.decimal "monthly_rpf", default: "0.0"
-    t.decimal "main_price", default: "0.0"
-    t.integer "weekly_chegg_sale_quantity", default: 0
-    t.decimal "monthly_nw", default: "0.0"
-    t.decimal "monthly_w", default: "0.0"
     t.string "sku"
     t.string "store_name"
-    t.string "subject"
-    t.decimal "oe_life", default: "0.0"
-    t.decimal "c_life", default: "0.0"
-    t.decimal "r_life", default: "0.0"
-    t.decimal "life", default: "0.0"
-    t.decimal "max_all_wholesale_price", default: "0.0"
-    t.decimal "ninety_nw", default: "0.0"
-    t.decimal "ninety_w", default: "0.0"
-    t.decimal "one_eighty_nw", default: "0.0"
-    t.decimal "one_eighty_w", default: "0.0"
-    t.decimal "monthly_fba", default: "0.0"
-    t.decimal "ninety_low", default: "0.0"
-    t.decimal "one_eighty_low", default: "0.0"
-    t.decimal "ninety_rpf", default: "0.0"
-    t.decimal "ninety_spf", default: "0.0"
-    t.decimal "one_eighty_spf", default: "0.0"
-    t.decimal "one_eighty_rpf", default: "0.0"
-    t.decimal "email_price", default: "0.0"
-    t.decimal "weekly_low", default: "0.0"
-    t.decimal "monthly_low", default: "0.0"
-    t.decimal "ninety_fba", default: "0.0"
-    t.decimal "weekly_fba", default: "0.0"
-    t.integer "weekly_sales_rank", default: 0
-    t.decimal "one_eighty_fba", default: "0.0"
-    t.integer "orq_ninety", default: 0
-    t.integer "wantlist_qty", default: 0
-    t.integer "pending_order", default: 0
-    t.decimal "low_jan_avg", default: "0.0"
-    t.decimal "low_feb_avg", default: "0.0"
-    t.decimal "low_mar_avg", default: "0.0"
-    t.decimal "low_apr_avg", default: "0.0"
-    t.decimal "low_may_avg", default: "0.0"
-    t.decimal "low_jun_avg", default: "0.0"
-    t.decimal "low_jul_avg", default: "0.0"
-    t.decimal "low_aug_avg", default: "0.0"
-    t.decimal "low_sep_avg", default: "0.0"
-    t.decimal "low_oct_avg", default: "0.0"
-    t.decimal "low_nov_avg", default: "0.0"
-    t.decimal "low_dec_avg", default: "0.0"
-    t.decimal "fba_jan_avg", default: "0.0"
-    t.decimal "fba_feb_avg", default: "0.0"
-    t.decimal "fba_mar_avg", default: "0.0"
-    t.decimal "fba_apr_avg", default: "0.0"
-    t.decimal "fba_may_avg", default: "0.0"
-    t.decimal "fba_jun_avg", default: "0.0"
-    t.decimal "fba_jul_avg", default: "0.0"
-    t.decimal "fba_aug_avg", default: "0.0"
-    t.decimal "fba_sep_avg", default: "0.0"
-    t.decimal "fba_oct_avg", default: "0.0"
-    t.decimal "fba_nov_avg", default: "0.0"
-    t.decimal "fba_dec_avg", default: "0.0"
-    t.integer "sales_rank_jan_avg", default: 0
-    t.integer "sales_rank_feb_avg", default: 0
-    t.integer "sales_rank_mar_avg", default: 0
-    t.integer "sales_rank_apr_avg", default: 0
-    t.integer "sales_rank_may_avg", default: 0
-    t.integer "sales_rank_jun_avg", default: 0
-    t.integer "sales_rank_jul_avg", default: 0
-    t.integer "sales_rank_aug_avg", default: 0
-    t.integer "sales_rank_sep_avg", default: 0
-    t.integer "sales_rank_oct_avg", default: 0
-    t.integer "sales_rank_nov_avg", default: 0
-    t.integer "sales_rank_dec_avg", default: 0
-    t.decimal "weekly_tradein", default: "0.0"
-    t.decimal "follet_wh", default: "0.0"
-    t.decimal "nebraska_wh", default: "0.0"
-    t.decimal "texas_wh", default: "0.0"
-    t.decimal "main_min_price", default: "0.0"
-    t.decimal "main_fifth_price", default: "0.0"
-    t.decimal "ninety_accepted", default: "0.0"
-    t.decimal "highest_weekly_low", default: "0.0"
-    t.integer "orq_total", default: 0
-    t.integer "ninety_rqf", default: 0
-    t.integer "one_eighty_rqf", default: 0
-    t.decimal "pricing_custom_14", default: "0.0"
-    t.integer "yearly_main_sold_quantity", default: 0
-    t.integer "yearly_fbaz_sold_quantity", default: 0
-    t.integer "yearly_fbaz_rented_quantity", default: 0
-    t.decimal "highest_weekly_low_average_last_seven_thirty", default: "0.0"
-    t.integer "competitive_sellers", default: 0
-    t.integer "buyouts", default: 0
-    t.integer "returns", default: 0
-    t.decimal "buyouts_percentage", default: "0.0"
-    t.decimal "returns_percentage", default: "0.0"
-    t.decimal "third_fba", default: "0.0"
-    t.decimal "supplier_price", default: "0.0"
     t.string "fbaz_flag"
     t.string "main_flag"
-    t.decimal "fbaz_low", default: "0.0"
-    t.decimal "fba_seventh", default: "0.0"
-    t.decimal "peak_price", default: "0.0"
-    t.decimal "roi", default: "0.0"
-    t.integer "monthly_sold_quantity_direct", default: 0
-    t.decimal "monthly_amazon_trade_in", default: "0.0"
-    t.decimal "yearly_low", default: "0.0"
-    t.decimal "yearly_fba_low", default: "0.0"
-    t.decimal "nw_feb_avg", default: "0.0"
-    t.decimal "nw_mar_avg", default: "0.0"
-    t.decimal "nw_apr_avg", default: "0.0"
-    t.decimal "nw_may_avg", default: "0.0"
-    t.decimal "nw_jun_avg", default: "0.0"
-    t.decimal "nw_jul_avg", default: "0.0"
-    t.decimal "nw_aug_avg", default: "0.0"
-    t.decimal "nw_sep_avg", default: "0.0"
-    t.decimal "nw_oct_avg", default: "0.0"
-    t.decimal "nw_nov_avg", default: "0.0"
-    t.decimal "nw_dec_avg", default: "0.0"
-    t.integer "weekly_direct_qty_all", default: 0
-    t.decimal "weekly_direct_price_all", default: "0.0"
-    t.integer "weekly_direct_qty_main", default: 0
-    t.integer "monthly_direct_qty_all", default: 0
-    t.decimal "monthly_direct_price_all", default: "0.0"
-    t.decimal "monthly_direct_price_main", default: "0.0"
-    t.integer "yearly_sold_quantity_all", default: 0
-    t.integer "two_years_main_sold_quantity", default: 0
-    t.integer "two_years_fbaz_sold_quantity", default: 0
-    t.integer "two_years_fbaz_rented_quantity", default: 0
-    t.integer "two_years_sold_quantity_all", default: 0
-    t.integer "three_years_main_sold_quantity", default: 0
-    t.integer "three_years_fbaz_sold_quantity", default: 0
-    t.integer "three_years_fbaz_rented_quantity", default: 0
-    t.integer "three_years_sold_quantity_all", default: 0
-    t.integer "one_eighty_sale_quantity_all", default: 0
-    t.decimal "one_eighty_sale_price_all", default: "0.0"
-    t.integer "one_eighty_sale_quantity_main", default: 0
-    t.decimal "one_eighty_sale_price_main", default: "0.0"
-    t.integer "one_eighty_sale_quantity_fbaz", default: 0
-    t.integer "ninety_sold_quantity_all", default: 0
-    t.decimal "ninety_sold_price_all", default: "0.0"
-    t.integer "ninety_sold_quantity_main", default: 0
-    t.decimal "ninety_sold_price_main", default: "0.0"
-    t.integer "weekly_sale_quantity_all", default: 0
-    t.decimal "weekly_sale_price_all", default: "0.0"
-    t.integer "monthly_sold_quantity_all", default: 0
-    t.decimal "monthly_sold_price_all", default: "0.0"
-    t.decimal "book_scouter_1", default: "0.0"
-    t.decimal "book_scouter_2", default: "0.0"
-    t.decimal "book_scouter_3", default: "0.0"
-    t.decimal "book_scouter_4", default: "0.0"
-    t.decimal "book_scouter_5", default: "0.0"
-    t.decimal "book_scouter_6", default: "0.0"
-    t.decimal "book_scouter_7", default: "0.0"
-    t.decimal "amazon_ca_low", default: "0.0"
-    t.decimal "amazon_ca_new", default: "0.0"
-    t.decimal "amazon_uk_low", default: "0.0"
-    t.decimal "amazon_uk_new", default: "0.0"
-    t.decimal "jan_rush_in_stock", default: "0.0"
-    t.decimal "august_rush_in_stock", default: "0.0"
-    t.decimal "new_box", default: "0.0"
-    t.integer "main_quantity_in_inventory", default: 0
-    t.decimal "forty_percent_rental", default: "0.0"
-    t.integer "qa_sales_rank", default: 0
-    t.integer "qa_aug_rank", default: 0
-    t.integer "qa_jan_rank", default: 0
-    t.decimal "qa_low", default: "0.0"
-    t.decimal "qa_aug_low", default: "0.0"
-    t.decimal "qa_fba_low", default: "0.0"
-    t.decimal "qa_rent", default: "0.0"
-    t.decimal "pricing_custom_12", default: "0.0"
-    t.decimal "two_years_wh_max", default: "0.0"
-    t.decimal "two_years_wh_min", default: "0.0"
+    t.date "new_edition_date"
+    t.date "out_of_print_date"
+    t.date "edition_status_date"
+    t.date "publication_date"
+    t.date "pnep"
+    t.string "subject"
+    t.string "image_url"
     t.string "book_scouter_vendor_1"
+    t.decimal "book_scouter_1", default: "0.0", null: false
     t.string "book_scouter_vendor_2"
+    t.decimal "book_scouter_2", default: "0.0", null: false
     t.string "book_scouter_vendor_3"
+    t.decimal "book_scouter_3", default: "0.0", null: false
     t.string "book_scouter_vendor_4"
+    t.decimal "book_scouter_4", default: "0.0", null: false
     t.string "book_scouter_vendor_5"
+    t.decimal "book_scouter_5", default: "0.0", null: false
     t.string "book_scouter_vendor_6"
+    t.decimal "book_scouter_6", default: "0.0", null: false
     t.string "book_scouter_vendor_7"
+    t.decimal "book_scouter_7", default: "0.0", null: false
     t.datetime "scraped_date"
-    t.integer "valore_pending_order", default: 0
-    t.decimal "chegg_avg_price", default: "0.0"
-    t.decimal "one_year_highest_wholesale_price", default: "0.0"
-    t.integer "manual_add", default: 0
-    t.decimal "weight", default: "0.0"
+    t.boolean "rental_history", default: false, null: false
+    t.boolean "not_on_amazon", default: false, null: false
+    t.boolean "not_in_guide", default: false, null: false
+    t.decimal "list_price", default: "0.0", null: false
+    t.decimal "used_wholesale_price", default: "0.0", null: false
+    t.decimal "new_wholesale_price", default: "0.0", null: false
+    t.integer "copyright_year", default: 0, null: false
+    t.decimal "trade_in", default: "0.0", null: false
+    t.decimal "amazon_price", default: "0.0", null: false
+    t.decimal "lowest_good_price", default: "0.0", null: false
+    t.decimal "lowest_price", default: "0.0", null: false
+    t.integer "sales_rank", default: 0, null: false
+    t.integer "total_offers", default: 0, null: false
+    t.decimal "amazon_rental", default: "0.0", null: false
+    t.decimal "lowest_rental", default: "0.0", null: false
+    t.decimal "fcb_price", default: "0.0", null: false
+    t.decimal "fba_price", default: "0.0", null: false
+    t.decimal "amazon_rental_average", default: "0.0", null: false
+    t.decimal "lowest_rental_average", default: "0.0", null: false
+    t.decimal "lowest_price_aug_average", default: "0.0", null: false
+    t.integer "sales_rank_aug_average", default: 0, null: false
+    t.integer "fba_sellers", default: 0, null: false
+    t.decimal "lowest_price_jan_average", default: "0.0", null: false
+    t.integer "sales_rank_jan_average", default: 0, null: false
+    t.decimal "lowest_rental_august_average", default: "0.0", null: false
+    t.decimal "fba_august_average", default: "0.0", null: false
+    t.integer "fba_sku_quantity", default: 0, null: false
+    t.integer "bz_j_sku_quantity", default: 0, null: false
+    t.integer "total_quantity_supplier", default: 0, null: false
+    t.decimal "pricing_custom_2", default: "0.0", null: false
+    t.decimal "max_wholesale_price", default: "0.0", null: false
+    t.integer "fbaq", default: 0, null: false
+    t.integer "inbq", default: 0, null: false
+    t.integer "orq", default: 0, null: false
+    t.integer "total_quantity", default: 0, null: false
+    t.decimal "amazon_ca_listing", default: "0.0", null: false
+    t.decimal "pricing_custom_15", default: "0.0", null: false
+    t.decimal "average_turns", default: "0.0", null: false
+    t.decimal "grid_lowest", default: "0.0", null: false
+    t.integer "weekly_sqm", default: 0, null: false
+    t.decimal "weekly_spm", default: "0.0", null: false
+    t.integer "monthly_sqm", default: 0, null: false
+    t.decimal "monthly_spm", default: "0.0", null: false
+    t.integer "weekly_sqf", default: 0, null: false
+    t.decimal "weekly_spf", default: "0.0", null: false
+    t.integer "weekly_rqf", default: 0, null: false
+    t.decimal "weekly_rpf", default: "0.0", null: false
+    t.integer "monthly_sqf", default: 0, null: false
+    t.decimal "monthly_spf", default: "0.0", null: false
+    t.integer "monthly_rqf", default: 0, null: false
+    t.decimal "monthly_rpf", default: "0.0", null: false
+    t.decimal "main_price", default: "0.0", null: false
+    t.integer "weekly_chegg_sale_quantity", default: 0, null: false
+    t.decimal "monthly_nw", default: "0.0", null: false
+    t.decimal "monthly_w", default: "0.0", null: false
+    t.decimal "oe_life", default: "0.0", null: false
+    t.decimal "c_life", default: "0.0", null: false
+    t.decimal "r_life", default: "0.0", null: false
+    t.decimal "life", default: "0.0", null: false
+    t.decimal "max_all_wholesale_price", default: "0.0", null: false
+    t.decimal "ninety_nw", default: "0.0", null: false
+    t.decimal "ninety_w", default: "0.0", null: false
+    t.decimal "one_eighty_nw", default: "0.0", null: false
+    t.decimal "one_eighty_w", default: "0.0", null: false
+    t.decimal "monthly_fba", default: "0.0", null: false
+    t.decimal "ninety_low", default: "0.0", null: false
+    t.decimal "one_eighty_low", default: "0.0", null: false
+    t.decimal "ninety_rpf", default: "0.0", null: false
+    t.decimal "ninety_spf", default: "0.0", null: false
+    t.decimal "one_eighty_spf", default: "0.0", null: false
+    t.decimal "one_eighty_rpf", default: "0.0", null: false
+    t.decimal "email_price", default: "0.0", null: false
+    t.decimal "weekly_low", default: "0.0", null: false
+    t.decimal "monthly_low", default: "0.0", null: false
+    t.decimal "ninety_fba", default: "0.0", null: false
+    t.decimal "weekly_fba", default: "0.0", null: false
+    t.integer "weekly_sales_rank", default: 0, null: false
+    t.decimal "one_eighty_fba", default: "0.0", null: false
+    t.integer "orq_ninety", default: 0, null: false
+    t.integer "wantlist_qty", default: 0, null: false
+    t.integer "pending_order", default: 0, null: false
+    t.decimal "low_jan_avg", default: "0.0", null: false
+    t.decimal "low_feb_avg", default: "0.0", null: false
+    t.decimal "low_mar_avg", default: "0.0", null: false
+    t.decimal "low_apr_avg", default: "0.0", null: false
+    t.decimal "low_may_avg", default: "0.0", null: false
+    t.decimal "low_jun_avg", default: "0.0", null: false
+    t.decimal "low_jul_avg", default: "0.0", null: false
+    t.decimal "low_aug_avg", default: "0.0", null: false
+    t.decimal "low_sep_avg", default: "0.0", null: false
+    t.decimal "low_oct_avg", default: "0.0", null: false
+    t.decimal "low_nov_avg", default: "0.0", null: false
+    t.decimal "low_dec_avg", default: "0.0", null: false
+    t.decimal "fba_jan_avg", default: "0.0", null: false
+    t.decimal "fba_feb_avg", default: "0.0", null: false
+    t.decimal "fba_mar_avg", default: "0.0", null: false
+    t.decimal "fba_apr_avg", default: "0.0", null: false
+    t.decimal "fba_may_avg", default: "0.0", null: false
+    t.decimal "fba_jun_avg", default: "0.0", null: false
+    t.decimal "fba_jul_avg", default: "0.0", null: false
+    t.decimal "fba_aug_avg", default: "0.0", null: false
+    t.decimal "fba_sep_avg", default: "0.0", null: false
+    t.decimal "fba_oct_avg", default: "0.0", null: false
+    t.decimal "fba_nov_avg", default: "0.0", null: false
+    t.decimal "fba_dec_avg", default: "0.0", null: false
+    t.integer "sales_rank_jan_avg", default: 0, null: false
+    t.integer "sales_rank_feb_avg", default: 0, null: false
+    t.integer "sales_rank_mar_avg", default: 0, null: false
+    t.integer "sales_rank_apr_avg", default: 0, null: false
+    t.integer "sales_rank_may_avg", default: 0, null: false
+    t.integer "sales_rank_jun_avg", default: 0, null: false
+    t.integer "sales_rank_jul_avg", default: 0, null: false
+    t.integer "sales_rank_aug_avg", default: 0, null: false
+    t.integer "sales_rank_sep_avg", default: 0, null: false
+    t.integer "sales_rank_oct_avg", default: 0, null: false
+    t.integer "sales_rank_nov_avg", default: 0, null: false
+    t.integer "sales_rank_dec_avg", default: 0, null: false
+    t.decimal "weekly_tradein", default: "0.0", null: false
+    t.decimal "follet_wh", default: "0.0", null: false
+    t.decimal "nebraska_wh", default: "0.0", null: false
+    t.decimal "texas_wh", default: "0.0", null: false
+    t.decimal "main_min_price", default: "0.0", null: false
+    t.decimal "main_fifth_price", default: "0.0", null: false
+    t.decimal "ninety_accepted", default: "0.0", null: false
+    t.decimal "highest_weekly_low", default: "0.0", null: false
+    t.integer "orq_total", default: 0, null: false
+    t.integer "ninety_rqf", default: 0, null: false
+    t.integer "one_eighty_rqf", default: 0, null: false
+    t.decimal "pricing_custom_14", default: "0.0", null: false
+    t.integer "yearly_main_sold_quantity", default: 0, null: false
+    t.integer "yearly_fbaz_sold_quantity", default: 0, null: false
+    t.integer "yearly_fbaz_rented_quantity", default: 0, null: false
+    t.decimal "highest_weekly_low_average_last_seven_thirty", default: "0.0", null: false
+    t.integer "competitive_sellers", default: 0, null: false
+    t.integer "buyouts", default: 0, null: false
+    t.integer "returns", default: 0, null: false
+    t.decimal "buyouts_percentage", default: "0.0", null: false
+    t.decimal "returns_percentage", default: "0.0", null: false
+    t.decimal "third_fba", default: "0.0", null: false
+    t.decimal "supplier_price", default: "0.0", null: false
+    t.decimal "fbaz_low", default: "0.0", null: false
+    t.decimal "fba_seventh", default: "0.0", null: false
+    t.decimal "peak_price", default: "0.0", null: false
+    t.decimal "roi", default: "0.0", null: false
+    t.integer "monthly_sold_quantity_direct", default: 0, null: false
+    t.decimal "monthly_amazon_trade_in", default: "0.0", null: false
+    t.decimal "yearly_low", default: "0.0", null: false
+    t.decimal "yearly_fba_low", default: "0.0", null: false
+    t.decimal "nw_feb_avg", default: "0.0", null: false
+    t.decimal "nw_mar_avg", default: "0.0", null: false
+    t.decimal "nw_apr_avg", default: "0.0", null: false
+    t.decimal "nw_may_avg", default: "0.0", null: false
+    t.decimal "nw_jun_avg", default: "0.0", null: false
+    t.decimal "nw_jul_avg", default: "0.0", null: false
+    t.decimal "nw_aug_avg", default: "0.0", null: false
+    t.decimal "nw_sep_avg", default: "0.0", null: false
+    t.decimal "nw_oct_avg", default: "0.0", null: false
+    t.decimal "nw_nov_avg", default: "0.0", null: false
+    t.decimal "nw_dec_avg", default: "0.0", null: false
+    t.integer "weekly_direct_qty_all", default: 0, null: false
+    t.decimal "weekly_direct_price_all", default: "0.0", null: false
+    t.integer "weekly_direct_qty_main", default: 0, null: false
+    t.integer "monthly_direct_qty_all", default: 0, null: false
+    t.decimal "monthly_direct_price_all", default: "0.0", null: false
+    t.decimal "monthly_direct_price_main", default: "0.0", null: false
+    t.integer "yearly_sold_quantity_all", default: 0, null: false
+    t.integer "two_years_main_sold_quantity", default: 0, null: false
+    t.integer "two_years_fbaz_sold_quantity", default: 0, null: false
+    t.integer "two_years_fbaz_rented_quantity", default: 0, null: false
+    t.integer "two_years_sold_quantity_all", default: 0, null: false
+    t.integer "three_years_main_sold_quantity", default: 0, null: false
+    t.integer "three_years_fbaz_sold_quantity", default: 0, null: false
+    t.integer "three_years_fbaz_rented_quantity", default: 0, null: false
+    t.integer "three_years_sold_quantity_all", default: 0, null: false
+    t.integer "one_eighty_sale_quantity_all", default: 0, null: false
+    t.decimal "one_eighty_sale_price_all", default: "0.0", null: false
+    t.integer "one_eighty_sale_quantity_main", default: 0, null: false
+    t.decimal "one_eighty_sale_price_main", default: "0.0", null: false
+    t.integer "one_eighty_sale_quantity_fbaz", default: 0, null: false
+    t.integer "ninety_sold_quantity_all", default: 0, null: false
+    t.decimal "ninety_sold_price_all", default: "0.0", null: false
+    t.integer "ninety_sold_quantity_main", default: 0, null: false
+    t.decimal "ninety_sold_price_main", default: "0.0", null: false
+    t.integer "weekly_sale_quantity_all", default: 0, null: false
+    t.decimal "weekly_sale_price_all", default: "0.0", null: false
+    t.integer "monthly_sold_quantity_all", default: 0, null: false
+    t.decimal "monthly_sold_price_all", default: "0.0", null: false
+    t.decimal "amazon_ca_low", default: "0.0", null: false
+    t.decimal "amazon_ca_new", default: "0.0", null: false
+    t.decimal "amazon_uk_low", default: "0.0", null: false
+    t.decimal "amazon_uk_new", default: "0.0", null: false
+    t.decimal "jan_rush_in_stock", default: "0.0", null: false
+    t.decimal "august_rush_in_stock", default: "0.0", null: false
+    t.decimal "new_box", default: "0.0", null: false
+    t.integer "main_quantity_in_inventory", default: 0, null: false
+    t.decimal "forty_percent_rental", default: "0.0", null: false
+    t.integer "qa_sales_rank", default: 0, null: false
+    t.integer "qa_aug_rank", default: 0, null: false
+    t.integer "qa_jan_rank", default: 0, null: false
+    t.decimal "qa_low", default: "0.0", null: false
+    t.decimal "qa_aug_low", default: "0.0", null: false
+    t.decimal "qa_fba_low", default: "0.0", null: false
+    t.decimal "qa_rent", default: "0.0", null: false
+    t.decimal "pricing_custom_12", default: "0.0", null: false
+    t.decimal "two_years_wh_max", default: "0.0", null: false
+    t.decimal "two_years_wh_min", default: "0.0", null: false
+    t.integer "valore_pending_order", default: 0, null: false
+    t.decimal "chegg_avg_price", default: "0.0", null: false
+    t.decimal "one_year_highest_wholesale_price", default: "0.0", null: false
+    t.integer "manual_add", default: 0, null: false
+    t.decimal "weight", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
@@ -621,6 +621,15 @@ ActiveRecord::Schema.define(version: 2020_02_20_105307) do
     t.index ["amazon_shipment_id"], name: "index_indaba_skus_on_amazon_shipment_id"
     t.index ["quantity"], name: "index_indaba_skus_on_quantity"
     t.index ["sku"], name: "index_indaba_skus_on_sku"
+  end
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.bigint "searchable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
   end
 
   create_table "users", force: :cascade do |t|
