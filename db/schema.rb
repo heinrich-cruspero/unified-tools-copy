@@ -10,51 +10,78 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_05_144507) do
+ActiveRecord::Schema.define(version: 2020_02_20_105307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "amazon_shipment_files", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.date "date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.date "date"
+    t.index ["date"], name: "index_amazon_shipment_files_on_date"
+    t.index ["name"], name: "index_amazon_shipment_files_on_name"
   end
 
   create_table "amazon_shipments", force: :cascade do |t|
-    t.string "isbn"
-    t.string "shipment_id"
-    t.integer "quantity_shipped", default: 0
-    t.integer "quantity_in_case", default: 0
-    t.integer "quantity_received", default: 0
-    t.boolean "reconciled"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "condition"
-    t.string "az_sku"
-    t.bigint "amazon_shipment_file_id"
+    t.bigint "amazon_shipment_file_id", null: false
+    t.bigint "book_id", null: false
+    t.string "isbn", null: false
+    t.string "shipment_id", null: false
+    t.string "condition", null: false
+    t.string "az_sku", null: false
+    t.string "fulfillment_network_sku", null: false
+    t.integer "quantity_shipped", default: 0, null: false
+    t.integer "quantity_in_case", default: 0, null: false
+    t.integer "quantity_received", default: 0, null: false
+    t.boolean "reconciled", default: false, null: false
     t.string "edition_status_code"
     t.date "edition_status_date"
-    t.decimal "list_price"
-    t.decimal "used_wholesale_price"
-    t.decimal "nebraska_wh"
-    t.decimal "qa_aug_low"
-    t.decimal "lowest_good_price"
-    t.decimal "qa_low"
-    t.decimal "yearly_low"
-    t.decimal "qa_fba_low"
-    t.integer "monthly_sqf"
-    t.decimal "monthly_spf"
-    t.integer "monthly_rqf"
-    t.decimal "monthly_rpf"
-    t.decimal "one_year_highest_wholesale_price"
-    t.decimal "two_years_wh_max"
-    t.bigint "book_id"
-    t.string "fulfillment_network_sku"
+    t.decimal "list_price", default: "0.0", null: false
+    t.decimal "used_wholesale_price", default: "0.0", null: false
+    t.decimal "nebraska_wh", default: "0.0", null: false
+    t.decimal "one_year_highest_wholesale_price", default: "0.0", null: false
+    t.decimal "two_years_wh_max", default: "0.0", null: false
+    t.decimal "qa_low", default: "0.0", null: false
+    t.decimal "qa_aug_low", default: "0.0", null: false
+    t.decimal "qa_fba_low", default: "0.0", null: false
+    t.decimal "lowest_good_price", default: "0.0", null: false
+    t.decimal "yearly_low", default: "0.0", null: false
+    t.integer "monthly_sqf", default: 0, null: false
+    t.decimal "monthly_spf", default: "0.0", null: false
+    t.integer "monthly_rqf", default: 0, null: false
+    t.decimal "monthly_rpf", default: "0.0", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["amazon_shipment_file_id"], name: "index_amazon_shipments_on_amazon_shipment_file_id"
+    t.index ["az_sku"], name: "index_amazon_shipments_on_az_sku"
     t.index ["book_id"], name: "index_amazon_shipments_on_book_id"
+    t.index ["condition"], name: "index_amazon_shipments_on_condition"
+    t.index ["edition_status_code"], name: "index_amazon_shipments_on_edition_status_code"
+    t.index ["edition_status_date"], name: "index_amazon_shipments_on_edition_status_date"
+    t.index ["fulfillment_network_sku"], name: "index_amazon_shipments_on_fulfillment_network_sku"
     t.index ["isbn", "az_sku", "shipment_id"], name: "index_amazon_shipments_on_isbn_and_az_sku_and_shipment_id", unique: true
+    t.index ["isbn"], name: "index_amazon_shipments_on_isbn"
+    t.index ["list_price"], name: "index_amazon_shipments_on_list_price"
+    t.index ["lowest_good_price"], name: "index_amazon_shipments_on_lowest_good_price"
+    t.index ["monthly_rpf"], name: "index_amazon_shipments_on_monthly_rpf"
+    t.index ["monthly_rqf"], name: "index_amazon_shipments_on_monthly_rqf"
+    t.index ["monthly_spf"], name: "index_amazon_shipments_on_monthly_spf"
+    t.index ["monthly_sqf"], name: "index_amazon_shipments_on_monthly_sqf"
+    t.index ["nebraska_wh"], name: "index_amazon_shipments_on_nebraska_wh"
+    t.index ["one_year_highest_wholesale_price"], name: "index_amazon_shipments_on_one_year_highest_wholesale_price"
+    t.index ["qa_aug_low"], name: "index_amazon_shipments_on_qa_aug_low"
+    t.index ["qa_fba_low"], name: "index_amazon_shipments_on_qa_fba_low"
+    t.index ["qa_low"], name: "index_amazon_shipments_on_qa_low"
+    t.index ["quantity_in_case"], name: "index_amazon_shipments_on_quantity_in_case"
+    t.index ["quantity_received"], name: "index_amazon_shipments_on_quantity_received"
+    t.index ["quantity_shipped"], name: "index_amazon_shipments_on_quantity_shipped"
+    t.index ["reconciled"], name: "index_amazon_shipments_on_reconciled"
+    t.index ["shipment_id"], name: "index_amazon_shipments_on_shipment_id"
+    t.index ["two_years_wh_max"], name: "index_amazon_shipments_on_two_years_wh_max"
+    t.index ["used_wholesale_price"], name: "index_amazon_shipments_on_used_wholesale_price"
+    t.index ["yearly_low"], name: "index_amazon_shipments_on_yearly_low"
   end
 
   create_table "books", force: :cascade do |t|
@@ -69,44 +96,44 @@ ActiveRecord::Schema.define(version: 2020_03_05_144507) do
     t.date "out_of_print_date"
     t.string "grade"
     t.string "trade_flag"
-    t.decimal "list_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "used_wholesale_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "new_wholesale_price", precision: 20, scale: 2, default: "0.0"
+    t.decimal "list_price", default: "0.0"
+    t.decimal "used_wholesale_price", default: "0.0"
+    t.decimal "new_wholesale_price", default: "0.0"
     t.integer "copyright_year", default: 0
     t.string "edition_status_code"
     t.date "edition_status_date"
     t.string "max_used_wholesale_price"
-    t.decimal "trade_in", precision: 20, scale: 2, default: "0.0"
+    t.decimal "trade_in", default: "0.0"
     t.integer "not_on_amazon", limit: 2, default: 0
     t.string "ean"
     t.string "isbn"
-    t.decimal "amazon_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "lowest_good_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "lowest_price", precision: 20, scale: 2, default: "0.0"
+    t.decimal "amazon_price", default: "0.0"
+    t.decimal "lowest_good_price", default: "0.0"
+    t.decimal "lowest_price", default: "0.0"
     t.integer "sales_rank", default: 0
     t.integer "total_offers", default: 0
-    t.decimal "amazon_rental", precision: 20, scale: 2, default: "0.0"
-    t.decimal "lowest_rental", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fcb_price", precision: 20, scale: 2, default: "0.0"
+    t.decimal "amazon_rental", default: "0.0"
+    t.decimal "lowest_rental", default: "0.0"
+    t.decimal "fcb_price", default: "0.0"
     t.string "image_url"
     t.integer "not_in_guide", limit: 2, default: 0
     t.date "publication_date"
-    t.decimal "fba_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "amazon_rental_average", precision: 20, scale: 2, default: "0.0"
-    t.decimal "lowest_rental_average", precision: 20, scale: 2, default: "0.0"
-    t.decimal "lowest_price_aug_average", precision: 20, scale: 2, default: "0.0"
+    t.decimal "fba_price", default: "0.0"
+    t.decimal "amazon_rental_average", default: "0.0"
+    t.decimal "lowest_rental_average", default: "0.0"
+    t.decimal "lowest_price_aug_average", default: "0.0"
     t.integer "sales_rank_aug_average", default: 0
     t.string "comments"
     t.integer "fba_sellers", default: 0
-    t.decimal "lowest_price_jan_average", precision: 20, scale: 2, default: "0.0"
+    t.decimal "lowest_price_jan_average", default: "0.0"
     t.integer "sales_rank_jan_average", default: 0
-    t.decimal "lowest_rental_august_average", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_august_average", precision: 20, scale: 2, default: "0.0"
+    t.decimal "lowest_rental_august_average", default: "0.0"
+    t.decimal "fba_august_average", default: "0.0"
     t.integer "fba_sku_quantity", default: 0
     t.integer "bz_j_sku_quantity", default: 0
     t.integer "total_quantity_supplier", default: 0
-    t.decimal "pricing_custom_2", precision: 20, scale: 2, default: "0.0"
-    t.decimal "max_wholesale_price", precision: 20, scale: 2, default: "0.0"
+    t.decimal "pricing_custom_2", default: "0.0"
+    t.decimal "max_wholesale_price", default: "0.0"
     t.date "pnep"
     t.string "oe_isbn"
     t.string "max_wholesale_comments"
@@ -115,80 +142,80 @@ ActiveRecord::Schema.define(version: 2020_03_05_144507) do
     t.integer "orq", default: 0
     t.integer "rental_history", limit: 2, default: 0
     t.integer "total_quantity", default: 0
-    t.decimal "amazon_ca_listing", precision: 20, scale: 2, default: "0.0"
-    t.decimal "pricing_custom_15", precision: 20, scale: 2, default: "0.0"
-    t.decimal "average_turns", precision: 20, scale: 2, default: "0.0"
+    t.decimal "amazon_ca_listing", default: "0.0"
+    t.decimal "pricing_custom_15", default: "0.0"
+    t.decimal "average_turns", default: "0.0"
     t.string "qa_notes"
-    t.decimal "grid_lowest", precision: 20, scale: 2, default: "0.0"
+    t.decimal "grid_lowest", default: "0.0"
     t.integer "weekly_sqm", default: 0
-    t.decimal "weekly_spm", precision: 20, scale: 2, default: "0.0"
+    t.decimal "weekly_spm", default: "0.0"
     t.integer "monthly_sqm", default: 0
-    t.decimal "monthly_spm", precision: 20, scale: 2, default: "0.0"
+    t.decimal "monthly_spm", default: "0.0"
     t.integer "weekly_sqf", default: 0
-    t.decimal "weekly_spf", precision: 20, scale: 2, default: "0.0"
+    t.decimal "weekly_spf", default: "0.0"
     t.integer "weekly_rqf", default: 0
-    t.decimal "weekly_rpf", precision: 20, scale: 2, default: "0.0"
+    t.decimal "weekly_rpf", default: "0.0"
     t.integer "monthly_sqf", default: 0
-    t.decimal "monthly_spf", precision: 20, scale: 2, default: "0.0"
+    t.decimal "monthly_spf", default: "0.0"
     t.integer "monthly_rqf", default: 0
-    t.decimal "monthly_rpf", precision: 20, scale: 2, default: "0.0"
-    t.decimal "main_price", precision: 20, scale: 2, default: "0.0"
+    t.decimal "monthly_rpf", default: "0.0"
+    t.decimal "main_price", default: "0.0"
     t.integer "weekly_chegg_sale_quantity", default: 0
-    t.decimal "monthly_nw", precision: 20, scale: 2, default: "0.0"
-    t.decimal "monthly_w", precision: 20, scale: 2, default: "0.0"
+    t.decimal "monthly_nw", default: "0.0"
+    t.decimal "monthly_w", default: "0.0"
     t.string "sku"
     t.string "store_name"
     t.string "subject"
-    t.decimal "oe_life", precision: 20, scale: 2, default: "0.0"
-    t.decimal "c_life", precision: 20, scale: 2, default: "0.0"
-    t.decimal "r_life", precision: 20, scale: 2, default: "0.0"
-    t.decimal "life", precision: 20, scale: 2, default: "0.0"
-    t.decimal "max_all_wholesale_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "ninety_nw", precision: 20, scale: 2, default: "0.0"
-    t.decimal "ninety_w", precision: 20, scale: 2, default: "0.0"
-    t.decimal "one_eighty_nw", precision: 20, scale: 2, default: "0.0"
-    t.decimal "one_eighty_w", precision: 20, scale: 2, default: "0.0"
-    t.decimal "monthly_fba", precision: 20, scale: 2, default: "0.0"
-    t.decimal "ninety_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "one_eighty_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "ninety_rpf", precision: 20, scale: 2, default: "0.0"
-    t.decimal "ninety_spf", precision: 20, scale: 2, default: "0.0"
-    t.decimal "one_eighty_spf", precision: 20, scale: 2, default: "0.0"
-    t.decimal "one_eighty_rpf", precision: 20, scale: 2, default: "0.0"
-    t.decimal "email_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "weekly_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "monthly_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "ninety_fba", precision: 20, scale: 2, default: "0.0"
-    t.decimal "weekly_fba", precision: 20, scale: 2, default: "0.0"
+    t.decimal "oe_life", default: "0.0"
+    t.decimal "c_life", default: "0.0"
+    t.decimal "r_life", default: "0.0"
+    t.decimal "life", default: "0.0"
+    t.decimal "max_all_wholesale_price", default: "0.0"
+    t.decimal "ninety_nw", default: "0.0"
+    t.decimal "ninety_w", default: "0.0"
+    t.decimal "one_eighty_nw", default: "0.0"
+    t.decimal "one_eighty_w", default: "0.0"
+    t.decimal "monthly_fba", default: "0.0"
+    t.decimal "ninety_low", default: "0.0"
+    t.decimal "one_eighty_low", default: "0.0"
+    t.decimal "ninety_rpf", default: "0.0"
+    t.decimal "ninety_spf", default: "0.0"
+    t.decimal "one_eighty_spf", default: "0.0"
+    t.decimal "one_eighty_rpf", default: "0.0"
+    t.decimal "email_price", default: "0.0"
+    t.decimal "weekly_low", default: "0.0"
+    t.decimal "monthly_low", default: "0.0"
+    t.decimal "ninety_fba", default: "0.0"
+    t.decimal "weekly_fba", default: "0.0"
     t.integer "weekly_sales_rank", default: 0
-    t.decimal "one_eighty_fba", precision: 20, scale: 2, default: "0.0"
+    t.decimal "one_eighty_fba", default: "0.0"
     t.integer "orq_ninety", default: 0
     t.integer "wantlist_qty", default: 0
     t.integer "pending_order", default: 0
-    t.decimal "low_jan_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_feb_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_mar_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_apr_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_may_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_jun_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_jul_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_aug_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_sep_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_oct_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_nov_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "low_dec_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_jan_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_feb_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_mar_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_apr_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_may_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_jun_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_jul_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_aug_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_sep_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_oct_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_nov_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_dec_avg", precision: 20, scale: 2, default: "0.0"
+    t.decimal "low_jan_avg", default: "0.0"
+    t.decimal "low_feb_avg", default: "0.0"
+    t.decimal "low_mar_avg", default: "0.0"
+    t.decimal "low_apr_avg", default: "0.0"
+    t.decimal "low_may_avg", default: "0.0"
+    t.decimal "low_jun_avg", default: "0.0"
+    t.decimal "low_jul_avg", default: "0.0"
+    t.decimal "low_aug_avg", default: "0.0"
+    t.decimal "low_sep_avg", default: "0.0"
+    t.decimal "low_oct_avg", default: "0.0"
+    t.decimal "low_nov_avg", default: "0.0"
+    t.decimal "low_dec_avg", default: "0.0"
+    t.decimal "fba_jan_avg", default: "0.0"
+    t.decimal "fba_feb_avg", default: "0.0"
+    t.decimal "fba_mar_avg", default: "0.0"
+    t.decimal "fba_apr_avg", default: "0.0"
+    t.decimal "fba_may_avg", default: "0.0"
+    t.decimal "fba_jun_avg", default: "0.0"
+    t.decimal "fba_jul_avg", default: "0.0"
+    t.decimal "fba_aug_avg", default: "0.0"
+    t.decimal "fba_sep_avg", default: "0.0"
+    t.decimal "fba_oct_avg", default: "0.0"
+    t.decimal "fba_nov_avg", default: "0.0"
+    t.decimal "fba_dec_avg", default: "0.0"
     t.integer "sales_rank_jan_avg", default: 0
     t.integer "sales_rank_feb_avg", default: 0
     t.integer "sales_rank_mar_avg", default: 0
@@ -201,56 +228,56 @@ ActiveRecord::Schema.define(version: 2020_03_05_144507) do
     t.integer "sales_rank_oct_avg", default: 0
     t.integer "sales_rank_nov_avg", default: 0
     t.integer "sales_rank_dec_avg", default: 0
-    t.decimal "weekly_tradein", precision: 20, scale: 2, default: "0.0"
-    t.decimal "follet_wh", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nebraska_wh", precision: 20, scale: 2, default: "0.0"
-    t.decimal "texas_wh", precision: 20, scale: 2, default: "0.0"
-    t.decimal "main_min_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "main_fifth_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "ninety_accepted", precision: 20, scale: 2, default: "0.0"
-    t.decimal "highest_weekly_low", precision: 20, scale: 2, default: "0.0"
+    t.decimal "weekly_tradein", default: "0.0"
+    t.decimal "follet_wh", default: "0.0"
+    t.decimal "nebraska_wh", default: "0.0"
+    t.decimal "texas_wh", default: "0.0"
+    t.decimal "main_min_price", default: "0.0"
+    t.decimal "main_fifth_price", default: "0.0"
+    t.decimal "ninety_accepted", default: "0.0"
+    t.decimal "highest_weekly_low", default: "0.0"
     t.integer "orq_total", default: 0
     t.integer "ninety_rqf", default: 0
     t.integer "one_eighty_rqf", default: 0
-    t.decimal "pricing_custom_14", precision: 20, scale: 2, default: "0.0"
+    t.decimal "pricing_custom_14", default: "0.0"
     t.integer "yearly_main_sold_quantity", default: 0
     t.integer "yearly_fbaz_sold_quantity", default: 0
     t.integer "yearly_fbaz_rented_quantity", default: 0
-    t.decimal "highest_weekly_low_average_last_seven_thirty", precision: 20, scale: 2, default: "0.0"
+    t.decimal "highest_weekly_low_average_last_seven_thirty", default: "0.0"
     t.integer "competitive_sellers", default: 0
     t.integer "buyouts", default: 0
     t.integer "returns", default: 0
-    t.decimal "buyouts_percentage", precision: 20, scale: 2, default: "0.0"
-    t.decimal "returns_percentage", precision: 20, scale: 2, default: "0.0"
-    t.decimal "third_fba", precision: 20, scale: 2, default: "0.0"
-    t.decimal "supplier_price", precision: 20, scale: 2, default: "0.0"
+    t.decimal "buyouts_percentage", default: "0.0"
+    t.decimal "returns_percentage", default: "0.0"
+    t.decimal "third_fba", default: "0.0"
+    t.decimal "supplier_price", default: "0.0"
     t.string "fbaz_flag"
     t.string "main_flag"
-    t.decimal "fbaz_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "fba_seventh", precision: 20, scale: 2, default: "0.0"
-    t.decimal "peak_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "roi", precision: 20, scale: 2, default: "0.0"
+    t.decimal "fbaz_low", default: "0.0"
+    t.decimal "fba_seventh", default: "0.0"
+    t.decimal "peak_price", default: "0.0"
+    t.decimal "roi", default: "0.0"
     t.integer "monthly_sold_quantity_direct", default: 0
-    t.decimal "monthly_amazon_trade_in", precision: 20, scale: 2, default: "0.0"
-    t.decimal "yearly_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "yearly_fba_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_feb_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_mar_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_apr_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_may_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_jun_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_jul_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_aug_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_sep_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_oct_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_nov_avg", precision: 20, scale: 2, default: "0.0"
-    t.decimal "nw_dec_avg", precision: 20, scale: 2, default: "0.0"
+    t.decimal "monthly_amazon_trade_in", default: "0.0"
+    t.decimal "yearly_low", default: "0.0"
+    t.decimal "yearly_fba_low", default: "0.0"
+    t.decimal "nw_feb_avg", default: "0.0"
+    t.decimal "nw_mar_avg", default: "0.0"
+    t.decimal "nw_apr_avg", default: "0.0"
+    t.decimal "nw_may_avg", default: "0.0"
+    t.decimal "nw_jun_avg", default: "0.0"
+    t.decimal "nw_jul_avg", default: "0.0"
+    t.decimal "nw_aug_avg", default: "0.0"
+    t.decimal "nw_sep_avg", default: "0.0"
+    t.decimal "nw_oct_avg", default: "0.0"
+    t.decimal "nw_nov_avg", default: "0.0"
+    t.decimal "nw_dec_avg", default: "0.0"
     t.integer "weekly_direct_qty_all", default: 0
-    t.decimal "weekly_direct_price_all", precision: 20, scale: 2, default: "0.0"
+    t.decimal "weekly_direct_price_all", default: "0.0"
     t.integer "weekly_direct_qty_main", default: 0
     t.integer "monthly_direct_qty_all", default: 0
-    t.decimal "monthly_direct_price_all", precision: 20, scale: 2, default: "0.0"
-    t.decimal "monthly_direct_price_main", precision: 20, scale: 2, default: "0.0"
+    t.decimal "monthly_direct_price_all", default: "0.0"
+    t.decimal "monthly_direct_price_main", default: "0.0"
     t.integer "yearly_sold_quantity_all", default: 0
     t.integer "two_years_main_sold_quantity", default: 0
     t.integer "two_years_fbaz_sold_quantity", default: 0
@@ -261,44 +288,44 @@ ActiveRecord::Schema.define(version: 2020_03_05_144507) do
     t.integer "three_years_fbaz_rented_quantity", default: 0
     t.integer "three_years_sold_quantity_all", default: 0
     t.integer "one_eighty_sale_quantity_all", default: 0
-    t.decimal "one_eighty_sale_price_all", precision: 20, scale: 2, default: "0.0"
+    t.decimal "one_eighty_sale_price_all", default: "0.0"
     t.integer "one_eighty_sale_quantity_main", default: 0
-    t.decimal "one_eighty_sale_price_main", precision: 20, scale: 2, default: "0.0"
+    t.decimal "one_eighty_sale_price_main", default: "0.0"
     t.integer "one_eighty_sale_quantity_fbaz", default: 0
     t.integer "ninety_sold_quantity_all", default: 0
-    t.decimal "ninety_sold_price_all", precision: 20, scale: 2, default: "0.0"
+    t.decimal "ninety_sold_price_all", default: "0.0"
     t.integer "ninety_sold_quantity_main", default: 0
-    t.decimal "ninety_sold_price_main", precision: 20, scale: 2, default: "0.0"
+    t.decimal "ninety_sold_price_main", default: "0.0"
     t.integer "weekly_sale_quantity_all", default: 0
-    t.decimal "weekly_sale_price_all", precision: 20, scale: 2, default: "0.0"
+    t.decimal "weekly_sale_price_all", default: "0.0"
     t.integer "monthly_sold_quantity_all", default: 0
-    t.decimal "monthly_sold_price_all", precision: 20, scale: 2, default: "0.0"
-    t.decimal "book_scouter_1", precision: 20, scale: 2, default: "0.0"
-    t.decimal "book_scouter_2", precision: 20, scale: 2, default: "0.0"
-    t.decimal "book_scouter_3", precision: 20, scale: 2, default: "0.0"
-    t.decimal "book_scouter_4", precision: 20, scale: 2, default: "0.0"
-    t.decimal "book_scouter_5", precision: 20, scale: 2, default: "0.0"
-    t.decimal "book_scouter_6", precision: 20, scale: 2, default: "0.0"
-    t.decimal "book_scouter_7", precision: 20, scale: 2, default: "0.0"
-    t.decimal "amazon_ca_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "amazon_ca_new", precision: 20, scale: 2, default: "0.0"
-    t.decimal "amazon_uk_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "amazon_uk_new", precision: 20, scale: 2, default: "0.0"
-    t.decimal "jan_rush_in_stock", precision: 20, scale: 2, default: "0.0"
-    t.decimal "august_rush_in_stock", precision: 20, scale: 2, default: "0.0"
-    t.decimal "new_box", precision: 20, scale: 2, default: "0.0"
+    t.decimal "monthly_sold_price_all", default: "0.0"
+    t.decimal "book_scouter_1", default: "0.0"
+    t.decimal "book_scouter_2", default: "0.0"
+    t.decimal "book_scouter_3", default: "0.0"
+    t.decimal "book_scouter_4", default: "0.0"
+    t.decimal "book_scouter_5", default: "0.0"
+    t.decimal "book_scouter_6", default: "0.0"
+    t.decimal "book_scouter_7", default: "0.0"
+    t.decimal "amazon_ca_low", default: "0.0"
+    t.decimal "amazon_ca_new", default: "0.0"
+    t.decimal "amazon_uk_low", default: "0.0"
+    t.decimal "amazon_uk_new", default: "0.0"
+    t.decimal "jan_rush_in_stock", default: "0.0"
+    t.decimal "august_rush_in_stock", default: "0.0"
+    t.decimal "new_box", default: "0.0"
     t.integer "main_quantity_in_inventory", default: 0
-    t.decimal "forty_percent_rental", precision: 20, scale: 2, default: "0.0"
+    t.decimal "forty_percent_rental", default: "0.0"
     t.integer "qa_sales_rank", default: 0
     t.integer "qa_aug_rank", default: 0
     t.integer "qa_jan_rank", default: 0
-    t.decimal "qa_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "qa_aug_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "qa_fba_low", precision: 20, scale: 2, default: "0.0"
-    t.decimal "qa_rent", precision: 20, scale: 2, default: "0.0"
-    t.decimal "pricing_custom_12", precision: 20, scale: 2, default: "0.0"
-    t.decimal "two_years_wh_max", precision: 20, scale: 2, default: "0.0"
-    t.decimal "two_years_wh_min", precision: 20, scale: 2, default: "0.0"
+    t.decimal "qa_low", default: "0.0"
+    t.decimal "qa_aug_low", default: "0.0"
+    t.decimal "qa_fba_low", default: "0.0"
+    t.decimal "qa_rent", default: "0.0"
+    t.decimal "pricing_custom_12", default: "0.0"
+    t.decimal "two_years_wh_max", default: "0.0"
+    t.decimal "two_years_wh_min", default: "0.0"
     t.string "book_scouter_vendor_1"
     t.string "book_scouter_vendor_2"
     t.string "book_scouter_vendor_3"
@@ -308,12 +335,12 @@ ActiveRecord::Schema.define(version: 2020_03_05_144507) do
     t.string "book_scouter_vendor_7"
     t.datetime "scraped_date"
     t.integer "valore_pending_order", default: 0
-    t.decimal "chegg_avg_price", precision: 20, scale: 2, default: "0.0"
-    t.decimal "one_year_highest_wholesale_price", precision: 20, scale: 2, default: "0.0"
+    t.decimal "chegg_avg_price", default: "0.0"
+    t.decimal "one_year_highest_wholesale_price", default: "0.0"
     t.integer "manual_add", default: 0
+    t.decimal "weight", default: "0.0"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "weight", precision: 20, scale: 2, default: "0.0"
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
@@ -561,6 +588,7 @@ ActiveRecord::Schema.define(version: 2020_03_05_144507) do
     t.index ["weekly_sqf"], name: "index_books_on_weekly_sqf"
     t.index ["weekly_sqm"], name: "index_books_on_weekly_sqm"
     t.index ["weekly_tradein"], name: "index_books_on_weekly_tradein"
+    t.index ["weight"], name: "index_books_on_weight"
     t.index ["yearly_fba_low"], name: "index_books_on_yearly_fba_low"
     t.index ["yearly_fbaz_rented_quantity"], name: "index_books_on_yearly_fbaz_rented_quantity"
     t.index ["yearly_fbaz_sold_quantity"], name: "index_books_on_yearly_fbaz_sold_quantity"
@@ -585,34 +613,17 @@ ActiveRecord::Schema.define(version: 2020_03_05_144507) do
   end
 
   create_table "indaba_skus", force: :cascade do |t|
-    t.string "sku"
+    t.bigint "amazon_shipment_id", null: false
+    t.string "sku", null: false
+    t.integer "quantity", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "amazon_shipment_id"
-    t.integer "quantity"
     t.index ["amazon_shipment_id"], name: "index_indaba_skus_on_amazon_shipment_id"
-  end
-
-  create_table "pg_search_documents", force: :cascade do |t|
-    t.text "content"
-    t.string "searchable_type"
-    t.bigint "searchable_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
-  end
-
-  create_table "sessions", force: :cascade do |t|
-    t.string "session_id", null: false
-    t.text "data"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
-    t.index ["updated_at"], name: "index_sessions_on_updated_at"
+    t.index ["quantity"], name: "index_indaba_skus_on_quantity"
+    t.index ["sku"], name: "index_indaba_skus_on_sku"
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "role", default: 0, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.integer "sign_in_count", default: 0, null: false
@@ -620,13 +631,11 @@ ActiveRecord::Schema.define(version: 2020_03_05_144507) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
+    t.integer "role", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role"], name: "index_users_on_role"
   end
 
-  add_foreign_key "amazon_shipments", "amazon_shipment_files"
-  add_foreign_key "amazon_shipments", "books"
-  add_foreign_key "indaba_skus", "amazon_shipments"
 end
