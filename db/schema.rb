@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 2020_02_12_084153) do
     t.boolean "rental_history", default: false, null: false
     t.boolean "not_on_amazon", default: false, null: false
     t.boolean "not_in_guide", default: false, null: false
+    t.boolean "manual_add", default: false, null: false
     t.decimal "list_price", default: "0.0", null: false
     t.decimal "used_wholesale_price", default: "0.0", null: false
     t.decimal "new_wholesale_price", default: "0.0", null: false
@@ -337,7 +338,6 @@ ActiveRecord::Schema.define(version: 2020_02_12_084153) do
     t.integer "valore_pending_order", default: 0, null: false
     t.decimal "chegg_avg_price", default: "0.0", null: false
     t.decimal "one_year_highest_wholesale_price", default: "0.0", null: false
-    t.integer "manual_add", default: 0, null: false
     t.decimal "weight", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -56,6 +56,7 @@ class CreateBooks < ActiveRecord::Migration[6.0]
       t.boolean :rental_history, index: true, null: false, default: false
       t.boolean :not_on_amazon, index: true, null: false, default: false
       t.boolean :not_in_guide, index: true, null: false, default: false
+      t.boolean :manual_add, index: true, null: false, default: false
 
       t.decimal :list_price, index: true, null: false, default: 0.00
       t.decimal :used_wholesale_price, index: true, null: false, default: 0.00
@@ -263,7 +264,6 @@ class CreateBooks < ActiveRecord::Migration[6.0]
       t.integer :valore_pending_order, index: true, null: false, default: 0
       t.decimal :chegg_avg_price, index: true, null: false, default: 0.00
       t.decimal :one_year_highest_wholesale_price, index: true, null: false, default: 0.00
-      t.integer :manual_add, index: true, null: false, default: 0
       t.decimal :weight, index: true, null: false, default: 0.00
 
       t.timestamps
