@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_02_12_084153) do
 
   create_table "amazon_shipments", force: :cascade do |t|
     t.bigint "amazon_shipment_file_id", null: false
-    t.bigint "book_id", null: false
+    t.bigint "book_id"
     t.string "isbn", null: false
     t.string "shipment_id", null: false
     t.string "condition", null: false

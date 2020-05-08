@@ -2,7 +2,7 @@ class CreateAmazonShipments < ActiveRecord::Migration[6.0]
   def change
     create_table :amazon_shipments do |t|
       t.references :amazon_shipment_file, null: false
-      t.references :book, null: false
+      t.references :book
 
       t.string :isbn, index: true, null: false
       t.string :shipment_id, index: true, null: false
