@@ -1,5 +1,5 @@
 # gets the a base ruby docker image
-FROM ruby:2.6.5
+FROM ruby:2.6.6
 
 # app home directory
 ENV APP_HOME /unified-tools
@@ -25,7 +25,7 @@ COPY yarn.lock $APP_HOME/
 COPY package.json $APP_HOME/
 
 # Run bundle & yarn install to install gems inside the gemfile
-RUN gem install bundler:2.0.2
+RUN gem install bundler:2.1.4
 RUN bundle install --without development test
 
 # Copy the whole app
