@@ -15,12 +15,14 @@ module AmazonShipmentCsvModule
         isbn: data_hash[:isbn],
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
-        amazon_shipment_file_id: amazon_shipment_file.id
+        amazon_shipment_file_id: amazon_shipment_file.id,
+        condition: data_hash[:condition]
       ).first_or_create(
         isbn: data_hash[:isbn],
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
-        amazon_shipment_file_id: amazon_shipment_file.id
+        amazon_shipment_file_id: amazon_shipment_file.id,
+        condition: data_hash[:condition]
       )
       indaba_sku = IndabaSku.where(sku: data_hash[:sku],
                                    amazon_shipment_id: az_shipment.id).first_or_create(
@@ -51,7 +53,6 @@ module AmazonShipmentCsvModule
       indaba_sku.quantity = 1
       indaba_sku.save
       az_shipment.quantity_shipped = az_shipment.indaba_skus.all.sum('quantity')
-      az_shipment.condition = data_hash[:condition]
       az_shipment.save
     end
   end
