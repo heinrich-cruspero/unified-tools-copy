@@ -18,6 +18,7 @@ end
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'support/factory_bot'
+require 'support/pundit_matcher'
 require 'faker'
 require 'devise'
 

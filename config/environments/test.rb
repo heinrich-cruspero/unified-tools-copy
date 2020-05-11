@@ -85,6 +85,4 @@ Rails.application.configure do
       expires_at: DateTime.now
     }
   )
-
-  Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 end
