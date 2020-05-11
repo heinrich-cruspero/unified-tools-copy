@@ -10,6 +10,26 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="wrapper">
+      <div class="spinner" id="spinner"></div>
+      <div>
+        <% if user_signed_in? %>
+          <%= render 'shared/sidebar' %>
+        <% end %>
+        <div id="content" class="active">
+          <% if user_signed_in? %>
+            <%= render 'shared/nav' %>
+          <% end %>
+          <div class="main-content">
+            <% flash.each do |key, value| %>
+              <div class="<%= flash_class(key) %>">
+                <%= value %>
+              </div>
+            <% end %>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
