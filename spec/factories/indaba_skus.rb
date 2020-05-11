@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  amazon_shipment = FactoryBot.create(:amazon_shipment)
   factory :indaba_sku do
     sku { Faker::Alphanumeric.alphanumeric(number: 10) }
-    amazon_shipment_id { amazon_shipment.id }
+    amazon_shipment { create(:amazon_shipment) }
     quantity { 1 }
   end
 end

@@ -1,15 +1,31 @@
 AllCops:
   TargetRubyVersion: 2.6
   Exclude:
-    - 'db/**/*'
-    - bin/rails
-    - bin/rake
-    - bin/spring
-    - bin/bundle
-    - tmp/**/*
-    - spec/spec_helper.rb
+    - bin/*
+    - db/migrate/*
+    - db/schema.rb
     - node_modules/**/*
+    - tmp/**/*
+    - spec/rails_helper.rb
+    - spec/spec_helper.rb
+    - Rakefile
+    - config.ru
 
 Metrics/LineLength:
-  Max: 80
+  Max: 100
   IgnoredPatterns: ['(\A|\s)#']
+
+Metrics/BlockLength:
+  Max: 50
+
+Metrics/AbcSize:
+  Max: 60
+
+Metrics/MethodLength:
+  Max: 50
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
