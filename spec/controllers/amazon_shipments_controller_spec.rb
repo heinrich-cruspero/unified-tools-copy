@@ -4,6 +4,10 @@ require 'rails_helper'
 require 'faker'
 
 RSpec.describe AmazonShipmentsController, type: :controller do
+  before(:each) do
+    sign_in create(:user)
+  end
+
   valid_attributes = {
     isbn: Faker::Alphanumeric.alphanumeric(number: 10),
     shipment_id: Faker::Alphanumeric.alphanumeric(number: 10),
