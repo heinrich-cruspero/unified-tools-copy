@@ -17,10 +17,14 @@ gem 'webpacker', '~> 4.0'
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', require: false
   gem 'faker'
   gem 'rspec-rails'
   gem 'simplecov', require: false
+end
+
+group :test do
+  gem 'factory_bot_rails'
 end
 
 group :development do

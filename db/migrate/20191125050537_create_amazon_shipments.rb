@@ -8,7 +8,7 @@ class CreateAmazonShipments < ActiveRecord::Migration[6.0]
       t.string :shipment_id, index: true, null: false
       t.string :condition, index: true, null: false
       t.string :az_sku, index: true, null: false
-      t.string :fulfillment_network_sku, index: true, null: false
+      t.string :fulfillment_network_sku, index: true, null: true
 
       t.integer :quantity_shipped, index: true, null: false, default: 0
       t.integer :quantity_in_case, index: true, null: false, default: 0
