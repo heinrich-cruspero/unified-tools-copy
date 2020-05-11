@@ -20,7 +20,7 @@ RSpec.describe AmazonShipmentCsvModule do
 
   it 'tests process method' do
     processed = SmarterCSV.process(file_path)
-    process_csv_deletion processed
+    process_delete processed
   end
 
   it 'tests process method' do
@@ -33,7 +33,7 @@ RSpec.describe AmazonShipmentCsvModule do
     )
 
     processed = SmarterCSV.process(file_path)
-    process_csv_deletion processed
+    process_delete processed
   end
 
   after(:each) { File.delete(file_path) }

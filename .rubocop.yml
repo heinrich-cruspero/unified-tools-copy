@@ -19,5 +19,13 @@ Metrics/BlockLength:
   Max: 50
 
 Metrics/AbcSize:
-  Max: 30
-  IgnoredPatterns: ['(\A|\s)#']
+  Max: 60
+
+Metrics/MethodLength:
+  Max: 50
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10

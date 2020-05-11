@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+##
 class ProcessCsvJob < ApplicationJob
   include AmazonShipmentCsvModule
   queue_as :delayed_job
