@@ -3,7 +3,6 @@
 require 'faker'
 
 FactoryBot.define do
-  amazon_shipment_file = FactoryBot.create(:amazon_shipment_file)
   factory :amazon_shipment do
     amazon_shipment_file { create(:amazon_shipment_file) }
     book { create(:book) }

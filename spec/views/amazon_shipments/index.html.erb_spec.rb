@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'amazon_shipments/index', type: :view do
   before(:each) do
-    amazon_shipment_file = create(:amazon_shipment_file)
     @amazon_shipments = WillPaginate::Collection.new(4, 10, 0)
     2.times do |_index|
       @amazon_shipments << create(:amazon_shipment)
@@ -25,8 +24,8 @@ end
 
 RSpec.describe 'Amazon Shipments Index Page', type: :feature do
   before do
-    # Rails.application.env_config['devise.mapping'] = Devise.mappings[:user] # If using Devise
-    # Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
+    Rails.application.env_config['devise.mapping'] = Devise.mappings[:user] # If using Devise
+    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
   end
 
   scenario 'index page' do

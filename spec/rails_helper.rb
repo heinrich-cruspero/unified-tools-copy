@@ -3,8 +3,7 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-
-abort('The Rails environment is running in production mode!') if Rails.env.production?
+abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'support/pundit_matcher'
@@ -68,35 +67,4 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include FactoryBot::Syntax::Methods
-
-  OmniAuth.config.test_mode = true
-  OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
-    provider: 'google_oauth2',
-    uid: '12345678910',
-    info: {
-      email: 'joe@rev365.com',
-      first_name: 'Joe',
-      last_name: 'Smith'
-    },
-    credentials: {
-      token: 'abcdefg12345',
-      refresh_token: '12345abcdefg',
-      expires_at: DateTime.now
-    }
-  )
-
-  OmniAuth.config.mock_auth[:invalid_google_oauth2] = OmniAuth::AuthHash.new(
-    provider: 'google_oauth2',
-    uid: '12345678910',
-    info: {
-      email: 'joe@gmail.com',
-      first_name: 'Joe',
-      last_name: 'Smith'
-    },
-    credentials: {
-      token: 'abcdefg12345',
-      refresh_token: '12345abcdefg',
-      expires_at: DateTime.now
-    }
-  )
 end
