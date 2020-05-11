@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_12_084153) do
+ActiveRecord::Schema.define(version: 2020_04_21_161414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "amazon_inventories", force: :cascade do |t|
+    t.string "isbn", null: false
+    t.string "condition", null: false
+    t.string "fnsku", null: false
+    t.integer "in_stock_supply_quantity", default: 0, null: false
+    t.integer "inbound_quantity", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["condition"], name: "index_amazon_inventories_on_condition"
+    t.index ["fnsku"], name: "index_amazon_inventories_on_fnsku"
+    t.index ["in_stock_supply_quantity"], name: "index_amazon_inventories_on_in_stock_supply_quantity"
+    t.index ["inbound_quantity"], name: "index_amazon_inventories_on_inbound_quantity"
+    t.index ["isbn"], name: "index_amazon_inventories_on_isbn"
+  end
 
   create_table "amazon_shipment_files", force: :cascade do |t|
     t.string "name", null: false

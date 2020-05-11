@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'spec_helper'
+require 'requests/spec_helper'
 
 RSpec.describe ApplicationPolicy do
   subject { ApplicationPolicy.new(user, amazon_shipment) }

@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'amazon_shipments/index', type: :view do
   before(:each) do
-    amazon_shipment_file = FactoryBot.create(:amazon_shipment_file)
     @amazon_shipments = WillPaginate::Collection.new(4, 10, 0)
     2.times do |_index|
       @amazon_shipments << create(:amazon_shipment)
