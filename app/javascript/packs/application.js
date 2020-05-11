@@ -11,7 +11,6 @@ require("jquery");
 require("bootstrap");
 require("bootstrap-table");
 require("bootstrap-daterangepicker");
-require("@fortawesome/fontawesome-free/js/all.min");
 require("moment");
 require("bootstrap-daterangepicker");
 
