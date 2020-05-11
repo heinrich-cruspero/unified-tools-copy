@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
 # your test database is "scratch space" for the test suite and is wiped
@@ -9,6 +7,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.cache_classes = false
+  config.action_view.cache_template_loading = true
 
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that
@@ -47,42 +46,4 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
-
-  OmniAuth.config.test_mode = true
-  # OmniAuth.config.mock_auth[:google_oauth2] = {
-  #   'uid' => '1337',
-  #   'provider' => 'google_oauth2',
-  #   'info' => {
-  #     'name' => 'TestUser'
-  #   }
-  # }
-  OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
-    provider: 'google_oauth2',
-    uid: '12345678910',
-    info: {
-      email: 'joe@rev365.com',
-      first_name: 'Joe',
-      last_name: 'Smith'
-    },
-    credentials: {
-      token: 'abcdefg12345',
-      refresh_token: '12345abcdefg',
-      expires_at: DateTime.now
-    }
-  )
-
-  OmniAuth.config.mock_auth[:invalid_google_oauth2] = OmniAuth::AuthHash.new(
-    provider: 'google_oauth2',
-    uid: '12345678910',
-    info: {
-      email: 'joe@gmail.com',
-      first_name: 'Joe',
-      last_name: 'Smith'
-    },
-    credentials: {
-      token: 'abcdefg12345',
-      refresh_token: '12345abcdefg',
-      expires_at: DateTime.now
-    }
-  )
 end

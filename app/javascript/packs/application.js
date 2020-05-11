@@ -7,18 +7,6 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
-require("jquery");
-require("bootstrap");
-require("bootstrap-table");
-require("bootstrap-daterangepicker");
-require("@fortawesome/fontawesome-free/js/all.min");
-require("moment");
-require("bootstrap-daterangepicker");
-
-require("../custom/sidebar")
-require("../custom/amazon_table")
-require("../custom/indaba_sku_tab")
-
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -27,5 +15,3 @@ require("../custom/indaba_sku_tab")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-
-global.$ = jQuery;
