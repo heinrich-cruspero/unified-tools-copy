@@ -3,7 +3,6 @@
 class DeviseCreateUsers < ActiveRecord::Migration[6.0]
   def change
     create_table :users do |t|
-      t.integer :role, index: true, null: false, default: 0
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -41,6 +40,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
       #t.integer  :invitation_limit
       #t.integer  :invited_by_id
       #t.string   :invited_by_type
+
+      t.integer :role, index: true, null: false, default: 0
 
       t.timestamps null: false
     end
