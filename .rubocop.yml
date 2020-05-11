@@ -20,3 +20,4 @@ Metrics/BlockLength:
 
 Metrics/AbcSize:
   Max: 30
+  IgnoredPatterns: ['(\A|\s)#']

@@ -19,15 +19,15 @@ RSpec.describe AmazonInventory, type: :model do
     end
 
     it 'raises NotNullViolation on isbn nil' do
-      expect{FactoryBot.create(:amazon_inventory, isbn: nil)}.to raise_error ActiveRecord::NotNullViolation
+      expect { FactoryBot.create(:amazon_inventory, isbn: nil) }.to raise_error ActiveRecord::NotNullViolation
     end
 
     it 'raises NotNullViolation on condition nil' do
-      expect{FactoryBot.create(:amazon_inventory, condition: nil)}.to raise_error ActiveRecord::NotNullViolation
+      expect { FactoryBot.create(:amazon_inventory, condition: nil) }.to raise_error ActiveRecord::NotNullViolation
     end
 
     it 'raises NotNullViolation on fnsku nil' do
-      expect{FactoryBot.create(:amazon_inventory, fnsku: nil)}.to raise_error ActiveRecord::NotNullViolation
+      expect { FactoryBot.create(:amazon_inventory, fnsku: nil) }.to raise_error ActiveRecord::NotNullViolation
     end
   end
 end

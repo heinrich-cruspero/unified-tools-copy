@@ -17,8 +17,9 @@ gem 'webpacker', '~> 4.0'
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
-  gem 'factory_bot_rails'
-  gem 'faker'
+  gem 'dotenv', '~> 2.7', '>= 2.7.5'
+  gem 'factory_bot_rails', require: false
+  gem 'faker', '~> 2.10', '>= 2.10.1'
   gem 'rspec-rails'
   gem 'simplecov', require: false
 end

@@ -1,7 +1,6 @@
 $( document ).on('turbolinks:load', function() {
     $container = $('#content');
-    $container
-        .on('click', '#sku-table-date-search-submit', onClickDateSubmit)
+    $container.on('click', '#sku-table-date-search-submit', onClickDateSubmit)
 
     function appendParamsToURL(key, value) {
         key = encodeURI(key);
