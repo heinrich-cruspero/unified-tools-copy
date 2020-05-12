@@ -10,6 +10,7 @@ require("channels")
 require("jquery");
 require("bootstrap");
 require("bootstrap-table");
+require('datatables.net-bs4');
 require("bootstrap-daterangepicker");
 require("moment");
 require("bootstrap-daterangepicker");
