@@ -7,7 +7,7 @@
 </div>
 <div class="row">
   <div class="col-sm">
-    <table id="books" class="table table-striped table-bordered">
+    <table id="books-datatable" data-source="<%= books_path(format: :json) %>">
       <thead>
         <tr>
           <th>EAN</th>
@@ -37,41 +37,47 @@
         </tr>
       </thead>
       <tbody>
-        <% @books.each do |book|%>
-          <tr>
-            <td><%= book.ean %></td>
-            <td><%= book.isbn %></td>
-            <td><%= book.author %></td>
-            <td><%= book.title %></td>
-            <td><%= book.edition %></td>
-            <td><%= book.subject %></td>
-            <td><%= book.publication_date %></td>
-            <td><%= book.copyright %></td>
-            <td><%= book.publisher %></td>
-            <td><%= book.edition_status_code %></td>
-            <td><%= book.edition_status_date %></td>
-            <td><%= book.grade %></td>
-            <td><%= book.list_price %></td>
-            <td><%= book.used_wholesale_price %></td>
-            <td><%= book.max_wholesale_price %></td>
-            <td><%= book.trade_in %></td>
-            <td><%= book.lowest_price %></td>
-            <td><%= book.sales_rank %></td>
-            <td><%= book.sales_rank_aug_avg %></td>
-            <td><%= book.amazon_rental %></td>
-            <td><%= book.lowest_rental %></td>
-            <td><%= book.fcb_price %></td>
-            <td><%= book.fba_price %></td>
-            <td><%= book.updated_at %></td>
-          </tr>
-        <%end%>
+
       </tbody>
     </table>
   </div>
 </div>
 
-<script type="text/javascript">
+<script>
   $(document).ready(function() {
-    $('#books').DataTable();
+    $('#books-datatable').dataTable({
+        "processing": true,
+        "serverSide": true,
+        "scrollCollapse": true,
+        "columnDefs": [{ "orderable": false, "targets": -1 }],
+        "ajax": $('#books-datatable').data('source'),
+        "pagingType": "full_numbers",
+        "columns": [
+            {"data": "ean"},
+            {"data": "isbn"},
+            {"data": "author"},
+            {"data": "title"},
+            {"data": "edition"},
+            {"data": "subject"},
+            {"data": "publication_date"},
+            {"data": "copyright"},
+            {"data": "publisher"},
+            {"data": "edition_status_code"},
+            {"data": "edition_status_date"},
+            {"data": "grade"},
+            {"data": "list_price"},
+            {"data": "used_wholesale_price"},
+            {"data": "max_wholesale_price"},
+            {"data": "trade_in"},
+            {"data": "lowest_price"},
+            {"data": "sales_rank"},
+            {"data": "sales_rank_aug_avg"},
+            {"data": "amazon_rental"},
+            {"data": "lowest_rental"},
+            {"data": "fcb_price"},
+            {"data": "fba_price"},
+            {"data": "updated_at"}
+        ]
+    });
   });
 </script>
