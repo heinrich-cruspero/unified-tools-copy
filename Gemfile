@@ -34,6 +34,7 @@ group :development do
   gem 'web-console', '>= 3.3.0'
 end
 
+gem 'ajax-datatables-rails'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
@@ -45,4 +46,3 @@ gem 'pundit'
 gem 'smarter_csv'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
-gem 'ajax-datatables-rails'
