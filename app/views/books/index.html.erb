@@ -1,3 +1,4 @@
+
 <div class="row">
   <div class="col-sm">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
@@ -48,7 +49,7 @@
     $('#books-datatable').dataTable({
         "processing": true,
         "serverSide": true,
-        "scrollCollapse": true,
+        "scrollX": true,
         "columnDefs": [{ "orderable": false, "targets": -1 }],
         "ajax": $('#books-datatable').data('source'),
         "pagingType": "full_numbers",
