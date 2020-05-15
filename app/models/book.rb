@@ -2,5 +2,4 @@
 
 ##
 class Book < ApplicationRecord
-
 end

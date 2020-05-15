@@ -64,7 +64,7 @@ class BookDatatable < AjaxDatatablesRails::ActiveRecord
     end
   end
 
-  def get_raw_records
+  def get_raw_records(*)
     # insert query here
     Book.all
   end

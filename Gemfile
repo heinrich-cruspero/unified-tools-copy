@@ -37,6 +37,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'ajax-datatables-rails'
 gem 'delayed_job_active_record'
 gem 'devise'
 gem 'omniauth-google-oauth2'
@@ -45,4 +46,3 @@ gem 'pundit'
 gem 'smarter_csv'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
-gem 'ajax-datatables-rails'

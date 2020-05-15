@@ -24,4 +24,3 @@
     secret_key: '`<google_secret_key>`''
 
 3. Save
-
