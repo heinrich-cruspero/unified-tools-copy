@@ -14,10 +14,13 @@ require("bootstrap-daterangepicker");
 require("moment");
 require("bootstrap-daterangepicker");
 require("@fortawesome/fontawesome-free");
+require('datatables.net');
+require('datatables.net-bs4');
 
 require("../custom/sidebar")
 require("../custom/amazon_table")
 require("../custom/indaba_sku_tab")
+require("../custom/book_table")
 
 import "@fortawesome/fontawesome-free/css/all.css";
 

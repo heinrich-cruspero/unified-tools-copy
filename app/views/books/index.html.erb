@@ -7,89 +7,37 @@
 </div>
 <div class="row">
   <div class="col-sm">
-    <div class="input-group mb-3 float-left">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="inputGroupSelect01"># of entries</label>
-      </div>
-      <select class="custom-select" id="inputGroupSelect01">
-        <option value="10" <% if params[:show] == '10' %> selected <% end %>>10</option>
-        <option value="25" <% if params[:show] == '25' || params[:show].nil? %> selected <% end %>>25</option>
-        <option value="50" <% if params[:show] == '50' %> selected <% end %>>50</option>
-        <option value="100" <% if params[:show] == '100' %> selected <% end %>>100</option>
-      </select>
-    </div>
-  </div>
-  <div class="col-sm"></div>
-  <div class="col-sm">
-    <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2" id="amazon-table-search-form">
-      <div class="input-group-append">
-        <button class="btn btn-secondary" type="button" id="amazon-table-search-submit">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="table-responsive table-bordered">
-    <table class="table text-center" id="table" data-toggle="table">
+    <table id="books-datatable" data-source="<%= books_path(format: :json) %>">
       <thead>
         <tr>
-          <th data-order='desc' data-field="ean" data-sortable="true">EAN</th>
-          <th data-order='desc' data-field="isbn" data-sortable="true">ISBN</th>
-          <th data-order='desc' data-field="author" data-sortable="true">Author</th>
-          <th data-order='desc' data-field="title" data-sortable="true">Title</th>
-          <th data-order='desc' data-field="edition" data-sortable="true">Edition</th>
-          <th data-order='desc' data-field="subject" data-sortable="true">Subject</th>
-          <th data-order='desc' data-field="publication_date" data-sortable="true">Publication Date</th>
-          <th data-order='desc' data-field="copyright" data-sortable="true">Copyright</th>
-          <th data-order='desc' data-field="publisher" data-sortable="true">Publisher</th>
-          <th data-order='desc' data-field="edition_status_code" data-sortable="true">Status</th>
-          <th data-order='desc' data-field="edition_status_date" data-sortable="true">Status Date</th>
-          <th data-order='desc' data-field="grade" data-sortable="true">Grade</th>
-          <th data-order='desc' data-field="list_price" data-sortable="true">List</th>
-          <th data-order='desc' data-field="used_wholesale_price" data-sortable="true">Wholesale</th>
-          <th data-order='desc' data-field="max_wholesale_price" data-sortable="true">Max Wholesale</th>
-          <th data-order='desc' data-field="trade_in" data-sortable="true">Trade In</th>
-          <th data-order='desc' data-field="lowest_price" data-sortable="true">Lowest Price</th>
-          <th data-order='desc' data-field="sales_rank" data-sortable="true">Rank</th>
-          <th data-order='desc' data-field="sales_rank_aug_avg" data-sortable="true">Aug Rank</th>
-          <th data-order='desc' data-field="amazon_rental" data-sortable="true">Amazon Rental</th>
-          <th data-order='desc' data-field="lowest_price" data-sortable="true">Lowest Rental</th>
-          <th data-order='desc' data-field="fcb_price" data-sortable="true">FCB Price</th>
-          <th data-order='desc' data-field="fba_price" data-sortable="true">FBA Price</th>
-          <th data-order='desc' data-field="updated_at" data-sortable="true">Updated At</th>
+          <th>EAN</th>
+          <th>ISBN</th>
+          <th>Author</th>
+          <th>Title</th>
+          <th>Edition</th>
+          <th>Subject</th>
+          <th>Publication Date</th>
+          <th>Copyright</th>
+          <th>Publisher</th>
+          <th>Status</th>
+          <th>Status Date</th>
+          <th>Grade</th>
+          <th>List</th>
+          <th>Wholesale</th>
+          <th>Max Wholesale</th>
+          <th>Trade In</th>
+          <th>Lowest Price</th>
+          <th>Rank</th>
+          <th>Aug Rank</th>
+          <th>Amazon Rental</th>
+          <th>Lowest Rental</th>
+          <th>FCB Price</th>
+          <th>FBA Price</th>
+          <th>Updated At</th>
         </tr>
       </thead>
       <tbody>
-        <% @books.each do |book|%>
-          <tr>
-            <td><%= book.ean %></td>
-            <td><%= book.isbn %></td>
-            <td><%= book.author %></td>
-            <td><%= book.title %></td>
-            <td><%= book.edition %></td>
-            <td><%= book.subject %></td>
-            <td><%= book.publication_date %></td>
-            <td><%= book.copyright %></td>
-            <td><%= book.publisher %></td>
-            <td><%= book.edition_status_code %></td>
-            <td><%= book.edition_status_date %></td>
-            <td><%= book.grade %></td>
-            <td><%= book.list_price %></td>
-            <td><%= book.used_wholesale_price %></td>
-            <td><%= book.max_wholesale_price %></td>
-            <td><%= book.trade_in %></td>
-            <td><%= book.lowest_price %></td>
-            <td><%= book.sales_rank %></td>
-            <td><%= book.sales_rank_aug_avg %></td>
-            <td><%= book.amazon_rental %></td>
-            <td><%= book.lowest_rental %></td>
-            <td><%= book.fcb_price %></td>
-            <td><%= book.fba_price %></td>
-            <td><%= book.updated_at %></td>
-          </tr>
-        <%end%>
+
       </tbody>
     </table>
   </div>
