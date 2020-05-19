@@ -262,8 +262,8 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :google_oauth2,
-                  ENV['GOOGLE_APP_ID'],
-                  ENV['GOOGLE_APP_SECRET'],
+                  Rails.application.credentials.google[:client_id],
+                  Rails.application.credentials.google[:secret_key],
                   scope: 'userinfo.email,userinfo.profile',
                   hd: ['rev365.com', 'bba-corp.com']
 

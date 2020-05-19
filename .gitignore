@@ -19,4 +19,5 @@ yarn-debug.log*
 .yarn-integrity
 .env
 coverage*
-credentials.yml.enc
+!credentials.yml.enc
+!config/credentials.yml.enc

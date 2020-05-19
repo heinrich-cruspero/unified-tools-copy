@@ -5,22 +5,30 @@ class AmazonShipmentsController < ApplicationController
   include AmazonShipmentCsvModule
 
   def index
-    authorize AmazonShipment
-    per_page = params[:show].nil? ? 25 : params[:show]
-    amazon_shipment_items = if params[:query].nil? || params[:query].empty?
-                              AmazonShipment.all
-                            else
-                              AmazonShipment.search_by_fuzzy(params[:query].to_s)
-                            end
-    if params[:filter] == 'pending'
-      amazon_shipment_items = amazon_shipment_items.pending
-    elsif params[:filter] == 'twenty_days_pending'
-      amazon_shipment_items = amazon_shipment_items.twenty_days_pending
-    elsif params[:filter] == 'combine_shipments'
-      amazon_shipment_items = amazon_shipment_items.combine_shipments
+    authorize Book
+    respond_to do |format|
+      format.html
+      format.json { render json: AmazonShipmentDatatable.new(params) }
     end
-    @amazon_shipment_items = amazon_shipment_items.paginate(page: params[:page], per_page: per_page)
   end
+
+  # def old_index
+  #   authorize AmazonShipment
+  #   per_page = params[:show].nil? ? 25 : params[:show]
+  #   amazon_shipment_items = if params[:query].nil? || params[:query].empty?
+  #                             AmazonShipment.all
+  #                           else
+  #                             AmazonShipment.search_by_fuzzy(params[:query].to_s)
+  #                           end
+  #   if params[:filter] == 'pending'
+  #     amazon_shipment_items = amazon_shipment_items.pending
+  #   elsif params[:filter] == 'twenty_days_pending'
+  #     amazon_shipment_items = amazon_shipment_items.twenty_days_pending
+  #   elsif params[:filter] == 'combine_shipments'
+  #     amazon_shipment_items = amazon_shipment_items.combine_shipments
+  #   end
+  #   @amazon_shipment_items = amazon_shipment_items.paginate(page: params[:page], per_page: per_page)
+  # end
 
   def import
     authorize AmazonShipment

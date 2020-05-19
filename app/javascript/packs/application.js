@@ -21,6 +21,7 @@ require("../custom/sidebar")
 require("../custom/amazon_table")
 require("../custom/indaba_sku_tab")
 require("../custom/book_table")
+require("../custom/amazon_shipment_data_table")
 
 import "@fortawesome/fontawesome-free/css/all.css";
 
