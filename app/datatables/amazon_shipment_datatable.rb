@@ -1,15 +1,10 @@
-# frozen_string_literal: true
-
-##
 class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
+
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      shipment_id: { source: 'AmazonShipment.shipment_id' },
-      condition: { source: 'AmazonShipment.condition' },
-      az_sku: { source: 'AmazonShipment.az_sku' },
-      fulfillment_network_sku: { source: 'AmazonShipment.fulfillment_network_sku' }
+      isbn: { source: "AmazonShipment.isbn", cond: :eq },
     }
   end
 
@@ -24,6 +19,7 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
         quantity_shipped: record.quantity_shipped,
         quantity_in_case: record.quantity_in_case,
         quantity_received: record.quantity_received,
+        quantity_difference: record.quantity_difference,
         reconciled: record.reconciled,
         edition_status_code: record.edition_status_code,
         edition_status_date: record.edition_status_date,
@@ -42,13 +38,20 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
         monthly_rqf: record.monthly_rqf,
         monthly_rpf: record.monthly_rpf,
         created_at: record.created_at,
-        updated_at: record.updated_at
+        updated_at: record.updated_at,
+        author: record.book.nil? ? 'None' : record.book.author,
+        title: record.book.nil? ? 'None' : record.book.title,
+        edition: record.book.nil? ? 'None' : record.book.edition,
+        publisher: record.book.nil? ? 'None' : record.book.publisher,
+        publication_date: record.book.nil? ? 'None' : record.book.publication_date,
+        weight: record.book.nil? ? 'None' : record.book.weight,
       }
     end
   end
 
-  def get_raw_records(*)
+  def get_raw_records
     # insert query here
     AmazonShipment.all
   end
+
 end

@@ -5,7 +5,7 @@ class AmazonShipmentsController < ApplicationController
   include AmazonShipmentCsvModule
 
   def index
-    authorize Book
+    authorize AmazonShipment
     respond_to do |format|
       format.html
       format.json { render json: AmazonShipmentDatatable.new(params) }
