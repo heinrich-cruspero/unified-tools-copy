@@ -34,3 +34,18 @@ $(document).ready(function() {
         ]
     });
 });
+$(document).ready(function() {
+    $('#amazon-orders-datatable').dataTable({
+        "processing": true,
+        "serverSide": true,
+        "scrollX": true,
+        "columnDefs": [{ "orderable": false, "targets": -1 }],
+        "ajax": $('#amazon-orders-datatable').data('source'),
+        "pagingType": "full_numbers",
+        "columns": [
+            {"data": "order_total"},
+            {"data": "purchase_date"},
+            {"data": "status"}
+        ]
+    });
+});

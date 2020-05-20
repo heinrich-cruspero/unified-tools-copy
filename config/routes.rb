@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :books, only: [:index]
 
+  resources :amazon_orders, only: [:index]
+
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
