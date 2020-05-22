@@ -51,7 +51,12 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
 
   def get_raw_records
     # insert query here
-    AmazonShipment.all
+    if params[:filter] == 'pending'
+        AmazonShipment.pending
+    elsif params[:filter] == 'twenty_days_pending'
+        AmazonShipment.twenty_days_pending
+    else
+        AmazonShipment.all
+    end
   end
-
 end
