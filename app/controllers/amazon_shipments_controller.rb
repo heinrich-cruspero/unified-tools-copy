@@ -22,6 +22,15 @@ class AmazonShipmentsController < ApplicationController
     end
   end
 
+  def indaba_skus
+    authorize AmazonShipment
+    respond_to do |format|
+      @filter_option = params[:filter]
+      format.html
+      format.json { render json: IndabaSkuDatatable.new(params) }
+    end
+  end
+
   # def old_index
   #   authorize AmazonShipment
   #   per_page = params[:show].nil? ? 25 : params[:show]
