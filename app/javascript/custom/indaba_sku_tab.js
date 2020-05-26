@@ -38,7 +38,7 @@ $( document ).on('turbolinks:load', function() {
 
     $(function () {
       $('input[name="daterange"]').daterangepicker({
-        opens: 'left',
+        opens: 'right',
         locale: {
           format: 'YYYY-MM-DD'
         }

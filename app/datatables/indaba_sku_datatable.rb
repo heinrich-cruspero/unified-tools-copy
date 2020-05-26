@@ -1,5 +1,7 @@
-class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
+# frozen_string_literal: true
 
+##
+class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
@@ -12,14 +14,14 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
       # quantity_in_case: { source: "AmazonShipment.quantity_in_case" },
       # quantity_received: { source: "AmazonShipment.quantity_received" },
       # quantity_difference: { source: "AmazonShipment.quantity_difference" },
-      az_sku: {source: "AmazonShipment.az_sku"},
-      isbn: {source: "AmazonShipment.isbn"},
-      shipment_id: {source: "AmazonShipment.shipment_id"},
-      sku: {source: "IndabaSku.sku"},
-      quantity: {source: "IndabaSku.quantity"},
-      condition: {source: "IndabaSku.amazon_shipment.condition"},
-      name: {source: "IndabaSku.amazon_shipment.amazon_shipment_file.name"},
-      date: {source: "IndabaSku.amazon_shipment.amazon_shipment_file.date"},
+      az_sku: { source: 'AmazonShipment.az_sku' },
+      isbn: { source: 'AmazonShipment.isbn' },
+      shipment_id: { source: 'AmazonShipment.shipment_id' },
+      sku: { source: 'IndabaSku.sku' },
+      quantity: { source: 'IndabaSku.quantity' },
+      condition: { source: 'IndabaSku.amazon_shipment.condition' },
+      name: { source: 'IndabaSku.amazon_shipment.amazon_shipment_file.name' },
+      date: { source: 'IndabaSku.amazon_shipment.amazon_shipment_file.date' }
     }
   end
 
@@ -38,15 +40,23 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
         quantity: record.quantity,
         condition: record.amazon_shipment.condition,
         name: record.amazon_shipment.amazon_shipment_file.name,
-        date: record.amazon_shipment.amazon_shipment_file.date,
+        date: record.amazon_shipment.amazon_shipment_file.date
       }
     end
   end
 
   def get_raw_records
     # insert query here
-    # User.all
-    IndabaSku.joins(amazon_shipment: :amazon_shipment_file).all
+    unless params[:date].nil?
+      dates = params['date'].split(' - ')
+      from_date = Date.parse dates[0]
+      to_date = Date.parse dates[1]
+      IndabaSku.joins(amazon_shipment: :amazon_shipment_file).where(
+        'amazon_shipment_files.date in (?)',
+        from_date..to_date
+      )
+    else
+      IndabaSku.joins(amazon_shipment: :amazon_shipment_file).all
+    end
   end
-
 end

@@ -1,7 +1,7 @@
 $( document ).on('turbolinks:load', function() {
     $('#combine-shipments-datatable').dataTable({
         "processing": true,
-        "serverSide": true,
+        "serverSide": false,
         "scrollX": true,
         "columnDefs": [{ "orderable": false, "targets": -1 }],
         "ajax": $('#combine-shipments-datatable').data('source'),

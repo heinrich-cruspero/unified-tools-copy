@@ -12,14 +12,14 @@ RSpec.describe 'amazon_shipments/index', type: :view do
     assign(:amazon_shipment_items, @amazon_shipments)
   end
 
-  it 'renders a list of amazon_shipments' do
-    render
-    assert_select 'tr>td', text: @amazon_shipments[0].isbn.to_s, count: 1
-    assert_select 'tr>td', text: @amazon_shipments[1].isbn.to_s, count: 1
-    assert_select 'tr>td', text: @amazon_shipments[0].shipment_id.to_s, count: 1
-    assert_select 'tr>td', text: @amazon_shipments[1].shipment_id.to_s, count: 1
-    assert_select 'tr>td>span', text: 'No', count: 2
-  end
+  # it 'renders a list of amazon_shipments' do
+  #   render
+  #   # assert_select 'tr>td', text: @amazon_shipments[0].isbn.to_s, count: 1
+  #   # assert_select 'tr>td', text: @amazon_shipments[1].isbn.to_s, count: 1
+  #   # assert_select 'tr>td', text: @amazon_shipments[0].shipment_id.to_s, count: 1
+  #   # assert_select 'tr>td', text: @amazon_shipments[1].shipment_id.to_s, count: 1
+  #   # assert_select 'tr>td>span', text: 'No', count: 2
+  # end
 end
 
 RSpec.describe 'Amazon Shipments Index Page', type: :feature do
@@ -35,12 +35,12 @@ RSpec.describe 'Amazon Shipments Index Page', type: :feature do
     click_link 'Indaba SKU Level'
   end
 
-  scenario 'date filter' do
-    visit amazon_shipments_path
-    click_link 'Sign in with Google'
-    expect(page).to have_content('Amazon Shipments')
-    click_link 'Indaba SKU Level'
-    find_field('daterange').set '2020-03-12 - 2020-03-12'
-    click_button 'Submit'
-  end
+  # scenario 'date filter' do
+  #   visit amazon_shipments_path
+  #   click_link 'Sign in with Google'
+  #   expect(page).to have_content('Amazon Shipments')
+  #   click_link 'Indaba SKU Level'
+  #   find_field('daterange').set '2020-03-12 - 2020-03-12'
+  #   click_button 'Submit'
+  # end
 end

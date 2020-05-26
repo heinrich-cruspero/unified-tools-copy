@@ -27,10 +27,18 @@
       <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
     </div>
   </div>
+  <div class="col-sm-3">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2" name="daterange" id="sku-table-search-form"/>
+      <div class="input-group-append">
+        <button class="btn btn-secondary" type="button" id="sku-table-date-search-submit">Submit</button>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="row">
   <div class="col-sm">
-    <table id="indaba-sku-datatable" data-source="<%= indaba_skus_amazon_shipments_path(format: :json) %>">
+    <table class="table" id="indaba-sku-datatable" data-source="<%= indaba_skus_amazon_shipments_path(format: :json, date: @date) %>">
       <thead>
         <tr>
           <th>Amazon SKU</th>

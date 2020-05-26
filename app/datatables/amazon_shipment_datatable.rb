@@ -1,10 +1,12 @@
-class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
+# frozen_string_literal: true
 
+##
+class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      isbn: { source: "AmazonShipment.isbn", cond: :eq },
+      isbn: { source: 'AmazonShipment.isbn', cond: :eq }
     }
   end
 
@@ -44,7 +46,7 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
         edition: record.book.nil? ? 'None' : record.book.edition,
         publisher: record.book.nil? ? 'None' : record.book.publisher,
         publication_date: record.book.nil? ? 'None' : record.book.publication_date,
-        weight: record.book.nil? ? 'None' : record.book.weight,
+        weight: record.book.nil? ? 'None' : record.book.weight
       }
     end
   end
@@ -52,11 +54,11 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
   def get_raw_records
     # insert query here
     if params[:filter] == 'pending'
-        AmazonShipment.pending
+      AmazonShipment.pending
     elsif params[:filter] == 'twenty_days_pending'
-        AmazonShipment.twenty_days_pending
+      AmazonShipment.twenty_days_pending
     else
-        AmazonShipment.all
+      AmazonShipment.all
     end
   end
 end
