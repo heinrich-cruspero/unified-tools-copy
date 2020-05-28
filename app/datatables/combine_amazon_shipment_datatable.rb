@@ -6,10 +6,11 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      # id: { source: "User.id", cond: :eq },
-      # name: { source: "User.name", cond: :like }
-      # isbn: { source: "AmazonShipment.isbn", cond: :eq },
-      shipment_id: { source: 'AmazonShipment.shipment_id' },
+      shipment_id: {
+        source: 'AmazonShipment.shipment_id',
+        cond: :like, searchable: true,
+        orderable: true
+      },
       quantity_shipped: { source: 'AmazonShipment.quantity_shipped' },
       quantity_in_case: { source: 'AmazonShipment.quantity_in_case' },
       quantity_received: { source: 'AmazonShipment.quantity_received' },
@@ -31,7 +32,6 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
 
   def get_raw_records
     # insert query here
-    # User.all
     AmazonShipment.combine_shipments
   end
 end

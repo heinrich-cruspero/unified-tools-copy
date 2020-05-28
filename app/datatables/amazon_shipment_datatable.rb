@@ -6,7 +6,20 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      isbn: { source: 'AmazonShipment.isbn', cond: :eq }
+      isbn: { source: 'AmazonShipment.isbn', cond: :like, searchable: true, orderable: true },
+      az_sku: { source: 'AmazonShipment.az_sku', cond: :like, searchable: true, orderable: true },
+      shipment_id: {
+        source: 'AmazonShipment.shipment_id',
+        cond: :like,
+        searchable: true,
+        orderable: true
+      },
+      fulfillment_network_sku: {
+        source: 'AmazonShipment.fulfillment_network_sku',
+        cond: :like,
+        searchable: true,
+        orderable: true
+      }
     }
   end
 
