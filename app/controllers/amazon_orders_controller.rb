@@ -3,7 +3,7 @@
 ##
 class AmazonOrdersController < ApplicationController
   def index
-    # authorize Book
+    authorize AmazonOrder
     respond_to do |format|
       format.html
       format.json { render json: AmazonOrderDatatable.new(params) }
