@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ##
-class BookPolicy < ApplicationPolicy
+class AmazonOrderPolicy < ApplicationPolicy
   def index?
     user.is_admin?
   end
