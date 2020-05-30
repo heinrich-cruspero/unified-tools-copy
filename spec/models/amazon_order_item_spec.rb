@@ -3,5 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe AmazonOrderItem, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:amazon_order_item) }
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:amazon_order) }
+  end  
 end
