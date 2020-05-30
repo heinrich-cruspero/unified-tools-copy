@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_161414) do
+ActiveRecord::Schema.define(version: 2020_05_20_184834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,39 @@ ActiveRecord::Schema.define(version: 2020_04_21_161414) do
     t.index ["in_stock_supply_quantity"], name: "index_amazon_inventories_on_in_stock_supply_quantity"
     t.index ["inbound_quantity"], name: "index_amazon_inventories_on_inbound_quantity"
     t.index ["isbn"], name: "index_amazon_inventories_on_isbn"
+  end
+
+  create_table "amazon_order_items", force: :cascade do |t|
+    t.text "asin", null: false
+    t.integer "amazon_order_id", null: false
+    t.integer "sale_type_id", default: 1, null: false
+    t.integer "quantity_ordered", null: false
+    t.decimal "item_price", null: false
+    t.integer "returned", limit: 2, null: false
+    t.integer "buy_out", limit: 2, null: false
+    t.text "rni"
+    t.date "action_date"
+    t.date "due_date"
+    t.integer "expired", limit: 2, default: 0, null: false
+    t.text "seller_sku"
+    t.float "buy_out_price", default: 0.0, null: false
+    t.text "order_item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["amazon_order_id"], name: "index_amazon_order_items_on_amazon_order_id"
+    t.index ["asin"], name: "index_amazon_order_items_on_asin"
+    t.index ["order_item_id"], name: "index_amazon_order_items_on_order_item_id", unique: true
+    t.index ["sale_type_id"], name: "index_amazon_order_items_on_sale_type_id"
+  end
+
+  create_table "amazon_orders", force: :cascade do |t|
+    t.float "order_total", null: false
+    t.datetime "purchase_date", null: false
+    t.text "status", null: false
+    t.text "amazon_order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["amazon_order_id"], name: "index_amazon_orders_on_amazon_order_id", unique: true
   end
 
   create_table "amazon_shipment_files", force: :cascade do |t|
