@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :amazon_order_item do
     buy_out_price { 0.0 }

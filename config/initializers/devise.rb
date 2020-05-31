@@ -20,8 +20,8 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender = 'no-reply@bba-corp.com'
   config.omniauth :google_oauth2,
-                  "1035280366037-mm395qns41qnivbl4pf3s3ofd252e6ep.apps.googleusercontent.com",
-                  "NU84MPiVqzqU3j7RYmsQILZS",
+                  ENV['GOOGLE_APP_ID'],
+                  ENV['GOOGLE_APP_SECRET'],
                   scope: 'userinfo.email,userinfo.profile',
                   hd: ['rev365.com', 'bba-corp.com']
 
