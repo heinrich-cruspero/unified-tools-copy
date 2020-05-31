@@ -7,5 +7,5 @@ RSpec.describe AmazonOrderItem, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:amazon_order) }
-  end  
+  end
 end

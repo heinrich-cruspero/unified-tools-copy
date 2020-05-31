@@ -5,8 +5,7 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
-
-   @view_columns ||= {
+    @view_columns ||= {
       asin: { source: 'AmazonOrderItem.asin' },
       amazon_order_id: { source: 'AmazonOrderItem.amazon_order_id' },
       sale_type_id: { source: 'AmazonOrderItem.sale_type_id' },
@@ -19,7 +18,7 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
       due_date: { source: 'AmazonOrderItem.due_date' },
       expired: { source: 'AmazonOrderItem.expired' },
       seller_sku: { source: 'AmazonOrderItem.seller_sku' },
-      buy_out_price: { source: 'AmazonOrderItem.buy_out_price'}
+      buy_out_price: { source: 'AmazonOrderItem.buy_out_price' }
     }
   end
 

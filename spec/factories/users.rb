@@ -8,7 +8,6 @@ FactoryBot.define do
     email { Faker::Internet.email }
     trait :admin do
       role { :Admin }
-    end 
+    end
   end
-
 end
