@@ -3,7 +3,7 @@ $( document ).on('turbolinks:load', function() {
         "processing": true,
         "serverSide": false,
         "scrollX": true,
-        "columnDefs": [{ "orderable": false, "targets": -1 }],
+        "columnDefs": [{ "orderable": false, }],
         "ajax": $('#combine-shipments-datatable').data('source'),
         "pagingType": "full_numbers",
         "columns": [

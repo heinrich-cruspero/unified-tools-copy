@@ -6,20 +6,52 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      isbn: { source: 'AmazonShipment.isbn', cond: :like, searchable: true, orderable: true },
-      az_sku: { source: 'AmazonShipment.az_sku', cond: :like, searchable: true, orderable: true },
-      shipment_id: {
-        source: 'AmazonShipment.shipment_id',
-        cond: :like,
-        searchable: true,
-        orderable: true
-      },
+      isbn: { source: 'AmazonShipment.isbn', cond: :exact, searchable: true, orderable: true },
+      az_sku: { source: 'AmazonShipment.az_sku', cond: :exact, searchable: true, orderable: true },
+      condition: { source: 'AmazonShipment.condition', cond: :exact, searchable: true, orderable: true },
+      shipment_id: { source: 'AmazonShipment.shipment_id', cond: :exact, searchable: true, orderable: true },
       fulfillment_network_sku: {
-        source: 'AmazonShipment.fulfillment_network_sku',
-        cond: :like,
-        searchable: true,
-        orderable: true
-      }
+        source: 'AmazonShipment.fulfillment_network_sku', cond: :exact, searchable: true, orderable: true
+      },
+      quantity_shipped: { source: 'AmazonShipment.quantity_shipped', cond: :exact, orderable: true },
+      quantity_in_case: { source: 'AmazonShipment.quantity_in_case', cond: :exact, orderable: true },
+      quantity_received: { source: 'AmazonShipment.quantity_received', cond: :exact, orderable: true },
+      quantity_difference: { source: 'AmazonShipment.quantity_shipped', cond: :exact, orderable: true },
+      reconciled: { source: 'AmazonShipment.reconciled', cond: :exact, orderable: true },
+      edition_status_code: {
+        source: 'AmazonShipment.edition_status_code', cond: :exact, searchable: true, orderable: true
+      },
+      edition_status_date: {
+        source: 'AmazonShipment.edition_status_date', cond: :exact, searchable: true, orderable: true
+      },
+      list_price: { source: 'AmazonShipment.list_price', cond: :exact, searchable: true, orderable: true },
+      used_wholesale_price: {
+        source: 'AmazonShipment.used_wholesale_price', cond: :exact, searchable: true, orderable: true
+      },
+      nebraska_wh: { source: 'AmazonShipment.nebraska_wh', cond: :exact, searchable: true, orderable: true },
+      one_year_highest_wholesale_price: {
+        source: 'AmazonShipment.one_year_highest_wholesale_price', cond: :exact, searchable: true, orderable: true
+      },
+      two_years_wh_max: { source: 'AmazonShipment.two_years_wh_max', cond: :exact, searchable: true, orderable: true },
+      qa_low: { source: 'AmazonShipment.qa_low', cond: :exact, searchable: true, orderable: true },
+      qa_aug_low: { source: 'AmazonShipment.qa_aug_low', cond: :exact, searchable: true, orderable: true },
+      qa_fba_low: { source: 'AmazonShipment.qa_fba_low', cond: :exact, searchable: true, orderable: true },
+      lowest_good_price: {
+        source: 'AmazonShipment.lowest_good_price', cond: :exact, searchable: true, orderable: true
+      },
+      yearly_low: { source: 'AmazonShipment.yearly_low', cond: :exact, searchable: true, orderable: true },
+      monthly_sqf: { source: 'AmazonShipment.monthly_sqf', cond: :exact, searchable: true, orderable: true },
+      monthly_spf: { source: 'AmazonShipment.monthly_spf', cond: :exact, searchable: true, orderable: true },
+      monthly_rqf: { source: 'AmazonShipment.monthly_rqf', cond: :exact, searchable: true, orderable: true },
+      monthly_rpf: { source: 'AmazonShipment.monthly_rpf', cond: :exact, searchable: true, orderable: true },
+      created_at: { source: 'AmazonShipment.created_at', cond: :exact, searchable: true, orderable: true },
+      updated_at: { source: 'AmazonShipment.updated_at', cond: :exact, searchable: true, orderable: true },
+      author: { source: 'Book.author', cond: :like, searchable: true, orderable: true },
+      title: { source: 'Book.title', cond: :like, searchable: true, orderable: true },
+      edition: { source: 'Book.edition', cond: :like, searchable: true, orderable: true },
+      publisher: { source: 'Book.publisher', cond: :like, searchable: true, orderable: true },
+      publication_date: { source: 'Book.publication_date', cond: :exact, searchable: true, orderable: true },
+      weight: { source: 'Book.weight', cond: :exact, searchable: true, orderable: true }
     }
   end
 
@@ -34,7 +66,7 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
         quantity_shipped: record.quantity_shipped,
         quantity_in_case: record.quantity_in_case,
         quantity_received: record.quantity_received,
-        quantity_difference: record.quantity_difference,
+        quantity_difference: record.quantity_shipped - record.quantity_received,
         reconciled: record.reconciled,
         edition_status_code: record.edition_status_code,
         edition_status_date: record.edition_status_date,
@@ -67,11 +99,16 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
   def get_raw_records
     # insert query here
     if params[:filter] == 'pending'
-      AmazonShipment.pending
+      AmazonShipment.left_outer_joins(:book).pending
     elsif params[:filter] == 'twenty_days_pending'
-      AmazonShipment.twenty_days_pending
+      AmazonShipment.left_outer_joins(:book).where('
+      quantity_shipped != quantity_received AND
+      amazon_shipments.created_at::date <= :start_date AND
+      amazon_shipments.created_at::date >= :end_date',
+                                                   start_date: Date.today,
+                                                   end_date: Date.today - 20)
     else
-      AmazonShipment.all
+      AmazonShipment.left_outer_joins(:book)
     end
   end
 end

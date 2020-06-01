@@ -6,23 +6,24 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      az_sku: { source: 'AmazonShipment.az_sku', cond: :like, searchable: true, orderable: true },
-      isbn: { source: 'AmazonShipment.isbn', cond: :like, searchable: true, orderable: true },
+      az_sku: { source: 'AmazonShipment.az_sku', cond: :exact, searchable: true, orderable: true },
+      isbn: { source: 'AmazonShipment.isbn', cond: :exact, searchable: true, orderable: true },
       shipment_id: {
         source: 'AmazonShipment.shipment_id',
-        cond: :like,
+        cond: :exact,
         searchable: true,
         orderable: true
       },
-      sku: { source: 'IndabaSku.sku', cond: :like, searchable: true, orderable: true },
-      quantity: { source: 'IndabaSku.quantity', cond: :like, searchable: true, orderable: true },
+      sku: { source: 'IndabaSku.sku', cond: :exact, searchable: true, orderable: true },
+      quantity: { source: 'IndabaSku.quantity', cond: :exact, searchable: true, orderable: true },
       condition: {
         source: 'AmazonShipment.condition',
-        cond: :like,
+        cond: :exact,
         searchable: true,
         orderable: true
       },
-      name: { source: 'AmazonShipmentFile.name', cond: :like, searchable: true, orderable: true }
+      name: { source: 'AmazonShipmentFile.name', cond: :exact, searchable: true, orderable: true },
+      date: { source: 'AmazonShipmentFile.date', cond: :exact, searchable: true, orderable: true }
     }
   end
 

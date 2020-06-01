@@ -11,10 +11,10 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
         cond: :like, searchable: true,
         orderable: true
       },
-      quantity_shipped: { source: 'AmazonShipment.quantity_shipped' },
-      quantity_in_case: { source: 'AmazonShipment.quantity_in_case' },
-      quantity_received: { source: 'AmazonShipment.quantity_received' },
-      quantity_difference: { source: 'AmazonShipment.quantity_difference' }
+      quantity_shipped: { source: 'AmazonShipment.quantity_shipped', orderable: true },
+      quantity_in_case: { source: 'AmazonShipment.quantity_in_case', orderable: true },
+      quantity_received: { source: 'AmazonShipment.quantity_received', orderable: true },
+      quantity_difference: { source: 'AmazonShipment.quantity_difference', orderable: true }
     }
   end
 
