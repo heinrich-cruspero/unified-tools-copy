@@ -11,15 +11,6 @@ RSpec.describe 'amazon_shipments/index', type: :view do
     assign(:test, @amazon_shipments) # for will_paginate
     assign(:amazon_shipment_items, @amazon_shipments)
   end
-
-  # it 'renders a list of amazon_shipments' do
-  #   render
-  #   assert_select 'tr>td', text: @amazon_shipments[0].isbn.to_s, count: 1
-  #   assert_select 'tr>td', text: @amazon_shipments[1].isbn.to_s, count: 1
-  #   assert_select 'tr>td', text: @amazon_shipments[0].shipment_id.to_s, count: 1
-  #   assert_select 'tr>td', text: @amazon_shipments[1].shipment_id.to_s, count: 1
-  #   assert_select 'tr>td>span', text: 'No', count: 2
-  # end
 end
 
 RSpec.describe 'Amazon Shipments Index Page', type: :feature do
@@ -36,11 +27,4 @@ RSpec.describe 'Amazon Shipments Index Page', type: :feature do
     click_link 'Pending'
     click_link 'Combine Shipments'
   end
-
-  # scenario 'index page with search' do
-  #   visit amazon_shipments_path
-  #   click_link 'Sign in with Google'
-  #   expect(page).to have_content('Amazon Shipments')
-  #   find(class: 'form-control form-control-sm').set Faker::Alphanumeric.alphanumeric(number: 10)
-  # end
 end

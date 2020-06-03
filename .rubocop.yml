@@ -59,3 +59,6 @@ Style/SlicingWithRange:
 
 Metrics/ClassLength:
   Max: 110
+
+Naming/AccessorMethodName:
+  Enabled: false
