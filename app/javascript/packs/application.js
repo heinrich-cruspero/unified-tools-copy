@@ -20,7 +20,11 @@ require('datatables.net-bs4');
 require("../custom/sidebar")
 require("../custom/amazon_table")
 require("../custom/indaba_sku_tab")
-require("../custom/book_table")
+require("../custom/book")
+require("../custom/amazon_order")
+require("../custom/amazon_order_item")
+require("../custom/amazon_associated_items")
+
 
 import "@fortawesome/fontawesome-free/css/all.css";
 

@@ -3,4 +3,5 @@
 ##
 class AmazonOrderItem < ApplicationRecord
   belongs_to :amazon_order
+  enum sale_type: [:sale, :rental]
 end

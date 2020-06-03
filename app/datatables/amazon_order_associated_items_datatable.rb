@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 ##
-class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
+class AmazonOrderAssociatedItemsDatatable < AjaxDatatablesRails::ActiveRecord
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       asin: { source: 'AmazonOrderItem.asin' },
-      amazon_order_id: { source: 'AmazonOrder.amazon_order_id' },
       sale_type: { source: 'AmazonOrderItem.sale_type' },
       quantity_ordered: { source: 'AmazonOrderItem.quantity_ordered' },
       item_price: { source: 'AmazonOrderItem.item_price' },
@@ -25,9 +24,7 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |record|
       {
-
         asin: record.asin,
-        amazon_order_id: record.amazon_order.amazon_order_id,
         sale_type: record.sale_type,
         quantity_ordered: record.quantity_ordered,
         item_price: record.item_price,
@@ -45,6 +42,6 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
 
   def get_raw_records(*)
     # insert query here
-    AmazonOrderItem.joins(:amazon_order)
+    AmazonOrderItem.where(amazon_order_id: params[:amazon_order_id])
   end
 end

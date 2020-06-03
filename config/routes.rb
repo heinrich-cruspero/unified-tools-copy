@@ -13,7 +13,11 @@ Rails.application.routes.draw do
 
   resources :books, only: [:index]
 
-  resources :amazon_orders, only: [:index]
+  resources :amazon_orders, only: [:index, :show] do
+    collection do
+      get 'order_associated_items'
+    end
+  end
 
   resources :amazon_order_items, only: [:index]
 
