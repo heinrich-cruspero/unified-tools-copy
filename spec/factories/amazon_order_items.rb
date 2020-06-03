@@ -8,7 +8,7 @@ FactoryBot.define do
     returned { 0 }
     item_price { 100.00 }
     quantity_ordered { 2 }
-    sale_type_id { 1 }
+    sale_type { 1 }
     amazon_order
   end
 end
