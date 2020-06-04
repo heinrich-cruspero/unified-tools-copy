@@ -30,9 +30,11 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
       },
       nebraska_wh: { source: 'AmazonShipment.nebraska_wh', cond: :exact, searchable: true, orderable: true },
       one_year_highest_wholesale_price: {
-        source: 'AmazonShipment.one_year_highest_wholesale_price', cond: :exact, searchable: true, orderable: true
+        source: 'AmazonShipment.one_year_highest_wholesale_price', cond: :exact,
+        searchable: true, orderable: true
       },
-      two_years_wh_max: { source: 'AmazonShipment.two_years_wh_max', cond: :exact, searchable: true, orderable: true },
+      two_years_wh_max: { source: 'AmazonShipment.two_years_wh_max', cond: :exact,
+                          searchable: true, orderable: true },
       qa_low: { source: 'AmazonShipment.qa_low', cond: :exact, searchable: true, orderable: true },
       qa_aug_low: { source: 'AmazonShipment.qa_aug_low', cond: :exact, searchable: true, orderable: true },
       qa_fba_low: { source: 'AmazonShipment.qa_fba_low', cond: :exact, searchable: true, orderable: true },
@@ -58,10 +60,8 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |record|
       {
-        isbn: record.isbn,
-        shipment_id: record.shipment_id,
-        condition: record.condition,
-        az_sku: record.az_sku,
+        isbn: record.isbn, shipment_id: record.shipment_id,
+        condition: record.condition, az_sku: record.az_sku,
         fulfillment_network_sku: record.fulfillment_network_sku,
         quantity_shipped: record.quantity_shipped,
         quantity_in_case: record.quantity_in_case,
