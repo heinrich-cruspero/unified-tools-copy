@@ -42,7 +42,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
     end
   end
 
-  def get_raw_records
+  def get_raw_records(*)
     # insert query here
     if params[:date].nil?
       IndabaSku.joins(amazon_shipment: :amazon_shipment_file).all

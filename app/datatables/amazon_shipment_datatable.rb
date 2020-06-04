@@ -76,16 +76,12 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
         one_year_highest_wholesale_price: record.one_year_highest_wholesale_price,
         two_years_wh_max: record.two_years_wh_max,
         qa_low: record.qa_low,
-        qa_aug_low: record.qa_aug_low,
-        qa_fba_low: record.qa_fba_low,
+        qa_aug_low: record.qa_aug_low, qa_fba_low: record.qa_fba_low,
         lowest_good_price: record.lowest_good_price,
         yearly_low: record.yearly_low,
-        monthly_sqf: record.monthly_sqf,
-        monthly_spf: record.monthly_spf,
-        monthly_rqf: record.monthly_rqf,
-        monthly_rpf: record.monthly_rpf,
-        created_at: record.created_at,
-        updated_at: record.updated_at,
+        monthly_sqf: record.monthly_sqf, monthly_spf: record.monthly_spf,
+        monthly_rqf: record.monthly_rqf, monthly_rpf: record.monthly_rpf,
+        created_at: record.created_at, updated_at: record.updated_at,
         author: record.book.nil? ? 'None' : record.book.author,
         title: record.book.nil? ? 'None' : record.book.title,
         edition: record.book.nil? ? 'None' : record.book.edition,
@@ -96,7 +92,7 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     end
   end
 
-  def get_raw_records
+  def get_raw_records(*)
     # insert query here
     if params[:filter] == 'pending'
       AmazonShipment.left_outer_joins(:book).pending

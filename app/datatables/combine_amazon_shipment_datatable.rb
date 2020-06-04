@@ -30,7 +30,7 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     end
   end
 
-  def get_raw_records
+  def get_raw_records(*)
     # insert query here
     AmazonShipment.combine_shipments
   end
