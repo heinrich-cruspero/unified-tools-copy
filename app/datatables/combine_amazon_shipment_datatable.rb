@@ -30,6 +30,15 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     end
   end
 
+  def as_json(*)
+    {
+      draw: params[:draw].to_i,
+      recordsTotal: get_raw_records.length,
+      recordsFiltered: filter_records(get_raw_records).length,
+      data: data
+    }
+  end
+
   def get_raw_records(*)
     # insert query here
     AmazonShipment.combine_shipments

@@ -29,7 +29,7 @@ $( document ).on('turbolinks:load', function() {
     }
 
     function onClickDateSubmit(event) {
-        appendParamsToURL('date', $('#sku-table-search-form').val());
+        appendParamsToURL('data', $('#sku-table-search-form').val());
     };
 
     function onImportCSVSubmit(event) {

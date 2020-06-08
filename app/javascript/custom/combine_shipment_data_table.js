@@ -1,9 +1,8 @@
 $( document ).on('turbolinks:load', function() {
     $('#combine-shipments-datatable').dataTable({
         "processing": true,
-        "serverSide": false,
+        "serverSide": true,
         "scrollX": true,
-        "columnDefs": [{ "orderable": false, }],
         "ajax": $('#combine-shipments-datatable').data('source'),
         "pagingType": "full_numbers",
         "columns": [

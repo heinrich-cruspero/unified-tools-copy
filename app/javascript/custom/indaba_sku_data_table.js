@@ -3,7 +3,6 @@ $( document ).on('turbolinks:load', function() {
         "processing": true,
         "serverSide": true,
         "scrollX": true,
-        "columnDefs": [{ "orderable": false, }],
         "ajax": $('#indaba-sku-datatable').data('source'),
         "pagingType": "full_numbers",
         "columns": [

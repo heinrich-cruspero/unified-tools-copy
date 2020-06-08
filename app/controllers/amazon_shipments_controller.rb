@@ -16,7 +16,6 @@ class AmazonShipmentsController < ApplicationController
   def combine
     authorize AmazonShipment
     respond_to do |format|
-      @filter_option = params[:filter]
       format.html
       format.json { render json: CombineAmazonShipmentDatatable.new(params) }
     end
@@ -25,8 +24,7 @@ class AmazonShipmentsController < ApplicationController
   def indaba_skus
     authorize AmazonShipment
     respond_to do |format|
-      @filter_option = params[:filter]
-      @date = params[:date]
+      @data = params[:data]
       format.html
       format.json { render json: IndabaSkuDatatable.new(params) }
     end

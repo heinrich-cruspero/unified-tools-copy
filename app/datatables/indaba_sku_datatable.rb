@@ -44,10 +44,10 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
 
   def get_raw_records(*)
     # insert query here
-    if params[:date].nil?
+    if params[:data].nil?
       IndabaSku.joins(amazon_shipment: :amazon_shipment_file).all
     else
-      dates = params['date'].split(' - ')
+      dates = params['data'].split(' - ')
       from_date = Date.parse dates[0]
       to_date = Date.parse dates[1]
       IndabaSku.joins(amazon_shipment: :amazon_shipment_file).where(
