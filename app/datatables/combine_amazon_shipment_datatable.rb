@@ -11,10 +11,10 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
         cond: :like, searchable: true,
         orderable: true
       },
-      quantity_shipped: { source: 'AmazonShipment.quantity_shipped', orderable: true },
-      quantity_in_case: { source: 'AmazonShipment.quantity_in_case', orderable: true },
-      quantity_received: { source: 'AmazonShipment.quantity_received', orderable: true },
-      quantity_difference: { source: 'AmazonShipment.quantity_difference', orderable: true }
+      quantity_shipped: { source: 'quantity_shipped', orderable: true, searchable: false },
+      quantity_in_case: { source: 'quantity_in_case', orderable: true, searchable: false },
+      quantity_received: { source: 'quantity_received', orderable: true, searchable: false },
+      quantity_difference: { source: 'quantity_difference', orderable: true, searchable: false }
     }
   end
 
@@ -41,6 +41,12 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
 
   def get_raw_records(*)
     # insert query here
-    AmazonShipment.combine_shipments
+    AmazonShipment.select('
+      shipment_id,
+      sum(quantity_shipped) as quantity_shipped,
+      sum(quantity_in_case) as quantity_in_case,
+      sum(quantity_received) as quantity_received,
+      sum(quantity_shipped - quantity_received) as quantity_difference
+    ').group('shipment_id')
   end
 end
