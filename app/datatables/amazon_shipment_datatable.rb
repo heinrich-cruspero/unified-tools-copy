@@ -6,48 +6,39 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      isbn: { source: 'AmazonShipment.isbn', cond: :exact, searchable: true, orderable: true },
-      az_sku: { source: 'AmazonShipment.az_sku', cond: :exact, searchable: true, orderable: true },
-      condition: { source: 'AmazonShipment.condition', cond: :exact, searchable: true, orderable: true },
-      shipment_id: { source: 'AmazonShipment.shipment_id', cond: :exact, searchable: true, orderable: true },
+      isbn: { source: 'isbn', cond: :exact, searchable: true, orderable: true },
+      az_sku: { source: 'az_sku', cond: :exact, searchable: true, orderable: true },
+      condition: { source: 'condition', cond: :exact, searchable: true, orderable: true },
+      shipment_id: { source: 'shipment_id', cond: :exact, searchable: true, orderable: true },
       fulfillment_network_sku: {
-        source: 'AmazonShipment.fulfillment_network_sku', cond: :exact, searchable: true, orderable: true
+        source: 'fulfillment_network_sku', cond: :exact, searchable: true, orderable: true
       },
-      quantity_shipped: { source: 'AmazonShipment.quantity_shipped', cond: :exact, orderable: true },
-      quantity_in_case: { source: 'AmazonShipment.quantity_in_case', cond: :exact, orderable: true },
-      quantity_received: { source: 'AmazonShipment.quantity_received', cond: :exact, orderable: true },
-      quantity_difference: { source: 'AmazonShipment.quantity_shipped', cond: :exact, orderable: true },
-      reconciled: { source: 'AmazonShipment.reconciled', cond: :exact, orderable: true },
-      edition_status_code: {
-        source: 'AmazonShipment.edition_status_code', cond: :exact, searchable: true, orderable: true
-      },
-      edition_status_date: {
-        source: 'AmazonShipment.edition_status_date', cond: :exact, searchable: true, orderable: true
-      },
-      list_price: { source: 'AmazonShipment.list_price', cond: :exact, searchable: true, orderable: true },
-      used_wholesale_price: {
-        source: 'AmazonShipment.used_wholesale_price', cond: :exact, searchable: true, orderable: true
-      },
-      nebraska_wh: { source: 'AmazonShipment.nebraska_wh', cond: :exact, searchable: true, orderable: true },
-      one_year_highest_wholesale_price: {
-        source: 'AmazonShipment.one_year_highest_wholesale_price', cond: :exact,
-        searchable: true, orderable: true
-      },
-      two_years_wh_max: { source: 'AmazonShipment.two_years_wh_max', cond: :exact,
+      quantity_shipped: { source: 'quantity_shipped', cond: :exact, searchable: false, orderable: true },
+      quantity_in_case: { source: 'quantity_in_case', cond: :exact, searchable: false, orderable: true },
+      quantity_received: { source: 'quantity_received', cond: :exact, searchable: false, orderable: true },
+      quantity_difference: { source: 'quantity_shipped', cond: :exact, searchable: false, orderable: true },
+      reconciled: { source: 'reconciled', cond: :exact, orderable: true },
+      edition_status_code: { source: 'edition_status_code', cond: :exact, searchable: true, orderable: true },
+      edition_status_date: { source: 'edition_status_date', cond: :exact, searchable: true, orderable: true },
+      list_price: { source: 'list_price', cond: :exact, searchable: true, orderable: true },
+      used_wholesale_price: { source: 'used_wholesale_price', cond: :exact,
+                              searchable: true, orderable: true },
+      nebraska_wh: { source: 'nebraska_wh', cond: :exact, searchable: true, orderable: true },
+      one_year_highest_wholesale_price: { source: 'one_year_highest_wholesale_price',
+                                          cond: :exact, searchable: true, orderable: true },
+      two_years_wh_max: { source: 'two_years_wh_max', cond: :exact,
                           searchable: true, orderable: true },
-      qa_low: { source: 'AmazonShipment.qa_low', cond: :exact, searchable: true, orderable: true },
-      qa_aug_low: { source: 'AmazonShipment.qa_aug_low', cond: :exact, searchable: true, orderable: true },
-      qa_fba_low: { source: 'AmazonShipment.qa_fba_low', cond: :exact, searchable: true, orderable: true },
-      lowest_good_price: {
-        source: 'AmazonShipment.lowest_good_price', cond: :exact, searchable: true, orderable: true
-      },
-      yearly_low: { source: 'AmazonShipment.yearly_low', cond: :exact, searchable: true, orderable: true },
-      monthly_sqf: { source: 'AmazonShipment.monthly_sqf', cond: :exact, searchable: true, orderable: true },
-      monthly_spf: { source: 'AmazonShipment.monthly_spf', cond: :exact, searchable: true, orderable: true },
-      monthly_rqf: { source: 'AmazonShipment.monthly_rqf', cond: :exact, searchable: true, orderable: true },
-      monthly_rpf: { source: 'AmazonShipment.monthly_rpf', cond: :exact, searchable: true, orderable: true },
-      created_at: { source: 'AmazonShipment.created_at', cond: :exact, searchable: true, orderable: true },
-      updated_at: { source: 'AmazonShipment.updated_at', cond: :exact, searchable: true, orderable: true },
+      qa_low: { source: 'qa_low', cond: :exact, searchable: true, orderable: true },
+      qa_aug_low: { source: 'qa_aug_low', cond: :exact, searchable: true, orderable: true },
+      qa_fba_low: { source: 'qa_fba_low', cond: :exact, searchable: true, orderable: true },
+      lowest_good_price: { source: 'lowest_good_price', cond: :exact, searchable: true, orderable: true },
+      yearly_low: { source: 'yearly_low', cond: :exact, searchable: true, orderable: true },
+      monthly_sqf: { source: 'monthly_sqf', cond: :exact, searchable: true, orderable: true },
+      monthly_spf: { source: 'monthly_spf', cond: :exact, searchable: true, orderable: true },
+      monthly_rqf: { source: 'monthly_rqf', cond: :exact, searchable: true, orderable: true },
+      monthly_rpf: { source: 'monthly_rpf', cond: :exact, searchable: true, orderable: true },
+      created_at: { source: 'created_at', cond: :exact, searchable: true, orderable: true },
+      updated_at: { source: 'updated_at', cond: :exact, searchable: true, orderable: true },
       author: { source: 'Book.author', cond: :like, searchable: true, orderable: true },
       title: { source: 'Book.title', cond: :like, searchable: true, orderable: true },
       edition: { source: 'Book.edition', cond: :like, searchable: true, orderable: true },

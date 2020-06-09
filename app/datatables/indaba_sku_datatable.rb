@@ -15,7 +15,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
         orderable: true
       },
       sku: { source: 'IndabaSku.sku', cond: :exact, searchable: true, orderable: true },
-      quantity: { source: 'IndabaSku.quantity', cond: :exact, searchable: true, orderable: true },
+      quantity: { source: 'IndabaSku.quantity', cond: :exact, searchable: false, orderable: true },
       condition: {
         source: 'AmazonShipment.condition',
         cond: :exact,
