@@ -11,6 +11,9 @@ $( document ).on('turbolinks:load', function() {
             {"data": "purchase_date"},
             {"data": "status"},
             {"data": "amazon_order_id"},
+            {"data": "state"},
+            {"data": "city"},
+            {"data": "zipcode"},
             {"data": "amazon_order_item"}
         ]
     });

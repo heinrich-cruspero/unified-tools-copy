@@ -7,7 +7,7 @@ class CreateAmazonOrders < ActiveRecord::Migration[6.0]
       t.text :amazon_order_id, null: false
       t.text :state
       t.text :city
-      t.text :pin
+      t.text :zipcode
       t.index [:amazon_order_id], unique: true
       t.timestamps
     end

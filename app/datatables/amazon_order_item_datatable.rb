@@ -6,26 +6,51 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      asin: { source: 'AmazonOrderItem.asin' },
-      amazon_order_id: { source: 'AmazonOrder.amazon_order_id' },
-      sale_type: { source: 'AmazonOrderItem.sale_type' },
-      quantity_ordered: { source: 'AmazonOrderItem.quantity_ordered' },
-      item_price: { source: 'AmazonOrderItem.item_price' },
-      returned: { source: 'AmazonOrderItem.returned' },
-      buy_out: { source: 'AmazonOrderItem.buy_out' },
-      rni: { source: 'AmazonOrderItem.rni' },
-      action_date: { source: 'AmazonOrderItem.action_date' },
-      due_date: { source: 'AmazonOrderItem.due_date' },
-      expired: { source: 'AmazonOrderItem.expired' },
-      seller_sku: { source: 'AmazonOrderItem.seller_sku' },
-      buy_out_price: { source: 'AmazonOrderItem.buy_out_price' }
+      asin: {
+        source: 'AmazonOrderItem.asin', cond: :string_in, searchable: true, orderable: true
+      },
+      amazon_order_id: {
+        source: 'AmazonOrder.amazon_order_id', searchable: false, orderable: true
+      },
+      sale_type: {
+        source: 'AmazonOrderItem.sale_type', cond: :string_in, searchable: true, orderable: true
+      },
+      quantity_ordered: {
+        source: 'AmazonOrderItem.quantity_ordered', searchable: false, orderable: true
+      },
+      item_price: {
+        source: 'AmazonOrderItem.item_price', searchable: false, orderable: true
+      },
+      returned: {
+        source: 'AmazonOrderItem.returned', searchable: false, orderable: true
+      },
+      buy_out: {
+        source: 'AmazonOrderItem.buy_out', searchable: false, orderable: true
+      },
+      rni: {
+        source: 'AmazonOrderItem.rni', cond: :string_in, searchable: true, orderable: true
+      },
+      action_date: {
+        source: 'AmazonOrderItem.action_date', searchable: false, orderable: true
+      },
+      due_date: {
+        source: 'AmazonOrderItem.due_date', searchable: false, orderable: true
+      },
+      expired: {
+        source: 'AmazonOrderItem.expired', searchable: false, orderable: true
+      },
+      seller_sku: {
+        source: 'AmazonOrderItem.seller_sku', cond: :string_in, searchable: true, orderable: true
+      },
+      buy_out_price: {
+        source: 'AmazonOrderItem.buy_out_price', searchable: false, orderable: true
+      }
     }
   end
 
   def data
     records.map do |record|
       {
-
         asin: record.asin,
         amazon_order_id: record.amazon_order.amazon_order_id,
         sale_type: record.sale_type,

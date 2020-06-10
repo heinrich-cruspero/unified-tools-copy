@@ -15,10 +15,46 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      order_total: { source: 'AmazonOrder.order_total', cond: :like, searchable: true, orderable: true },
-      purchase_date: { source: 'AmazonOrder.purchase_date' },
-      status: { source: 'AmazonOrder.status' },
-      amazon_order_id: { source: 'AmazonOrder.amazon_order_id' }
+      order_total: {
+        source: 'AmazonOrder.order_total',
+        searchable: false,
+        orderable: true
+      },
+      purchase_date: {
+        source: 'AmazonOrder.purchase_date',
+        searchable: false,
+        orderable: true
+      },
+      status: {
+        source: 'AmazonOrder.status',
+        cond: :string_in,
+        searchable: true,
+        orderable: true
+      },
+      amazon_order_id: {
+        source: 'AmazonOrder.amazon_order_id',
+        cond: :string_in,
+        searchable: true,
+        orderable: true
+      },
+      state: {
+        source: 'AmazonOrder.state',
+        cond: :string_in,
+        searchable: true,
+        orderable: true
+      },
+      city: {
+        source: 'AmazonOrder.city',
+        cond: :string_in,
+        searchable: true,
+        orderable: true
+      },
+      zipcode: {
+        source: 'AmazonOrder.zipcode',
+        cond: :string_in,
+        searchable: true,
+        orderable: true
+      }
     }
   end
 
@@ -29,7 +65,10 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
         purchase_date: record.purchase_date,
         status: record.status,
         amazon_order_id: record.amazon_order_id,
-        amazon_order_item: link_to("Order Items", amazon_order_path(record), class: "btn btn-info btn-sm"),
+        state: record.state,
+        city: record.city,
+        zipcode: record.zipcode,
+        amazon_order_item: link_to('Order Items', amazon_order_path(record), class: 'btn btn-info btn-sm')
       }
     end
   end
