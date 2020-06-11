@@ -2,8 +2,9 @@ $( document ).on('turbolinks:load', function() {
     $('#amazon-orders-datatable').dataTable({
         "processing": true,
         "serverSide": true,
+        "autoWidth": false,
         "scrollX": true,
-        "columnDefs": [{ "orderable": false, "targets": -1 }],
+        "columnDefs": [{"targets": -1}],
         "ajax": $('#amazon-orders-datatable').data('source'),
         "pagingType": "full_numbers",
         "columns": [

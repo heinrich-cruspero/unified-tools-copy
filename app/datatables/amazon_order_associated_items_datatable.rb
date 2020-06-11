@@ -6,18 +6,42 @@ class AmazonOrderAssociatedItemsDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      asin: { source: 'AmazonOrderItem.asin' },
-      sale_type: { source: 'AmazonOrderItem.sale_type' },
-      quantity_ordered: { source: 'AmazonOrderItem.quantity_ordered' },
-      item_price: { source: 'AmazonOrderItem.item_price' },
-      returned: { source: 'AmazonOrderItem.returned' },
-      buy_out: { source: 'AmazonOrderItem.buy_out' },
-      rni: { source: 'AmazonOrderItem.rni' },
-      action_date: { source: 'AmazonOrderItem.action_date' },
-      due_date: { source: 'AmazonOrderItem.due_date' },
-      expired: { source: 'AmazonOrderItem.expired' },
-      seller_sku: { source: 'AmazonOrderItem.seller_sku' },
-      buy_out_price: { source: 'AmazonOrderItem.buy_out_price' }
+      asin: {
+        source: 'AmazonOrderItem.asin', cond: :string_eq
+      },
+      sale_type: {
+        source: 'AmazonOrderItem.sale_type', cond: :string_eq
+      },
+      quantity_ordered: {
+        source: 'AmazonOrderItem.quantity_ordered', searchable: false
+      },
+      item_price: {
+        source: 'AmazonOrderItem.item_price', searchable: false
+      },
+      returned: {
+        source: 'AmazonOrderItem.returned', searchable: false
+      },
+      buy_out: {
+        source: 'AmazonOrderItem.buy_out', searchable: false
+      },
+      rni: {
+        source: 'AmazonOrderItem.rni', cond: :string_eq
+      },
+      action_date: {
+        source: 'AmazonOrderItem.action_date', searchable: false
+      },
+      due_date: {
+        source: 'AmazonOrderItem.due_date', searchable: false
+      },
+      expired: {
+        source: 'AmazonOrderItem.expired', searchable: false
+      },
+      seller_sku: {
+        source: 'AmazonOrderItem.seller_sku', cond: :string_eq
+      },
+      buy_out_price: {
+        source: 'AmazonOrderItem.buy_out_price', searchable: false
+      }
     }
   end
 
