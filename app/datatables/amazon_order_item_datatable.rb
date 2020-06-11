@@ -7,43 +7,43 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       asin: {
-        source: 'AmazonOrderItem.asin', cond: :string_in, searchable: true, orderable: true
+        source: 'AmazonOrderItem.asin', cond: :string_eq
       },
       amazon_order_id: {
-        source: 'AmazonOrder.amazon_order_id', searchable: false, orderable: true
+        source: 'AmazonOrder.amazon_order_id', searchable: false
       },
       sale_type: {
-        source: 'AmazonOrderItem.sale_type', cond: :string_in, searchable: true, orderable: true
+        source: 'AmazonOrderItem.sale_type', cond: :string_eq
       },
       quantity_ordered: {
-        source: 'AmazonOrderItem.quantity_ordered', searchable: false, orderable: true
+        source: 'AmazonOrderItem.quantity_ordered', searchable: false
       },
       item_price: {
-        source: 'AmazonOrderItem.item_price', searchable: false, orderable: true
+        source: 'AmazonOrderItem.item_price', searchable: false
       },
       returned: {
-        source: 'AmazonOrderItem.returned', searchable: false, orderable: true
+        source: 'AmazonOrderItem.returned', searchable: false
       },
       buy_out: {
-        source: 'AmazonOrderItem.buy_out', searchable: false, orderable: true
+        source: 'AmazonOrderItem.buy_out', searchable: false
       },
       rni: {
-        source: 'AmazonOrderItem.rni', cond: :string_in, searchable: true, orderable: true
+        source: 'AmazonOrderItem.rni', cond: :string_eq
       },
       action_date: {
-        source: 'AmazonOrderItem.action_date', searchable: false, orderable: true
+        source: 'AmazonOrderItem.action_date', searchable: false
       },
       due_date: {
-        source: 'AmazonOrderItem.due_date', searchable: false, orderable: true
+        source: 'AmazonOrderItem.due_date', searchable: false
       },
       expired: {
-        source: 'AmazonOrderItem.expired', searchable: false, orderable: true
+        source: 'AmazonOrderItem.expired', searchable: false
       },
       seller_sku: {
-        source: 'AmazonOrderItem.seller_sku', cond: :string_in, searchable: true, orderable: true
+        source: 'AmazonOrderItem.seller_sku', cond: :string_eq
       },
       buy_out_price: {
-        source: 'AmazonOrderItem.buy_out_price', searchable: false, orderable: true
+        source: 'AmazonOrderItem.buy_out_price', searchable: false
       }
     }
   end

@@ -17,43 +17,31 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       order_total: {
         source: 'AmazonOrder.order_total',
-        searchable: false,
-        orderable: true
+        searchable: false
       },
       purchase_date: {
         source: 'AmazonOrder.purchase_date',
-        searchable: false,
-        orderable: true
+        searchable: false
       },
       status: {
         source: 'AmazonOrder.status',
-        cond: :string_in,
-        searchable: true,
-        orderable: true
+        cond: :string_eq
       },
       amazon_order_id: {
         source: 'AmazonOrder.amazon_order_id',
-        cond: :string_in,
-        searchable: true,
-        orderable: true
+        cond: :string_eq
       },
       state: {
         source: 'AmazonOrder.state',
-        cond: :string_in,
-        searchable: true,
-        orderable: true
+        cond: :string_eq
       },
       city: {
         source: 'AmazonOrder.city',
-        cond: :string_in,
-        searchable: true,
-        orderable: true
+        cond: :string_eq
       },
       zipcode: {
         source: 'AmazonOrder.zipcode',
-        cond: :string_in,
-        searchable: true,
-        orderable: true
+        cond: :string_eq
       }
     }
   end
