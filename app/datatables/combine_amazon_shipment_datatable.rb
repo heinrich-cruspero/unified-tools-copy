@@ -8,8 +8,7 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       shipment_id: {
         source: 'AmazonShipment.shipment_id',
-        cond: :like, searchable: true,
-        orderable: true
+        cond: :start_with
       },
       quantity_shipped: { source: 'quantity_shipped', orderable: true, searchable: false },
       quantity_in_case: { source: 'quantity_in_case', orderable: true, searchable: false },
