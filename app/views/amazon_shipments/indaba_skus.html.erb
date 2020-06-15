@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-      <h1 class="h2">Amazon Shipments</h1>
+      <h1 class="h2">Amazon Shipment</h1>
     </div>
   </div>
   <div class="col-sm">
@@ -20,19 +20,14 @@
 <div class="row">
   <div class="col-sm">
     <div class="input-group mb-3 float-left">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="inputGroupSelect01"># of entries</label>
-      </div>
-      <select class="custom-select" id="inputGroupSelect01">
-        <option value="10" <% if params[:show] == '10' %> selected <% end %>>10</option>
-        <option value="25" <% if params[:show] == '25' || params[:show].nil? %> selected <% end %>>25</option>
-        <option value="50" <% if params[:show] == '50' %> selected <% end %>>50</option>
-        <option value="100" <% if params[:show] == '100' %> selected <% end %>>100</option>
-      </select>
+      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path %>">Standard</a>
+      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'pending') %>">Pending</a>
+      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'twenty_days_pending') %>">20 Days Pending</a>
+      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= combine_amazon_shipments_path %>">Combine Shipments</a>
+      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
     </div>
   </div>
-  <div class="col-sm"></div>
-  <div class="col-sm">
+  <div class="col-sm-3">
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon2" name="daterange" id="sku-table-search-form"/>
       <div class="input-group-append">
@@ -43,40 +38,21 @@
 </div>
 <div class="row">
   <div class="col-sm">
-    <div class="input-group mb-3 float-left">
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path %>">Standard</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path %>?filter=pending">Pending</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path %>?filter=twenty_days_pending">20 Days Pending</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path %>?filter=combine_shipments">Combine Shipments</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm float-right">
-    <%= will_paginate @indaba_skus, list_classes: %w(pagination justify-content-end)  %>
-  </div>
-</div>
-<div class="row">
-  <div class="table-responsive">
-    <table class="table text-center">
+    <table class="table" id="indaba-sku-datatable" data-source="<%= indaba_skus_amazon_shipments_path(format: :json, data: @data) %>"  style="text-align: center; width:100%;">
       <thead>
-        <%= render partial: 'indaba_sku_table_header' %>
+        <tr>
+          <th>Amazon SKU</th>
+          <th>ISBN</th>
+          <th>Shipment ID</th>
+          <th>SKU</th>
+          <th>Quantity </th>
+          <th>Condition</th>
+          <th>File Name</th>
+          <th>Date</th>
+        </tr>
       </thead>
       <tbody>
-        <%=
-        render partial: 'indaba_sku_item',
-        collection: @indaba_skus
-        %>
       </tbody>
-      <tfoot>
-      <%= render partial: 'indaba_sku_table_header' %>
-      </tfoot>
     </table>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm float-right">
-    <%= will_paginate @indaba_skus, list_classes: %w(pagination justify-content-end)  %>
   </div>
 </div>

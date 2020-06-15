@@ -3,9 +3,10 @@
 Rails.application.routes.draw do
   resources :amazon_shipments do
     collection do
+      get 'indaba_skus'
+      get 'combine'
       get 'import'
       post 'import'
-      get 'indaba_skus'
       get 'delete_skus'
       post 'delete_skus'
     end
