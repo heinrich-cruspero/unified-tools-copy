@@ -13,4 +13,8 @@ class AmazonShipmentPolicy < ApplicationPolicy
   def delete_skus?
     user.is_admin?
   end
+
+  def combine?
+    user.is_admin?
+  end
 end

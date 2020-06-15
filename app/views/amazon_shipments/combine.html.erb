@@ -30,46 +30,14 @@
 </div>
 <div class="row">
   <div class="col-sm">
-    <table class="table" id="amazon-shipments-datatable" data-source="<%= amazon_shipments_path(format: :json, filter: @filter_option) %>" style="text-align: center; width:100%;">
+    <table class="table" id="combine-shipments-datatable" data-source="<%= combine_amazon_shipments_path(format: :json) %>" style="text-align: center; width:100%;">
       <thead>
         <tr>
-          <th>ISBN</th>
           <th>Shipment ID</th>
-          <th>Amazon SKU</th>
           <th>Quantity Shipped</th>
           <th>Quantity In Case</th>
           <th>Quantity Received</th>
           <th>Quantity Difference</th>
-          <th>Condition</th>
-          <th>Fulfillment Network SKU</th>
-
-          <th>Author</th>
-          <th>Title</th>
-          <th>Edition</th>
-          <th>Publisher</th>
-          <th>Publication Date</th>
-          <th>Weight</th>
-
-          <th>Edition Status Code</th>
-          <th>Edition Status Date</th>
-          <th>List Price</th>
-          <th>Used Wholesale Price</th>
-          <th>nebraska_wh</th>
-          <th>qa_aug_low</th>
-          <th>lowest_good_price</th>
-          <th>qa_low</th>
-          <th>yearly_low</th>
-          <th>qa_fba_low</th>
-          <th>monthly_sqf</th>
-          <th>monthly_spf</th>
-          <th>monthly_rqf</th>
-          <th>monthly_rpf</th>
-          <th>one_year_highest_wholesale_price</th>
-          <th>two_years_wh_max</th>
-
-          <th>Created At</th>
-          <th>Updated At</th>
-          <th>Reconciled</th>
         </tr>
       </thead>
       <tbody>

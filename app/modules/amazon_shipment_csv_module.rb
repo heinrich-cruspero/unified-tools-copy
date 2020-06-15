@@ -32,28 +32,28 @@ module AmazonShipmentCsvModule
       book = Book.find_by(isbn: data_hash[:isbn])
 
       unless book.nil?
-        az_shipment.book_id = book.id
-        az_shipment.edition_status_code = book.edition_status_code
-        az_shipment.edition_status_date = book.edition_status_date
-        az_shipment.list_price = book.list_price
-        az_shipment.used_wholesale_price = book.used_wholesale_price
-        az_shipment.nebraska_wh = book.nebraska_wh
-        az_shipment.qa_aug_low = book.qa_aug_low
-        az_shipment.lowest_good_price = book.lowest_good_price
-        az_shipment.qa_low = book.qa_low
-        az_shipment.yearly_low = book.yearly_low
-        az_shipment.qa_fba_low = book.qa_fba_low
-        az_shipment.monthly_sqf = book.monthly_sqf
-        az_shipment.monthly_spf = book.monthly_spf
-        az_shipment.monthly_rqf = book.monthly_rqf
-        az_shipment.monthly_rpf = book.monthly_rpf
-        az_shipment.one_year_highest_wholesale_price = book.one_year_highest_wholesale_price
-        az_shipment.two_years_wh_max = book.two_years_wh_max
+        az_shipment.update(
+          book_id: book.id,
+          edition_status_code: book.edition_status_code,
+          edition_status_date: book.edition_status_date,
+          list_price: book.list_price,
+          used_wholesale_price: book.used_wholesale_price,
+          nebraska_wh: book.nebraska_wh,
+          qa_aug_low: book.qa_aug_low,
+          lowest_good_price: book.lowest_good_price,
+          qa_low: book.qa_low,
+          yearly_low: book.yearly_low,
+          qa_fba_low: book.qa_fba_low,
+          monthly_sqf: book.monthly_sqf,
+          monthly_spf: book.monthly_spf,
+          monthly_rqf: book.monthly_rqf,
+          monthly_rpf: book.monthly_rpf,
+          one_year_highest_wholesale_price: book.one_year_highest_wholesale_price,
+          two_years_wh_max: book.two_years_wh_max
+        )
       end
-      indaba_sku.quantity = 1
-      indaba_sku.save
-      az_shipment.quantity_shipped = az_shipment.indaba_skus.all.sum('quantity')
-      az_shipment.save
+      indaba_sku.update(quantity: 1)
+      az_shipment.update(quantity_shipped: az_shipment.indaba_skus.all.sum('quantity'))
     end
   end
 

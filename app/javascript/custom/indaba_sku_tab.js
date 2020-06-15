@@ -29,7 +29,7 @@ $( document ).on('turbolinks:load', function() {
     }
 
     function onClickDateSubmit(event) {
-        appendParamsToURL('date', $('#sku-table-search-form').val());
+        appendParamsToURL('data', $('#sku-table-search-form').val());
     };
 
     function onImportCSVSubmit(event) {
@@ -38,7 +38,7 @@ $( document ).on('turbolinks:load', function() {
 
     $(function () {
       $('input[name="daterange"]').daterangepicker({
-        opens: 'left',
+        opens: 'right',
         locale: {
           format: 'YYYY-MM-DD'
         }
