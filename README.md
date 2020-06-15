@@ -4,7 +4,7 @@
 3. Run `bin/yarn install`
 
 # DB Setup
-1. run `rake db:create`, `rake db:migrate`
+1. run `rake db:db:setup` or `rake db:reset`
 
 # Running of Test Scripts using Rspec
 1. run `rspec`
@@ -16,11 +16,12 @@
 3. Go to Credentials, then select the "OAuth consent screen" tab on the left panel, and provide an 'EMAIL ADDRESS' and a 'Project Name'
 
 # Credentials
-1. Run `EDITOR=vi bin/rails credentials:edit` in cmd to create master.key and credentials.yml.enc files inside config.
-2. Run `EDITOR=vi rails credentials:edit` againg to set up, google and aws key
+1. Run `EDITOR=vi rails credentials:edit`
 
-  google:
-    client_id: '`<google_client_id>`'
-    secret_key: '`<google_secret_key>`''
+    secret_key_base: '*********'
 
 3. Save
+
+#Required Environment Variables
+1.GOOGLE_APP_ID
+2.GOOGLE_APP_SECRET

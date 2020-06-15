@@ -12,7 +12,7 @@ AllCops:
     - config.ru
 
 Layout/LineLength:
-  Max: 110
+  Max: 100
   IgnoredPatterns: ['(\A|\s)#']
 
 Metrics/BlockLength:
