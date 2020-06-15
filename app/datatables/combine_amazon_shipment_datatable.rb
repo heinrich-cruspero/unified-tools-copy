@@ -6,14 +6,11 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      shipment_id: {
-        source: 'AmazonShipment.shipment_id',
-        cond: :start_with
-      },
-      quantity_shipped: { source: 'quantity_shipped', orderable: true, searchable: false },
-      quantity_in_case: { source: 'quantity_in_case', orderable: true, searchable: false },
-      quantity_received: { source: 'quantity_received', orderable: true, searchable: false },
-      quantity_difference: { source: 'quantity_difference', orderable: true, searchable: false }
+      shipment_id: { source: 'AmazonShipment.shipment_id', cond: :string_eq },
+      quantity_shipped: { source: 'quantity_shipped', searchable: false },
+      quantity_in_case: { source: 'quantity_in_case', searchable: false },
+      quantity_received: { source: 'quantity_received', searchable: false },
+      quantity_difference: { source: 'quantity_difference', searchable: false }
     }
   end
 

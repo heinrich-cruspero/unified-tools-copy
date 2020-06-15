@@ -6,20 +6,14 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      az_sku: { source: 'AmazonShipment.az_sku', cond: :start_with },
-      isbn: { source: 'AmazonShipment.isbn', cond: :start_with },
-      shipment_id: {
-        source: 'AmazonShipment.shipment_id',
-        cond: :start_with
-      },
-      sku: { source: 'IndabaSku.sku', cond: :start_with },
-      quantity: { source: 'IndabaSku.quantity', cond: :exact, searchable: false },
-      condition: {
-        source: 'AmazonShipment.condition',
-        cond: :start_with
-      },
-      name: { source: 'AmazonShipmentFile.name', cond: :start_with },
-      date: { source: 'AmazonShipmentFile.date', cond: :start_with }
+      az_sku: { source: 'AmazonShipment.az_sku', cond: :string_eq },
+      isbn: { source: 'AmazonShipment.isbn', cond: :string_eq },
+      shipment_id: { source: 'AmazonShipment.shipment_id', cond: :string_eq },
+      sku: { source: 'IndabaSku.sku', cond: :string_eq },
+      quantity: { source: 'IndabaSku.quantity', searchable: false },
+      condition: { source: 'AmazonShipment.condition', cond: :string_eq },
+      name: { source: 'AmazonShipmentFile.name', cond: :string_eq },
+      date: { source: 'AmazonShipmentFile.date', cond: :string_eq }
     }
   end
 
