@@ -28,7 +28,6 @@ require("../custom/amazon_shipment_data_table")
 require("../custom/combine_shipment_data_table")
 require("../custom/indaba_sku_data_table")
 
-
 import "@fortawesome/fontawesome-free/css/all.css";
 
 // Uncomment to copy all static images under ../images to the output folder and reference
