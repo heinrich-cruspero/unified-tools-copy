@@ -6,18 +6,19 @@ $( document ).on('turbolinks:load', function() {
         "ajax": $('#amazon-associated-items-datatable').data('source'),
         "pagingType": "full_numbers",
         "columns": [
+            {"data": "order_item_id"},
             {"data": "asin"},
+            {"data": "seller_sku"},
+            {"data": "rni"},
             {"data": "sale_type"},
             {"data": "quantity_ordered"},
             {"data": "item_price"},
             {"data": "returned"},
             {"data": "buy_out"},
-            {"data": "rni"},
-            {"data": "action_date"},
-            {"data": "due_date"},
+            {"data": "buy_out_price"},
             {"data": "expired"},
-            {"data": "seller_sku"},
-            {"data": "buy_out_price"}
+            {"data": "due_date"},
+            {"data": "action_date"}
         ]
     });
 });

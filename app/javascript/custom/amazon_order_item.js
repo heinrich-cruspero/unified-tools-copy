@@ -7,6 +7,7 @@ $( document ).on('turbolinks:load', function() {
         "pagingType": "full_numbers",
         "columns": [
             {"data": "amazon_order_id"},
+            {"data": "order_item_id"},
             {"data": "asin"},
             {"data": "seller_sku"},
             {"data": "rni"},

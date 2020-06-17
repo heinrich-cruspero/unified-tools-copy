@@ -9,6 +9,9 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
       amazon_order_id: {
         source: 'AmazonOrder.amazon_order_id', searchable: false
       },
+      order_item_id: {
+        source: 'AmazonOrderItem.order_item_id', cond: :string_eq
+      },
       asin: {
         source: 'AmazonOrderItem.asin', cond: :string_eq
       },
@@ -19,7 +22,7 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
         source: 'AmazonOrderItem.rni', cond: :string_eq
       },
       sale_type: {
-        source: 'AmazonOrderItem.sale_type', cond: :string_eq
+        source: 'AmazonOrderItem.sale_type', searchable: false
       },
       quantity_ordered: {
         source: 'AmazonOrderItem.quantity_ordered', searchable: false
@@ -52,6 +55,7 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
     records.map do |record|
       {
         amazon_order_id: record.amazon_order.amazon_order_id,
+        order_item_id: record.order_item_id,
         asin: record.asin,
         seller_sku: record.seller_sku,
         rni: record.rni,

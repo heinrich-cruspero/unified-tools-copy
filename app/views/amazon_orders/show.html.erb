@@ -34,6 +34,7 @@
     <table id="amazon-associated-items-datatable" data-source="<%= order_associated_items_amazon_orders_path(format: :json, amazon_order_id: @amazon_order.id) %>">
       <thead>
         <tr>
+          <th>Order Item Id</th>
           <th>ASIN</th>
           <th>Seller SKU</th>
           <th>RNI</th>
