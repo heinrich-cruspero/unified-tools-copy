@@ -3,23 +3,23 @@ $( document ).on('turbolinks:load', function() {
         "processing": true,
         "serverSide": true,
         "scrollX": true,
-        "columnDefs": [{ "orderable": false, "targets": -1 }],
         "ajax": $('#amazon-order-items-datatable').data('source'),
         "pagingType": "full_numbers",
         "columns": [
-            {"data": "asin"},
             {"data": "amazon_order_id"},
+            {"data": "asin"},
+            {"data": "seller_sku"},
+            {"data": "rni"},
             {"data": "sale_type"},
             {"data": "quantity_ordered"},
             {"data": "item_price"},
             {"data": "returned"},
             {"data": "buy_out"},
-            {"data": "rni"},
-            {"data": "action_date"},
-            {"data": "due_date"},
+            {"data": "buy_out_price"},
             {"data": "expired"},
-            {"data": "seller_sku"},
-            {"data": "buy_out_price"}
+            {"data": "due_date"},
+            {"data": "action_date"}
         ]
     });
 });
+

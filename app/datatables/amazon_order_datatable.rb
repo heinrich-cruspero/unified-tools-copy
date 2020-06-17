@@ -15,20 +15,12 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      order_total: {
-        source: 'AmazonOrder.order_total',
-        searchable: false
-      },
-      purchase_date: {
-        source: 'AmazonOrder.purchase_date',
-        searchable: false
+      amazon_order_id: {
+        source: 'AmazonOrder.amazon_order_id',
+        cond: :string_eq
       },
       status: {
         source: 'AmazonOrder.status',
-        cond: :string_eq
-      },
-      amazon_order_id: {
-        source: 'AmazonOrder.amazon_order_id',
         cond: :string_eq
       },
       state: {
@@ -42,6 +34,14 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
       zipcode: {
         source: 'AmazonOrder.zipcode',
         cond: :string_eq
+      },
+      order_total: {
+        source: 'AmazonOrder.order_total',
+        searchable: false
+      },
+      purchase_date: {
+        source: 'AmazonOrder.purchase_date',
+        searchable: false
       }
     }
   end
@@ -49,13 +49,13 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |record|
       {
-        order_total: record.order_total,
-        purchase_date: record.purchase_date,
-        status: record.status,
         amazon_order_id: record.amazon_order_id,
+        status: record.status,
         state: record.state,
         city: record.city,
         zipcode: record.zipcode,
+        order_total: record.order_total,
+        purchase_date: record.purchase_date,
         amazon_order_item: link_to('Order Items', amazon_order_path(record), class: 'btn btn-info btn-sm')
       }
     end
