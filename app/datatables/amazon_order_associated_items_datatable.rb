@@ -9,6 +9,12 @@ class AmazonOrderAssociatedItemsDatatable < AjaxDatatablesRails::ActiveRecord
       asin: {
         source: 'AmazonOrderItem.asin', cond: :string_eq
       },
+      seller_sku: {
+        source: 'AmazonOrderItem.seller_sku', cond: :string_eq
+      },
+      rni: {
+        source: 'AmazonOrderItem.rni', cond: :string_eq
+      },
       sale_type: {
         source: 'AmazonOrderItem.sale_type', cond: :string_eq
       },
@@ -24,23 +30,17 @@ class AmazonOrderAssociatedItemsDatatable < AjaxDatatablesRails::ActiveRecord
       buy_out: {
         source: 'AmazonOrderItem.buy_out', searchable: false
       },
-      rni: {
-        source: 'AmazonOrderItem.rni', cond: :string_eq
-      },
-      action_date: {
-        source: 'AmazonOrderItem.action_date', searchable: false
-      },
-      due_date: {
-        source: 'AmazonOrderItem.due_date', searchable: false
+      buy_out_price: {
+        source: 'AmazonOrderItem.buy_out_price', searchable: false
       },
       expired: {
         source: 'AmazonOrderItem.expired', searchable: false
       },
-      seller_sku: {
-        source: 'AmazonOrderItem.seller_sku', cond: :string_eq
+      due_date: {
+        source: 'AmazonOrderItem.due_date', searchable: false
       },
-      buy_out_price: {
-        source: 'AmazonOrderItem.buy_out_price', searchable: false
+      action_date: {
+        source: 'AmazonOrderItem.action_date', searchable: false
       }
     }
   end
@@ -49,17 +49,17 @@ class AmazonOrderAssociatedItemsDatatable < AjaxDatatablesRails::ActiveRecord
     records.map do |record|
       {
         asin: record.asin,
+        seller_sku: record.seller_sku,
+        rni: record.rni,
         sale_type: record.sale_type,
         quantity_ordered: record.quantity_ordered,
         item_price: record.item_price,
         returned: record.returned,
         buy_out: record.buy_out,
-        rni: record.rni,
-        action_date: record.action_date,
-        due_date: record.due_date,
+        buy_out_price: record.buy_out_price,
         expired: record.expired,
-        seller_sku: record.seller_sku,
-        buy_out_price: record.buy_out_price
+        due_date: record.due_date,
+        action_date: record.action_date
       }
     end
   end
