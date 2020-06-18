@@ -56,7 +56,8 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
         zipcode: record.zipcode,
         order_total: record.order_total,
         purchase_date: record.purchase_date,
-        amazon_order_item: link_to('Order Items', amazon_order_path(record), class: 'btn btn-info btn-sm')
+        amazon_order_item: link_to('Order Items', amazon_order_path(record),
+                                   class: 'btn btn-info btn-sm')
       }
     end
   end
