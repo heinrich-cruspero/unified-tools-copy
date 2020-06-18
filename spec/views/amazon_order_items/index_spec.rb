@@ -17,7 +17,7 @@ RSpec.describe 'Amazon order items index page spec', type: :feature do
     within 'table#amazon-order-items-datatable' do
       expect(page).to have_text 'ASIN'
       expect(page).to have_text 'Amazon Order Id'
-      expect(page).to have_text 'Sate Type Id'
+      expect(page).to have_text 'Sale Type Id'
       expect(page).to have_text 'Quantity Ordered'
       expect(page).to have_text 'Item Price'
       expect(page).to have_text 'Buy Out'
