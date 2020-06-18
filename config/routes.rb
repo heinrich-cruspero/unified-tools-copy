@@ -14,6 +14,14 @@ Rails.application.routes.draw do
 
   resources :books, only: [:index]
 
+  resources :amazon_orders, only: %i[index show] do
+    collection do
+      get 'order_associated_items'
+    end
+  end
+
+  resources :amazon_order_items, only: [:index]
+
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 

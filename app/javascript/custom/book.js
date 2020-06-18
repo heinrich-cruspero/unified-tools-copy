@@ -1,9 +1,8 @@
-$(document).ready(function() {
+$( document ).on('turbolinks:load', function() {
     $('#books-datatable').dataTable({
         "processing": true,
         "serverSide": true,
         "scrollX": true,
-        "columnDefs": [{ "orderable": false, "targets": -1 }],
         "ajax": $('#books-datatable').data('source'),
         "pagingType": "full_numbers",
         "columns": [
