@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-sm">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+      <h1 class="h2">Amazon Orders Import</h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <div class="custom-file">
+      <%= form_tag('/amazon_orders/export.csv', method: :get) do %>
+        <p class="input-note">Note: Enter ids without double/single quotes.
+        example - 444-4444444-444444 555-5555555-5555555</p>
+        <%= text_area_tag 'amazon_order_ids' %>
+        <%= submit_tag "Export CSV", class: 'btn btn-secondary csv-btn'%>
+      <% end %>
+    </div>
+  </div>
+</div>

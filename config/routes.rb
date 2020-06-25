@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :amazon_orders, only: %i[index show] do
     collection do
       get 'order_associated_items'
+      get 'export'
     end
   end
 
