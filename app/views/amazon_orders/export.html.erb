@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-sm">
     <div class="custom-file">
-      <%= form_tag('/amazon_orders/export.csv', method: :get) do %>
+      <%= form_tag('/amazon_orders/export.csv') do %>
         <p class="input-note">Note: Enter ids without double/single quotes.
         example - 444-4444444-444444 555-5555555-5555555</p>
         <%= text_area_tag 'amazon_order_ids' %>
