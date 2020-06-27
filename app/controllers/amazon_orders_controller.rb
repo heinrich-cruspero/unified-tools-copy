@@ -27,7 +27,11 @@ class AmazonOrdersController < ApplicationController
     authorize AmazonOrder
     return if request.format.html?
 
-    ids = params[:amazon_order_ids].split(' ')
+    ids = if params[:amazon_order_ids].present?
+            params[:amazon_order_ids].split(' ')
+          else
+            AmazonOrder.import(params[:csv_file])
+          end
     @amazon_orders = AmazonOrder.where(amazon_order_id: ids)
     respond_to do |format|
       format.html

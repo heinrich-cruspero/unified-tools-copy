@@ -14,4 +14,14 @@ class AmazonOrder < ApplicationRecord
       end
     end
   end
+
+  def self.import(file)
+    ids = []
+    if file
+      CSV.foreach(file.path, headers: true) do |row|
+        ids << row[0]
+      end
+    end
+    ids
+  end
 end
