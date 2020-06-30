@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-sm">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+      <h1 class="h2">Amazon Order Items</h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <table id="amazon-order-items-datatable" data-source="<%= amazon_order_items_path(format: :json) %>">
+      <thead>
+        <tr>
+          <th>Amazon Order Id</th>
+          <th>Order Item Id</th>
+          <th>ASIN</th>
+          <th>Seller SKU</th>
+          <th>RNI</th>
+          <th>Sale Type Id</th>
+          <th>Quantity Ordered</th>
+          <th>Item Price</th>
+          <th>Returned</th>
+          <th>Buy Out</th>
+          <th>Buy Out Price</th>
+          <th>Expired</th>
+          <th>Due Date</th>
+          <th>Action Date</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+</div>

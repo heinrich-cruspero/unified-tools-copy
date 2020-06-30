@@ -20,8 +20,8 @@
 
     secret_key_base: '*********'
 
-3. Save
+2. Save
 
 #Required Environment Variables
-1.GOOGLE_APP_ID
-2.GOOGLE_APP_SECRET
+1. GOOGLE_APP_ID
+2. GOOGLE_APP_SECRET

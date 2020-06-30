@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_161414) do
+ActiveRecord::Schema.define(version: 2020_05_20_184834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,51 @@ ActiveRecord::Schema.define(version: 2020_04_21_161414) do
     t.index ["in_stock_supply_quantity"], name: "index_amazon_inventories_on_in_stock_supply_quantity"
     t.index ["inbound_quantity"], name: "index_amazon_inventories_on_inbound_quantity"
     t.index ["isbn"], name: "index_amazon_inventories_on_isbn"
+  end
+
+  create_table "amazon_order_items", force: :cascade do |t|
+    t.bigint "amazon_order_id", null: false
+    t.string "order_item_id", null: false
+    t.string "asin", null: false
+    t.string "seller_sku"
+    t.string "rni"
+    t.integer "sale_type", default: 0, null: false
+    t.integer "quantity_ordered", default: 0, null: false
+    t.float "item_price", default: 0.0, null: false
+    t.boolean "returned", default: false, null: false
+    t.boolean "buy_out", default: false, null: false
+    t.float "buy_out_price", default: 0.0, null: false
+    t.boolean "expired", default: false, null: false
+    t.date "due_date"
+    t.date "action_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["action_date"], name: "index_amazon_order_items_on_action_date"
+    t.index ["amazon_order_id"], name: "index_amazon_order_items_on_amazon_order_id"
+    t.index ["asin"], name: "index_amazon_order_items_on_asin"
+    t.index ["due_date"], name: "index_amazon_order_items_on_due_date"
+    t.index ["order_item_id"], name: "index_amazon_order_items_on_order_item_id", unique: true
+    t.index ["rni"], name: "index_amazon_order_items_on_rni"
+    t.index ["sale_type"], name: "index_amazon_order_items_on_sale_type"
+    t.index ["seller_sku"], name: "index_amazon_order_items_on_seller_sku"
+  end
+
+  create_table "amazon_orders", force: :cascade do |t|
+    t.string "amazon_order_id", null: false
+    t.string "status", null: false
+    t.string "state"
+    t.string "city"
+    t.string "zipcode"
+    t.float "order_total", default: 0.0, null: false
+    t.datetime "purchase_date", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["amazon_order_id"], name: "index_amazon_orders_on_amazon_order_id", unique: true
+    t.index ["city"], name: "index_amazon_orders_on_city"
+    t.index ["purchase_date"], name: "index_amazon_orders_on_purchase_date"
+    t.index ["state"], name: "index_amazon_orders_on_state"
+    t.index ["status"], name: "index_amazon_orders_on_status"
+    t.index ["zipcode"], name: "index_amazon_orders_on_zipcode"
   end
 
   create_table "amazon_shipment_files", force: :cascade do |t|
