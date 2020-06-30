@@ -15,6 +15,11 @@
         <%= text_area_tag 'amazon_order_ids',nil, placeholder: "Enter Amazon Order Ids" %>
         <p>Or</p>
         <p><b>Upload Ids CSV:</b></p>
+        <p class="input-note">Note: Import file with header.<br>
+        Example - <br>amazon_order_id<br>
+                  111-0419226-6277856<br>
+                  111-0911268-0718624<br>
+        </p>
         <%= file_field_tag 'csv_file' %>
         <%= submit_tag "Export CSV", class: 'btn btn-secondary csv-btn'%>
       <% end %>

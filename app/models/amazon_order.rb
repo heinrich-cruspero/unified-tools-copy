@@ -15,7 +15,7 @@ class AmazonOrder < ApplicationRecord
     end
   end
 
-  def self.import(file)
+  def self.parse_csv(file)
     ids = []
     if file
       CSV.foreach(file.path, headers: true) do |row|

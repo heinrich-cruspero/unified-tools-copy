@@ -30,7 +30,7 @@ class AmazonOrdersController < ApplicationController
     ids = if params[:amazon_order_ids].present?
             params[:amazon_order_ids].split(' ')
           else
-            AmazonOrder.import(params[:csv_file])
+            AmazonOrder.parse_csv(params[:csv_file])
           end
     @amazon_orders = AmazonOrder.where(amazon_order_id: ids)
     respond_to do |format|
