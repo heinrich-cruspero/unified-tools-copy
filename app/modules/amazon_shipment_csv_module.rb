@@ -10,15 +10,22 @@ module AmazonShipmentCsvModule
     ).first_or_create(name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
                       date: (parsed_filename[1]).to_s)
     # check amazon_shipment_file (filename and date should be unique) .create_or_first
+
+    # append 0 for isbn incase length is below 10 chars
+    isbn_data = data_hash[:isbn]
+    while isbn_data.length < 10
+      isbn_data = "0" + isbn_data
+    end
+
     chunks.each do |data_hash|
       az_shipment = AmazonShipment.where(
-        isbn: data_hash[:isbn],
+        isbn: isbn_data,
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
         amazon_shipment_file_id: amazon_shipment_file.id,
         condition: data_hash[:condition]
       ).first_or_create(
-        isbn: data_hash[:isbn],
+        isbn: isbn_data,
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
         amazon_shipment_file_id: amazon_shipment_file.id,
@@ -29,7 +36,7 @@ module AmazonShipmentCsvModule
                                      sku: data_hash[:sku],
                                      amazon_shipment_id: az_shipment.id
                                    )
-      book = Book.find_by(isbn: data_hash[:isbn])
+      book = Book.find_by(isbn: isbn_data)
 
       unless book.nil?
         az_shipment.update(

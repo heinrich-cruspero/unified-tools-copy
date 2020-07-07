@@ -31,7 +31,7 @@
 <div class="row">
   <div class="col-sm">
     <table class="table" id="amazon-shipments-datatable" data-source="<%= amazon_shipments_path(format: :json, filter: @filter_option) %>" style="text-align: center; width:100%;">
-      <thead>
+      <thead style="table-layout:fixed;">
         <tr>
           <th>ISBN</th>
           <th>Shipment ID</th>
