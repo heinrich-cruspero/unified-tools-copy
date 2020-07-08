@@ -31,7 +31,7 @@ RUN bundle install --without development test
 # Copy the whole app
 COPY . $APP_HOME
 
-CMD RAILS_ENV=production bin/delayed_job start
+RUN chmod +x scripts/db_migrate.sh
 
 EXPOSE 3000
 CMD bundle exec puma -C config/puma.rb
