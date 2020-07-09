@@ -3,6 +3,7 @@
 ##
 module AmazonShipmentCsvModule
   def process_csv(chunks, fname)
+
     parsed_filename = fname.split('_')
     amazon_shipment_file = AmazonShipmentFile.where(
       name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
@@ -12,12 +13,12 @@ module AmazonShipmentCsvModule
     # check amazon_shipment_file (filename and date should be unique) .create_or_first
 
     # append 0 for isbn incase length is below 10 chars
-    isbn_data = data_hash[:isbn]
-    while isbn_data.length < 10
-      isbn_data = "0" + isbn_data
-    end
 
     chunks.each do |data_hash|
+      isbn_data = data_hash[:isbn].to_s
+      while isbn_data.length < 10
+        isbn_data = "0" + isbn_data
+      end
       az_shipment = AmazonShipment.where(
         isbn: isbn_data,
         shipment_id: data_hash[:ship_id],

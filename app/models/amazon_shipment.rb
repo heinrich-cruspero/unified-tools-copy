@@ -3,6 +3,8 @@
 ##
 class AmazonShipment < ApplicationRecord
   include PgSearch::Model
+  include Wisper::Publisher
+
   pg_search_scope :search_by_fuzzy, against: %i[
     isbn
     shipment_id
@@ -21,10 +23,20 @@ class AmazonShipment < ApplicationRecord
 
   # validation
   validates :shipment_id, uniqueness: { scope: %i[az_sku isbn] }
+  # after_save :amazon_shipment_creation_failed
 
   # fks
   belongs_to :amazon_shipment_file
   belongs_to :book, optional: true
+
+
+  # wisper signals
+  # def amazon_shipment_creation_failed
+  #   puts("=================error here====================")
+  #   # broadcast(:user_created, UserCreatedEvent.new(user_id: id, email: email, fullname: fullname))
+  #   # broadcast(:amazon_shipment_failed, self) if errors.any?
+  # end
+
 
   # instance methods
   def quantity_difference
