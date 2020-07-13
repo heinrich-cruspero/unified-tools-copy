@@ -7,7 +7,7 @@ class ProcessCsvJob < ApplicationJob
 
   rescue_from(ActiveRecord::NotNullViolation) do |exception|
     puts("+++++++++++++++++++process error here++++++++++++++++++=")
-    flash[:alert] = 'Error while sending message!'
+    AmazonShipmentMailer.with(user: "heinrich.cruspero@gmail.com").csv_error_email.deliver_now
   end
 
   def perform(*args)

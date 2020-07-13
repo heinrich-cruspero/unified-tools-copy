@@ -3,7 +3,6 @@
 ##
 class AmazonShipment < ApplicationRecord
   include PgSearch::Model
-  include Wisper::Publisher
 
   pg_search_scope :search_by_fuzzy, against: %i[
     isbn
