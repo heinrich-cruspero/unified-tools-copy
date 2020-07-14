@@ -7,11 +7,13 @@ class ProcessCsvJob < ApplicationJob
 
   rescue_from(ActiveRecord::NotNullViolation) do |exception|
     puts("+++++++++++++++++++process error here++++++++++++++++++=")
-    AmazonShipmentMailer.with(user: "heinrich.cruspero@gmail.com").csv_error_email.deliver_now
   end
 
   def perform(*args)
-    process_csv(args[0], args[1])
+    invalid_entries = process_csv(args[0], args[1])
+    unless invalid_entries.empty?
+      AmazonShipmentMailer.with(user: "heinrich.cruspero@gmail.com", entries: invalid_entries).csv_error_email.deliver_now
+    end
   end
 
   def max_attempts
