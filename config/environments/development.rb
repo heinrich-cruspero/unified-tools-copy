@@ -66,15 +66,12 @@ Rails.application.configure do
 
   config.hosts.clear
 
-
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                 587,
-    domain:               'example.com',
-    user_name:            'marc.cruspero@gmail.com',
-    password:             'Bengat143!',
-    authentication:       'plain',
-    enable_starttls_auto: true
+    address: ENV['AWS_SES_ADDRESS'],
+    password: ENV['AWS_SES_PASSWORD'],
+    authentication: ENV['AWS_SES_AUTHENTICATION'],
+    port: ENV['AWS_SES_PORT'],
+    user_name: ENV['AWS_SES_USERNAME']
   }
 end

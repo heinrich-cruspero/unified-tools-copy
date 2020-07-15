@@ -7,7 +7,16 @@
   <body>
     <h1>Cannot proccess following entries</h1>
     <% @entries.each do |entry| %>
-      <p><%= entry %></p>
+      <ul>
+        <li>
+          <b>Row:</b>&nbsp;<%= entry[:row] %> <br>
+          <% if entry[:az_sku].nil? %> <b>Amazon SKU:</b>&nbsp; MISSING <br><% end %>
+          <% if entry[:sku].nil? %> <b>SKU:</b>&nbsp; MISSING <br><% end %>
+          <% if entry[:isbn].nil? %> <b>ISBN:</b>&nbsp; MISSING <br><% end %>
+          <% if entry[:ship_id].nil? %> <b>Shipment ID:</b>&nbsp; MISSING <br><% end %>
+          <% if entry[:condition].nil? %> <b>Condition:</b>&nbsp; MISSING <br><% end %>
+        </li>
+      </ul>
     <% end %>
   </body>
 </html>
