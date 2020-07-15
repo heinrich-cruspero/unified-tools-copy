@@ -1,8 +1,3 @@
-
-Welcome to example.com, <%= @user %>
-===============================================
-
-You have successfully signed up to example.com,
-your username is: <%= @user %>.
-
-Thanks for joining and have a great day!
+<% @entries.each do |entry| %>
+  <%= entry %>
+<% end %>
