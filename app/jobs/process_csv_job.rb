@@ -10,11 +10,12 @@ class ProcessCsvJob < ApplicationJob
   end
 
   def perform(*args)
+    user = args[2]
     invalid_entries = process_csv(args[0], args[1])
     return if invalid_entries.empty?
 
     AmazonShipmentMailer.with(
-      user: 'heinrich.cruspero@gmail.com',
+      user: user,
       entries: invalid_entries
     ).csv_error_email.deliver_now
   end
