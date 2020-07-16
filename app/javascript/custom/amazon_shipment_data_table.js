@@ -1,7 +1,8 @@
 $( document ).on('turbolinks:load', function() {
-    $('#amazon-shipments-datatable').dataTable({
+    var table = $('#amazon-shipments-datatable').dataTable({
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "scrollX": true,
         "ajax": $('#amazon-shipments-datatable').data('source'),
         "pagingType": "full_numbers",

@@ -1,6 +1,7 @@
 @import 'bootstrap/dist/css/bootstrap';
 @import 'bootstrap-table/dist/bootstrap-table';
-@import "bootstrap-daterangepicker/daterangepicker";
+@import 'bootstrap-daterangepicker/daterangepicker';
+@import 'datatables.net-fixheader-dt/css/fixedHeader.dataTables.min.css';
 
 body {
   font-size: .925rem;
