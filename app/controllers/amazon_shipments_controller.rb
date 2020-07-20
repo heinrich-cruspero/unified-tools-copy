@@ -62,4 +62,31 @@ class AmazonShipmentsController < ApplicationController
       redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }
     end
   end
+
+  def export
+    authorize AmazonShipment
+
+    @filter_option = params[:filter]
+    something = AmazonShipmentDatatable.new(params)
+
+    puts("===================================")
+    puts(@filter_option)
+    puts(something.data)
+    puts("===================================")
+
+    attributes = %w[isbn shipment_id az_sku condition]
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      something.data.to_a.each do |order|
+        csv << order
+      end
+    end
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data csv, filename: "amazon_orders-#{Date.today}.csv" }
+    end
+
+  end
 end

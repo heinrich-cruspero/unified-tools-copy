@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       post 'import'
       get 'delete_skus'
       post 'delete_skus'
+      post 'export'
+      get 'export'
     end
   end
 
