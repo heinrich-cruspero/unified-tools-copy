@@ -11,6 +11,11 @@ Rails.application.routes.draw do
       post 'delete_skus'
       post 'export'
       get 'export'
+
+      post 'index'
+      get 'index'
+      post 'combine'
+      post 'indaba_skus'
     end
   end
 

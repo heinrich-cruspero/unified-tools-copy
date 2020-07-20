@@ -88,7 +88,6 @@ module AmazonShipmentCsvModule
 
   def _parse_amazon_shipment_file(fname)
     parsed_filename = fname.split('_')
-
     amazon_shipment_file = AmazonShipmentFile.where(
       name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
       date: (parsed_filename[1]).to_s

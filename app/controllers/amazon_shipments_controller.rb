@@ -3,30 +3,61 @@
 ##
 class AmazonShipmentsController < ApplicationController
   include AmazonShipmentCsvModule
+  include AmazonShipmentDatatableModule
 
   def index
     authorize AmazonShipment
+
     respond_to do |format|
       @filter_option = params[:filter]
-      format.html
-      format.json { render json: AmazonShipmentDatatable.new(params) }
+      if request.get?
+        Rails.cache.write 'params', params
+        format.html
+        format.json { render json: AmazonShipmentDatatable.new(params) }
+      else
+        to_display = AmazonShipmentDatatable.new(Rails.cache.fetch('params'))
+        format.csv do
+          send_data datatable_to_csv(to_display),
+                    filename: "amazon_shipments-#{Date.today}.csv"
+        end
+      end
     end
   end
 
   def combine
     authorize AmazonShipment
+
     respond_to do |format|
-      format.html
-      format.json { render json: CombineAmazonShipmentDatatable.new(params) }
+      if request.get?
+        Rails.cache.write 'params', params
+        format.html
+        format.json { render json: CombineAmazonShipmentDatatable.new(params) }
+      else
+        to_display = CombineAmazonShipmentDatatable.new(Rails.cache.fetch('params'))
+        format.csv do
+          send_data datatable_to_csv(to_display),
+                    filename: "amazon_shipments_combined-#{Date.today}.csv"
+        end
+      end
     end
   end
 
   def indaba_skus
     authorize AmazonShipment
+
     respond_to do |format|
       @data = params[:data]
-      format.html
-      format.json { render json: IndabaSkuDatatable.new(params) }
+      if request.get?
+        Rails.cache.write 'params', params
+        format.html
+        format.json { render json: IndabaSkuDatatable.new(params) }
+      else
+        to_display = IndabaSkuDatatable.new(Rails.cache.fetch('params'))
+        format.csv do
+          send_data datatable_to_csv(to_display),
+                    filename: "amazon_shipments_indaba_skus-#{Date.today}.csv"
+        end
+      end
     end
   end
 
@@ -61,32 +92,5 @@ class AmazonShipmentsController < ApplicationController
     else
       redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }
     end
-  end
-
-  def export
-    authorize AmazonShipment
-
-    @filter_option = params[:filter]
-    something = AmazonShipmentDatatable.new(params)
-
-    puts("===================================")
-    puts(@filter_option)
-    puts(something.data)
-    puts("===================================")
-
-    attributes = %w[isbn shipment_id az_sku condition]
-
-    CSV.generate(headers: true) do |csv|
-      csv << attributes
-      something.data.to_a.each do |order|
-        csv << order
-      end
-    end
-
-    respond_to do |format|
-      format.html
-      format.csv { send_data csv, filename: "amazon_orders-#{Date.today}.csv" }
-    end
-
   end
 end

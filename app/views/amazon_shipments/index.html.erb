@@ -17,7 +17,9 @@
     </div>
     <div class="btn-toolbar mb-2 mb-md-0 float-right">
       <div class="btn-group mr-2">
-        <a class="btn btn btn-secondary" href="<%= export_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Export</a>
+        <%= form_tag('/amazon_shipments/index.csv', multipart: true) do %>
+        <%= submit_tag "Export CSV", class: 'btn btn-secondary csv-btn'%>
+        <% end %>
       </div>
     </div>
   </div>
@@ -33,6 +35,7 @@
     </div>
   </div>
 </div>
+
 
 <div class="row">
   <div class="col-sm">

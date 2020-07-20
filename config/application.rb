@@ -36,5 +36,6 @@ module UnifiedTools
     config.generators.system_tests = nil
 
     config.active_job.queue_adapter = :delayed_job
+    config.cache_store = :memory_store, { size: 64.megabytes }
   end
 end
