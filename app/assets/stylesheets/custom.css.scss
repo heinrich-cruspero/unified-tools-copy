@@ -1,7 +1,8 @@
 @import 'bootstrap/dist/css/bootstrap';
 @import 'bootstrap-table/dist/bootstrap-table';
 @import 'bootstrap-daterangepicker/daterangepicker';
-@import 'datatables.net-fixheader-dt/css/fixedHeader.dataTables.min.css';
+// @import 'datatables.net-dt/css/jquery.dataTables';
+@import 'datatables.net-fixedheader-dt/css/fixedHeader.dataTables';
 
 body {
   font-size: .925rem;
@@ -373,4 +374,12 @@ table.dataTable {
 }
 .input-note {
   color: lightgrey;
+}
+
+.dataTables_scrollHead {
+  position: sticky !important;
+  top: 50px;
+  z-index: 99;
+  background-color: white;
+  box-shadow: 0px 5px 5px 0px rgba(82, 63, 105, 0.08);
 }

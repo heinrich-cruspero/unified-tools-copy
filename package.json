@@ -12,7 +12,7 @@
     "bootstrap-table": "^1.15.5",
     "datatables.net": "^1.10.21",
     "datatables.net-bs4": "^1.10.21",
-    "datatables.net-fixedheader": "^3.1.7",
+    "datatables.net-dt": "^1.10.21",
     "datatables.net-fixedheader-dt": "^3.1.7",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
