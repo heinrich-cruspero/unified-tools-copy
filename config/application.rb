@@ -36,5 +36,13 @@ module UnifiedTools
     config.generators.system_tests = nil
 
     config.active_job.queue_adapter = :delayed_job
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV['AWS_SES_ADDRESS'],
+      password: ENV['AWS_SES_PASSWORD'],
+      authentication: ENV['AWS_SES_AUTHENTICATION'],
+      port: ENV['AWS_SES_PORT'],
+      user_name: ENV['AWS_SES_USERNAME']
+    }
   end
 end

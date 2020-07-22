@@ -8,7 +8,7 @@ module AmazonShipmentCsvModule
     chunks.each_with_index do |data_hash, i|
       data_hash[:row] = i
       _check_entries(data_hash)
-      isbn_data = _format_isbn(data_hash[:isbn])
+      isbn_data = data_hash[:isbn]
       az_shipment = AmazonShipment.where(
         isbn: isbn_data,
         shipment_id: data_hash[:ship_id],
@@ -98,9 +98,10 @@ module AmazonShipmentCsvModule
     amazon_shipment_file
   end
 
-  def _format_isbn(isbn)
-    isbn_data = isbn.to_s
-    isbn_data = '0' + isbn_data while isbn_data.length < 10
-    isbn_data
-  end
+  # To be used later
+  # def _format_isbn(isbn)
+  #   isbn_data = isbn.to_s
+  #   isbn_data = '0' + isbn_data while isbn_data.length < 10
+  #   isbn_data
+  # end
 end

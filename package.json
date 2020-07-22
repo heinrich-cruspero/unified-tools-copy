@@ -12,7 +12,6 @@
     "bootstrap-table": "^1.15.5",
     "datatables.net": "^1.10.21",
     "datatables.net-bs4": "^1.10.21",
-    "datatables.net-fixedheader": "^3.1.7",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "turbolinks": "^5.2.0"

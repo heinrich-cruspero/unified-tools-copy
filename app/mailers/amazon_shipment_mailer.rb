@@ -2,11 +2,11 @@
 
 ##
 class AmazonShipmentMailer < ApplicationMailer
-  default from: 'no-reply@bba-corp.com'
+  layout 'amazon_shipment_mailer'
 
-  def csv_error_email
-    @user = params[:user]
-    @entries = params[:entries]
+  def csv_error_email(user, entries)
+    @user = user
+    @entries = entries
     mail(to: @user.email, subject: 'Entries cannot be processed')
   end
 end
