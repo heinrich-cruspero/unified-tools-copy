@@ -13,6 +13,6 @@ class ProcessCsvJob < ApplicationJob
     AmazonShipmentMailer.csv_error_email(
       user,
       invalid_entries
-    ).deliver_now
+    ).deliver_later
   end
 end

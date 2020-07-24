@@ -97,11 +97,4 @@ module AmazonShipmentCsvModule
 
     amazon_shipment_file
   end
-
-  # To be used later
-  # def _format_isbn(isbn)
-  #   isbn_data = isbn.to_s
-  #   isbn_data = '0' + isbn_data while isbn_data.length < 10
-  #   isbn_data
-  # end
 end

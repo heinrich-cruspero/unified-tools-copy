@@ -2,7 +2,7 @@
 
 ##
 class AmazonShipmentMailer < ApplicationMailer
-  layout 'amazon_shipment_mailer'
+  layout 'mailer'
 
   def csv_error_email(user, entries)
     @user = user

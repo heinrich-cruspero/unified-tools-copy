@@ -38,11 +38,11 @@ module UnifiedTools
     config.active_job.queue_adapter = :delayed_job
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      address: ENV['AWS_SES_ADDRESS'],
-      password: ENV['AWS_SES_PASSWORD'],
-      authentication: ENV['AWS_SES_AUTHENTICATION'],
-      port: ENV['AWS_SES_PORT'],
-      user_name: ENV['AWS_SES_USERNAME']
+      user_name: Rails.application.credentials[:aws][:ses_smtp_username],
+      password: Rails.application.credentials[:aws][:ses_smtp_password],
+      address: 'email-smtp.us-west-2.amazonaws.com',
+      authentication: 'plain',
+      port: 587
     }
   end
 end
