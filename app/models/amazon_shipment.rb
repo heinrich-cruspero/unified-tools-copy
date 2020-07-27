@@ -3,6 +3,7 @@
 ##
 class AmazonShipment < ApplicationRecord
   include PgSearch::Model
+
   pg_search_scope :search_by_fuzzy, against: %i[
     isbn
     shipment_id

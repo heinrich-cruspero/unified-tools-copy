@@ -37,8 +37,8 @@ class AmazonShipmentsController < ApplicationController
     uploaded_file = params[:csv_file]
     if uploaded_file
       processed = SmarterCSV.process(uploaded_file)
-      ProcessCsvJob.perform_later(processed, uploaded_file.original_filename)
-      redirect_to amazon_shipments_url, flash: { success: 'Successfully imported file.' }
+      ProcessCsvJob.perform_later(processed, uploaded_file.original_filename, current_user)
+      redirect_to amazon_shipments_url, flash: { notice: 'Processing imported file.' }
     else
       redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }
     end
