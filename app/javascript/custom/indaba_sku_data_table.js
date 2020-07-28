@@ -16,4 +16,14 @@ $( document ).on('turbolinks:load', function() {
             {"data": "date"},
         ]
     });
+
+    $container = $('#content');
+    $container
+        .on('click', '#export-indaba-sku-submit-button', onExportButtonClick)
+
+    function onExportButtonClick(event) {
+        event.preventDefault();
+        $("#export-indaba-sku-params").val(JSON.stringify($('#indaba-sku-datatable').DataTable().ajax.json().data));
+        $("#export-indaba-sku-form").submit();
+    }
 });

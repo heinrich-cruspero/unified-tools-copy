@@ -2,14 +2,12 @@
 
 ##
 module AmazonShipmentDatatableModule
-  def datatable_to_csv(datatable)
-    return if datatable.data.empty?
-
-    attributes = datatable.data[0].keys
+  def hash_array_to_csv(data)
+    attributes = data[0].keys
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
-      datatable.data.each do |order|
+      data.each do |order|
         csv << order.values
       end
     end

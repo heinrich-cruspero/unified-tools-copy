@@ -13,4 +13,14 @@ $( document ).on('turbolinks:load', function() {
             {"data": "quantity_difference"},
         ]
     });
+
+    $container = $('#content');
+    $container
+        .on('click', '#export-combined-shipments-submit-button', onExportButtonClick)
+
+    function onExportButtonClick(event) {
+        event.preventDefault();
+        $("#export-combined-shipments-params").val(JSON.stringify($('#combine-shipments-datatable').DataTable().ajax.json().data));
+        $("#export-combined-shipments-form").submit();
+    }
 });

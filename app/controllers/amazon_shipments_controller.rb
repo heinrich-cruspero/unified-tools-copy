@@ -11,13 +11,11 @@ class AmazonShipmentsController < ApplicationController
     respond_to do |format|
       @filter_option = params[:filter]
       if request.get?
-        Rails.cache.write 'params', params
         format.html
         format.json { render json: AmazonShipmentDatatable.new(params) }
       else
-        to_display = AmazonShipmentDatatable.new(Rails.cache.fetch('params'))
         format.csv do
-          send_data datatable_to_csv(to_display),
+          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
                     filename: "amazon_shipments-#{Date.today}.csv"
         end
       end
@@ -29,13 +27,11 @@ class AmazonShipmentsController < ApplicationController
 
     respond_to do |format|
       if request.get?
-        Rails.cache.write 'params', params
         format.html
         format.json { render json: CombineAmazonShipmentDatatable.new(params) }
       else
-        to_display = CombineAmazonShipmentDatatable.new(Rails.cache.fetch('params'))
         format.csv do
-          send_data datatable_to_csv(to_display),
+          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
                     filename: "amazon_shipments_combined-#{Date.today}.csv"
         end
       end
@@ -48,13 +44,11 @@ class AmazonShipmentsController < ApplicationController
     respond_to do |format|
       @data = params[:data]
       if request.get?
-        Rails.cache.write 'params', params
         format.html
         format.json { render json: IndabaSkuDatatable.new(params) }
       else
-        to_display = IndabaSkuDatatable.new(Rails.cache.fetch('params'))
         format.csv do
-          send_data datatable_to_csv(to_display),
+          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
                     filename: "amazon_shipments_indaba_skus-#{Date.today}.csv"
         end
       end

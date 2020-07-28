@@ -1,5 +1,5 @@
 $( document ).on('turbolinks:load', function() {
-    var table = $('#amazon-shipments-datatable').dataTable({
+    $('#amazon-shipments-datatable').DataTable({
         "processing": true,
         "serverSide": true,
         "scrollX": true,
@@ -43,4 +43,13 @@ $( document ).on('turbolinks:load', function() {
         ]
     });
 
+    $container = $('#content');
+    $container
+        .on('click', '#export-amazon-shipments-submit-button', onExportButtonClick)
+
+    function onExportButtonClick(event) {
+        event.preventDefault();
+        $("#export-amazon-shipments-params").val(JSON.stringify($('#amazon-shipments-datatable').DataTable().ajax.json().data));
+        $("#export-amazon-shipments-form").submit();
+    }
 });
