@@ -22,7 +22,6 @@ class AmazonShipment < ApplicationRecord
 
   # validation
   validates :shipment_id, uniqueness: { scope: %i[az_sku isbn] }
-  # after_save :amazon_shipment_creation_failed
 
   # fks
   belongs_to :amazon_shipment_file

@@ -17,8 +17,4 @@ class AmazonShipmentPolicy < ApplicationPolicy
   def combine?
     user.is_admin?
   end
-
-  def export?
-    user.is_admin?
-  end
 end

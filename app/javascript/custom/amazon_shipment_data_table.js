@@ -1,5 +1,5 @@
 $( document ).on('turbolinks:load', function() {
-    $('#amazon-shipments-datatable').DataTable({
+    $('#amazon-shipments-datatable').dataTable({
         "processing": true,
         "serverSide": true,
         "scrollX": true,
