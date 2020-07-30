@@ -23,6 +23,7 @@
           <% end %>
           <div class="main-content">
             <% flash.each do |key, value| %>
+              <% next if value.blank? %>
               <div class="<%= flash_class(key) %>">
                 <%= value %>
               </div>

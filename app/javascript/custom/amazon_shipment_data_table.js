@@ -42,4 +42,14 @@ $( document ).on('turbolinks:load', function() {
             {"data": "reconciled"}
         ]
     });
+
+    $container = $('#content');
+    $container
+        .on('click', '#export-amazon-shipments-submit-button', onExportButtonClick)
+
+    function onExportButtonClick(event) {
+        event.preventDefault();
+        $("#export-amazon-shipments-params").val(JSON.stringify($('#amazon-shipments-datatable').DataTable().ajax.json().data));
+        $("#export-amazon-shipments-form").submit();
+    }
 });

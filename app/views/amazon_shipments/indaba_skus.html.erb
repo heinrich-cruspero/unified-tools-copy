@@ -15,6 +15,14 @@
         <a class="btn btn btn-danger" href="<%= delete_skus_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Delete</a>
       </div>
     </div>
+    <div class="btn-toolbar mb-2 mb-md-0 float-right">
+      <div class="btn-group mr-2">
+        <%= form_tag('/amazon_shipments/indaba_skus.csv', multipart: true, id: 'export-indaba-sku-form') do %>
+        <input type="hidden" value="" id="export-indaba-sku-params" name="export-params">
+        <%= submit_tag "Export CSV", class: 'btn btn-secondary csv-btn', id: 'export-indaba-sku-submit-button' %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 <div class="row">
