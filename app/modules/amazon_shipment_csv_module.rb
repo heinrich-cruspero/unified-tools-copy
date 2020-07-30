@@ -3,34 +3,28 @@
 ##
 module AmazonShipmentCsvModule
   def process_csv(chunks, fname)
-    parsed_filename = fname.split('_')
-    amazon_shipment_file = AmazonShipmentFile.where(
-      name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
-      date: (parsed_filename[1]).to_s
-    ).first_or_create(name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
-                      date: (parsed_filename[1]).to_s)
-    # check amazon_shipment_file (filename and date should be unique) .create_or_first
-    chunks.each do |data_hash|
+    invalid_entries = []
+    amazon_shipment_file = _parse_amazon_shipment_file(fname)
+    chunks.each_with_index do |data_hash, i|
+      data_hash[:row] = i
+      _check_entries(data_hash)
+      isbn_data = _format_isbn(data_hash[:isbn])
       az_shipment = AmazonShipment.where(
-        isbn: data_hash[:isbn],
+        isbn: isbn_data,
         shipment_id: data_hash[:ship_id],
         az_sku: data_hash[:az_sku],
         amazon_shipment_file_id: amazon_shipment_file.id,
         condition: data_hash[:condition]
-      ).first_or_create(
-        isbn: data_hash[:isbn],
-        shipment_id: data_hash[:ship_id],
-        az_sku: data_hash[:az_sku],
-        amazon_shipment_file_id: amazon_shipment_file.id,
-        condition: data_hash[:condition]
-      )
+      ).first_or_create(isbn: isbn_data, shipment_id: data_hash[:ship_id],
+                        az_sku: data_hash[:az_sku],
+                        amazon_shipment_file_id: amazon_shipment_file.id,
+                        condition: data_hash[:condition])
       indaba_sku = IndabaSku.where(sku: data_hash[:sku],
                                    amazon_shipment_id: az_shipment.id).first_or_create(
                                      sku: data_hash[:sku],
                                      amazon_shipment_id: az_shipment.id
                                    )
-      book = Book.find_by(isbn: data_hash[:isbn])
-
+      book = Book.find_by(isbn: isbn_data)
       unless book.nil?
         az_shipment.update(
           book_id: book.id,
@@ -54,7 +48,10 @@ module AmazonShipmentCsvModule
       end
       indaba_sku.update(quantity: 1)
       az_shipment.update(quantity_shipped: az_shipment.indaba_skus.all.sum('quantity'))
+    rescue StandardError
+      invalid_entries.push(data_hash)
     end
+    invalid_entries
   end
 
   def process_delete(chunks)
@@ -76,7 +73,33 @@ module AmazonShipmentCsvModule
         deleted_skus.push(data_hash[:sku])
       end
     end
-
     { deleted_skus: deleted_skus, unfound_skus: unfound_skus }
+  end
+
+  def _check_entries(data_hash)
+    if data_hash[:isbn].nil? ||
+       data_hash[:ship_id].nil? ||
+       data_hash[:az_sku].nil? ||
+       data_hash[:condition].nil?
+
+      raise 'error'
+    end
+  end
+
+  def _parse_amazon_shipment_file(fname)
+    parsed_filename = fname.split('_')
+    amazon_shipment_file = AmazonShipmentFile.where(
+      name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
+      date: (parsed_filename[1]).to_s
+    ).first_or_create(name: "#{parsed_filename[0]}_#{parsed_filename[1]}",
+                      date: (parsed_filename[1]).to_s)
+
+    amazon_shipment_file
+  end
+
+  def _format_isbn(isbn)
+    isbn_data = isbn.to_s
+    isbn_data = '0' + isbn_data while isbn_data.length < 10
+    isbn_data
   end
 end

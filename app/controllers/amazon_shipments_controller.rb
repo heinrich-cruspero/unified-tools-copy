@@ -3,30 +3,55 @@
 ##
 class AmazonShipmentsController < ApplicationController
   include AmazonShipmentCsvModule
+  include AmazonShipmentDatatableModule
 
   def index
     authorize AmazonShipment
+
     respond_to do |format|
       @filter_option = params[:filter]
-      format.html
-      format.json { render json: AmazonShipmentDatatable.new(params) }
+      if request.get?
+        format.html
+        format.json { render json: AmazonShipmentDatatable.new(params) }
+      else
+        format.csv do
+          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
+                    filename: "amazon_shipments-#{Date.today}.csv"
+        end
+      end
     end
   end
 
   def combine
     authorize AmazonShipment
+
     respond_to do |format|
-      format.html
-      format.json { render json: CombineAmazonShipmentDatatable.new(params) }
+      if request.get?
+        format.html
+        format.json { render json: CombineAmazonShipmentDatatable.new(params) }
+      else
+        format.csv do
+          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
+                    filename: "amazon_shipments_combined-#{Date.today}.csv"
+        end
+      end
     end
   end
 
   def indaba_skus
     authorize AmazonShipment
+
     respond_to do |format|
       @data = params[:data]
-      format.html
-      format.json { render json: IndabaSkuDatatable.new(params) }
+      if request.get?
+        format.html
+        format.json { render json: IndabaSkuDatatable.new(params) }
+      else
+        format.csv do
+          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
+                    filename: "amazon_shipments_indaba_skus-#{Date.today}.csv"
+        end
+      end
     end
   end
 
@@ -37,8 +62,8 @@ class AmazonShipmentsController < ApplicationController
     uploaded_file = params[:csv_file]
     if uploaded_file
       processed = SmarterCSV.process(uploaded_file)
-      ProcessCsvJob.perform_later(processed, uploaded_file.original_filename)
-      redirect_to amazon_shipments_url, flash: { success: 'Successfully imported file.' }
+      ProcessCsvJob.perform_later(processed, uploaded_file.original_filename, current_user)
+      redirect_to amazon_shipments_url, flash: { notice: 'Processing imported file.' }
     else
       redirect_to import_amazon_shipments_url, flash: { error: 'Missing csv file.' }
     end

@@ -14,8 +14,8 @@ require("bootstrap-daterangepicker");
 require("moment");
 require("bootstrap-daterangepicker");
 require("@fortawesome/fontawesome-free");
-require('datatables.net');
-require('datatables.net-bs4');
+require("datatables.net");
+require("datatables.net-bs4");
 
 require("../custom/sidebar")
 require("../custom/amazon_table")

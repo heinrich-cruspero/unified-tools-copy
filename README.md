@@ -17,7 +17,6 @@
 
 # Credentials
 1. Run `EDITOR=vi rails credentials:edit`
-
     secret_key_base: '*********'
 
 2. Save
@@ -25,3 +24,10 @@
 #Required Environment Variables
 1. GOOGLE_APP_ID
 2. GOOGLE_APP_SECRET
+
+
+## AWS Credentials
+1. Run `EDITOR=vim rails credentials:edit` again to set up, aws configuration
+    aws:
+        ses_smtp_username:
+        ses_smtp_password:
