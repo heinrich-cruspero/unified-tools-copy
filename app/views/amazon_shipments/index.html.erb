@@ -17,12 +17,10 @@
     </div>
     <div class="btn-toolbar mb-2 mb-md-0 float-right">
       <div class="btn-group mr-2">
-        <%= form_tag('/amazon_shipments/index.csv', multipart: true, id: 'export-amazon-shipments-form') do %>
-        <input type="hidden" value="" id="export-amazon-shipments-params" name="export-params">
-        <%= submit_tag "Export CSV", class: 'btn btn-secondary csv-btn', id: 'export-amazon-shipments-submit-button' %>
-        <% end %>
+        <a href="<%= amazon_shipments_path(format: :csv, filter: @filter_option) %>" id="export-amazon-shipments-submit-button" class="btn btn-secondary csv-btn">Export to CSV</a>
       </div>
     </div>
+
   </div>
 </div>
 <div class="row">

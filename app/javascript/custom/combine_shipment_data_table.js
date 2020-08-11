@@ -20,7 +20,9 @@ $( document ).on('turbolinks:load', function() {
 
     function onExportButtonClick(event) {
         event.preventDefault();
-        $("#export-combined-shipments-params").val(JSON.stringify($('#combine-shipments-datatable').DataTable().ajax.json().data));
-        $("#export-combined-shipments-form").submit();
+        const url = $(this).attr('href');
+        const delimiter = url.includes('?') ? '&' : '?';
+        const params = $.param($('#combine-shipments-datatable').DataTable().ajax.params());
+        window.location.href = url + delimiter + params;
     }
 });
