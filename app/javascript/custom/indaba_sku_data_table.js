@@ -19,9 +19,9 @@ $( document ).on('turbolinks:load', function() {
 
     $container = $('#content');
     $container
-        .on('click', '#export-indaba-sku-submit-button', onExportButtonClick)
+        .on('click', '#export-indaba-sku-submit-button', onIndabaSKUExportButtonClick)
 
-    function onExportButtonClick(event) {
+    function onIndabaSKUExportButtonClick(event) {
         event.preventDefault();
         const url = $(this).attr('href');
         const delimiter = url.includes('?') ? '&' : '?';

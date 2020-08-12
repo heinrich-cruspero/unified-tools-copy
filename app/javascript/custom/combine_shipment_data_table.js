@@ -16,9 +16,9 @@ $( document ).on('turbolinks:load', function() {
 
     $container = $('#content');
     $container
-        .on('click', '#export-combined-shipments-submit-button', onExportButtonClick)
+        .on('click', '#export-combined-shipments-submit-button', onCombinedShipmentExportButtonClick)
 
-    function onExportButtonClick(event) {
+    function onCombinedShipmentExportButtonClick(event) {
         event.preventDefault();
         const url = $(this).attr('href');
         const delimiter = url.includes('?') ? '&' : '?';
