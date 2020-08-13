@@ -42,4 +42,12 @@ $( document ).on('turbolinks:load', function() {
     function onImportCSVSubmit(event) {
         $('#spinner').show();
     }
+
+    global.onExportSubmit = function (element, params) {
+        const url = $(element).attr('href');
+        const delimiter = url.includes('?') ? '&' : '?';
+        const datatable_params = $.param(params);
+        window.location.href = url + delimiter + datatable_params;
+    }
+
 });

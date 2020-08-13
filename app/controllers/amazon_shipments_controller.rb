@@ -10,14 +10,12 @@ class AmazonShipmentsController < ApplicationController
 
     respond_to do |format|
       @filter_option = params[:filter]
-      if request.get?
-        format.html
-        format.json { render json: AmazonShipmentDatatable.new(params) }
-      else
-        format.csv do
-          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
-                    filename: "amazon_shipments-#{Date.today}.csv"
-        end
+      format.html
+      format.json { render json: AmazonShipmentDatatable.new(params) }
+      format.csv do
+        params[:length] = "-1"
+        send_data datatable_to_csv(AmazonShipmentDatatable.new(params)),
+                  filename: "amazon_shipments-#{Date.today}.csv"
       end
     end
   end
@@ -26,14 +24,12 @@ class AmazonShipmentsController < ApplicationController
     authorize AmazonShipment
 
     respond_to do |format|
-      if request.get?
-        format.html
-        format.json { render json: CombineAmazonShipmentDatatable.new(params) }
-      else
-        format.csv do
-          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
-                    filename: "amazon_shipments_combined-#{Date.today}.csv"
-        end
+      format.html
+      format.json { render json: CombineAmazonShipmentDatatable.new(params) }
+      format.csv do
+        params[:length] = "-1"
+        send_data datatable_to_csv(CombineAmazonShipmentDatatable.new(params)),
+                  filename: "amazon_shipments_combined-#{Date.today}.csv"
       end
     end
   end
@@ -43,14 +39,12 @@ class AmazonShipmentsController < ApplicationController
 
     respond_to do |format|
       @data = params[:data]
-      if request.get?
-        format.html
-        format.json { render json: IndabaSkuDatatable.new(params) }
-      else
-        format.csv do
-          send_data hash_array_to_csv(JSON.parse(params['export-params'])),
-                    filename: "amazon_shipments_indaba_skus-#{Date.today}.csv"
-        end
+      format.html
+      format.json { render json: IndabaSkuDatatable.new(params) }
+      format.csv do
+        params[:length] = "-1"
+        send_data datatable_to_csv(IndabaSkuDatatable.new(params)),
+                  filename: "amazon_shipments_indaba_skus-#{Date.today}.csv"
       end
     end
   end

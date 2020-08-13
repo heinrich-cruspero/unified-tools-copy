@@ -17,10 +17,7 @@
     </div>
     <div class="btn-toolbar mb-2 mb-md-0 float-right">
       <div class="btn-group mr-2">
-        <%= form_tag('/amazon_shipments/indaba_skus.csv', multipart: true, id: 'export-indaba-sku-form') do %>
-        <input type="hidden" value="" id="export-indaba-sku-params" name="export-params">
-        <%= submit_tag "Export CSV", class: 'btn btn-secondary csv-btn', id: 'export-indaba-sku-submit-button' %>
-        <% end %>
+        <a href="<%= indaba_skus_amazon_shipments_path(format: :csv, data: @data) %>" id="export-indaba-sku-submit-button" class="btn btn-secondary csv-btn">Export to CSV</a>
       </div>
     </div>
   </div>
