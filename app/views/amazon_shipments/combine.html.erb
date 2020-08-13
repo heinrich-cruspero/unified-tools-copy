@@ -17,10 +17,7 @@
     </div>
     <div class="btn-toolbar mb-2 mb-md-0 float-right">
       <div class="btn-group mr-2">
-        <%= form_tag('/amazon_shipments/combine.csv', multipart: true, id: 'export-combined-shipments-form') do %>
-        <input type="hidden" value="" id="export-combined-shipments-params" name="export-params">
-        <%= submit_tag "Export CSV", class: 'btn btn-secondary csv-btn', id: 'export-combined-shipments-submit-button' %>
-        <% end %>
+        <a href="<%= combine_amazon_shipments_path(format: :csv) %>" id="export-combined-shipments-submit-button" class="btn btn-secondary csv-btn">Export to CSV</a>
       </div>
     </div>
   </div>

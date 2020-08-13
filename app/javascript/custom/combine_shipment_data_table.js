@@ -16,11 +16,10 @@ $( document ).on('turbolinks:load', function() {
 
     $container = $('#content');
     $container
-        .on('click', '#export-combined-shipments-submit-button', onExportButtonClick)
+        .on('click', '#export-combined-shipments-submit-button', onCombinedShipmentExportButtonClick)
 
-    function onExportButtonClick(event) {
+    function onCombinedShipmentExportButtonClick(event) {
         event.preventDefault();
-        $("#export-combined-shipments-params").val(JSON.stringify($('#combine-shipments-datatable').DataTable().ajax.json().data));
-        $("#export-combined-shipments-form").submit();
+        onExportSubmit(this, $('#combine-shipments-datatable').DataTable().ajax.params());
     }
 });

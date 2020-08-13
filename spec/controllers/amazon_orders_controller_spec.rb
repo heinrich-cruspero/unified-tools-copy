@@ -15,7 +15,7 @@ RSpec.describe AmazonOrdersController, type: :controller do
       sign_out admin
       get :index
 
-      expect(flash['alert']).to match('You need to sign in or sign up before continuing.')
+      expect(flash['alert']).to match('')
     end
 
     it 'renders the index template' do

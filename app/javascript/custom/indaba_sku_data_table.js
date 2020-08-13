@@ -19,11 +19,10 @@ $( document ).on('turbolinks:load', function() {
 
     $container = $('#content');
     $container
-        .on('click', '#export-indaba-sku-submit-button', onExportButtonClick)
+        .on('click', '#export-indaba-sku-submit-button', onIndabaSKUExportButtonClick)
 
-    function onExportButtonClick(event) {
+    function onIndabaSKUExportButtonClick(event) {
         event.preventDefault();
-        $("#export-indaba-sku-params").val(JSON.stringify($('#indaba-sku-datatable').DataTable().ajax.json().data));
-        $("#export-indaba-sku-form").submit();
+        onExportSubmit(this, $('#indaba-sku-datatable').DataTable().ajax.params());
     }
 });
