@@ -20,9 +20,6 @@ $( document ).on('turbolinks:load', function() {
 
     function onCombinedShipmentExportButtonClick(event) {
         event.preventDefault();
-        const url = $(this).attr('href');
-        const delimiter = url.includes('?') ? '&' : '?';
-        const params = $.param($('#combine-shipments-datatable').DataTable().ajax.params());
-        window.location.href = url + delimiter + params;
+        onExportSubmit(this, $('#combine-shipments-datatable').DataTable().ajax.params());
     }
 });

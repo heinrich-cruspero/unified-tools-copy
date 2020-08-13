@@ -49,9 +49,6 @@ $( document ).on('turbolinks:load', function() {
 
     function onAmazonShipmentExportButtonClick(event) {
         event.preventDefault();
-        const url = $(this).attr('href');
-        const delimiter = url.includes('?') ? '&' : '?';
-        const params = $.param($('#amazon-shipments-datatable').DataTable().ajax.params());
-        window.location.href = url + delimiter + params;
+        onExportSubmit(this, $('#amazon-shipments-datatable').DataTable().ajax.params());
     }
 });

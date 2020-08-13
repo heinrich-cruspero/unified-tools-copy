@@ -23,9 +23,6 @@ $( document ).on('turbolinks:load', function() {
 
     function onIndabaSKUExportButtonClick(event) {
         event.preventDefault();
-        const url = $(this).attr('href');
-        const delimiter = url.includes('?') ? '&' : '?';
-        const params = $.param($('#indaba-sku-datatable').DataTable().ajax.params());
-        window.location.href = url + delimiter + params;
+        onExportSubmit(this, $('#indaba-sku-datatable').DataTable().ajax.params());
     }
 });
