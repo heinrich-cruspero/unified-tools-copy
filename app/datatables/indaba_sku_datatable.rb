@@ -14,7 +14,6 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
       condition: { source: 'AmazonShipment.condition', cond: :string_eq },
       name: { source: 'AmazonShipmentFile.name', cond: :string_eq },
       date: { source: 'AmazonShipmentFile.date', cond: :string_eq },
-
       edition_status_code: { source: 'AmazonShipment.edition_status_code', cond: :string_eq },
       edition_status_date: { source: 'AmazonShipment.edition_status_date', cond: :string_eq },
       list_price: { source: 'AmazonShipment.list_price', searchable: false },
@@ -63,17 +62,20 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
         one_year_highest_wholesale_price: record.amazon_shipment.one_year_highest_wholesale_price,
         two_years_wh_max: record.amazon_shipment.two_years_wh_max,
         qa_low: record.amazon_shipment.qa_low,
-        qa_aug_low: record.amazon_shipment.qa_aug_low, qa_fba_low: record.amazon_shipment.qa_fba_low,
+        qa_aug_low: record.amazon_shipment.qa_aug_low,
+        qa_fba_low: record.amazon_shipment.qa_fba_low,
         lowest_good_price: record.amazon_shipment.lowest_good_price,
-        yearly_low: record.amazon_shipment.yearly_low, monthly_sqf: record.amazon_shipment.monthly_sqf,
-        monthly_spf: record.amazon_shipment.monthly_spf, monthly_rqf: record.amazon_shipment.monthly_rqf,
+        yearly_low: record.amazon_shipment.yearly_low,
+        monthly_sqf: record.amazon_shipment.monthly_sqf,
+        monthly_spf: record.amazon_shipment.monthly_spf,
+        monthly_rqf: record.amazon_shipment.monthly_rqf,
         monthly_rpf: record.amazon_shipment.monthly_rpf,
-        author:  record.amazon_shipment.book.author,
-        title:  record.amazon_shipment.book.title,
-        edition:  record.amazon_shipment.book.edition,
-        publisher:  record.amazon_shipment.book.publisher,
-        publication_date:  record.amazon_shipment.book.publication_date,
-        weight:  record.amazon_shipment.book.weight
+        author: record.amazon_shipment.book.author,
+        title: record.amazon_shipment.book.title,
+        edition: record.amazon_shipment.book.edition,
+        publisher: record.amazon_shipment.book.publisher,
+        publication_date: record.amazon_shipment.book.publication_date,
+        weight: record.amazon_shipment.book.weight
       }
     end
   end
@@ -81,12 +83,12 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
   def get_raw_records(*)
     # insert query here
     if params[:data].nil?
-      IndabaSku.joins(amazon_shipment: [:book, :amazon_shipment_file]).all
+      IndabaSku.joins(amazon_shipment: %i[book amazon_shipment_file]).all
     else
       dates = params['data'].split(' - ')
       from_date = Date.parse dates[0]
       to_date = Date.parse dates[1]
-      IndabaSku.joins(amazon_shipment: [:book, :amazon_shipment_file]).where(
+      IndabaSku.joins(amazon_shipment: %i[book amazon_shipment_file]).where(
         'amazon_shipment_files.date in (?)',
         from_date..to_date
       )
