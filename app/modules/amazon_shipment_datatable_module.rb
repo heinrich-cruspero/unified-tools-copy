@@ -2,7 +2,6 @@
 
 ##
 module AmazonShipmentDatatableModule
-
   def datatable_to_csv(datatable)
     return if datatable.data.empty?
 

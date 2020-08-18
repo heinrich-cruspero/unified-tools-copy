@@ -13,7 +13,7 @@ class AmazonShipmentsController < ApplicationController
       format.html
       format.json { render json: AmazonShipmentDatatable.new(params) }
       format.csv do
-        params[:length] = "-1"
+        params[:length] = '-1'
         send_data datatable_to_csv(AmazonShipmentDatatable.new(params)),
                   filename: "amazon_shipments-#{Date.today}.csv"
       end
@@ -27,7 +27,7 @@ class AmazonShipmentsController < ApplicationController
       format.html
       format.json { render json: CombineAmazonShipmentDatatable.new(params) }
       format.csv do
-        params[:length] = "-1"
+        params[:length] = '-1'
         send_data datatable_to_csv(CombineAmazonShipmentDatatable.new(params)),
                   filename: "amazon_shipments_combined-#{Date.today}.csv"
       end
@@ -42,7 +42,7 @@ class AmazonShipmentsController < ApplicationController
       format.html
       format.json { render json: IndabaSkuDatatable.new(params) }
       format.csv do
-        params[:length] = "-1"
+        params[:length] = '-1'
         send_data datatable_to_csv(IndabaSkuDatatable.new(params)),
                   filename: "amazon_shipments_indaba_skus-#{Date.today}.csv"
       end
