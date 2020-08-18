@@ -49,5 +49,4 @@ $( document ).on('turbolinks:load', function() {
         const datatable_params = $.param(params);
         window.location.href = url + delimiter + datatable_params;
     }
-
 });

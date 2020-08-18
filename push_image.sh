@@ -23,6 +23,7 @@ AWS_REPO_URL="470123955518.dkr.ecr.us-west-2.amazonaws.com/$AWS_REPO_NAME"
 
 StagingServiceName="DevUnifiedToolsService"
 ProductionServiceName="ProdUnifiedToolsService"
+ProductionWorkerServiceName="ProdUnifiedToolsJobsService"
 
 RAILS_ENV=production bundle exec rake assets:precompile
 RAILS_ENV=production RACK_ENV=production NODE_ENV=production bin/webpack
@@ -42,4 +43,5 @@ if $UPDATE_PROD ; then
     docker tag $AWS_REPO_NAME:latest $AWS_REPO_URL:latest_prod
     aws ecr get-login-password --profile bba-ecr | docker login --username AWS --password-stdin $AWS_REPO_URL:latest_prod && docker push $AWS_REPO_URL:latest_prod
     aws ecs update-service --profile bba-ecr --cluster Production --service $ProductionServiceName --force-new-deployment >/dev/null
+    aws ecs update-service --profile bba-ecr --cluster Production --service $ProductionWorkerServiceName --force-new-deployment >/dev/null
 fi
