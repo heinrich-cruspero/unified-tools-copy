@@ -25,9 +25,9 @@
 <div class="row">
   <div class="col-sm">
     <div class="input-group mb-3 float-left">
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path %>">Standard</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'pending') %>">Pending</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'twenty_days_pending') %>">20 Days Pending</a>
+      <a role="button" class="btn <% if @filter_option.nil? %> btn-outline-secondary <% else %> btn-secondary <% end %> amazon-shipment-filter-button" href="<%= amazon_shipments_path %>">Standard</a>
+      <a role="button" class="btn <% if @filter_option == "pending" %> btn-outline-secondary <% else %> btn-secondary <% end %>amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'pending') %>">Pending</a>
+      <a role="button" class="btn <% if @filter_option == "twenty_days_pending" %> btn-outline-secondary <% else %> btn-secondary <% end %>amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'twenty_days_pending') %>">20 Days Pending</a>
       <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= combine_amazon_shipments_path %>">Combine Shipments</a>
       <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
     </div>
@@ -49,34 +49,9 @@
           <th>Quantity Difference</th>
           <th>Condition</th>
           <th>Fulfillment Network SKU</th>
-
-          <th>Author</th>
-          <th>Title</th>
-          <th>Edition</th>
-          <th>Publisher</th>
-          <th>Publication Date</th>
-          <th>Weight</th>
-
-          <th>Edition Status Code</th>
-          <th>Edition Status Date</th>
-          <th>List Price</th>
-          <th>Used Wholesale Price</th>
-          <th>nebraska wh</th>
-          <th>qa aug low</th>
-          <th>lowest good price</th>
-          <th>qa low</th>
-          <th>yearly low</th>
-          <th>qa fba low</th>
-          <th>monthly sqf</th>
-          <th>monthly spf</th>
-          <th>monthly rqf</th>
-          <th>monthly rpf</th>
-          <th>one year highest wholesale price</th>
-          <th>two years wh max</th>
-
+          <th>Reconciled</th>
           <th>Created At</th>
           <th>Updated At</th>
-          <th>Reconciled</th>
         </tr>
       </thead>
       <tbody class="text-nowrap">
