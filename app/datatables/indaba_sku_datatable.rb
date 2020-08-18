@@ -43,6 +43,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
     }
   end
 
+  # rubocop:disable Metrics/AbcSize
   def data
     records.map do |record|
       {
@@ -79,6 +80,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
       }
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def get_raw_records(*)
     # insert query here

@@ -20,7 +20,6 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
       reconciled: { source: 'AmazonShipment.reconciled', searchable: false },
       created_at: { source: 'AmazonShipment.created_at', cond: :string_eq },
       updated_at: { source: 'AmazonShipment.updated_at', cond: :string_eq }
-
     }
   end
 
@@ -35,7 +34,6 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
         quantity_received: record.quantity_received,
         quantity_difference: record.quantity_shipped - record.quantity_received,
         reconciled: record.reconciled,
-
         created_at: record.created_at.strftime('%Y-%m-%d'),
         updated_at: record.updated_at.strftime('%Y-%m-%d')
       }

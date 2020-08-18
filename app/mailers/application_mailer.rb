@@ -9,7 +9,7 @@ class ApplicationMailer < ActionMailer::Base
     @message = message
     mail(
       to: Rails.application.credentials[:developer_email_group],
-      subject: 'Unified tools import Job error'
+      subject: 'Unified Tools Job Error'
     )
   end
 end
