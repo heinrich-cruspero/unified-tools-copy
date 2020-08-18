@@ -29,7 +29,7 @@
       <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'pending') %>">Pending</a>
       <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'twenty_days_pending') %>">20 Days Pending</a>
       <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= combine_amazon_shipments_path %>">Combine Shipments</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
+      <a role="button" class="btn <% if @filter_option.nil? %> btn-outline-secondary <% else %> btn-secondary <% end %> amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
     </div>
   </div>
   <div class="col-sm-3">
@@ -52,6 +52,28 @@
           <th>SKU</th>
           <th>Quantity </th>
           <th>Condition</th>
+          <th>Author</th>
+          <th>Title</th>
+          <th>Edition</th>
+          <th>Edition Status Code</th>
+          <th>Edition Status Date</th>
+          <th>List Price</th>
+          <th>Used Wholesale Price</th>
+          <th>Nebraska WH</th>
+          <th>Qa aug low</th>
+          <th>Lowest Good Price</th>
+          <th>Qa low</th>
+          <th>Yearly Low</th>
+          <th>Qa FBA Low</th>
+          <th>Monthly sqf</th>
+          <th>Monthly spf</th>
+          <th>Monthly rqf</th>
+          <th>Monthly rpf</th>
+          <th>One year highest wholesale price</th>
+          <th>Two years wh max</th>
+          <th>Publisher</th>
+          <th>Publication Date</th>
+          <th>Weight</th>
           <th>File Name</th>
           <th>Date</th>
         </tr>
