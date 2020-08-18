@@ -9,12 +9,4 @@ class AmazonShipmentMailer < ApplicationMailer
     @entries = entries
     mail(to: @user.email, subject: 'Entries cannot be processed')
   end
-
-  def job_failed_email(message)
-    @message = message
-    mail(
-      to: Rails.application.credentials[:developer_emails],
-      subject: 'Unified tools import Job error'
-    )
-  end
 end

@@ -26,9 +26,9 @@
 <div class="row">
   <div class="col-sm">
     <div class="input-group mb-3 float-left">
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path %>">Standard</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'pending') %>">Pending</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'twenty_days_pending') %>">20 Days Pending</a>
+      <a role="button" class="btn <% if @filter_option.nil? %> btn-outline-secondary <% else %> btn-secondary <% end %> amazon-shipment-filter-button" href="<%= amazon_shipments_path %>">Standard</a>
+      <a role="button" class="btn <% if @filter_option == "pending" %> btn-outline-secondary <% else %> btn-secondary <% end %>amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'pending') %>">Pending</a>
+      <a role="button" class="btn <% if @filter_option == "twenty_days_pending" %> btn-outline-secondary <% else %> btn-secondary <% end %>amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'twenty_days_pending') %>">20 Days Pending</a>
       <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= combine_amazon_shipments_path %>">Combine Shipments</a>
       <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
     </div>
