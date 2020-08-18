@@ -23,7 +23,7 @@ AWS_REPO_URL="470123955518.dkr.ecr.us-west-2.amazonaws.com/$AWS_REPO_NAME"
 
 StagingServiceName="DevUnifiedToolsService"
 ProductionServiceName="ProdUnifiedToolsService"
-ProductionWorkerServiceName="ProdUnifiedToolsJobsServiceUpdate"
+ProductionWorkerServiceName="ProdUnifiedToolsJobsService"
 
 RAILS_ENV=production bundle exec rake assets:precompile
 RAILS_ENV=production RACK_ENV=production NODE_ENV=production bin/webpack
