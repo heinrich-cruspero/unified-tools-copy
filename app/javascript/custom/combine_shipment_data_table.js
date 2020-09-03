@@ -11,6 +11,7 @@ $( document ).on('turbolinks:load', function() {
             {"data": "quantity_in_case"},
             {"data": "quantity_received"},
             {"data": "quantity_difference"},
+            {"data": "created_at"},
         ]
     });
 

@@ -1,5 +1,5 @@
 $( document ).on('turbolinks:load', function() {
-    $('#indaba-sku-datatable').dataTable({
+    $dataTable = $('#indaba-sku-datatable').dataTable({
         "processing": true,
         "serverSide": true,
         "scrollX": true,
@@ -13,30 +13,40 @@ $( document ).on('turbolinks:load', function() {
             {"data": "quantity"},
             {"data": "condition"},
             {"data": "author"},
-            {"data": "title"},
+            {
+                "data": "title",
+                "render": function (data, type, full, meta) {
+                    let truncated = data.length > 30 ? data.substr( 0, 30 ) +'…' : data;
+                    return '<span data-toggle="tooltip" style="cursor: pointer;" title="' + data + '">' + truncated + '</span>';
+                }
+            },
             {"data": "edition"},
-            {"data": "edition_status_code"},
-            {"data": "edition_status_date"},
-            {"data": "list_price"},
-            {"data": "used_wholesale_price"},
-            {"data": "nebraska_wh"},
-            {"data": "qa_aug_low"},
-            {"data": "lowest_good_price"},
-            {"data": "qa_low"},
-            {"data": "yearly_low"},
-            {"data": "qa_fba_low"},
-            {"data": "monthly_sqf"},
-            {"data": "monthly_spf"},
-            {"data": "monthly_rqf"},
-            {"data": "monthly_rpf"},
-            {"data": "one_year_highest_wholesale_price"},
-            {"data": "two_years_wh_max"},
+            {"data": "status_code"},
+            {"data": "stat_date"},
+            {"data": "list"},
+            {"data": "MBS_WH"},
+            {"data": "NBC_WH"},
+            {"data": "QaPC3"},
+            {"data": "ALow"},
+            {"data": "QaLow"},
+            {"data": "YLow"},
+            {"data": "QaFBALow"},
+            {"data": "30SQF"},
+            {"data": "30SPF"},
+            {"data": "30RQF"},
+            {"data": "30RPF"},
+            {"data": "1YRWH"},
+            {"data": "2YRWH"},
             {"data": "publisher"},
-            {"data": "publication_date"},
+            {"data": "pub_date"},
             {"data": "weight"},
-            {"data": "name"},
-            {"data": "date"},
-        ]
+            {"data": "file_name"},
+            {"data": "import_date"},
+        ],
+    });
+
+    $dataTable.on('draw.dt', function () {
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     $container = $('#content');
