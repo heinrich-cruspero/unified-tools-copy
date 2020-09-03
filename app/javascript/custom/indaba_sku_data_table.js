@@ -17,7 +17,7 @@ $( document ).on('turbolinks:load', function() {
                 "data": "title",
                 "render": function (data, type, full, meta) {
                     let truncated = data.length > 30 ? data.substr( 0, 30 ) +'…' : data;
-                    return '<span data-toggle="tooltip" title="' + data + '">' + truncated + '</span>';
+                    return '<span data-toggle="tooltip" style="cursor: pointer;" title="' + data + '">' + truncated + '</span>';
                 }
             },
             {"data": "edition"},
