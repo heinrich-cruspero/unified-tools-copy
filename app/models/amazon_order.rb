@@ -24,4 +24,23 @@ class AmazonOrder < ApplicationRecord
     end
     ids
   end
+
+  def self.index(params)
+    amazon_orders = AmazonOrder.all
+
+    # filter by purchase date
+    if params.present?
+      purchase_start_date = params[:purchase_start_date]
+      purchase_end_date = params[:purchase_end_date]
+
+      if !purchase_start_date.empty? && !purchase_end_date.empty?
+        start_date = purchase_start_date.to_date
+        end_date = purchase_end_date.to_date
+        amazon_orders = amazon_orders.where('
+          amazon_orders.purchase_date BETWEEN ? AND ?', start_date, end_date)
+      end
+    end
+
+    amazon_orders
+  end
 end

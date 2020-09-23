@@ -5,8 +5,17 @@ class AmazonOrdersController < ApplicationController
   def index
     authorize AmazonOrder
     respond_to do |format|
+      filters = params[:filters] || {}
+      @purchase_start_date = filters[:purchase_start_date]
+      @purchase_end_date = filters[:purchase_end_date]
       format.html
       format.json { render json: AmazonOrderDatatable.new(params, view_context: view_context) }
+      format.csv do
+        params.permit!
+        CsvDownloadJob.perform_later(params, 'AmazonOrderDatatable', 'amazon_order.csv',
+                                     current_user.id)
+        head :ok
+      end
     end
   end
 

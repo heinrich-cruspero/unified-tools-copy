@@ -63,7 +63,18 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records(*)
-    # insert query here
-    AmazonOrder.all
+    AmazonOrder.index(params[:filters])
+  end
+
+  def record_map(record)
+    {
+      amazon_order_id: record.amazon_order_id,
+      status: record.status,
+      state: record.state,
+      city: record.city,
+      zipcode: record.zipcode,
+      order_total: record.order_total,
+      purchase_date: record.purchase_date
+    }
   end
 end

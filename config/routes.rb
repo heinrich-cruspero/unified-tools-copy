@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get 'export'
     end
   end
+  match '/amazon_orders.csv' => 'amazon_orders#index', via: :get, defaults: { format: :csv }
 
   resources :amazon_order_items, only: [:index]
 
