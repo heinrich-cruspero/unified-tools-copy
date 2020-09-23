@@ -7,6 +7,13 @@
 </div>
 <div class="row">
   <div class="col-sm">
+    <div class="input-group mb-3 float-left">
+      <%= button_to "Book Details", book_details_path(isbn: @book.isbn), method: :get, class: "btn btn-info" %>  
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm">
     <table id="books-datatable" data-source="<%= books_path(format: :json) %>">
       <thead>
         <tr>

@@ -1,0 +1,68 @@
+
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Author</th>
+      <th scope="col">Title</th>
+      <th scope="col">List</th>
+      <th scope="col">Wholesale</th>
+      <th scope="col">Amazon Low</th>
+      <th scope="col">FBA Low</th>
+      <th scope="col">Amazon Rental</th>
+      <th scope="col">Sales Rank</th>
+      <th scope="col">Pub</th>
+      <th scope="col">Subject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @book.nil? %>
+        <tr class="no-data">
+            <td colspan="11" class="text-center">No data available in table</td>
+        </tr>
+    <% else %>
+    <tr>
+        <td>
+            <% if @book.image_url %>
+                <%= image_tag @book.image_url %>
+            <% end %>
+        </td>
+        <td><%= @book.author %></td>
+        <td>
+            <%= @book.title %> <br>
+            <%= @book.edition %> <br>
+            <%= @book.isbn %> <br>
+            <%= @book.ean %> <br>
+        </td>
+        <td><%= @book.list_price %></td>
+        <td>
+            <%= @book.max_used_wholesale_price %> <br>
+            <%= @book.edition_status_code %>
+        </td> 
+        <td> <%= @book.amazon_ca_low %> </td>
+        <td>
+            <%= @book.qa_fba_low %> <br>
+            <%= @book.yearly_fba_low %>
+        </td>
+        <td>
+            <%= @book.amazon_rental %> <br>
+            <%= @book.amazon_rental_average %>
+        </td>
+        <td>
+            <%= @book.sales_rank %> <br>
+            <%= @book.weekly_sales_rank %> <br>
+            <%= @book.sales_rank_aug_average %>
+        </td>
+        <td>
+            <%= @book.publisher %> <br>
+            <%= @book.publication_date %> <br>
+            <%= @book.life %> <br>
+            <%= @book.oe_life %> <br>
+            <%= @book.c_life %> <br>
+            <%= @book.r_life %> <br>
+        </td>
+        <td><%= @book.subject %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table> 
