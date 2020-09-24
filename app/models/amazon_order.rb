@@ -28,7 +28,6 @@ class AmazonOrder < ApplicationRecord
   def self.index(params)
     amazon_orders = AmazonOrder.all
 
-    # filter by purchase date
     if params.present?
       purchase_start_date = params[:purchase_start_date]
       purchase_end_date = params[:purchase_end_date]

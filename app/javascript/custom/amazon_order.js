@@ -48,6 +48,4 @@ $( document ).on('turbolinks:load', function() {
         url.searchParams.set("filters[purchase_end_date]", endDate);
         window.location.href = url.toString();
     });
-
-
 });
