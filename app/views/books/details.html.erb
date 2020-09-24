@@ -1,6 +1,6 @@
 <div class="input-group mb-3 float-left">
   <%= form_tag(book_details_path, method: "get", remote: true, role: "form", class: "book-form" ) do %>
-    <%= text_field_tag :search, params[:search], value: @book.isbn, class: "form-control", onkeyup: "searchBook();"%>
+    <%= text_field_tag :search, params[:search], value: @book.isbn, class: "form-control", oninput: "searchBook();"%>
   <% end %>
 </div>
 
