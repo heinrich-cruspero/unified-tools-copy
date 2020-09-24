@@ -13,6 +13,13 @@ class Book < ApplicationRecord
         @oe_book.sales_rank
     end
 
+    def default_image_url
+        unless image_url
+            return "https://s3.amazonaws.com/books-data/eans/#{ean}/images/medium.jpg"
+        end
+        image_url
+    end
+
     def self.get_jan_year
         month = Date.today.month
         year = Date.today.strftime("%y")
@@ -31,5 +38,9 @@ class Book < ApplicationRecord
             return year
         end
         prev_year
+    end
+
+    def self.search_ean_isbn(keyword)
+        where(:ean => keyword).or(where(:isbn => keyword))
     end
 end
