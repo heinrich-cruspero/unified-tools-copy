@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :book_export_templates, :path => "books/export/templates"
   resources :amazon_shipments do
     collection do
       get 'indaba_skus'

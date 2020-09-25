@@ -146,6 +146,26 @@ ActiveRecord::Schema.define(version: 2020_09_28_105937) do
     t.index ["yearly_low"], name: "index_amazon_shipments_on_yearly_low"
   end
 
+  create_table "book_export_templates", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "book_export_templates_field_mappings", id: false, force: :cascade do |t|
+    t.bigint "book_export_template_id", null: false
+    t.bigint "book_field_mapping_id", null: false
+    t.index ["book_export_template_id", "book_field_mapping_id"], name: "index_book_export_template_on_field_mapping_id"
+    t.index ["book_field_mapping_id", "book_export_template_id"], name: "index_field_mapping_book_on_export_template_id"
+  end
+
+  create_table "book_field_mappings", force: :cascade do |t|
+    t.string "display_name"
+    t.string "lookup_field"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "books", force: :cascade do |t|
     t.string "ean"
     t.string "isbn"

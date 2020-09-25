@@ -1,0 +1,37 @@
+<%= simple_form_for(@book_export_template) do |form| %>
+  <% if book_export_template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(book_export_template.errors.count, "error") %> prohibited this book_export_template from being saved:</h2>
+      <ul>
+        <% book_export_template.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col">
+      <div class="field">
+        <%= form.label :name %>
+        <%= form.text_field :name %>
+      </div>
+      <h3>Add Field Mapping</h3>
+      <%= form.simple_fields_for :book_field_mappings do |field_mapping| %>
+        <%= render 'book_field_mappings', f: field_mapping %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association form, :book_field_mappings, partial: 'book_field_mappings', class: 'btn btn-secondary btn-sm' do %>
+          <i class="fa fa-plus-circle"></i>&nbsp;Add Field
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="actions">
+        <%= form.submit "Update" %>
+      </div>
+    </div>
+  </div>
+<% end %>

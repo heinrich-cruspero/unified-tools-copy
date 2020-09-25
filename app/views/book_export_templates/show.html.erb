@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th colspan="5">Export</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td class=col-md-2>ID</td>
+        <td class=col-md-10><%= @book_export_template.id %></td>
+      </tr>
+      <tr>
+        <td class=col-md-2>Name</td>
+        <td class=col-md-10><%= @book_export_template.name %></td>
+      </tr>
+      <tr>
+        <td class=col-md-2>Fields</td>
+        <td class=col-md-10>
+          <ul class="list-group">
+            <% @book_export_template.book_field_mappings.each do |field_mapping| %>
+              <li class="list-group-item"><%= field_mapping.display_name %> => <%= field_mapping.lookup_field %> </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class=col-md-2>Created At</td>
+        <td class=col-md-10><%= @book_export_template.created_at %></td>
+      </tr>
+      <tr>
+        <td class=col-md-2>Updated At</td>
+        <td class=col-md-10><%= @book_export_template.updated_at %></td>
+      </tr>
+    
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_book_export_template_path(@book_export_template) %> |
+<%= link_to 'Back', book_export_templates_path %>
