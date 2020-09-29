@@ -384,7 +384,7 @@ table.dataTable {
 }
 
 #amazon-order-purchase-date-filter {
-  width: 200px;
+  width: auto;
   border-radius: 5px;
 }
 .purchase-date-filter .fa-times {
@@ -395,5 +395,5 @@ table.dataTable {
 
 .search-purchase-date {
   position: absolute;
-  left: -32px;
+  left: -104px;
 }
