@@ -1,5 +1,7 @@
 var book_obj = JSON.parse('<%= raw @book.to_json %>');
-// if (book_obj){
-//     $("#search").val(@search)
-// }
+if (book_obj){
+    var search_val = "<%=@search_value%>";
+    search_val = search_val.toString();
+    $("#search").val(search_val);
+}
 $("#book-table").html("<%= escape_javascript(render :partial => 'details') %>");

@@ -2,7 +2,7 @@
 
 ##
 class BookPolicy < ApplicationPolicy
-    def details?
-        user.is_admin?
-    end
+  def details?
+    user.is_admin?
+  end
 end

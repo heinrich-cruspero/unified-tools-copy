@@ -1,4 +1,4 @@
-<table class="table table-bordered">
+<table id="book-details-main" class="book-details-table table table-bordered">
   <thead class="thead-light text-center">
     <tr>
       <th scope="col">Image</th>
@@ -33,12 +33,7 @@
             <%= @book.isbn ? @book.isbn : 'N/A'  %> <br>
             <%= @book.ean ? @book.ean : 'N/A'  %> <br>
             OE: <%= link_to  "#{@book.oe_isbn}", book_details_path(:search => @book.oe_isbn), method: :get, remote: true, class: 'text-info' %>
-            NE:
-            <%
-=begin%>
- NE: <%= link_to  @book.ne_isbn, book_details_path(isbn: @book.ne_isbn), method: :get %> <br>
-<%
-=end%>
+            NE: <%= link_to "#{@book.ne_isbn}", book_details_path(:search => @book.ne_isbn), method: :get, remote: true, class: 'text-info' %>
         </td>
         <td> <!-- List Price -->
             <%= @book.list_price ? @book.list_price : 'N/A' %>
@@ -50,21 +45,21 @@
         </td>
         <td> <!-- Amazon Low -->
             7d: <%= @book.amazon_ca_low ? @book.amazon_ca_low : 'N/A' %> <br>
-            1/<%= Book.get_jan_year %>: <%= @book.lowest_price_jan_average ? @book.lowest_price_jan_average : 'N/A' %> <br>
-            8/<%= Book.get_aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
+            1/<%= Book.jan_year %>: <%= @book.lowest_price_jan_average ? @book.lowest_price_jan_average : 'N/A' %> <br>
+            8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
         </td>
         <td> <!-- FBA Low -->
             7d: <%= @book.weekly_fba ? @book.weekly_fba : 'N/A' %> <br>
-            8/<%= Book.get_aug_year %>: <%= @book.fba_august_average ? @book.fba_august_average : 'N/A' %>
+            8/<%= Book.aug_year %>: <%= @book.fba_august_average ? @book.fba_august_average : 'N/A' %>
         </td>
         <td> <!-- Amazon Rental -->
             7d: <%= @book.lowest_rental_average ? @book.lowest_rental_average : 'N/A' %> <br>
-            8/<%= Book.get_aug_year %>: <%= @book.lowest_rental_august_average ? @book.lowest_rental_august_average : 'N/A' %>
+            8/<%= Book.aug_year %>: <%= @book.lowest_rental_august_average ? @book.lowest_rental_august_average : 'N/A' %>
         </td>
         <td> <!-- Sales Rank -->
             7d: <%= @book.weekly_sales_rank ? @book.weekly_sales_rank : 'N/A' %> <br>
-            1/<%= Book.get_jan_year %>: <%= @book.sales_rank_jan_average ? @book.sales_rank_jan_average : 'N/A' %> <br>
-            8/<%= Book.get_aug_year%> : <%= @book.sales_rank_aug_average ? @book.sales_rank_aug_average : 'N/A' %> <br>
+            1/<%= Book.jan_year %>: <%= @book.sales_rank_jan_average ? @book.sales_rank_jan_average : 'N/A' %> <br>
+            8/<%= Book.aug_year%> : <%= @book.sales_rank_aug_average ? @book.sales_rank_aug_average : 'N/A' %> <br>
             OE: <%= @book.oe_isbn_sales_rank ? @book.oe_isbn_sales_rank : 'N/A' %>
         </td>
         <td> <!-- Pub -->
@@ -83,3 +78,55 @@
     <% end %>
   </tbody>
 </table>
+
+<!-- Amazon Inventory -->
+<table id="book-details-amazon-inventory" class="book-details-table table table-bordered">
+  <caption class="caption"><h5>Amazon Inventory</h5></caption>
+  <thead class="thead-light text-center">
+    <tr>
+      <th scope="col">FBAQ</th>
+      <th scope="col">Inbound</th>
+      <th scope="col">ORQC</th>
+      <th scope="col">ORQT</th>
+      <th scope="col">FBAWQ</th>
+      <th scope="col">BZ&JQ</th>
+      <th scope="col">POQ</th>
+      <th scope="col">BOQ</th>
+      <th scope="col">BO%</th>
+      <th scope="col">RQ</th>
+      <th scope="col">R%</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @book.nil? %>
+        <tr class="no-data">
+            <td colspan="11" class="text-center">No data available in table</td>
+        </tr>
+    <% else %>
+    <tr>
+        <td><%= @book.fbaq %></td>
+        <td><%= @book.inbq %></td>
+        <td><%= @book.orq %></td>
+        <td><%= @book.orq_total %></td>
+        <td><%= @book.fba_sku_quantity %></td>
+        <td><%= @book.bz_j_sku_quantity %></td>
+        <td><%= @book.pending_order %></td>
+        <td><%= @book.buyouts %></td>
+        <td><%= @book.buyouts_percentage %></td>
+        <td><%= @book.returns %></td>
+        <td><%= @book.returns_percentage %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<script type="text/javascript">
+    var book_obj = JSON.parse('<%= raw @book.to_json %>');
+    if (!book_obj){
+        $("#book-details-main").removeClass("book-details-table");
+        $("#book-details-main").attr("id", "");
+        $("#book-details-amazon-inventory").removeClass("book-details-table");
+        $("#book-details-amazon-inventory").attr("id", "");
+    }
+</script> 

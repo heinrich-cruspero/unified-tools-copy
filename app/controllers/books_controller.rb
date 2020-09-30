@@ -18,7 +18,7 @@ class BooksController < ApplicationController
       @book = Book.search_ean_isbn(params[:search]).last
       @search_value = params[:search]
       respond_to do |format|
-        format.js {render partial: 'search-results'}
+        format.js { render partial: 'search-results' }
       end
     else
       @book = Book.last
