@@ -10,11 +10,30 @@
         <a class="btn btn btn-secondary" href="<%= export_amazon_orders_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Export</a>
       </div>
     </div>
+
+    <div class="btn-toolbar mb-2 mb-md-0 float-right">
+      <div class="btn-group mr-2">
+        <a class="btn btn btn-secondary" href="<%= amazon_orders_path(format: :csv, filters: {purchase_start_date: @purchase_start_date, purchase_end_date: @purchase_end_date} ) %>" id="export-order-items-button"><i class="fa fa-plus"></i>&nbsp;Export All</a>
+      </div>
+    </div>
+
+    <div class="btn-toolbar mb-2 mb-md-0 float-left">
+      <div class="btn-group mr-2 search-purchase-date">
+        <label class="col-form-label">Purchase Date:</label>&nbsp;
+        <div class="input-group">
+          <input type="text" class="form-control date-range-filter" id="amazon-order-purchase-date-filter" <% if !@purchase_start_date.blank? and !@purchase_end_date.blank? %>value="<%= @purchase_start_date %> - <%= @purchase_end_date %>"<% end %> />
+           <span></span>
+          <a href="<%= amazon_orders_path(filters: {purchase_start_date: nil, purchase_end_date: nil}) %>" class="btn purchase-date-filter" >
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="row">
   <div class="col-sm">
-    <table id="amazon-orders-datatable" data-source="<%= amazon_orders_path(format: :json) %>">
+    <table id="amazon-orders-datatable" data-source="<%= amazon_orders_path(format: :json, filters: {purchase_start_date: @purchase_start_date, purchase_end_date: @purchase_end_date} ) %>">
       <thead>
         <tr>
           <th>Amazon Order ID</th>
@@ -33,3 +52,5 @@
     </table>
   </div>
 </div>
+
+<%= render 'shared/block_modal' %>
