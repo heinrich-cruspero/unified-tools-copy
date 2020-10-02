@@ -2,4 +2,7 @@
 
 ##
 class BookExportTemplatePolicy < ApplicationPolicy
+    def use?
+        user.is_admin?
+    end
 end

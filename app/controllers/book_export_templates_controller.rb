@@ -47,6 +47,8 @@ class BookExportTemplatesController < ApplicationController
   # PATCH/PUT /book_export_templates/1.json
   def update
     authorize BookExportTemplate
+    # TODO: @book_export_template.book_field_mappings.delete(all)
+    # then update >
     respond_to do |format|
       if @book_export_template.update(book_export_template_params)
         format.html { redirect_to @book_export_template, notice: 'Book export template was successfully updated.' }
@@ -64,8 +66,26 @@ class BookExportTemplatesController < ApplicationController
     authorize BookExportTemplate
     @book_export_template.destroy
     respond_to do |format|
-      format.html { redirect_to book_export_templates_url, notice: 'Book export template was successfully destroyed.' }
+      format.html { redirect_to book_export_templates_url, notice: 'Book export template was successfully deleted.' }
       format.json { head :no_content }
+    end
+  end
+
+  def use
+    authorize BookExportTemplate
+    return if request.format.html?
+    
+    ids = if params[:book_ids].present?
+            params[:book_ids].split(' ')
+          else
+            Book.parse_csv(params[:csv_file])
+          end
+    params[:book_id] == 'ean' ? @books = Book.where(ean: ids) : 
+                            @books = Book.where(isbn: ids)
+      
+    respond_to do |format|
+      format.html
+      format.csv { send_data @books.to_csv(params[:template_id]), filename: "books-#{Date.today}.csv" }
     end
   end
 
@@ -78,7 +98,7 @@ class BookExportTemplatesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def book_export_template_params
       params.require(:book_export_template).permit(:name, 
-        #book_field_mappings_attributes:[:id, :_destroy],
+        book_field_mappings_attributes:[:id, :_destroy],
         book_field_mapping_ids: [])
     end
 end

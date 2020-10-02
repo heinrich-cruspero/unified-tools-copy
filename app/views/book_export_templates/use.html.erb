@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-sm">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+      <h1 class="h2">Books Export</h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <div class="custom-file">
+      <%= form_tag(use_book_export_templates_path(format: :csv), multipart: true) do %>
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <p><b>Book ISBN/EAN Ids:</b></p>
+                <p class="input-note">Note: Enter ids without double/single quotes.<br>
+                example - 0002171856 0004334523 0004723570</p>
+                <%= text_area_tag 'book_ids',nil, placeholder: "Enter one or more ISBNs/EANs", class: "form-control rounded-0", rows: "20" %>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm">
+                <div class="input-group">
+                    <%= label_tag "book_id_isbn", "ISBN" %>
+                    <div class="ml-1 p-1">
+                        <%= radio_button_tag 'book_id', 'isbn', checked = true %>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <%= label_tag "book_id_ean", "EAN" %>
+                    <div class="ml-2 p-1">
+                        <%= radio_button_tag 'book_id', 'ean' %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm">
+                <%= submit_tag "Generate CSV", class: 'btn btn-secondary csv-btn'%>
+            </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

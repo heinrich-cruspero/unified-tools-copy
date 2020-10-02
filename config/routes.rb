@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :book_export_templates, :path => "books/export/templates"
+  resources :book_export_templates, :path => "books/export/templates" do
+    collection do
+      get '/:template_id/use', :to => 'book_export_templates#use', as: 'use'
+      post '/:template_id/use', :to => 'book_export_templates#use'
+    end
+  end
   resources :amazon_shipments do
     collection do
       get 'indaba_skus'

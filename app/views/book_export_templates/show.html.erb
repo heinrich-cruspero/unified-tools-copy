@@ -1,7 +1,27 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+    <div class="col-sm">
+        <div class="float-right">
+            <%= link_to edit_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
+              <span class="fa fa-file"></span>
+              Edit
+            <% end %>
+            <%= link_to new_book_export_template_path, class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-plus"></span>
+                New
+            <% end %>
+            <%= link_to @book_export_template, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ml-2' do %>
+              <span class="fa fa-trash"></span>
+              Delete
+            <% end %>
+            <%= link_to book_export_templates_path, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-list"> </span>
+                Return to List
+            <% end %>
+        </div>
+    </div>
+</div>
 
-
-<table class="table table-bordered">
+<table class="table table-bordered mt-3">
   <thead class="thead-light">
     <tr>
       <th colspan="5">Export</th>
@@ -10,16 +30,16 @@
 
   <tbody>
       <tr>
-        <td class=col-md-2>ID</td>
-        <td class=col-md-10><%= @book_export_template.id %></td>
+        <td>ID</td>
+        <td><%= @book_export_template.id %></td>
       </tr>
       <tr>
-        <td class=col-md-2>Name</td>
-        <td class=col-md-10><%= @book_export_template.name %></td>
+        <td>Name</td>
+        <td><%= @book_export_template.name %></td>
       </tr>
       <tr>
-        <td class=col-md-2>Fields</td>
-        <td class=col-md-10>
+        <td>Fields</td>
+        <td>
           <ul class="list-group">
             <% @book_export_template.book_field_mappings.each do |field_mapping| %>
               <li class="list-group-item"><%= field_mapping.display_name %> => <%= field_mapping.lookup_field %> </li>
@@ -28,16 +48,13 @@
         </td>
       </tr>
       <tr>
-        <td class=col-md-2>Created At</td>
-        <td class=col-md-10><%= @book_export_template.created_at %></td>
+        <td>Created At</td>
+        <td><%= @book_export_template.created_at %></td>
       </tr>
       <tr>
-        <td class=col-md-2>Updated At</td>
-        <td class=col-md-10><%= @book_export_template.updated_at %></td>
+        <td>Updated At</td>
+        <td><%= @book_export_template.updated_at %></td>
       </tr>
     
   </tbody>
 </table>
-
-<%= link_to 'Edit', edit_book_export_template_path(@book_export_template) %> |
-<%= link_to 'Back', book_export_templates_path %>
