@@ -1,8 +1,8 @@
 
 <div class="row">
   <div class="input-group mb-3 float-left">
-    <%= form_tag(book_details_path, method: "get", remote: true, role: "form", class: "book-form" ) do %>
-      <%= text_field_tag :search, params[:search], value: @book.isbn, class: "form-control", type: "text",oninput: "searchBook();"%>
+    <%= form_tag(details_books_path, method: "get", role: "form", class: "book-form" ) do %>
+      <%= text_field_tag :search_book, params[:search_book], value: @book.isbn, class: "form-control", type: "text"%>
     <% end %>
   </div>
 </div>
@@ -10,16 +10,3 @@
 <div id="book-table" class="row">
   <%= render 'details' %>
 </div>
-
-
-<script type="text/javascript">
-      function searchBook(){
-        var field_len = $('#search').val().length;
-        if (field_len == 10 || field_len == 13) {
-          $.ajax({
-              url : "/books/details",
-              data : $(".book-form").serialize()
-          });
-        }
-      }
-</script> 

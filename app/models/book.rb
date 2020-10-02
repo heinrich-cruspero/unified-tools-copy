@@ -10,9 +10,7 @@ class Book < ApplicationRecord
   end
 
   def default_image_url
-    return "https://s3.amazonaws.com/books-data/eans/#{ean}/images/medium.jpg" unless image_url
-
-    image_url
+    "https://s3.amazonaws.com/books-data/eans/#{ean}/images/medium.jpg"
   end
 
   def self.jan_year

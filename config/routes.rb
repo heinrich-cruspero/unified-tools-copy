@@ -19,8 +19,11 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'books/details/', to: 'books#details', as: 'book_details'
-  resources :books, only: %i[index details]
+  resources :books, only: %i[index details] do
+    collection do
+      get 'details', to: 'books#details'
+    end
+  end
 
   resources :amazon_orders, only: %i[index show] do
     collection do

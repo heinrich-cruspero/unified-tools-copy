@@ -32,8 +32,8 @@
             <%= @book.edition ? @book.edition : 'N/A'  %> <br>
             <%= @book.isbn ? @book.isbn : 'N/A'  %> <br>
             <%= @book.ean ? @book.ean : 'N/A'  %> <br>
-            OE: <%= link_to  "#{@book.oe_isbn}", book_details_path(:search => @book.oe_isbn), method: :get, remote: true, class: 'text-info' %>
-            NE: <%= link_to "#{@book.ne_isbn}", book_details_path(:search => @book.ne_isbn), method: :get, remote: true, class: 'text-info' %>
+            OE: <%= link_to  "#{@book.oe_isbn}", details_books_path(:search_book => @book.oe_isbn), method: :get, remote: true, class: 'text-info' %>
+            NE: <%= link_to "#{@book.ne_isbn}", details_books_path(:search_book => @book.ne_isbn), method: :get, remote: true, class: 'text-info' %>
         </td>
         <td> <!-- List Price -->
             <%= @book.list_price ? @book.list_price : 'N/A' %>
@@ -50,7 +50,7 @@
         </td>
         <td> <!-- FBA Low -->
             7d: <%= @book.weekly_fba ? @book.weekly_fba : 'N/A' %> <br>
-            8/<%= Book.aug_year %>: <%= @book.fba_august_average ? @book.fba_august_average : 'N/A' %>
+            8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
         </td>
         <td> <!-- Amazon Rental -->
             7d: <%= @book.lowest_rental_average ? @book.lowest_rental_average : 'N/A' %> <br>
