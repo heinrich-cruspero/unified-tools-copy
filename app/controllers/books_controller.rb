@@ -13,14 +13,6 @@ class BooksController < ApplicationController
 
   def details
     authorize Book
-    if params[:search_book]
-      @book = Book.search_ean_isbn(params[:search_book]).last
-      @search_value = params[:search_book]
-      respond_to do |format|
-        format.js { render partial: 'search-results' }
-      end
-    else
-      @book = Book.last
-    end
+    @book = Book.search_ean_isbn(params[:id]).last
   end
 end

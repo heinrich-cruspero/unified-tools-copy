@@ -4,9 +4,8 @@
 class Book < ApplicationRecord
   include PgSearch
 
-  def oe_isbn_sales_rank
+  def oe_isbn_rec
     @oe_book = Book.where(oe_isbn: oe_isbn).take
-    @oe_book.sales_rank
   end
 
   def default_image_url

@@ -1,0 +1,40 @@
+<!-- Amazon Inventory -->
+<table id="book-details-amazon-inventory" class="book-details-table table table-bordered">
+  <caption class="caption"><h5>Amazon Inventory</h5></caption>
+  <thead class="thead-light text-center">
+    <tr>
+      <th scope="col">FBAQ</th>
+      <th scope="col">Inbound</th>
+      <th scope="col">ORQC</th>
+      <th scope="col">ORQT</th>
+      <th scope="col">FBAWQ</th>
+      <th scope="col">BZ&JQ</th>
+      <th scope="col">POQ</th>
+      <th scope="col">BOQ</th>
+      <th scope="col">BO%</th>
+      <th scope="col">RQ</th>
+      <th scope="col">R%</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @book.nil? %>
+        <tr class="no-data">
+            <td colspan="11" class="text-center">No data available in table</td>
+        </tr>
+    <% else %>
+    <tr>
+        <td><%= @book.fbaq %></td>
+        <td><%= @book.inbq %></td>
+        <td><%= @book.orq %></td>
+        <td><%= @book.orq_total %></td>
+        <td><%= @book.fba_sku_quantity %></td>
+        <td><%= @book.bz_j_sku_quantity %></td>
+        <td><%= @book.pending_order %></td>
+        <td><%= @book.buyouts %></td>
+        <td><%= @book.buyouts_percentage %></td>
+        <td><%= @book.returns %></td>
+        <td><%= @book.returns_percentage %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

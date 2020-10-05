@@ -7,13 +7,19 @@ $( document ).on('turbolinks:load', function() {
         });
     }
 
+    var book_obj = document.getElementById("book-record")
+    if (!book_obj){
+        $("#book-details-main").removeClass("book-details-table");
+        $("#book-details-main").attr("id", "");
+        $("#book-details-amazon-inventory").removeClass("book-details-table");
+        $("#book-details-amazon-inventory").attr("id", "");
+    }
+
+
     function searchBook(){
-        var field_len = $('#search_book').val().length;
-        if (field_len == 10 || field_len == 13) {
-            $.ajax({
-                url : "/books/details",
-                data : $(".book-form").serialize()
-            });
+        var book_val = $('#search_book').val()
+        if (book_val.length == 10 || book_val.length == 13) {
+            window.location = book_val
         }
     }
 });

@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :books, only: %i[index details] do
     collection do
-      get 'details', to: 'books#details'
+      get 'details/:id', to: 'books#details', as: :details
     end
   end
 

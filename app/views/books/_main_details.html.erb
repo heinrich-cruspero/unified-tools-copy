@@ -1,0 +1,92 @@
+<!-- Main book details -->
+<table id="book-details-main" class="book-details-table table table-bordered">
+  <thead class="thead-light text-center">
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">Author</th>
+      <th scope="col">Title</th>
+      <th scope="col">List</th>
+      <th scope="col">Wholesale</th>
+      <th scope="col">Amazon Low</th>
+      <th scope="col">FBA Low</th>
+      <th scope="col">Amazon Rental</th>
+      <th scope="col">Sales Rank</th>
+      <th scope="col">Pub</th>
+      <th scope="col">Subject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @book.nil? %>
+        <tr class="no-data">
+            <td colspan="11" class="text-center">No data available in table</td>
+        </tr>
+    <% else %>
+        <tr>
+            <input type="hidden" id="book-record" data-book-id="<%=@book.id%>">
+            <td class="align-middle">
+                <%= image_tag @book.default_image_url, :class => 'mx-auto d-block' %>
+            </td>
+            <td> <!-- Author -->
+                <%= @book.author ? @book.author : 'N/A'  %>
+            </td>
+            <td> <!-- Title -->
+                <%= @book.title ? @book.title : 'N/A'  %> <br>
+                <%= @book.edition ? @book.edition : 'N/A'  %> <br>
+                <%= @book.isbn ? @book.isbn : 'N/A'  %> <br>
+                <%= @book.ean ? @book.ean : 'N/A'  %> <br>
+                OE: 
+                <% if @book.oe_isbn? %>
+                    <%= link_to  "#{@book.oe_isbn}", details_books_path(:id => @book.oe_isbn), method: :get, class: 'text-info' %>
+                <% else %>
+                    N/A
+                <% end %>
+                NE: 
+                <% if @book.ne_isbn? %>
+                    <%= link_to "#{@book.ne_isbn}", details_books_path(:id => @book.ne_isbn), method: :get, class: 'text-info' %>
+                <% else %>
+                    N/A
+                <% end %>
+            </td>
+            <td> <!-- List Price -->
+                <%= @book.list_price ? @book.list_price : 'N/A' %>
+            </td>
+            <td> <!-- Wholesale -->
+                <%= @book.max_used_wholesale_price ? @book.max_used_wholesale_price : 'N/A' %> <br>
+                <%= @book.edition_status_code ? @book.edition_status_code : 'N/A' %>
+                <%= @book.edition_status_date ? @book.edition_status_date : 'N/A' %>
+            </td>
+            <td> <!-- Amazon Low -->
+                7d: <%= @book.amazon_ca_low ? @book.amazon_ca_low : 'N/A' %> <br>
+                1/<%= Book.jan_year %>: <%= @book.lowest_price_jan_average ? @book.lowest_price_jan_average : 'N/A' %> <br>
+                8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
+            </td>
+            <td> <!-- FBA Low -->
+                7d: <%= @book.weekly_fba ? @book.weekly_fba : 'N/A' %> <br>
+                8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
+            </td>
+            <td> <!-- Amazon Rental -->
+                7d: <%= @book.lowest_rental_average ? @book.lowest_rental_average : 'N/A' %> <br>
+                8/<%= Book.aug_year %>: <%= @book.lowest_rental_august_average ? @book.lowest_rental_august_average : 'N/A' %>
+            </td>
+            <td> <!-- Sales Rank -->
+                7d: <%= @book.weekly_sales_rank ? @book.weekly_sales_rank : 'N/A' %> <br>
+                1/<%= Book.jan_year %>: <%= @book.sales_rank_jan_average ? @book.sales_rank_jan_average : 'N/A' %> <br>
+                8/<%= Book.aug_year%> : <%= @book.sales_rank_aug_average ? @book.sales_rank_aug_average : 'N/A' %> <br>
+                OE: <%= @book.oe_isbn_rec ? @book.oe_isbn_rec.sales_rank : 'N/A' %>
+            </td>
+            <td> <!-- Pub -->
+                <%= @book.publisher ? @book.publisher : 'N/A' %> <br>
+                <%= @book.publication_date ? @book.publication_date : 'N/A' %> <br>
+                Life: <%= @book.life ? @book.life : 'N/A' %> <br>
+                OE Life: <%= @book.oe_life ? @book.oe_life : 'N/A' %> <br>
+                C Life: <%= @book.c_life ? @book.c_life : 'N/A' %> <br>
+                R Life: <%= @book.r_life ? @book.r_life : 'N/A' %> <br>
+                <%= @book.binding ? @book.binding : 'N/A' %>
+            </td>
+            <td> <!-- Subject -->
+                <%= @book.subject ? @book.subject : 'N/A' %>
+            </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
