@@ -1,11 +1,7 @@
 $( document ).on('turbolinks:load', function() {
-    const search_book_field = document.getElementById("search_book")
-    if (search_book_field) { 
-        search_book_field.addEventListener("input", e => {
-            e.preventDefault();
-            searchBook();
-        });
-    }
+    $("#search_book").on("keyup", function(){
+        searchBook();
+    });
 
     var book_obj = document.getElementById("book-record")
     if (!book_obj){
