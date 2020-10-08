@@ -19,9 +19,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :books, only: %i[index] do
+  resources :books, only: %i[index details] do
     member do
       get 'details'
+      get 'detail_guides'
     end
   end
 

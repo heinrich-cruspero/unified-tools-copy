@@ -1,0 +1,54 @@
+<!-- Guides -->
+<table id="book-details-guides" class="book-details-table table table-bordered">
+  <caption class="caption"><h5>Guides</h5></caption>
+  <thead class="thead-light text-center">
+    <tr class=text-left>
+      <th scope="col">Guide</th>
+      <th scope="col">Expiration</th>
+      <th scope="col">Title</th>
+      <th scope="col">List</th>
+      <th scope="col">Wholesale</th>
+      <th scope="col">Status</th>
+      <th scope="col">Comments</th>
+      <th scope="col">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @guides.empty? %>
+        <tr class="no-data">
+            <td colspan="8" class="text-center">No data available in table</td>
+        </tr>
+    <% else %>
+        <tr class="current-guides">
+            <td colspan="8"><h5>Current Guides</h5></td>
+        </tr>
+        <% @guides["current_guides"].each do |guide| %>
+          <tr>
+              <td><%= guide.fetch("name", "N/A") %></td>
+              <td><%= guide.fetch("guide_import_end_date", "N/A") %></td>
+              <td><%= guide["data"].fetch("title", "N/A") %></td>
+              <td><%= guide["data"].fetch("list_price", "N/A") %></td>
+              <td><%= guide["data"].fetch("used_wholesale_price", "N/A") %></td>
+              <td><%= guide["data"].fetch("edition_status_code", "N/A") %></td>
+              <td><%= guide["data"].fetch("comments", "")  %></td>
+              <td><%= guide["data"].fetch("grade", "") %></td>
+          </tr>
+        <% end %>
+        <tr class="previous-guides">
+            <td colspan="8"><h5>Previous Guides</h5></td>
+        </tr>
+        <% @guides.fetch("previous_guides").each do |guide| %>
+          <tr>
+              <td><%= guide.fetch("name", "N/A") %></td>
+              <td><%= guide.fetch("guide_import_end_date", "N/A") %></td>
+              <td><%= guide["data"].fetch("title", "N/A") %></td>
+              <td><%= guide["data"].fetch("list_price", "N/A") %></td>
+              <td><%= guide["data"].fetch("used_wholesale_price", "N/A") %></td>
+              <td><%= guide["data"].fetch("edition_status_code", "N/A") %></td>
+              <td><%= guide["data"].fetch("comments", "")  %></td>
+              <td><%= guide["data"].fetch("grade", "") %></td>
+          </tr>
+        <% end %>
+    <% end %>
+  </tbody>
+</table>

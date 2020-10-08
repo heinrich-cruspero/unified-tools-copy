@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_105936) do
+ActiveRecord::Schema.define(version: 2020_10_08_062025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2020_09_28_105936) do
     t.date "action_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "product_id"
     t.index ["action_date"], name: "index_amazon_order_items_on_action_date"
     t.index ["amazon_order_id"], name: "index_amazon_order_items_on_amazon_order_id"
     t.index ["asin"], name: "index_amazon_order_items_on_asin"
@@ -408,6 +409,7 @@ ActiveRecord::Schema.define(version: 2020_09_28_105936) do
     t.decimal "yearly_fbaz_rented_price", precision: 10, scale: 2
     t.decimal "rent_avg", precision: 10, scale: 2
     t.string "ne_isbn"
+    t.string "product_id"
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
