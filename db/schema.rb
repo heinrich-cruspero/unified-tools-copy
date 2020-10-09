@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_105937) do
+ActiveRecord::Schema.define(version: 2020_10_09_032945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,17 +146,17 @@ ActiveRecord::Schema.define(version: 2020_09_28_105937) do
     t.index ["yearly_low"], name: "index_amazon_shipments_on_yearly_low"
   end
 
-  create_table "book_export_templates", force: :cascade do |t|
-    t.string "name"
+  create_table "book_export_template_field_mappings", force: :cascade do |t|
+    t.integer "book_export_template_id"
+    t.integer "book_field_mapping_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "book_export_templates_field_mappings", id: false, force: :cascade do |t|
-    t.bigint "book_export_template_id", null: false
-    t.bigint "book_field_mapping_id", null: false
-    t.index ["book_export_template_id", "book_field_mapping_id"], name: "index_book_export_template_on_field_mapping_id"
-    t.index ["book_field_mapping_id", "book_export_template_id"], name: "index_field_mapping_book_on_export_template_id"
+  create_table "book_export_templates", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "book_field_mappings", force: :cascade do |t|

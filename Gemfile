@@ -49,9 +49,8 @@ gem 'httparty'
 gem 'omniauth-google-oauth2'
 gem 'pg_search'
 gem 'pundit'
+gem 'simple_form'
 gem 'smarter_csv'
 gem 'tiny_tds'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
-gem "cocoon"
-gem "simple_form"

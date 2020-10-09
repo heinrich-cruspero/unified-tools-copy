@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "book_export_templates/edit", type: :view do
+RSpec.describe 'book_export_templates/edit', type: :view do
   before(:each) do
     @book_export_template = assign(:book_export_template, BookExportTemplate.create!(
-      name: "MyString"
-    ))
+                                                            name: 'MyString'
+                                                          ))
   end
 
-  it "renders the edit book_export_template form" do
+  it 'renders the edit book_export_template form' do
     render
 
-    assert_select "form[action=?][method=?]", book_export_template_path(@book_export_template), "post" do
-
-      assert_select "input[name=?]", "book_export_template[name]"
+    assert_select 'form[action=?][method=?]',
+                  book_export_template_path(@book_export_template), 'post' do
+      assert_select 'input[name=?]', 'book_export_template[name]'
     end
   end
 end
