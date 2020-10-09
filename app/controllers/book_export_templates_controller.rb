@@ -44,6 +44,7 @@ class BookExportTemplatesController < ApplicationController
     authorize BookExportTemplate
     respond_to do |format|
       if @book_export_template.update(book_export_template_params_del)
+        @book_export_template.book_field_mappings.delete(*@book_export_template.book_field_mappings)
         update_params = book_export_template_update_params.clone
         template_params = book_export_template_params_del[:book_field_mappings_attributes].to_h
         template_params.each do |attr|
