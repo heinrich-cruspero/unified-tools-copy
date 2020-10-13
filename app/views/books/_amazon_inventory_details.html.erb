@@ -1,40 +1,101 @@
-<!-- Amazon Inventory -->
-<table id="book-details-amazon-inventory" class="book-details-table table table-bordered">
-  <caption class="caption"><h5>Amazon Inventory</h5></caption>
-  <thead class="thead-light text-center">
-    <tr class="text-left">
-      <th scope="col">FBAQ</th>
-      <th scope="col">Inbound</th>
-      <th scope="col">ORQC</th>
-      <th scope="col">ORQT</th>
-      <th scope="col">FBAWQ</th>
-      <th scope="col">BZ&JQ</th>
-      <th scope="col">POQ</th>
-      <th scope="col">BOQ</th>
-      <th scope="col">BO%</th>
-      <th scope="col">RQ</th>
-      <th scope="col">R%</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if @book.nil? %>
-        <tr class="no-data">
-            <td colspan="11" class="text-center">No data available in table</td>
-        </tr>
-    <% else %>
-    <tr>
-        <td><%= @book.fbaq %></td>
-        <td><%= @book.inbq %></td>
-        <td><%= @book.orq %></td>
-        <td><%= @book.orq_total %></td>
-        <td><%= @book.fba_sku_quantity %></td>
-        <td><%= @book.bz_j_sku_quantity %></td>
-        <td><%= @book.pending_order %></td>
-        <td><%= @book.buyouts %></td>
-        <td><%= @book.buyouts_percentage %></td>
-        <td><%= @book.returns %></td>
-        <td><%= @book.returns_percentage %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @book.nil? %>
+  <!-- Amazon Inventory Empty Table -->
+  <table id="book-details-amazon-inventory" class="book-details-table table table-bordered">
+    <caption class="caption"><h5>Amazon Inventory</h5></caption>
+    <thead class="thead-light text-center">
+      <tr class="text-left">
+        <th scope="col">FBAQ</th>
+        <th scope="col">Inbound</th>
+        <th scope="col">ORQC</th>
+        <th scope="col">ORQT</th>
+        <th scope="col">FBAWQ</th>
+        <th scope="col">BZ&JQ</th>
+        <th scope="col">POQ</th>
+        <th scope="col">BOQ</th>
+        <th scope="col">BO%</th>
+        <th scope="col">RQ</th>
+        <th scope="col">R%</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="no-data">
+          <td colspan="11" class="text-center">No data available in table</td>
+      </tr>
+    </tbody>
+  </table>
+
+<% else %>
+  <!-- Flex divs-->
+  <div class="detail-header">
+      <h5>Amazon Inventory</h5>
+  </div>
+  <div class="book-details mb-4">
+      <div class="col-detail">
+          <p class="title">FBAQ</p>
+          <div>
+              <%= @book.fbaq %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">Inbound</p>
+          <div>
+              <%= @book.inbq %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">ORQC</p>
+          <div>
+              <%= @book.orq %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">ORQT</p>
+          <div>
+              <%= @book.orq_total %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">FBAWQ</p>
+          <div>
+              <%= @book.fba_sku_quantity %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">BZ&JQ</p>
+          <div>
+              <%= @book.bz_j_sku_quantity %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">POQ</p>
+          <div>
+              <%= @book.pending_order %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">BOQ</p>
+          <div>
+              <%= @book.buyouts %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">BO%</p>
+          <div>
+              <%= @book.buyouts_percentage %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">RQ</p>
+          <div>
+              <%= @book.returns %>
+          </div>
+      </div>
+      <div class="col-detail">
+          <p class="title">R%</p>
+          <div>
+              <%= @book.returns_percentage %>
+          </div>
+      </div>
+  </div>
+
+<% end %>
