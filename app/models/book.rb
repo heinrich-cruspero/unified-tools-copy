@@ -2,6 +2,7 @@
 
 ##
 class Book < ApplicationRecord
+  include HTTParty
   include PgSearch
 
   def oe_isbn_rec
@@ -9,7 +10,10 @@ class Book < ApplicationRecord
   end
 
   def default_image_url
-    "https://s3.amazonaws.com/books-data/eans/#{ean}/images/medium.jpg"
+    default = 'blank_book_image.png'
+    s3_img_url = "https://s3.amazonaws.com/books-data/eans/#{ean}/images/medium.jpg"
+    response = HTTParty.get(s3_img_url)
+    response.code == 200 ? s3_img_url : default
   end
 
   def self.jan_year

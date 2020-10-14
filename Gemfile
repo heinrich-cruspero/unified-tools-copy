@@ -44,6 +44,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'ajax-datatables-rails'
 gem 'delayed_job_active_record'
 gem 'devise'
+gem 'httparty'
 gem 'omniauth-google-oauth2'
 gem 'pg_search'
 gem 'pundit'
