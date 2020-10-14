@@ -42,11 +42,12 @@ class Book < ApplicationRecord
     n = 2
     guide_provider_names = 'MBS,Nebraska,TBC'
     names = %w[MBS Nebraska TBC]
-
     token = ENV['DATAWH_API_TOKEN']
     base_url = 'https://datawh-api.bbabackoffice.com'
-    endpoint = "/api/v1/guide_data/recent?eans=#{ean}&n=#{n}&guide_provider_names=#{guide_provider_names}"
-
+    endpoint = "/api/v1/guide_data/recent?eans=#{
+      ean}&n=#{
+        n}&guide_provider_names=#{
+          guide_provider_names}"
     response = HTTParty.get(base_url + endpoint, {
                               headers: {
                                 'User-Agent' => 'Httparty',
@@ -54,22 +55,23 @@ class Book < ApplicationRecord
                               }
                             })
     data = response.parsed_response
-
     current_guides = []
     previous_guides = []
-
     names.each do |name|
       next if data[name].nil?
 
-      current_expiration = Date.parse(data[name].to_a.last[1]['guide_import_end_date']).strftime('%m/%d/%Y')
+      current_expiration = Date.parse(
+        data[name].to_a.last[1]['guide_import_end_date']
+      ).strftime('%m/%d/%Y')
       current_guide = {
         'name' => name,
         'data' => data[name].to_a.last[1]['guide_data'].first,
         'guide_import_end_date' => current_expiration
       }
       current_guides << current_guide
-
-      prev_expiration = Date.parse(data[name].first[1]['guide_import_end_date']).strftime('%m/%d/%Y')
+      prev_expiration = Date.parse(
+        data[name].first[1]['guide_import_end_date']
+      ).strftime('%m/%d/%Y')
       previous_guide = {
         'name' => name,
         'data' => data[name].first[1]['guide_data'].first,
@@ -77,34 +79,28 @@ class Book < ApplicationRecord
       }
       previous_guides << previous_guide
     end
-
-    guides = {
-      'current_guides' => current_guides,
-      'previous_guides' => previous_guides
-    }
+    { 'current_guides' => current_guides, 'previous_guides' => previous_guides }
   end
 
   def amazon_orders
-    amazon_order_items = AmazonOrderItem.joins(
-      :amazon_order
-    ).where(
-      product_id: product_id
-    ).where(
+    AmazonOrderItem.joins(:amazon_order).where(asin: isbn).where(
       'item_price > ?', 0
-    ).where(
-      'quantity_ordered > ?', 0
-    ).where.not(
+    ).where('quantity_ordered > ?', 0).where.not(
       amazon_orders: { status: 'Canceled' }
     ).where(
       'amazon_orders.purchase_date > ?', 1.year.ago
     ).select(
       "
-                                                  sum(CASE WHEN sale_type=0 THEN quantity_ordered ELSE NULL END) as sale_quantity,
-                                                  avg(CASE WHEN sale_type=0 THEN (item_price/quantity_ordered) ELSE NULL END) as sale_avg_price,
-                                                  sum(CASE WHEN sale_type=1 THEN quantity_ordered ELSE NULL END) as rental_quantity,
-                                                  avg(CASE WHEN sale_type=1 THEN (item_price/quantity_ordered) ELSE NULL END) as rental_avg_price,
-                                                  date(amazon_orders.purchase_date)
-                                                "
+        sum(CASE WHEN sale_type=0
+          THEN quantity_ordered ELSE NULL END) as sale_quantity,
+        avg(CASE WHEN sale_type=0
+          THEN (item_price/quantity_ordered) ELSE NULL END) as sale_avg_price,
+        sum(CASE WHEN sale_type=1
+          THEN quantity_ordered ELSE NULL END) as rental_quantity,
+        avg(CASE WHEN sale_type=1
+          THEN (item_price/quantity_ordered) ELSE NULL END) as rental_avg_price,
+        date(amazon_orders.purchase_date)
+      "
     ).group(
       'date(amazon_orders.purchase_date)'
     ).order(
@@ -113,25 +109,21 @@ class Book < ApplicationRecord
   end
 
   def amazon_orders_totals
-    amazon_orders_totals = AmazonOrderItem.joins(
-      :amazon_order
-    ).where(
-      product_id: product_id
-    ).where(
+    AmazonOrderItem.joins(:amazon_order).where(asin: isbn).where(
       'item_price > ?', 0
-    ).where(
-      'quantity_ordered > ?', 0
-    ).where.not(
-      amazon_orders: { status: 'Canceled' }
-    ).where(
+    ).where('quantity_ordered > ?', 0).where.not(amazon_orders: { status: 'Canceled' }).where(
       'amazon_orders.purchase_date > ?', 1.year.ago
     ).select(
       "
-                                                  sum(CASE WHEN sale_type=0 THEN quantity_ordered ELSE NULL END) as sale_quantity,
-                                                  avg(CASE WHEN sale_type=0 THEN (item_price/quantity_ordered) ELSE NULL END) as sale_avg_price,
-                                                  sum(CASE WHEN sale_type=1 THEN quantity_ordered ELSE NULL END) as rental_quantity,
-                                                  avg(CASE WHEN sale_type=1 THEN (item_price/quantity_ordered) ELSE NULL END) as rental_avg_price
-                                                "
+        sum(CASE WHEN sale_type=0
+          THEN quantity_ordered ELSE NULL END) as sale_quantity,
+        avg(CASE WHEN sale_type=0
+          THEN (item_price/quantity_ordered) ELSE NULL END) as sale_avg_price,
+        sum(CASE WHEN sale_type=1
+          THEN quantity_ordered ELSE NULL END) as rental_quantity,
+        avg(CASE WHEN sale_type=1
+          THEN (item_price/quantity_ordered) ELSE NULL END) as rental_avg_price
+      "
     ).references(:amazon_orders)
   end
 end

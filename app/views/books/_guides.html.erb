@@ -1,54 +1,100 @@
 <!-- Guides -->
-<table id="book-details-guides" class="book-details-table table table-bordered">
-  <caption class="caption"><h5>Guides</h5></caption>
-  <thead class="thead-light text-center">
-    <tr class=text-left>
-      <th scope="col">Guide</th>
-      <th scope="col">Expiration</th>
-      <th scope="col">Title</th>
-      <th scope="col">List</th>
-      <th scope="col">Wholesale</th>
-      <th scope="col">Status</th>
-      <th scope="col">Comments</th>
-      <th scope="col">Grade</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if @guides.empty? %>
-        <tr class="no-data">
-            <td colspan="8" class="text-center">No data available in table</td>
-        </tr>
-    <% else %>
-        <tr class="current-guides">
-            <td colspan="8"><h5>Current Guides</h5></td>
-        </tr>
-        <% @guides["current_guides"].each do |guide| %>
-          <tr>
-              <td><%= guide.fetch("name", "N/A") %></td>
-              <td><%= guide.fetch("guide_import_end_date", "N/A") %></td>
-              <td><%= guide["data"].fetch("title", "N/A") %></td>
-              <td><%= guide["data"].fetch("list_price", "N/A") %></td>
-              <td><%= guide["data"].fetch("used_wholesale_price", "N/A") %></td>
-              <td><%= guide["data"].fetch("edition_status_code", "N/A") %></td>
-              <td><%= guide["data"].fetch("comments", "")  %></td>
-              <td><%= guide["data"].fetch("grade", "") %></td>
-          </tr>
-        <% end %>
-        <tr class="previous-guides">
-            <td colspan="8"><h5>Previous Guides</h5></td>
-        </tr>
-        <% @guides.fetch("previous_guides").each do |guide| %>
-          <tr>
-              <td><%= guide.fetch("name", "N/A") %></td>
-              <td><%= guide.fetch("guide_import_end_date", "N/A") %></td>
-              <td><%= guide["data"].fetch("title", "N/A") %></td>
-              <td><%= guide["data"].fetch("list_price", "N/A") %></td>
-              <td><%= guide["data"].fetch("used_wholesale_price", "N/A") %></td>
-              <td><%= guide["data"].fetch("edition_status_code", "N/A") %></td>
-              <td><%= guide["data"].fetch("comments", "")  %></td>
-              <td><%= guide["data"].fetch("grade", "") %></td>
-          </tr>
-        <% end %>
-    <% end %>
-  </tbody>
-</table>
+<div class="detail-headers">
+  <div class="book-details">
+    <label class="col-detail title">Guide</label>
+    <label class="col-detail title">Expiration</label>
+    <label class="col-detail title">Title</label>
+    <label class="col-detail title">List</label>
+    <label class="col-detail title">Wholesale</label>
+    <label class="col-detail title">Status</label>
+    <label class="col-detail title">Comments</label>
+    <label class="col-detail title">Grade</label>
+  </div>
+</div>
+
+<% if @guides.empty? %>
+  <div class="detail-caption text-center">
+    No data available in table.
+  </div>
+<% else %>
+  <!-- CURRENT GUIDES-->
+  <div class="detail-caption">
+    <h5>Current Guides</h5>
+  </div>
+  <% @guides["current_guides"].each do |guide| %>
+    <div class="book-details dotted-top"> 
+        <div class="col-detail">
+          <p class="title title-sm">Guide</p>
+          <div><%= guide.fetch("name", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Expiration</p>
+          <div><%= guide.fetch("guide_import_end_date", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Title</p>
+          <div><%= guide["data"].fetch("title", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">List</p>
+          <div><%= guide["data"].fetch("list_price", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Wholesale</p>
+          <div><%= guide["data"].fetch("used_wholesale_price", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Status</p>
+          <div><%= guide["data"].fetch("edition_status_code", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Comments</p>
+          <div><%= guide["data"].fetch("comments", "")  %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Grade</p>
+          <div><%= guide["data"].fetch("grade", "") %></div>
+        </div>
+    </div>
+  <% end %>
+  <!-- PREVIOUS GUIDES-->
+  <div class="detail-caption">
+    <h5>Previous Guides</h5>
+  </div>
+  <% @guides["previous_guides"].each do |guide| %>
+    <div class="book-details dotted-top">
+        <div class="col-detail">
+          <p class="title title-sm">Guide</p>
+          <div><%= guide.fetch("name", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Expiration</p>
+          <div><%= guide.fetch("guide_import_end_date", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Title</p>
+          <div><%= guide["data"].fetch("title", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">List</p>
+          <div><%= guide["data"].fetch("list_price", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Wholesale</p>
+          <div><%= guide["data"].fetch("used_wholesale_price", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Status</p>
+          <div><%= guide["data"].fetch("edition_status_code", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Comments</p>
+          <div><%= guide["data"].fetch("comments", "")  %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Grade</p>
+          <div><%= guide["data"].fetch("grade", "") %></div>
+        </div>
+    </div>
+  <% end %>
+<% end %>

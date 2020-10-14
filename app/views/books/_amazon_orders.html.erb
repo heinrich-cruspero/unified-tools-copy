@@ -1,38 +1,66 @@
 <!-- Amazon Orders -->
-<table id="book-details-amazon-orders" class="book-details-table table table-bordered">
-  <caption class="caption"><h5>Amazon Orders - AVG Turns: <%= @book? @book.average_turns : 'N/A' %> - ROI: <%= @book? @book.roi : 'N/A' %> </h5></caption>
-  <thead class="thead-light text-center">
-    
-    <tr id="book-details-amazon-ordrs-th" class="text-left">
-      <th scope="col">Sale Q</th>
-      <th scope="col">Sale P</th>
-      <th scope="col">Rental Q</th>
-      <th scope="col">Rental P</th>
-      <th scope="col">Month/Year</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if @book.nil? %>
-        <tr class="no-data">
-            <td colspan="11" class="text-center">No data available in table</td>
-        </tr>
-    <% else %>
-      <% @amazon_orders.each do |order| %>
-        <tr>
-            <td><%= order.sale_quantity ? order.sale_quantity : 0 %></td>
-            <td><%= order.sale_avg_price ? number_to_currency(order.sale_avg_price) : 0.00 %></td>
-            <td><%= order.rental_quantity ? order.rental_quantity : 0 %></td>
-            <td><%= order.rental_avg_price ? number_to_currency(order.rental_avg_price) : 0.00 %></td>
-            <td><%= order.date %></td>
-        </tr>
-      <% end %>
-      <tr id="book-details-amazon-orders-total-avg"class="text-left">
-        <td><%= @amazon_orders_totals.sale_quantity ? @amazon_orders_totals.sale_quantity : 0 %></td>
-        <td><%= @amazon_orders_totals.sale_avg_price ? number_to_currency(@amazon_orders_totals.sale_avg_price) : 0.00 %></td>
-        <td><%= @amazon_orders_totals.rental_quantity ? @amazon_orders_totals.rental_quantity : 0 %></td>
-        <td><%= @amazon_orders_totals.rental_avg_price ? number_to_currency(@amazon_orders_totals.rental_avg_price) : 0.00 %></td>
-        <td scope="col"> </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="detail-caption mt-4">
+    <h5>Amazon Orders - AVG Turns: <%= @book? @book.average_turns : 'N/A' %> - ROI: <%= @book? @book.roi : 'N/A' %></h5>
+</div>
+<div class="detail-headers">
+  <div class="book-details">
+    <label class="col-detail title">Sale Q</label>
+    <label class="col-detail title">Sale P</label>
+    <label class="col-detail title">Rental P</label>
+    <label class="col-detail title">Rental Q</label>
+    <label class="col-detail title">Month/Year</label>
+  </div>
+</div>
+<% if @book.nil? %>
+  <div class="detail-caption text-center">
+    No data available in table.
+  </div>
+<% else %>
+  <!-- AMAZON ORDERS -->
+  <% @amazon_orders.each do |order| %>
+    <div class="book-details dotted-top">
+      <div class="col-detail">
+        <p class="title title-sm">Sale P</p>
+        <div><%= order.sale_quantity ? order.sale_quantity : 0 %></div>
+      </div>
+      <div class="col-detail">
+        <p class="title title-sm">Sale Q</p>
+        <div><%= order.sale_avg_price ? number_to_currency(order.sale_avg_price) : 0.00 %></div>
+      </div>
+      <div class="col-detail">
+        <p class="title title-sm">Rental P</p>
+        <div><%= order.rental_quantity ? order.rental_quantity : 0 %></div>
+      </div>
+      <div class="col-detail">
+        <p class="title title-sm">Rental Q</p>
+        <div><%= order.rental_avg_price ? number_to_currency(order.rental_avg_price) : 0.00 %></div>
+      </div>
+      <div class="col-detail">
+        <p class="title title-sm">Month/Year</p>
+        <div><%= order.date %></div>
+      </div>
+    </div>
+  <% end %>
+  <!-- AMAZON ORDERS TOTAL -->
+  <div id="amazon-orders-total-avg" class="book-details">
+    <div class="col-detail">
+      <p class="title title-sm">Sale P Total</p>
+      <div><%= @amazon_orders_totals.sale_quantity ? @amazon_orders_totals.sale_quantity : 0 %></div>
+    </div>
+    <div class="col-detail">
+      <p class="title title-sm">Sale Q Total</p>
+      <div><%= @amazon_orders_totals.sale_avg_price ? number_to_currency(@amazon_orders_totals.sale_avg_price) : 0.00 %></div>
+    </div>
+    <div class="col-detail">
+      <p class="title title-sm">Rental P Total</p>
+      <div><%= @amazon_orders_totals.rental_quantity ? @amazon_orders_totals.rental_quantity : 0 %></div>
+    </div>
+    <div class="col-detail">
+      <p class="title title-sm">Rental Q Total</p>
+      <div><%= @amazon_orders_totals.rental_avg_price ? number_to_currency(@amazon_orders_totals.rental_avg_price) : 0.00 %></div>
+    </div>
+    <div class="col-detail hidden">
+      <div>None</div>
+    </div>
+  </div>
+<% end %>
