@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+##
 class BookFieldMappingsController < ApplicationController
-  before_action :set_book_field_mapping, only: [:show, :edit, :update, :destroy]
+  before_action :set_book_field_mapping, only: %i[show edit update destroy]
 
   def index
     authorize Book
@@ -22,10 +25,13 @@ class BookFieldMappingsController < ApplicationController
   def create
     authorize Book
     @book_field_mapping = BookFieldMapping.new(book_field_mapping_params)
-    
+
     respond_to do |format|
       if @book_field_mapping.save
-        format.html { redirect_to @book_field_mapping, notice: 'Book field mapping was successfully created.' }
+        format.html do
+          redirect_to @book_field_mapping,
+                      notice: 'Book field mapping was successfully created.'
+        end
         format.json { render :show, status: :created, location: @book_field_mapping }
       else
         format.html { render :new }
@@ -39,7 +45,10 @@ class BookFieldMappingsController < ApplicationController
 
     respond_to do |format|
       if @book_field_mapping.update(book_field_mapping_params)
-        format.html { redirect_to @book_field_mapping, notice: 'Book field mapping was successfully updated.' }
+        format.html do
+          redirect_to @book_field_mapping,
+                      notice: 'Book field mapping was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @book_field_mapping }
       else
         format.html { render :edit }
@@ -52,17 +61,21 @@ class BookFieldMappingsController < ApplicationController
     authorize Book
     @book_field_mapping.destroy
     respond_to do |format|
-      format.html { redirect_to book_field_mappings_url, notice: 'Book field mapping was successfully destroyed.' }
+      format.html do
+        redirect_to book_field_mappings_url,
+                    notice: 'Book field mapping was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    def set_book_field_mapping
-      @book_field_mapping = BookFieldMapping.find(params[:id])
-    end
 
-    def book_field_mapping_params
-      params.fetch(:book_field_mapping, {})
-    end
+  def set_book_field_mapping
+    @book_field_mapping = BookFieldMapping.find(params[:id])
+  end
+
+  def book_field_mapping_params
+    params.fetch(:book_field_mapping, {})
+  end
 end
