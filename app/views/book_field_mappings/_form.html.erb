@@ -1,0 +1,36 @@
+<%= form_with(model: book_field_mapping, local: true) do |form| %>
+  <% if book_field_mapping.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(book_field_mapping.errors.count, "error") %> prohibited this book_field_mapping from being saved:</h2>
+
+      <ul>
+        <% book_field_mapping.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+    <label for="book_export_template_name" class="col-sm-1 col-form-label">
+      Display Name *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :display_name, required: true, class: "form-control" %>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-1 col-form-label">Lookup Field *</label>
+    <div class="col-sm-3">
+      <%= form.text_field :lookup_field, required: true, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= form.submit "Save" %>
+      </div>
+    </div>
+  </div>
+<% end %>

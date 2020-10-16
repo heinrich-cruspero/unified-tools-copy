@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-sm">
+        <h2>Editing Book Field Mapping</h2>
+    </div>
+    <div class="col-sm">
+        <div class="float-right">
+            <%= link_to @book_field_mapping, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-search-plus"> </span>
+                Show
+            <% end %>
+            <%= link_to new_book_field_mapping_path, class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-plus"></span>
+                New
+            <% end %>
+            <%= link_to book_field_mappings_path, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-list"> </span>
+                Return to List
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm border-top p-3">
+        <%= render 'form', book_field_mapping: @book_field_mapping %>
+    </div>
+</div>

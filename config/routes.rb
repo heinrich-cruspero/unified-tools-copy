@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :book_field_mappings, path: 'books/export/field_mappings'
   resources :book_export_templates, path: 'books/export/templates' do
     member do
       get 'use'
