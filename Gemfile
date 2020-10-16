@@ -54,3 +54,5 @@ gem 'smarter_csv'
 gem 'tiny_tds'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
+
+gem 'jquery-ui-rails'

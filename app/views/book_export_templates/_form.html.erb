@@ -23,16 +23,19 @@
   </div>
   <div class="form-group row">
     <label class="col-sm-1 col-form-label">Fields *</label>
-    <div class="col-sm-5">
-      <%= form.simple_fields_for :book_field_mappings do |field_mapping| %>
-        <%= render 'book_field_mappings', f: field_mapping %>
-      <% end %>
-      <div class="links mt-2">
-        <%= link_to_add_association form, :book_field_mappings, partial: 'book_field_mappings', class: 'btn btn-secondary btn-sm' do %>
-          <i class="fa fa-plus-circle"></i>&nbsp;Add Field
+    <div class="col-sm-4">
+      <div id="field-mappings">
+        <%= form.simple_fields_for :book_field_mappings do |field_mapping| %>
+          <%= render 'book_field_mappings', f: field_mapping %>
+        <% end %>
+      </div>
+      <div id="link_add" class="links mt-2 not-sortable">
+        <%= link_to_add_association form, :book_field_mappings, partial: 'book_field_mappings', class: 'btn btn-secondary btn-sm not-sortable' do %>
+          <i class="fa fa-plus-circle not-sortable"></i>&nbsp;Add Field
         <% end %>
       </div>
     </div>
+    
   </div>
   <div class="form-group row">
     <div class="col-sm-2">

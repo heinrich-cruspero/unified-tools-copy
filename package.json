@@ -15,7 +15,8 @@
     "chartkick": "^3.2.1",
     "datatables.net": "^1.10.21",
     "datatables.net-bs4": "^1.10.21",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
+    "jquery-ui-dist": "^1.12.1",
     "popper.js": "^1.16.0",
     "turbolinks": "^5.2.0"
   },
