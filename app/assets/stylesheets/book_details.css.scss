@@ -3,31 +3,48 @@
 ----------------------------------------------------- */
 @media only screen and (max-width: 768px) {
 
-    .book-details {
-      flex-direction: column !important;
-    }
+  .book-details {
+    flex-direction: column !important;
+  }
 
-    .col-detail {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      flex-wrap: wrap;
-      align-items: stretch;
-      justify-content: space-evenly;
-    }
-    
-    .title {
-      flex: 1 2 30%;
-    }
-
-    .col-detail > div{
-      flex: 1 1 70%;
-    }
-
+  .col-detail {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-evenly;
   }
   
+  .title {
+    flex: 1 2 30%;
+  }
+
+  .col-detail > div{
+    flex: 1 1 70%;
+  }
+
+  .dotted-top {
+    border-top: 1px dotted;
+  }
+
+  /* --- Hidden --- */
+  #detail-headers {
+    display: none;
+  }
+
+  .title-sm {
+    display: unset !important;
+    border-right: 0.5px solid #dee2e6;
+  }
+
+  .hidden {
+    display: none;
+  }
+}
+
 /* ---------------------------------------------------
-    STYLES
+  STYLES
 ----------------------------------------------------- */
 .caption {
   caption-side: top;
@@ -42,39 +59,67 @@
   flex-direction: row;
   width: 100%;
   flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-evenly;
+  
 }
 
 .col-detail {
   border: 0.5px solid #dee2e6;
-  flex:1;
+  min-width: 65px;
+  flex: 1;
 };
 
 .col-detail > div {
   padding:10px;
+  overflow: auto;
 }
 
 .title {
   font-weight: bold;
   padding: 10px;
   margin-bottom: 0;
-  color: #495057;
+  color: #08C;
   border-bottom: 0.5px solid #dee2e6;
-  background-color: #e9ecef;
+  background-color: #f2f2f2;
 }
 
-.detail-header {
+.detail-caption {
+  border: 1px solid #ccc;
+  width: 100%;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+.no-data {
   border: 1px solid #ccc;
   width: 100%;
   padding: 10px;
 }
 
-.detail-header > h5 {
-  color: #495057;
+.detail-caption > h5 {
+  color: #08C;
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.2;
+  margin: 0;
 }
 
 .book-details-table {
   table-layout: fixed;
+} 
+
+#amazon-orders-total-avg {
+  color: #08c;
+  padding-bottom: 0.2rem;
+  border: 1px solid #ccc;
+  background-color: #e9ecef;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.title-sm {
+  display: none;
 }
