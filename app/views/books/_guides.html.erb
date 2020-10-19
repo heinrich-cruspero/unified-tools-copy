@@ -1,19 +1,20 @@
-<!-- Guides -->
-<div class="detail-headers">
-  <div class="book-details">
-    <label class="col-detail title">Guide</label>
-    <label class="col-detail title">Expiration</label>
-    <label class="col-detail title">Title</label>
-    <label class="col-detail title">List</label>
-    <label class="col-detail title">Wholesale</label>
-    <label class="col-detail title">Status</label>
-    <label class="col-detail title">Comments</label>
-    <label class="col-detail title">Grade</label>
-  </div>
+<!-- Title Headers -->
+<div class="detail-caption mt-4">
+    <h5>Guides</h5>
+</div>
+<div id="detail-headers" class="book-details">
+  <label class="col-detail title">Guide</label>
+  <label class="col-detail title">Expiration</label>
+  <label class="col-detail title">Title</label>
+  <label class="col-detail title">List</label>
+  <label class="col-detail title">Wholesale</label>
+  <label class="col-detail title">Status</label>
+  <label class="col-detail title">Comments</label>
+  <label class="col-detail title">Grade</label>
 </div>
 
 <% if @guides.empty? %>
-  <div class="detail-caption text-center">
+  <div class="no-data text-center">
     No data available in table.
   </div>
 <% else %>
