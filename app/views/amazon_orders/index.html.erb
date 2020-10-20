@@ -1,33 +1,35 @@
 <div class="row">
-  <div class="col-sm">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-2">
       <h1 class="h2">Amazon Orders</h1>
     </div>
   </div>
-  <div class="col-sm">
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
-      <div class="btn-group mr-2">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+    <div class="btn-toolbar mb-2 md-0 float-right">
+      <div class="btn-group ml-2">
         <a class="btn btn btn-secondary" href="<%= export_amazon_orders_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Export</a>
       </div>
     </div>
 
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
-      <div class="btn-group mr-2">
+    <div class="btn-toolbar mb-2 md-0 float-right">
+      <div class="btn-group ml-2">
         <a class="btn btn btn-secondary" href="<%= amazon_orders_path(format: :csv, filters: {purchase_start_date: @purchase_start_date, purchase_end_date: @purchase_end_date} ) %>" id="export-order-items-button"><i class="fa fa-plus"></i>&nbsp;Export All</a>
       </div>
     </div>
 
-    <div class="btn-toolbar mb-2 mb-md-0 float-left">
-      <div class="btn-group mr-2 search-purchase-date">
-        <label class="col-form-label">Purchase Date:</label>&nbsp;
-        <div class="input-group">
-          <input type="text" class="form-control date-range-filter" id="amazon-order-purchase-date-filter" <% if !@purchase_start_date.blank? and !@purchase_end_date.blank? %>value="<%= @purchase_start_date %> - <%= @purchase_end_date %>"<% end %> />
-           <span></span>
-          <a href="<%= amazon_orders_path(filters: {purchase_start_date: nil, purchase_end_date: nil}) %>" class="btn purchase-date-filter" >
+    <div class="btn-toolbar mb-2 md-0 float-left date-range-filter">
+      <div class="input-group">
+        <div class="input-group-prepend mr-1">
+          <label class="col-form-label">Purchase Date:</label>
+        </div>
+        <input type="text" class="form-control" id="amazon-order-purchase-date-filter" <% if !@purchase_start_date.blank? and !@purchase_end_date.blank? %>value="<%= @purchase_start_date %> - <%= @purchase_end_date %>"<% end %> />
+        <div class="input-group-append">
+          <a href="<%= amazon_orders_path(filters: {purchase_start_date: nil, purchase_end_date: nil}) %>" class="btn purchase-date-filter input-group-text" >
             <i class="fa fa-times"></i>
           </a>
         </div>
       </div>
+      
     </div>
   </div>
 </div>
