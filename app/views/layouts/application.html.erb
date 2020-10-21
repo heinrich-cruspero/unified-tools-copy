@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, inital-scale=1" />
+    <% if @enable_viewport %>
+      <meta name="viewport" content="width=device-width, inital-scale=1" />
+    <% end %>
     <title>UnifiedTools</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>

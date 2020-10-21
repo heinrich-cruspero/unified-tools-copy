@@ -15,6 +15,7 @@ class BooksController < ApplicationController
 
   def details
     authorize Book
+    @enable_viewport = true
     @book = Book.search_ean_isbn(params[:id]).last
     @guides = {}
     @amazon_orders = nil
