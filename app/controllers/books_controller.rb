@@ -15,6 +15,7 @@ class BooksController < ApplicationController
 
   def details
     authorize Book
+    
     @enable_viewport = true
     @book = Book.search_ean_isbn(params[:id]).last
     @guides = {}
@@ -29,7 +30,7 @@ class BooksController < ApplicationController
   def detail_guides
     authorize Book
     @book = Book.search_ean_isbn(params[:id]).last
-    @guides = !@book.nil? ? @book.guides : {}
+    @guides = @book.nil? ? {} : @book.guides
     respond_to do |format|
       format.js
     end

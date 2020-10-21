@@ -54,32 +54,36 @@ class Book < ApplicationRecord
                                 'Authorization' => "Token token=#{token}"
                               }
                             })
-    data = response.parsed_response
-    current_guides = []
-    previous_guides = []
-    names.each do |name|
-      next if data[name].nil?
+    if response.code == 200
+      data = response.parsed_response
+      current_guides = []
+      previous_guides = []
+      names.each do |name|
+        next if data[name].nil?
 
-      current_expiration = Date.parse(
-        data[name].to_a.last[1]['guide_import_end_date']
-      ).strftime('%m/%d/%Y')
-      current_guide = {
-        'name' => name,
-        'data' => data[name].to_a.last[1]['guide_data'].first,
-        'guide_import_end_date' => current_expiration
-      }
-      current_guides << current_guide
-      prev_expiration = Date.parse(
-        data[name].first[1]['guide_import_end_date']
-      ).strftime('%m/%d/%Y')
-      previous_guide = {
-        'name' => name,
-        'data' => data[name].first[1]['guide_data'].first,
-        'guide_import_end_date' => prev_expiration
-      }
-      previous_guides << previous_guide
+        current_expiration = Date.parse(
+          data[name].to_a.last[1]['guide_import_end_date']
+        ).strftime('%m/%d/%Y')
+        current_guide = {
+          'name' => name,
+          'data' => data[name].to_a.last[1]['guide_data'].first,
+          'guide_import_end_date' => current_expiration
+        }
+        current_guides << current_guide
+        prev_expiration = Date.parse(
+          data[name].first[1]['guide_import_end_date']
+        ).strftime('%m/%d/%Y')
+        previous_guide = {
+          'name' => name,
+          'data' => data[name].first[1]['guide_data'].first,
+          'guide_import_end_date' => prev_expiration
+        }
+        previous_guides << previous_guide
+      end
+      { 'current_guides' => current_guides, 'previous_guides' => previous_guides }
+    else
+      {}
     end
-    { 'current_guides' => current_guides, 'previous_guides' => previous_guides }
   end
 
   def amazon_orders

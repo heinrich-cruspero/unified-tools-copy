@@ -13,7 +13,7 @@
   <label class="col-detail title">Grade</label>
 </div>
 
-<% if @guides.empty? %>
+<% if @guides.blank? %>
   <div class="no-data text-center">
     No data available in table.
   </div>
@@ -26,23 +26,33 @@
     <div class="book-details dotted-top"> 
         <div class="col-detail">
           <p class="title title-sm">Guide</p>
-          <div><%= guide.fetch("name", "N/A") %></div>
+          <div>
+            <%= guide.fetch("name", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Expiration</p>
-          <div><%= guide.fetch("guide_import_end_date", "N/A") %></div>
+          <div>
+            <%= guide.fetch("guide_import_end_date", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Title</p>
-          <div><%= guide["data"].fetch("title", "N/A") %></div>
+          <div>
+            <%= guide["data"].fetch("title", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">List</p>
-          <div><%= guide["data"].fetch("list_price", "N/A") %></div>
+          <div>
+            <%= guide["data"].fetch("list_price", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Wholesale</p>
-          <div><%= guide["data"].fetch("used_wholesale_price", "N/A") %></div>
+          <div>
+            <%= guide["data"].fetch("used_wholesale_price", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Status</p>
@@ -50,11 +60,15 @@
         </div>
         <div class="col-detail">
           <p class="title title-sm">Comments</p>
-          <div><%= guide["data"].fetch("comments", "")  %></div>
+          <div>
+            <%= guide.fetch("data", {})["comments"].blank? ? raw("&nbsp;") : guide.fetch("data", {})["comments"] %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Grade</p>
-          <div><%= guide["data"].fetch("grade", "") %></div>
+          <div>
+            <%= guide["data"].fetch("grade", "") %>
+          </div>
         </div>
     </div>
   <% end %>
@@ -66,35 +80,51 @@
     <div class="book-details dotted-top">
         <div class="col-detail">
           <p class="title title-sm">Guide</p>
-          <div><%= guide.fetch("name", "N/A") %></div>
+          <div>
+            <%= guide.fetch("name", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Expiration</p>
-          <div><%= guide.fetch("guide_import_end_date", "N/A") %></div>
+          <div>
+            <%= guide.fetch("guide_import_end_date", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Title</p>
-          <div><%= guide["data"].fetch("title", "N/A") %></div>
+          <div>
+            <%= guide["data"].fetch("title", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">List</p>
-          <div><%= guide["data"].fetch("list_price", "N/A") %></div>
+          <div>
+            <%= guide["data"].fetch("list_price", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Wholesale</p>
-          <div><%= guide["data"].fetch("used_wholesale_price", "N/A") %></div>
+          <div>
+            <%= guide["data"].fetch("used_wholesale_price", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Status</p>
-          <div><%= guide["data"].fetch("edition_status_code", "N/A") %></div>
+          <div>
+            <%= guide["data"].fetch("edition_status_code", "N/A") %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Comments</p>
-          <div><%= guide["data"].fetch("comments", "")  %></div>
+          <div>
+            <%= guide.fetch("data", {})["comments"].blank? ? raw("&nbsp;") : guide.fetch("data", {})["comments"] %>
+          </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Grade</p>
-          <div><%= guide["data"].fetch("grade", "") %></div>
+          <div>
+            <%= guide["data"].fetch("grade", "") %>
+          </div>
         </div>
     </div>
   <% end %>
