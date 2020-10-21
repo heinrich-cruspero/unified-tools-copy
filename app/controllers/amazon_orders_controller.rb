@@ -4,6 +4,7 @@
 class AmazonOrdersController < ApplicationController
   def index
     authorize AmazonOrder
+    cookies.delete(:responsive)
     respond_to do |format|
       filters = params[:filters] || {}
       @purchase_start_date = filters[:purchase_start_date]
