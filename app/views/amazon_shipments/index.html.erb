@@ -5,17 +5,17 @@
     </div>
   </div>
   <div class="col-sm">
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
+    <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
       <div class="btn-group mr-2">
         <a class="btn btn btn-secondary" href="<%= import_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Import</a>
       </div>
     </div>
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
+    <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
       <div class="btn-group mr-2">
         <a class="btn btn btn-danger" href="<%= delete_skus_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Delete</a>
       </div>
     </div>
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
+    <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
       <div class="btn-group mr-2">
         <a href="<%= amazon_shipments_path(format: :csv, filter: @filter_option) %>" id="export-amazon-shipments-submit-button" class="btn btn-secondary csv-btn">Export to CSV</a>
       </div>
