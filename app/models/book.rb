@@ -44,12 +44,12 @@ class Book < ApplicationRecord
     guide_provider_names = 'MBS,Nebraska,TBC'
     names = %w[MBS Nebraska TBC]
     token = Rails.application.credentials[:datawh][:api_token]
-    base_url = 'https://datawh-api.bbabackoffice.com'
+    base_url = Rails.application.credentials[:datawh][:url]
     endpoint = '/api/v1/guide_data/recent?'
     params = "eans=#{ean}&n=#{n}&guide_provider_names=#{guide_provider_names}"
 
     response = HTTParty.get(
-      base_url + endpoint + params,
+      'https://' + base_url + endpoint + params,
       {
         headers: {
           'User-Agent' => 'Httparty',
