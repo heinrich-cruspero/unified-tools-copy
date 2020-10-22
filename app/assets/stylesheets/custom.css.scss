@@ -269,13 +269,6 @@ a.article:hover {
 }
 
 /* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-// @media (max-width: 768px) {
-// }
-
-/* ---------------------------------------------------
     SPINNER
 ----------------------------------------------------- */
 
@@ -371,4 +364,15 @@ table.dataTable {
 
 #amazon-order-purchase-date-filter {
   border-radius: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .paging_full_numbers {
+    .paginate_button {
+      display: none !important;
+    }
+    .first,.previous,.next,.last {
+      display: block !important;
+    }
+  }
 }

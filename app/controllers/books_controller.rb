@@ -16,7 +16,6 @@ class BooksController < ApplicationController
 
   def details
     authorize Book
-    @responsive = true
     @book = Book.search_ean_isbn(params[:id]).last
     @guides = {}
     @amazon_orders = nil
