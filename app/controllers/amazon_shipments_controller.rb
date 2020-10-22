@@ -7,7 +7,7 @@ class AmazonShipmentsController < ApplicationController
 
   def index
     authorize AmazonShipment
-    cookies.delete(:responsive)
+
     respond_to do |format|
       @filter_option = params[:filter]
       format.html

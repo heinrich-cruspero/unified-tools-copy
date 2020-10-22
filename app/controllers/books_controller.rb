@@ -6,7 +6,7 @@ class BooksController < ApplicationController
 
   def index
     authorize Book
-    cookies.delete(:responsive)
+
     @book = Book.last
     respond_to do |format|
       format.html
@@ -16,7 +16,7 @@ class BooksController < ApplicationController
 
   def details
     authorize Book
-    cookies[:responsive] = { value: 'yes' }
+    @responsive = true
     @book = Book.search_ean_isbn(params[:id]).last
     @guides = {}
     @amazon_orders = nil
