@@ -43,7 +43,7 @@ class Book < ApplicationRecord
     n = 2
     guide_provider_names = 'MBS,Nebraska,TBC'
     names = %w[MBS Nebraska TBC]
-    token = ENV['DATAWH_API_TOKEN']
+    token = Rails.application.credentials[:datawh][:api_token]
     base_url = 'https://datawh-api.bbabackoffice.com'
     endpoint = '/api/v1/guide_data/recent?'
     params = "eans=#{ean}&n=#{n}&guide_provider_names=#{guide_provider_names}"

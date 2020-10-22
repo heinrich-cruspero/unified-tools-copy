@@ -31,7 +31,13 @@
     aws:
         ses_smtp_username:
         ses_smtp_password:
-        
+
 ## Job Error Email
 1. Run `EDITOR=vim rails credentials:edit` again to set up, aws configuration
     developer_email_group: ["marc@rev365.com", "karim@rev365.com", "ramya@rev365.com"]
+
+
+## Data Credentials
+1. Run `EDITOR=vim rails credentials:edit` again to set up, aws configuration
+    datawh:
+        api_token:
