@@ -366,6 +366,20 @@ table.dataTable {
   border-radius: 5px;
 }
 
+.purchase-date-filter .fa-times {
+  position: absolute;
+  top: 10px;
+  left: 208px;
+}
+#amazon-order-item-purchase-date-filter {
+  width: auto;
+  border-radius: 5px;
+}
+.date-filter .fa-times {
+  position: absolute;
+  top: 10px;
+}
+
 @media only screen and (max-width: 768px) {
   .paging_full_numbers {
     .paginate_button {
@@ -375,4 +389,10 @@ table.dataTable {
       display: block !important;
     }
   }
+}
+.amazon-item-filter-button {
+  margin-right: 10px;
+}
+.select_sale_type_filter {
+  border-radius: 5px !important;
 }
