@@ -53,27 +53,31 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
 
   def data
     records.map do |record|
-      {
-        amazon_order_id: record.amazon_order.amazon_order_id,
-        order_item_id: record.order_item_id,
-        asin: record.asin,
-        seller_sku: record.seller_sku,
-        rni: record.rni,
-        sale_type: record.sale_type,
-        quantity_ordered: record.quantity_ordered,
-        item_price: record.item_price,
-        returned: record.returned,
-        buy_out: record.buy_out,
-        buy_out_price: record.buy_out_price,
-        expired: record.expired,
-        due_date: record.due_date,
-        action_date: record.action_date
-      }
+      record_map(record)
     end
   end
 
   def get_raw_records(*)
     # insert query here
-    AmazonOrderItem.joins(:amazon_order)
+    AmazonOrderItem.index(params[:filters])
+  end
+
+  def record_map(record)
+    {
+      amazon_order_id: record.amazon_order.amazon_order_id,
+      order_item_id: record.order_item_id,
+      asin: record.asin,
+      seller_sku: record.seller_sku,
+      rni: record.rni,
+      sale_type: record.sale_type,
+      quantity_ordered: record.quantity_ordered,
+      item_price: record.item_price,
+      returned: record.returned,
+      buy_out: record.buy_out,
+      buy_out_price: record.buy_out_price,
+      expired: record.expired,
+      due_date: record.due_date,
+      action_date: record.action_date
+    }
   end
 end

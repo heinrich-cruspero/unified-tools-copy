@@ -392,8 +392,22 @@ table.dataTable {
   top: 10px;
   left: 208px;
 }
+#amazon-order-item-purchase-date-filter {
+  width: auto;
+  border-radius: 5px;
+}
+.date-filter .fa-times {
+  position: absolute;
+  top: 10px;
+}
 
 .search-purchase-date {
   position: absolute;
   left: -104px;
+}
+.amazon-item-filter-button {
+  margin-right: 10px;
+}
+.select_sale_type_filter {
+  border-radius: 5px !important;
 }
