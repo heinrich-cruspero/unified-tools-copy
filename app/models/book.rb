@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ##
+# rubocop:disable  Metrics/ClassLength
 class Book < ApplicationRecord
   include HTTParty
   include PgSearch
@@ -44,16 +45,18 @@ class Book < ApplicationRecord
     names = %w[MBS Nebraska TBC]
     token = ENV['DATAWH_API_TOKEN']
     base_url = 'https://datawh-api.bbabackoffice.com'
-    endpoint = "/api/v1/guide_data/recent?eans=#{
-      ean}&n=#{
-        n}&guide_provider_names=#{
-          guide_provider_names}"
-    response = HTTParty.get(base_url + endpoint, {
-                              headers: {
-                                'User-Agent' => 'Httparty',
-                                'Authorization' => "Token token=#{token}"
-                              }
-                            })
+    endpoint = '/api/v1/guide_data/recent?'
+    params = "eans=#{ean}&n=#{n}&guide_provider_names=#{guide_provider_names}"
+
+    response = HTTParty.get(
+      base_url + endpoint + params,
+      {
+        headers: {
+          'User-Agent' => 'Httparty',
+          'Authorization' => "Token token=#{token}"
+        }
+      }
+    )
     if response.code == 200
       data = response.parsed_response
       current_guides = []
@@ -131,3 +134,4 @@ class Book < ApplicationRecord
     ).references(:amazon_orders)
   end
 end
+# rubocop:enable  Metrics/ClassLength

@@ -16,15 +16,15 @@ class BooksController < ApplicationController
 
   def details
     authorize Book
-    cookies[:responsive] = {:value => "yes"}
+    cookies[:responsive] = { value: 'yes' }
     @book = Book.search_ean_isbn(params[:id]).last
     @guides = {}
     @amazon_orders = nil
     @amazon_orders_totals = nil
-    unless @book.nil?
-      @amazon_orders = @book.amazon_orders
-      @amazon_orders_totals = @book.amazon_orders_totals.take
-    end
+    return if @book.nil?
+
+    @amazon_orders = @book.amazon_orders
+    @amazon_orders_totals = @book.amazon_orders_totals.take
   end
 
   def detail_guides
