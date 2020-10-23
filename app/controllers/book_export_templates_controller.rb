@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 ##
+# rubocop:disable Metrics/ClassLength
 class BookExportTemplatesController < ApplicationController
   before_action :set_book_export_template, only: %i[show edit update destroy]
 
   def index
     authorize BookExportTemplate
-
     @book_export_templates = BookExportTemplate.all
   end
 
@@ -27,13 +27,25 @@ class BookExportTemplatesController < ApplicationController
     authorize BookExportTemplate
     @book_export_template = BookExportTemplate.new(book_export_template_params)
     respond_to do |format|
-      if @book_export_template.save
-        format.html do
-          redirect_to @book_export_template,
-                      notice: 'Book export template was successfully created.'
+      if book_export_template_params[:book_field_mapping_ids].blank?
+        @book_export_template.errors.add(:fields, 'must not be empty.')
+        format.html { render :new }
+        format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
+
+      elsif book_export_template_params[
+        :book_field_mapping_ids].uniq == book_export_template_params[:book_field_mapping_ids]
+        if @book_export_template.save
+          format.html do
+            redirect_to @book_export_template,
+                        notice: 'Book export template was successfully created.'
+          end
+          format.json { render :show, status: :created, location: @book_export_template }
+        else
+          format.html { render :new }
+          format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
         end
-        format.json { render :show, status: :created, location: @book_export_template }
       else
+        @book_export_template.errors.add(:duplicate_fields, 'not allowed.')
         format.html { render :new }
         format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
       end
@@ -43,20 +55,41 @@ class BookExportTemplatesController < ApplicationController
   def update
     authorize BookExportTemplate
     respond_to do |format|
-      if @book_export_template.update(book_export_template_params_del)
-        @book_export_template.book_field_mappings.delete(*@book_export_template.book_field_mappings)
-        update_params = book_export_template_update_params.clone
-        template_params = book_export_template_params_del[:book_field_mappings_attributes].to_h
-        template_params.each do |attr|
-          update_params[:book_field_mapping_ids].delete(attr[1][:id]) if attr[1]['_destroy'] == '1'
-        end
-        if @book_export_template.update(update_params)
-          format.html do
-            redirect_to @book_export_template,
-                        notice: 'Book export template was successfully updated.'
+      update_params = book_export_template_update_params.clone
+      template_params = book_export_template_params_del[:book_field_mappings_attributes].to_h
+      template_params.each do |attr|
+        update_params[:book_field_mapping_ids].delete(attr[1][:id]) if attr[1]['_destroy'] == '1'
+      end
+
+      if update_params[:book_field_mapping_ids].blank?
+        @book_export_template.errors.add(:fields, 'must not be empty.')
+        format.html { render :edit }
+        format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
+
+      elsif @book_export_template.update(book_export_template_params_del)
+        if update_params[:book_field_mapping_ids].uniq == update_params[:book_field_mapping_ids]
+          @book_export_template.book_field_mappings.delete(
+            *@book_export_template.book_field_mappings
+          )
+          if @book_export_template.update(update_params)
+            format.html do
+              redirect_to @book_export_template,
+                          notice: 'Book export template was successfully updated.'
+            end
+            format.json { render :show, status: :ok, location: @book_export_template }
+          else
+            format.html { render :edit }
+            format.json do
+              render json: @book_export_template.errors,
+                     status: :unprocessable_entity
+            end
           end
-          format.json { render :show, status: :ok, location: @book_export_template }
+        else
+          @book_export_template.errors.add(:duplicate_fields, 'not allowed.')
+          format.html { render :edit }
+          format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
         end
+
       else
         format.html { render :edit }
         format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
@@ -86,12 +119,17 @@ class BookExportTemplatesController < ApplicationController
             Book.parse_csv(params[:csv_file])
           end
     @books = params[:book_id] == 'ean' ? Book.where(ean: ids) : Book.where(isbn: ids)
-
+    # template = BookExportTemplate.find(params[:id])
+    params[:template_id] = params[:id]
+    params[:ids] = ids
     respond_to do |format|
       format.html
       format.csv do
-        send_data @books.to_csv(params[:id]),
-                  filename: "books-#{Date.today}.csv"
+        params.delete :csv_file
+        params.permit!
+        CsvDownloadJob.perform_later(params, 'BookExportDatatable', 'books.csv',
+                                     current_user.id)
+        head :ok
       end
     end
   end
@@ -119,3 +157,4 @@ class BookExportTemplatesController < ApplicationController
                                                  book_field_mappings_attributes: %i[id _destroy])
   end
 end
+# rubocop:enable Metrics/ClassLength

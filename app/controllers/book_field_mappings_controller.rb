@@ -76,6 +76,6 @@ class BookFieldMappingsController < ApplicationController
   end
 
   def book_field_mapping_params
-    params.fetch(:book_field_mapping, {})
+    params.require(:book_field_mapping).permit(:display_name, :lookup_field)
   end
 end

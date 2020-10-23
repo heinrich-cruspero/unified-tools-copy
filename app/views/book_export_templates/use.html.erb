@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-sm">
     <div class="custom-file">
-      <%= form_tag(use_book_export_template_path(format: :csv), multipart: true) do %>
+      <%= form_tag(use_book_export_template_path(format: :csv), id: 'export-use-form', multipart: true) do %>
         <div class="form-group row">
             <div class="col-sm-3">
                 <p><b>Book ISBN/EAN Ids:</b></p>
@@ -45,6 +45,9 @@
             </div>
         </div>
       <% end %>
+      
     </div>
   </div>
 </div>
+
+<%= render 'shared/block_modal' %>

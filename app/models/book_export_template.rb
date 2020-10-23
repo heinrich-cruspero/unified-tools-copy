@@ -10,9 +10,11 @@ class BookExportTemplate < ApplicationRecord
                                 allow_destroy: true,
                                 reject_if: :template_rejectable
 
+  validates :name, uniqueness: true
+
   private
 
   def template_rejectable(att)
-    att['display_name'].blank?
+    att['display_name'].blank? && att['lookup_field'].blank?
   end
 end
