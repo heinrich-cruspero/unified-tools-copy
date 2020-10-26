@@ -31,7 +31,7 @@ class BooksController < ApplicationController
     @book = Book.search_ean_isbn(params[:id]).last
     @guides = @book.nil? ? {} : @book.guides
     respond_to do |format|
-      format.js
+      format.js { render json: { html: render_to_string(partial: 'guides') } }
     end
   end
 end

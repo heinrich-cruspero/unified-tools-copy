@@ -7,9 +7,12 @@ $( document ).on('turbolinks:load', function() {
     $.ajax({
         type: "GET",
         url: "/books/" + search_val + "/detail_guides",
-        dataType: "script"
+        dataType: "json",
+        complete: function(result){
+            $("#guides-div").html(result.responseJSON.html);
+        }
     })
-
+    
     function searchBook(){
         let book_val = $('#search_book').val()
         if (book_val.length == 10 || book_val.length == 13) {
