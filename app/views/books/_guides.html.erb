@@ -1,0 +1,131 @@
+<!-- Title Headers -->
+<div class="detail-caption mt-4">
+    <h5>Guides</h5>
+</div>
+<div id="detail-headers" class="book-details">
+  <label class="col-detail title">Guide</label>
+  <label class="col-detail title">Expiration</label>
+  <label class="col-detail title">Title</label>
+  <label class="col-detail title">List</label>
+  <label class="col-detail title">Wholesale</label>
+  <label class="col-detail title">Status</label>
+  <label class="col-detail title">Comments</label>
+  <label class="col-detail title">Grade</label>
+</div>
+
+<% if @guides.blank? %>
+  <div class="no-data text-center">
+    No data available in table.
+  </div>
+<% else %>
+  <!-- CURRENT GUIDES-->
+  <div class="detail-caption">
+    <h5>Current Guides</h5>
+  </div>
+  <% @guides["current_guides"].each do |guide| %>
+    <div class="book-details dotted-top"> 
+        <div class="col-detail">
+          <p class="title title-sm">Guide</p>
+          <div>
+            <%= guide.fetch("name", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Expiration</p>
+          <div>
+            <%= guide.fetch("guide_import_end_date", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Title</p>
+          <div>
+            <%= guide["data"].fetch("title", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">List</p>
+          <div>
+            <%= guide["data"].fetch("list_price", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Wholesale</p>
+          <div>
+            <%= guide["data"].fetch("used_wholesale_price", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Status</p>
+          <div><%= guide["data"].fetch("edition_status_code", "N/A") %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Comments</p>
+          <div>
+            <%= guide.fetch("data", {})["comments"].blank? ? raw("&nbsp;") : guide.fetch("data", {})["comments"] %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Grade</p>
+          <div>
+            <%= guide["data"].fetch("grade", "") %>
+          </div>
+        </div>
+    </div>
+  <% end %>
+  <!-- PREVIOUS GUIDES-->
+  <div class="detail-caption">
+    <h5>Previous Guides</h5>
+  </div>
+  <% @guides["previous_guides"].each do |guide| %>
+    <div class="book-details dotted-top">
+        <div class="col-detail">
+          <p class="title title-sm">Guide</p>
+          <div>
+            <%= guide.fetch("name", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Expiration</p>
+          <div>
+            <%= guide.fetch("guide_import_end_date", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Title</p>
+          <div>
+            <%= guide["data"].fetch("title", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">List</p>
+          <div>
+            <%= guide["data"].fetch("list_price", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Wholesale</p>
+          <div>
+            <%= guide["data"].fetch("used_wholesale_price", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Status</p>
+          <div>
+            <%= guide["data"].fetch("edition_status_code", "N/A") %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Comments</p>
+          <div>
+            <%= guide.fetch("data", {})["comments"].blank? ? raw("&nbsp;") : guide.fetch("data", {})["comments"] %>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Grade</p>
+          <div>
+            <%= guide["data"].fetch("grade", "") %>
+          </div>
+        </div>
+    </div>
+  <% end %>
+<% end %>

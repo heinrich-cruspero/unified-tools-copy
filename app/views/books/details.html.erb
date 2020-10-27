@@ -1,0 +1,16 @@
+<div class="row ml-1">
+  <div col-3>
+    <div class="input-group mb-3 float-left">
+      <%= text_field_tag :search_book, params[:search_book], value: params[:id], class: "form-control", type: "text"%>
+    </div>
+  </div>
+</div>
+
+<div id="book-table">
+  <%= render 'main_details' %>
+  <%= render 'amazon_inventory_details' %>
+  <div id="guides-div">
+    <%= render 'guides' %>
+  </div>
+  <%= render 'amazon_orders' %>
+</div>

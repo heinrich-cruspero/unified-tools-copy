@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_183258) do
+ActiveRecord::Schema.define(version: 2020_10_08_062025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -407,6 +407,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_183258) do
     t.decimal "yearly_fbaz_sold_price", precision: 10, scale: 2
     t.decimal "yearly_fbaz_rented_price", precision: 10, scale: 2
     t.decimal "rent_avg", precision: 10, scale: 2
+    t.string "ne_isbn"
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"

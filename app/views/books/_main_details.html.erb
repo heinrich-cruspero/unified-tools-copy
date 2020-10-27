@@ -1,0 +1,125 @@
+<div class="detail-caption">
+    <h5>Book</h5>
+</div>
+
+<!-- Title headers -->
+<div id="detail-headers" class="book-details">
+    <label class="col-detail title">Image</label>
+    <label class="col-detail title">Author</label>
+    <label class="col-detail title">Title</label>
+    <label class="col-detail title">List</label>
+    <label class="col-detail title">Wholesale</label>
+    <label class="col-detail title">Amazon Low</label>
+    <label class="col-detail title">FBA Low</label>
+    <label class="col-detail title">Amazon Rental</label>
+    <label class="col-detail title">Sales Rank</label>
+    <label class="col-detail title">Pub</label>
+    <label class="col-detail title">Subject</label>
+</div>
+
+
+<% if @book.nil? %>
+    <div class="no-data text-center">
+        No data available in table.
+    </div>
+<% else %>
+    <!-- Detail content -->
+    <div class="book-details">
+        <div class="col-detail">
+            <p class="title title-sm">Image</p>
+            <div>
+                <%= image_tag @book.default_image_url, :class => 'mx-auto d-block' %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Author</p>
+            <div>
+                <%= @book.author ? @book.author : 'N/A'  %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Title</p>
+            <div>
+                <%= @book.title ? @book.title : 'N/A'  %> <br>
+                <%= @book.edition ? @book.edition : 'N/A'  %> <br>
+                <%= @book.isbn ? @book.isbn : 'N/A'  %> <br>
+                <%= @book.ean ? @book.ean : 'N/A'  %> <br>
+                OE: 
+                <% if @book.oe_isbn? %>
+                    <%= link_to  "#{@book.oe_isbn}", details_book_path(:id => @book.oe_isbn), method: :get, class: 'text-info' %>
+                <% else %>
+                    N/A
+                <% end %>
+                NE: 
+                <% if @book.ne_isbn? %>
+                    <%= link_to "#{@book.ne_isbn}", details_book_path(:id => @book.ne_isbn), method: :get, class: 'text-info' %>
+                <% else %>
+                    N/A
+                <% end %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">List</p>
+            <div>
+                <%= @book.list_price ? @book.list_price : 'N/A' %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Wholesale</p>
+            <div>
+                <%= @book.max_used_wholesale_price ? @book.max_used_wholesale_price : 'N/A' %> <br>
+                <%= @book.edition_status_code ? @book.edition_status_code : 'N/A' %>
+                <%= @book.edition_status_date ? @book.edition_status_date : 'N/A' %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Amazon Low</p>
+            <div>
+                7d: <%= @book.amazon_ca_low ? @book.amazon_ca_low : 'N/A' %> <br>
+                1/<%= Book.jan_year %>: <%= @book.lowest_price_jan_average ? @book.lowest_price_jan_average : 'N/A' %> <br>
+                8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">FBA Low</p>
+            <div>
+                7d: <%= @book.weekly_fba ? @book.weekly_fba : 'N/A' %> <br>
+                8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Amazon Rental</p>
+            <div>
+                7d: <%= @book.lowest_rental_average ? @book.lowest_rental_average : 'N/A' %> <br>
+                8/<%= Book.aug_year %>: <%= @book.lowest_rental_august_average ? @book.lowest_rental_august_average : 'N/A' %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Sales Rank</p>
+            <div>
+                7d: <%= @book.weekly_sales_rank ? @book.weekly_sales_rank : 'N/A' %> <br>
+                1/<%= Book.jan_year %>: <%= @book.sales_rank_jan_average ? @book.sales_rank_jan_average : 'N/A' %> <br>
+                8/<%= Book.aug_year%> : <%= @book.sales_rank_aug_average ? @book.sales_rank_aug_average : 'N/A' %> <br>
+                OE: <%= @book.oe_isbn_rec ? @book.oe_isbn_rec.sales_rank : 'N/A' %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Pub</p>
+            <div>
+                <%= @book.publisher ? @book.publisher : 'N/A' %> <br>
+                <%= @book.publication_date ? @book.publication_date : 'N/A' %> <br>
+                Life: <%= @book.life ? @book.life : 'N/A' %> <br>
+                OE Life: <%= @book.oe_life ? @book.oe_life : 'N/A' %> <br>
+                C Life: <%= @book.c_life ? @book.c_life : 'N/A' %> <br>
+                R Life: <%= @book.r_life ? @book.r_life : 'N/A' %> <br>
+                <%= @book.binding ? @book.binding : 'N/A' %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Subject</p>
+            <div>
+                <%= @book.subject ? @book.subject : 'N/A' %>
+            </div>
+        </div>
+    </div>
+<% end %>

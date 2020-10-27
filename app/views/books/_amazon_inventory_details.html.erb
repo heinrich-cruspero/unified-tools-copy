@@ -1,0 +1,94 @@
+<!-- title headers -->
+<div class="detail-caption mt-4">
+    <h5>Amazon Inventory</h5>
+</div>
+<div id="detail-headers" class="book-details">
+    <label class="col-detail title">FBAQ</label>
+    <label class="col-detail title">Inbound</label>
+    <label class="col-detail title">ORQC</label>
+    <label class="col-detail title">ORQT</label>
+    <label class="col-detail title">FBAWQ</label>
+    <label class="col-detail title">BZ&JQ</label>
+    <label class="col-detail title">POQ</label>
+    <label class="col-detail title">BOQ</label>
+    <label class="col-detail title">BO%</label>
+    <label class="col-detail title">RQ</label>
+    <label class="col-detail title">R%</label>
+</div>
+
+<% if @book.nil? %>
+    <div class="no-data text-center">
+        No data available in table.
+    </div>
+<% else %>
+    <!-- Detail content -->
+    <div class="book-details mb-4">
+        <div class="col-detail">
+            <p class="title title-sm">FBAQ</p>
+            <div>
+                <%= @book.fbaq %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">Inbound</p>
+            <div>
+                <%= @book.inbq %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">ORQC</p>
+            <div>
+                <%= @book.orq %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">ORQT</p>
+            <div>
+                <%= @book.orq_total %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">FBAWQ</p>
+            <div>
+                <%= @book.fba_sku_quantity %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">BZ&JQ</p>
+            <div>
+                <%= @book.bz_j_sku_quantity %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">POQ</p>
+            <div>
+                <%= @book.pending_order %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">BOQ</p>
+            <div>
+                <%= @book.buyouts %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">BO%</p>
+            <div>
+                <%= @book.buyouts_percentage %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">RQ</p>
+            <div>
+                <%= @book.returns %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">R%</p>
+            <div>
+                <%= @book.returns_percentage %>
+            </div>
+        </div>
+    </div>
+
+<% end %>

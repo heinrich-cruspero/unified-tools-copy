@@ -108,6 +108,7 @@ body {
 
 .amazon-shipment-filter-button {
   margin-right: 10px;
+  margin-top: 10px;
 }
 
 a,
@@ -268,28 +269,6 @@ a.article:hover {
 }
 
 /* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-@media (max-width: 768px) {
-  #sidebar {
-    margin-left: -250px;
-  }
-  #sidebar.active {
-    margin-left: 0;
-  }
-  #content {
-    width: 100%;
-  }
-  #content.active {
-    width: calc(100% - 250px);
-  }
-  #sidebarCollapse span {
-    display: none;
-  }
-}
-
-/* ---------------------------------------------------
     SPINNER
 ----------------------------------------------------- */
 
@@ -384,16 +363,16 @@ table.dataTable {
 }
 
 #amazon-order-purchase-date-filter {
-  width: auto;
   border-radius: 5px;
 }
-.purchase-date-filter .fa-times {
-  position: absolute;
-  top: 10px;
-  left: 208px;
-}
 
-.search-purchase-date {
-  position: absolute;
-  left: -104px;
+@media only screen and (max-width: 768px) {
+  .paging_full_numbers {
+    .paginate_button {
+      display: none !important;
+    }
+    .first,.previous,.next,.last {
+      display: block !important;
+    }
+  }
 }
