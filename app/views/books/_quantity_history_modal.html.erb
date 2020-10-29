@@ -1,0 +1,40 @@
+<!-- Quantity History Modal -->
+<div class="modal fade book-detail-modal quantity-history-modal" id="quantityHistoryModal" tabindex="-1" role="dialog" aria-labelledby="quantityHistory" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-qh" role="document">
+    <div class="modal-content modal-content-qh">
+      <div class="modal-header">
+        <h5 class="modal-title">Daily Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="loader" id="chart-spinner"></div>
+        <div id="modal-chart">
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-sm">
+                    <%
+=begin%>
+ <table id="book-quantity-history-datatable" data-source="<%= quantity_history_book_path(format: :json) %>">
+                    <thead>
+                        <tr>
+                          <th>Price</th>
+                          <th>Day</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+
+
+                    </tbody>
+                    </table>
+<%
+=end%>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

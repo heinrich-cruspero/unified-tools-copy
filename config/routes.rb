@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     member do
       get 'details'
       get 'detail_guides'
+      get 'quantity_history'
+      get 'quantity_history_chart'
     end
   end
 

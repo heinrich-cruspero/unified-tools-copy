@@ -122,3 +122,46 @@
 .title-sm {
   display: none;
 }
+
+.plus-button {
+  background-color: #33b636 !important;
+  border: 1px #33b636 !important;
+  border-color: #33b636 !important;
+  border-radius: 50% !important;
+  outline: none !important;
+}
+
+.modal-dialog-qh{
+  position: relative;
+  display: table;
+  overflow-y: auto;    
+  overflow-x: auto;
+  width: auto;
+  min-width: 1000px;
+}
+
+.modal-content-qh{
+  min-height: 500px;
+}
+
+.loader {
+  position: relative;
+  text-align: center;
+  margin: 150px auto 35px auto;
+  z-index: 9999;
+  display: block;
+  width: 80px;
+  height: 80px;
+  border: 10px solid rgba(0, 0, 0, .3);
+  border-radius: 50%;
+  border-top-color: #000;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left:6px solid rgba(52, 58, 64,.15);
+  border-right:6px solid rgba(52, 58, 64,.15);
+  border-bottom:6px solid rgba(52, 58, 64,.15);
+  border-top:6px solid rgba(52, 58, 64,.8);
+  border-radius:100%;
+}

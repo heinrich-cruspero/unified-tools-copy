@@ -16,12 +16,15 @@ require("bootstrap-daterangepicker");
 require("@fortawesome/fontawesome-free");
 require("datatables.net");
 require("datatables.net-bs4");
+require("chartkick");
+require("chart.js");
 
 require("../custom/sidebar")
 require("../custom/amazon_table")
 require("../custom/indaba_sku_tab")
 require("../custom/book")
 require("../custom/book_details")
+require("../custom/book_quantity_history_datatable")
 require("../custom/amazon_order")
 require("../custom/amazon_order_item")
 require("../custom/amazon_associated_items")

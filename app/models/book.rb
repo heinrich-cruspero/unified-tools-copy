@@ -36,9 +36,9 @@ class Book < ApplicationRecord
   end
 
   def book_qa_aug_rank
-    if qa_aug_rank
-      qa_aug_rank == 1000000 ? 0 : qa_aug_rank
-    end
+    return unless qa_aug_rank
+
+    qa_aug_rank == 1_000_000 ? 0 : qa_aug_rank
   end
 
   def self.search_ean_isbn(keyword)
@@ -138,6 +138,115 @@ class Book < ApplicationRecord
           THEN (item_price/quantity_ordered) ELSE NULL END) as rental_avg_price
       "
     ).references(:amazon_orders)
+  end
+
+  def monthly_averages
+    monthly_averages = {}
+    client = TinyTds::Client.new(
+      host: 'bbafbaaz.indabasql.com',
+      database: 'reporting',
+      port: 4101,
+      username: 'ReportingUser',
+      password: 'H@ykWI*zlXJ$0mY'
+    )
+
+    quantity_history = client.execute(
+      "SELECT AVG(TotalQuantity) AS 'Total',
+        AVG(PricingCustom8) AS 'OR',
+        AVG(PricingCustom2) AS 'INB',
+        CONCAT(MONTH(Date), '/', YEAR(Date)) AS 'Date'
+      FROM aa_ArchivedProductData
+      WHERE
+      ISBN = '#{ean}'
+      AND
+      Date > DATEADD(day, -366, GETDATE())
+      GROUP BY CONCAT(MONTH(Date), '/', YEAR(Date))
+      ORDER BY Date DESC;"
+    )
+
+    monthly_averages.merge!({ quantity_history: quantity_history })
+    monthly_averages
+  end
+
+  def total_quantity_history(month, year)
+    data = {}
+    client = TinyTds::Client.new(
+      host: 'bbafbaaz.indabasql.com',
+      database: 'reporting',
+      port: 4101,
+      username: 'ReportingUser',
+      password: 'H@ykWI*zlXJ$0mY'
+    )
+
+    results = client.execute(
+      "SELECT TotalQuantity AS 'quantity', DAY(Date) AS 'day'
+      FROM aa_ArchivedProductData r
+      WHERE
+      ISBN = '#{ean}'
+      AND
+      YEAR(Date) = '#{year}'
+      AND
+      MONTH(Date) = '#{month}'
+      ORDER BY Date;"
+    )
+    results.each do |result|
+      data.merge!("#{result['day']}": result['quantity'])
+    end
+    data
+  end
+
+  def or_quantity_history(month, year)
+    data = {}
+    client = TinyTds::Client.new(
+      host: 'bbafbaaz.indabasql.com',
+      database: 'reporting',
+      port: 4101,
+      username: 'ReportingUser',
+      password: 'H@ykWI*zlXJ$0mY'
+    )
+
+    results = client.execute(
+      "SELECT PricingCustom8 AS 'quantity', DAY(Date) AS 'day'
+      FROM aa_ArchivedProductData r
+      WHERE
+      ISBN = '#{ean}'
+      AND
+      YEAR(Date) = '#{year}'
+      AND
+      MONTH(Date) = '#{month}'
+      ORDER BY Date;"
+    )
+    results.each do |result|
+      data.merge!("#{result['day']}": result['quantity'])
+    end
+    data
+  end
+
+  def inb_quantity_history(month, year)
+    data = {}
+    client = TinyTds::Client.new(
+      host: 'bbafbaaz.indabasql.com',
+      database: 'reporting',
+      port: 4101,
+      username: 'ReportingUser',
+      password: 'H@ykWI*zlXJ$0mY'
+    )
+
+    results = client.execute(
+      "SELECT PricingCustom2 AS 'quantity', DAY(Date) AS 'day'
+      FROM aa_ArchivedProductData r
+      WHERE
+      ISBN = '#{ean}'
+      AND
+      YEAR(Date) = '#{year}'
+      AND
+      MONTH(Date) = '#{month}'
+      ORDER BY Date;"
+    )
+    results.each do |result|
+      data.merge!("#{result['day']}": result['quantity'].to_i)
+    end
+    data
   end
 end
 # rubocop:enable  Metrics/ClassLength
