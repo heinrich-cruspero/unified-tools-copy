@@ -35,6 +35,12 @@ class Book < ApplicationRecord
     prev_year
   end
 
+  def book_qa_aug_rank
+    if qa_aug_rank
+      qa_aug_rank == 1000000 ? 0 : qa_aug_rank
+    end
+  end
+
   def self.search_ean_isbn(keyword)
     where(ean: keyword).or(where(isbn: keyword))
   end

@@ -99,7 +99,7 @@
             <div>
                 7d: <%= @book.weekly_sales_rank ? @book.weekly_sales_rank : 'N/A' %> <br>
                 1/<%= Book.jan_year %>: <%= @book.sales_rank_jan_average ? @book.sales_rank_jan_average : 'N/A' %> <br>
-                8/<%= Book.aug_year%> : <%= @book.sales_rank_aug_average ? @book.sales_rank_aug_average : 'N/A' %> <br>
+                8/<%= Book.aug_year%> : <%= @book.book_qa_aug_rank ? @book.book_qa_aug_rank : 'N/A' %> <br>
                 OE: <%= @book.oe_isbn_rec ? @book.oe_isbn_rec.sales_rank : 'N/A' %>
             </div>
         </div>
