@@ -2,15 +2,6 @@
 
 ##
 class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
-  extend Forwardable
-
-  def_delegators :@view, :link_to, :amazon_order_path
-
-  def initialize(params, opts = {})
-    @view = opts[:view_context]
-    super
-  end
-
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format

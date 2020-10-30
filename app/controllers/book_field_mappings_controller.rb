@@ -5,25 +5,25 @@ class BookFieldMappingsController < ApplicationController
   before_action :set_book_field_mapping, only: %i[show edit update destroy]
 
   def index
-    authorize Book
+    authorize BookFieldMapping
     @book_field_mappings = BookFieldMapping.all
   end
 
   def show
-    authorize Book
+    authorize BookFieldMapping
   end
 
   def new
-    authorize Book
+    authorize BookFieldMapping
     @book_field_mapping = BookFieldMapping.new
   end
 
   def edit
-    authorize Book
+    authorize BookFieldMapping
   end
 
   def create
-    authorize Book
+    authorize BookFieldMapping
     @book_field_mapping = BookFieldMapping.new(book_field_mapping_params)
 
     respond_to do |format|
@@ -41,7 +41,7 @@ class BookFieldMappingsController < ApplicationController
   end
 
   def update
-    authorize Book
+    authorize BookFieldMapping
 
     respond_to do |format|
       if @book_field_mapping.update(book_field_mapping_params)
@@ -58,7 +58,7 @@ class BookFieldMappingsController < ApplicationController
   end
 
   def destroy
-    authorize Book
+    authorize BookFieldMapping
     @book_field_mapping.destroy
     respond_to do |format|
       format.html do

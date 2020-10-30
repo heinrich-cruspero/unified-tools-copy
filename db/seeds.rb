@@ -6,7 +6,7 @@
 Book.column_names[1..].each do |item|
   next if BookFieldMapping.where(lookup_field: item).exists?
 
-  BookFieldMapping.create!(
+  BookFieldMapping.find_or_create_by(
     display_name: item.upcase,
     lookup_field: item
   )

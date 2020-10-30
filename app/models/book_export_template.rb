@@ -11,6 +11,8 @@ class BookExportTemplate < ApplicationRecord
                                 reject_if: :template_rejectable
 
   validates :name, uniqueness: true
+  validates :book_field_mappings, presence: true, on: :create
+  # TODO: validation for update
 
   private
 
