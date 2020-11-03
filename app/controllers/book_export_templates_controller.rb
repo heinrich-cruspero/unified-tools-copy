@@ -54,11 +54,14 @@ class BookExportTemplatesController < ApplicationController
         update_params[:book_field_mapping_ids].delete(attr[1][:id]) if attr[1]['_destroy'] == '1'
       end
 
-      if @book_export_template.update(book_export_template_params.except(:book_field_mapping_ids))
+      @template = BookExportTemplate.new
+      @template.assign_attributes(update_params.except(:book_field_mappings_attributes))
+
+      if @template.valid?
+
         @book_export_template.book_field_mappings.delete(
           *@book_export_template.book_field_mappings
         )
-        # TODO: Record validation for duplicates not catched here
         if @book_export_template.update(update_params.except(:book_field_mappings_attributes))
           format.html do
             redirect_to @book_export_template,
@@ -67,54 +70,12 @@ class BookExportTemplatesController < ApplicationController
           format.json { render :show, status: :ok, location: @book_export_template }
         else
           format.html { render :edit }
-          format.json do
-            render json: @book_export_template.errors,
-                   status: :unprocessable_entity
-          end
+          format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
         end
       else
         format.html { render :edit }
-        format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
+        format.json { render json: @template.errors, status: :unprocessable_entity }
       end
-      # update_params = book_export_template_update_params.clone
-      # template_params = book_export_template_params_del[:book_field_mappings_attributes].to_h
-      # template_params.each do |attr|
-      #   update_params[:book_field_mapping_ids].delete(attr[1][:id]) if attr[1]['_destroy'] == '1'
-      # end
-
-      # if update_params[:book_field_mapping_ids].blank?
-      #   @book_export_template.errors.add(:fields, 'must not be empty.')
-      #   format.html { render :edit }
-      #   format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
-
-      # elsif @book_export_template.update(book_export_template_params_del)
-      #   if update_params[:book_field_mapping_ids].uniq == update_params[:book_field_mapping_ids]
-      #     @book_export_template.book_field_mappings.delete(
-      #       *@book_export_template.book_field_mappings
-      #     )
-      #     if @book_export_template.update(update_params)
-      #       format.html do
-      #         redirect_to @book_export_template,
-      #                     notice: 'Book export template was successfully updated.'
-      #       end
-      #       format.json { render :show, status: :ok, location: @book_export_template }
-      #     else
-      #       format.html { render :edit }
-      #       format.json do
-      #         render json: @book_export_template.errors,
-      #               status: :unprocessable_entity
-      #       end
-      #     end
-      #   else
-      #     @book_export_template.errors.add(:duplicate_fields, 'not allowed.')
-      #     format.html { render :edit }
-      #     format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
-      #   end
-
-      # else
-      #   format.html { render :edit }
-      #   format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
-      # end
     end
   end
 
@@ -167,15 +128,5 @@ class BookExportTemplatesController < ApplicationController
                                                  book_field_mappings_attributes: %i[id _destroy],
                                                  book_field_mapping_ids: [])
   end
-
-  # def book_export_template_update_params
-  #   params.require(:book_export_template).permit(:name,
-  #                                                book_field_mapping_ids: [])
-  # end
-
-  # def book_export_template_params_del
-  #   params.require(:book_export_template).permit(:name,
-  #                                                book_field_mappings_attributes: %i[id _destroy])
-  # end
 end
 # rubocop:enable Metrics/ClassLength

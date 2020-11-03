@@ -1,8 +1,8 @@
 <%= simple_form_for(@book_export_template, html: { id: :export_template_form }) do |form| %>
   <div class="row">
     <div class="col-sm">
-      <% if !@export_template_field_mapping.nil? %>
-        <% @export_template_field_mapping.errors.full_messages.each do |message| %>
+      <% if !@template.nil? %>
+        <% @template.errors.full_messages.each do |message| %>
           <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
             <%= message %>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
