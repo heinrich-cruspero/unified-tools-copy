@@ -16,7 +16,6 @@ class BooksController < ApplicationController
 
   def details
     authorize Book
-    # @book = Book.search_ean_isbn(params[:id]).last
     @guides = {}
     @amazon_orders = nil
     @amazon_orders_totals = nil
@@ -28,7 +27,6 @@ class BooksController < ApplicationController
 
   def detail_guides
     authorize Book
-    # @book = Book.search_ean_isbn(params[:id]).last
     @guides = @book.nil? ? {} : @book.guides
     respond_to do |format|
       format.js { render json: { html: render_to_string(partial: 'guides') } }
@@ -37,13 +35,10 @@ class BooksController < ApplicationController
 
   def quantity_history
     authorize Book
-    # @book = Book.search_ean_isbn(params[:id]).last
-    # @quantity_hist_data = !@book.nil? ? @book.quantity_history : nil
     return if @book.nil?
 
     @quantity_history = @monthly_averages.fetch(:quantity_history, {})
     respond_to do |format|
-      # format.json { render json: BookQuantityHistoryDatatable.new(params) }
       format.js { render json: { quantity_history: render_to_string(partial: 'quantity_history') } }
     end
   end
@@ -66,20 +61,28 @@ class BooksController < ApplicationController
       @quantity_data = @book.inb_quantity_history(date.month, date.year)
     end
 
+    @quantity_datatable = []
+    @quantity_data.each do |key, value|
+      @quantity_datatable << { "day": key, "quantity": value.to_i }
+    end
+
     # @total_quantity_data = @book.total_quantity_history(date.month, date.year)
     respond_to do |format|
-      # format.json { render json: BookQuantityHistoryDatatable.new(params) }
       format.js do
-        render json: { qh_chart_data: render_to_string(
-          partial: 'chart',
-          locals: {
-            title: title,
-            date: params[:date],
-            filename: "Daily_#{file_name}_#{params[:date]}",
-            data: @quantity_data
-          }
-        ) }
+        render json: {
+          qh_chart_data: render_to_string(
+            partial: 'chart',
+            locals: {
+              title: title,
+              date: params[:date],
+              filename: "Daily_#{file_name}_#{params[:date]}",
+              data: @quantity_data
+            }
+          ),
+          qh_datatable: render_to_string(partial: 'quantity_history_datatable')
+        }
       end
+      format.json { render json: { data: @quantity_datatable } }
     end
   end
 
