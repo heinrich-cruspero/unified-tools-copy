@@ -24,7 +24,10 @@ Rails.application.routes.draw do
       get 'details'
       get 'detail_guides'
       get 'quantity_history'
-      get 'quantity_history_chart'
+      get 'rental_history'
+      get 'fba_history'
+      get 'lowest_history'
+      get 'history_chart'
     end
   end
 

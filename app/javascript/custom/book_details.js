@@ -23,17 +23,20 @@ $( document ).on('turbolinks:load', function() {
         }
     })
     
-    $("#quantityHistoryModal").on('show.bs.modal', function() {
+    $("#historyModal").on('show.bs.modal', function() {
         opener = document.activeElement;
-        qh_col = $(opener).closest(".col-data").find("input[name='qh-col-data']").val()
-        qh_date = $(opener).closest(".qh-detail-row").find(".qh-date").text().replace(/\s/g, "");
+        hist_table = $(opener).closest(".qh-detail-row").find("input[name='hist-table']").val()
+        hist_col = $(opener).closest(".col-data").find("input[name='qh-col-data']").val()
+        hist_date = $(opener).closest(".qh-detail-row").find(".qh-date").text().replace(/\s/g, "");
 
+        // TODO: Dynamic column names
         $("#qh-datatable").dataTable({
             "ajax": {
-                "url": "/books/" + search_val + "/quantity_history_chart",
+                "url": "/books/" + search_val + "/history_chart",
                 "data": {
-                    "date": qh_date, 
-                    "column_name": qh_col
+                    "table": hist_table,
+                    "date": hist_date, 
+                    "column_name": hist_col
                 },
             },
             columns: [
@@ -49,8 +52,11 @@ $( document ).on('turbolinks:load', function() {
         $("#chart-spinner").show();
         $.ajax({
             type: "GET",
-            data: {date: qh_date, column_name: qh_col},
-            url: "/books/" + search_val + "/quantity_history_chart",
+            data: {
+                table: hist_table,
+                date: hist_date,
+                column_name: hist_col},
+            url: "/books/" + search_val + "/history_chart",
             dataType: "js",
             complete: function(result){
                 $("#chart-spinner").hide();
@@ -60,7 +66,7 @@ $( document ).on('turbolinks:load', function() {
         })
     })
 
-    $('#quantityHistoryModal').on('hidden.bs.modal', function () {
+    $('#historyModal').on('hidden.bs.modal', function () {
         $("#qh-datatable").dataTable().fnDestroy();
     })
       

@@ -3,6 +3,7 @@
 ##
 # rubocop:disable  Metrics/ClassLength
 class Book < ApplicationRecord
+  include BookDetailsModule
   include HTTParty
   include PgSearch
 
@@ -142,13 +143,7 @@ class Book < ApplicationRecord
 
   def monthly_averages
     monthly_averages = {}
-    client = TinyTds::Client.new(
-      host: 'bbafbaaz.indabasql.com',
-      database: 'reporting',
-      port: 4101,
-      username: 'ReportingUser',
-      password: 'H@ykWI*zlXJ$0mY'
-    )
+    client = bbafbaaz_indaba_reporting
 
     quantity_history = client.execute(
       "SELECT AVG(TotalQuantity) AS 'Total',
@@ -164,19 +159,37 @@ class Book < ApplicationRecord
       ORDER BY Date DESC;"
     )
 
-    monthly_averages.merge!({ quantity_history: quantity_history })
+    # WIP: DB Connection to amazon_data and rental_prices
+    # rental_history = client.execute{
+    #   "SELECT
+    #     AVG(CASE WHEN r.source = 'Amazon Warehouse Deals' THEN r.price ELSE NULL END) AS 'W',
+    #     AVG(CASE WHEN r.source != 'Amazon Warehouse Deals' THEN r.price ELSE NULL END) AS 'NW',
+    #     CONCAT(MONTH(r.created_at), '/', YEAR(r.created_at)) AS 'Date'
+    #   FROM rental_prices r
+    #   WHERE
+    #   r.ean = '#{ean}'
+    #   AND
+    #   r.created_at > DATE_SUB(NOW(), INTERVAL 366 DAY)
+    #   GROUP BY CONCAT(MONTH(r.created_at), '/', YEAR(r.created_at))
+    #   ORDER BY r.created_at DESC";
+    # }
+
+    # TODO: Queries
+    # fba_history = client.execute{}
+    # lowest_history = client.execute{}
+
+    monthly_averages.merge!({
+                              quantity_history: quantity_history,
+                              rental_history: quantity_history, # TODO: rental_history
+                              fba_history: quantity_history, # TODO: fba_history
+                              lowest_history: quantity_history # TODO: lowest_history
+                            })
     monthly_averages
   end
 
   def total_quantity_history(month, year)
     data = {}
-    client = TinyTds::Client.new(
-      host: 'bbafbaaz.indabasql.com',
-      database: 'reporting',
-      port: 4101,
-      username: 'ReportingUser',
-      password: 'H@ykWI*zlXJ$0mY'
-    )
+    client = bbafbaaz_indaba_reporting
 
     results = client.execute(
       "SELECT TotalQuantity AS 'quantity', DAY(Date) AS 'day'
@@ -197,13 +210,7 @@ class Book < ApplicationRecord
 
   def or_quantity_history(month, year)
     data = {}
-    client = TinyTds::Client.new(
-      host: 'bbafbaaz.indabasql.com',
-      database: 'reporting',
-      port: 4101,
-      username: 'ReportingUser',
-      password: 'H@ykWI*zlXJ$0mY'
-    )
+    client = bbafbaaz_indaba_reporting
 
     results = client.execute(
       "SELECT PricingCustom8 AS 'quantity', DAY(Date) AS 'day'
@@ -224,13 +231,7 @@ class Book < ApplicationRecord
 
   def inb_quantity_history(month, year)
     data = {}
-    client = TinyTds::Client.new(
-      host: 'bbafbaaz.indabasql.com',
-      database: 'reporting',
-      port: 4101,
-      username: 'ReportingUser',
-      password: 'H@ykWI*zlXJ$0mY'
-    )
+    client = bbafbaaz_indaba_reporting
 
     results = client.execute(
       "SELECT PricingCustom2 AS 'quantity', DAY(Date) AS 'day'

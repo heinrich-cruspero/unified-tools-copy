@@ -1,0 +1,41 @@
+<!-- Lowest History -->
+<div class="detail-caption mt-4">
+    <h5>Lowest History</h5>
+</div>
+<div id="detail-headers" class="book-details">
+    <label class="col-detail title">Avg Price</label>
+    <label class="col-detail title">Month / Year</label>
+</div>
+<% if @book.nil? %>
+  <div class="no-data text-center">
+    No data available in table.
+  </div>
+<% else %>
+  <% unless @quantity_history.blank? %>
+    <% @quantity_history.each do |row| %>
+      <div class="book-details dotted-top qh-detail-row">
+        <div class="col-detail col-data">
+          <p class="title title-sm">Avg Price</p>
+          <div>
+              <%= number_with_delimiter(row.fetch("Total", 0)) %>
+              <input type="hidden" name="qh-col-data" value="Total-Quantity">
+              <button type="button" class="btn-sm btn-success plus-button ml-2" data-toggle="modal" data-target="#historyModal">
+                  <i class="fa fa-plus"></i>
+              </button>
+              
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Month/Year</p>
+          <div class="qh-date">
+              <%= row.fetch("Date", "") %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="no-data text-center">
+      No data available in table.
+    </div>
+  <% end %>
+<% end %>
