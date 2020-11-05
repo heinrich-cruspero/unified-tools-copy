@@ -11,24 +11,23 @@
     No data available in table.
   </div>
 <% else %>
-  <% unless @quantity_history.blank? %>
-    <% @quantity_history.each do |row| %>
+  <% unless @fba_history.blank? %>
+    <% @fba_history.each do |row| %>
       <div class="book-details dotted-top qh-detail-row">
         <div class="col-detail col-data">
           <p class="title title-sm">Avg Price</p>
           <div>
               <%= number_with_delimiter(row.fetch("Total", 0)) %>
-              <input type="hidden" name="qh-col-data" value="Total-Quantity">
-              <button type="button" class="btn-sm btn-success plus-button ml-2" data-toggle="modal" data-target="#historyModal">
-                  <i class="fa fa-plus"></i>
-              </button>
-              
           </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Month/Year</p>
           <div class="qh-date">
-              <%= row.fetch("Date", "") %>
+            <input type="hidden" name="qh-col-data" value="Total-Quantity">
+            <button type="button" class="btn-sm btn-success plus-button mr-2" data-toggle="modal" data-target="#historyModal">
+                <i class="fa fa-plus"></i>
+            </button>
+            <%= row.fetch("Date", "") %>
           </div>
         </div>
       </div>

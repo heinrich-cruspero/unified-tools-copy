@@ -49,21 +49,21 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:rental_history, {})
+    data = @monthly_averages.fetch(:rental_history, {}) # temp: fetching from quantity hist
     @rental_history = data.count.positive? ? data : {}
     respond_to do |format|
       format.js { render json: { rental_history: render_to_string(partial: 'rental_history') } }
     end
   end
 
-  def fba_histsory
+  def fba_history
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:fba_histsory, {})
-    @fba_histsory = data.count.positive? ? data : {}
+    data = @monthly_averages.fetch(:fba_history, {}) # temp: fetching from quantity hist
+    @fba_history = data.count.positive? ? data : {}
     respond_to do |format|
-      format.js { render json: { fba_histsory: render_to_string(partial: 'fba_histsory') } }
+      format.js { render json: { fba_history: render_to_string(partial: 'fba_history') } }
     end
   end
 
@@ -71,7 +71,7 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:lowest_history, {})
+    data = @monthly_averages.fetch(:lowest_history, {}) # temp: fetching from quantity hist
     @lowest_history = data.count.positive? ? data : {}
     respond_to do |format|
       format.js { render json: { lowest_history: render_to_string(partial: 'lowest_history') } }

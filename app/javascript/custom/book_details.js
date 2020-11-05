@@ -22,6 +22,32 @@ $( document ).on('turbolinks:load', function() {
             $("#quantity-history-div").html(result.responseJSON.quantity_history);
         }
     })
+
+    // TEMP DATA: fetching from quantity_history
+    $.ajax({
+        type: "GET",
+        url: "/books/" + search_val + "/rental_history",
+        dataType: "json",
+        complete: function(result){
+            $("#rental-history-div").html(result.responseJSON.rental_history);
+        }
+    })
+    $.ajax({
+        type: "GET",
+        url: "/books/" + search_val + "/fba_history",
+        dataType: "json",
+        complete: function(result){
+            $("#fba-history-div").html(result.responseJSON.fba_history);
+        }
+    })
+    $.ajax({
+        type: "GET",
+        url: "/books/" + search_val + "/lowest_history",
+        dataType: "json",
+        complete: function(result){
+            $("#lowest-history-div").html(result.responseJSON.lowest_history);
+        }
+    })
     
     $("#historyModal").on('show.bs.modal', function() {
         opener = document.activeElement;
