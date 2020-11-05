@@ -3,7 +3,6 @@
 ##
 # rubocop:disable  Metrics/ClassLength
 class Book < ApplicationRecord
-  include IndabaServiceModule
   include HTTParty
   include PgSearch
 
@@ -143,8 +142,7 @@ class Book < ApplicationRecord
 
   def monthly_averages
     monthly_averages = {}
-    client = bbafbaaz_indaba_reporting
-    # client = IndabaService
+    client = IndabaService.call
 
     quantity_history = client.execute(
       "SELECT AVG(TotalQuantity) AS 'Total',
@@ -190,7 +188,7 @@ class Book < ApplicationRecord
 
   def total_quantity_history(month, year)
     data = {}
-    client = bbafbaaz_indaba_reporting
+    client = IndabaService.call
 
     results = client.execute(
       "SELECT TotalQuantity AS 'quantity', DAY(Date) AS 'day'
@@ -203,6 +201,7 @@ class Book < ApplicationRecord
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
     )
+
     results.each do |result|
       data.merge!("#{result['day']}": result['quantity'])
     end
@@ -211,7 +210,7 @@ class Book < ApplicationRecord
 
   def or_quantity_history(month, year)
     data = {}
-    client = bbafbaaz_indaba_reporting
+    client = IndabaService.call
 
     results = client.execute(
       "SELECT PricingCustom8 AS 'quantity', DAY(Date) AS 'day'
@@ -224,6 +223,7 @@ class Book < ApplicationRecord
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
     )
+
     results.each do |result|
       data.merge!("#{result['day']}": result['quantity'])
     end
@@ -232,7 +232,7 @@ class Book < ApplicationRecord
 
   def inb_quantity_history(month, year)
     data = {}
-    client = bbafbaaz_indaba_reporting
+    client = IndabaService.call
 
     results = client.execute(
       "SELECT PricingCustom2 AS 'quantity', DAY(Date) AS 'day'
@@ -245,6 +245,7 @@ class Book < ApplicationRecord
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
     )
+
     results.each do |result|
       data.merge!("#{result['day']}": result['quantity'].to_i)
     end
