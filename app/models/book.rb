@@ -3,7 +3,7 @@
 ##
 # rubocop:disable  Metrics/ClassLength
 class Book < ApplicationRecord
-  include BookDetailsModule
+  include IndabaServiceModule
   include HTTParty
   include PgSearch
 
@@ -144,6 +144,7 @@ class Book < ApplicationRecord
   def monthly_averages
     monthly_averages = {}
     client = bbafbaaz_indaba_reporting
+    # client = IndabaService
 
     quantity_history = client.execute(
       "SELECT AVG(TotalQuantity) AS 'Total',
