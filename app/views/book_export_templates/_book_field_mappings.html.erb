@@ -1,7 +1,7 @@
 <div class="nested-fields mt-2 mb-3">
     <div class="field">
         
-        <%= f.collection_select :id, BookFieldMapping.order(:id).all,:id, :display_name, {}, {:name => 'book_export_template[book_field_mapping_ids][]'} %>
+        <%= f.collection_select :id, BookFieldMapping.order(:id).all,:id, :display_name, {}, {:name => 'book_export_template[book_field_mapping_ids][]', class: "field-select"} %>
         
         <span class="fa fa-arrows-alt ml-1"></span>&nbsp;
         <%= f.hidden_field :_destroy %>

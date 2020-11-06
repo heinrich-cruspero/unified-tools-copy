@@ -25,7 +25,19 @@ class BookExportTemplatesController < ApplicationController
 
   def create
     authorize BookExportTemplate
-    @book_export_template = BookExportTemplate.new(book_export_template_params)
+
+    rm = []
+    create_params = book_export_template_params.clone
+    template_params = book_export_template_params[:book_field_mappings_attributes].to_h
+    template_params.each do |attr|
+      rm << attr[0].to_i if attr[1]['_destroy'] == '1'
+    end
+    create_params[:book_field_mapping_ids].reject!.with_index {
+       |_e, i| rm.include? i } if create_params[:book_field_mapping_ids]
+
+    @book_export_template = BookExportTemplate.new(
+      create_params.except(:book_field_mappings_attributes)
+    )
 
     respond_to do |format|
       if @book_export_template.save
@@ -35,10 +47,6 @@ class BookExportTemplatesController < ApplicationController
         end
         format.json { render :show, status: :created, location: @book_export_template }
       else
-        if @book_export_template.book_export_template_field_mappings
-          @export_template_field_mapping = \
-            @book_export_template.book_export_template_field_mappings.last
-        end
         format.html { render :new }
         format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
       end

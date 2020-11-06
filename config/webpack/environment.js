@@ -9,7 +9,6 @@ environment.plugins.append("Provide", new webpack.ProvidePlugin({
 }));
 
 const aliasConfig = {
-    'jquery': 'jquery-ui-dist/external/jquery/jquery.js',
     'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
 };
 

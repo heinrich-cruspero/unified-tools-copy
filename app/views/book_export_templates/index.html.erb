@@ -19,8 +19,9 @@
 <table class="table table-bordered">
   <thead class="thead-light">
     <tr>
+      <th style="width: 5%">ID</th>
       <th style="width: 10%">Name</th>
-      <th style="width: 50%">Fields</th>
+      <th style="width: 45%">Fields</th>
       <th style="width: 10%">Created At</th>
       <th style="width: 10%">Updated At</th>
       <th style="width: 20%">Action</th>
@@ -30,6 +31,7 @@
   <tbody>
     <% @book_export_templates.each do |book_export_template| %>
       <tr>
+        <td><%= book_export_template.id %></td>
         <td><%= book_export_template.name %></td>
         <td>
           <ul class="list-group">

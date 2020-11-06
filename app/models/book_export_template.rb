@@ -2,7 +2,7 @@
 
 ##
 class BookExportTemplate < ApplicationRecord
-  has_many :book_export_template_field_mappings
+  has_many :book_export_template_field_mappings, dependent: :destroy
   has_many :book_field_mappings,
            -> { order 'book_export_template_field_mappings.id' },
            through: :book_export_template_field_mappings

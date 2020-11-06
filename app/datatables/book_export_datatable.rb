@@ -23,14 +23,14 @@ class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
   def record_map(record)
     record_mappings = {}
     @template_keys.each do |item|
-      h.store(item.to_sym, record[item])
+      record_mappings.store(item.to_sym, record[item])
     end
     record_mappings
   end
 
   def template_keys
     attributes = %w[]
-    template = BookExportTemplate.find(params[:template_id])
+    template = BookExportTemplate.find(params[:id])
     template.book_field_mappings.each do |field|
       attributes << field.lookup_field.to_sym
     end

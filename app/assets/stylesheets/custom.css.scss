@@ -388,6 +388,13 @@ table.dataTable {
   top: 10px;
 }
 
+.field-select {
+  padding: 5px 35px 5px 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  height: 34px;
+}
+
 @media only screen and (max-width: 768px) {
   .paging_full_numbers {
     .paginate_button {
