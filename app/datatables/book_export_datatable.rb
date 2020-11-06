@@ -2,14 +2,13 @@
 
 ##
 class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
-  def view_columns
-    # Declare strings in this format: ModelName.column_name
-    # or in aliased_join_table.column_name format
-    @view_columns ||= {
-      ean: { source: 'Book.ean' },
-      isbn: { source: 'Book.isbn' }
-    }
+  def initialize(params)
+    super
+    @template_keys = template_keys
+    @view_columns ||= template_columns
   end
+
+  attr_reader :view_columns
 
   def data
     records.map do |record|
@@ -22,10 +21,27 @@ class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def record_map(record)
-    h = {}
-    Book.column_names[1..].each do |item|
+    record_mappings = {}
+    @template_keys.each do |item|
       h.store(item.to_sym, record[item])
     end
-    h
+    record_mappings
+  end
+
+  def template_keys
+    attributes = %w[]
+    template = BookExportTemplate.find(params[:template_id])
+    template.book_field_mappings.each do |field|
+      attributes << field.lookup_field.to_sym
+    end
+    attributes
+  end
+
+  def template_columns
+    cols = {}
+    @template_keys.each do |attr|
+      cols[attr] = { source: "Book.#{attr}" }
+    end
+    cols
   end
 end

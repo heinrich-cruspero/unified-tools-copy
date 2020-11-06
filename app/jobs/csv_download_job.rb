@@ -24,31 +24,12 @@ class CsvDownloadJob < ApplicationJob
     key = "downloads/#{user_id}/#{Time.now}/#{file_name}"
     obj = s3.bucket(bucket).object(key)
 
-    if params[:template_id].present?
-      template = BookExportTemplate.find(params[:template_id])
-      attributes = %w[]
-      template.book_field_mappings.each do |field|
-        attributes << field.lookup_field.to_sym
-      end
-      obj.upload_stream(tempfile: true) do |write_stream|
-        write_stream << CSV.generate_line(attributes)
-        datatable.records.find_each do |item|
-          record_map = datatable.record_map(item)
-          rec = {}
-          attributes.each do |attr|
-            rec.store(attr, record_map[attr])
-          end
-          write_stream << CSV.generate_line(rec.values)
-        end
-      end
-    else
-      obj.upload_stream(tempfile: true) do |write_stream|
-        write_stream << CSV.generate_line(datatable.view_columns.keys)
-        datatable.records.find_each do |order_item|
-          record_map = datatable.record_map(order_item)
+    obj.upload_stream(tempfile: true) do |write_stream|
+      write_stream << CSV.generate_line(datatable.view_columns.keys)
+      datatable.records.find_each do |order_item|
+        record_map = datatable.record_map(order_item)
 
-          write_stream << CSV.generate_line(record_map.values)
-        end
+        write_stream << CSV.generate_line(record_map.values)
       end
     end
 

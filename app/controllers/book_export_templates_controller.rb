@@ -53,7 +53,6 @@ class BookExportTemplatesController < ApplicationController
       template_params.each do |attr|
         update_params[:book_field_mapping_ids].delete(attr[1][:id]) if attr[1]['_destroy'] == '1'
       end
-
       @template = BookExportTemplate.new
       @template.assign_attributes(update_params.except(:book_field_mappings_attributes))
 
@@ -100,9 +99,6 @@ class BookExportTemplatesController < ApplicationController
           else
             Book.parse_csv(params[:csv_file])
           end
-    # @books = params[:book_id] == 'ean' ? Book.where(ean: ids) : Book.where(isbn: ids)
-    # template = BookExportTemplate.find(params[:id])
-    params[:template_id] = params[:id]
     params[:ids] = ids
     respond_to do |format|
       format.html

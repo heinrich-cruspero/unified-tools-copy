@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_09_032945) do
+ActiveRecord::Schema.define(version: 2020_11_05_075511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,9 +154,10 @@ ActiveRecord::Schema.define(version: 2020_10_09_032945) do
   end
 
   create_table "book_export_templates", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_book_export_templates_on_name"
   end
 
   create_table "book_field_mappings", force: :cascade do |t|
