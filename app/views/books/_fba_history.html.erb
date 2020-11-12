@@ -14,20 +14,21 @@
   <% unless @fba_history.blank? %>
     <% @fba_history.each do |row| %>
       <div class="book-details dotted-top qh-detail-row">
-        <div class="col-detail col-data">
+        <input type="hidden" name="hist-table" value="fba-hist-table">
+        <div class="col-detail">
           <p class="title title-sm">Avg Price</p>
           <div>
-              <%= number_with_delimiter(row.fetch("Total", 0)) %>
+              <%= number_with_delimiter(number_with_precision(row["avg"] ? row["avg"] : 0, precision: 2)) %>
           </div>
         </div>
-        <div class="col-detail">
+        <div class="col-detail col-data">
           <p class="title title-sm">Month/Year</p>
           <div class="qh-date">
-            <input type="hidden" name="qh-col-data" value="Total-Quantity">
+            <input type="hidden" name="qh-col-data" value="FBA-Price">
             <button type="button" class="btn-sm btn-success plus-button mr-2" data-toggle="modal" data-target="#historyModal">
                 <i class="fa fa-plus"></i>
             </button>
-            <%= row.fetch("Date", "") %>
+            <%= row.fetch("date", "") %>
           </div>
         </div>
       </div>

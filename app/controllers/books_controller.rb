@@ -49,7 +49,7 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:rental_history, {}) # temp: fetching from quantity hist
+    data = @monthly_averages.fetch(:rental_history, {})
     @rental_history = data.count.positive? ? data : {}
     respond_to do |format|
       format.js { render json: { rental_history: render_to_string(partial: 'rental_history') } }
@@ -60,7 +60,7 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:fba_history, {}) # temp: fetching from quantity hist
+    data = @monthly_averages.fetch(:fba_history, {})
     @fba_history = data.count.positive? ? data : {}
     respond_to do |format|
       format.js { render json: { fba_history: render_to_string(partial: 'fba_history') } }
@@ -71,14 +71,15 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:lowest_history, {}) # temp: fetching from quantity hist
+    data = @monthly_averages.fetch(:lowest_history, {})
     @lowest_history = data.count.positive? ? data : {}
     respond_to do |format|
       format.js { render json: { lowest_history: render_to_string(partial: 'lowest_history') } }
     end
   end
 
-  def history_chart
+  # rubocop:disable  Metrics/MethodLength
+  def history_chart # rubocop:disable  Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     authorize Book
     return if @book.nil?
 
@@ -87,8 +88,10 @@ class BooksController < ApplicationController
     column_name = params[:column_name]
     title = column_name.split('-').join(' ')
     file_name = column_name.split('-').join('_')
+    column_title = nil
 
     if table == 'quantity-hist-table'
+      column_title = 'Quantity'
       case column_name
       when 'Total-Quantity'
         @chart_data = @book.total_quantity_history(date.month, date.year)
@@ -97,14 +100,32 @@ class BooksController < ApplicationController
       when 'INB-Quantity'
         @chart_data = @book.inb_quantity_history(date.month, date.year)
       end
+    elsif table == 'lowest-hist-table'
+      column_title = 'Price'
+      case column_name
+      when 'Lowest-Price'
+        @chart_data = @book.avg_price_lowest_history(date.month, date.year)
+      end
+    elsif table == 'rental-hist-table'
+      column_title = 'Price'
+      case column_name
+      when 'W-Price'
+        @chart_data = @book.w_rental_history(date.month, date.year)
+      when 'NW-Price'
+        @chart_data = @book.nw_rental_history(date.month, date.year)
+      end
+    elsif table == 'fba-hist-table'
+      column_title = 'Price'
+      case column_name
+      when 'FBA-Price'
+        @chart_data = @book.avg_price_fba_history(date.month, date.year)
+      end
     end
-
     @datatable_data = []
     @chart_data.each do |key, value|
-      @datatable_data << { "day": key, "quantity": value.to_i }
+      @datatable_data << { "day": key, "value": value }
     end
 
-    # @total_quantity_data = @book.total_quantity_history(date.month, date.year)
     respond_to do |format|
       format.js do
         render json: {
@@ -112,17 +133,18 @@ class BooksController < ApplicationController
             partial: 'chart',
             locals: {
               title: title,
+              ytitle: column_title,
               date: params[:date],
               filename: "Daily_#{file_name}_#{params[:date]}",
               data: @chart_data
             }
-          ),
-          qh_datatable: render_to_string(partial: 'quantity_history_datatable')
+          )
         }
       end
-      format.json { render json: { data: @datatable_data } }
+      format.json { render json: { data: @datatable_data, title: column_title } }
     end
   end
+  # rubocop:enable  Metrics/MethodLength
 
   private
 

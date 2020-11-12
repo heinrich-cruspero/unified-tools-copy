@@ -23,7 +23,6 @@ $( document ).on('turbolinks:load', function() {
         }
     })
 
-    // TEMP DATA: fetching from quantity_history
     $.ajax({
         type: "GET",
         url: "/books/" + search_val + "/rental_history",
@@ -55,26 +54,30 @@ $( document ).on('turbolinks:load', function() {
         hist_col = $(opener).closest(".col-data").find("input[name='qh-col-data']").val()
         hist_date = $(opener).closest(".qh-detail-row").find(".qh-date").text().replace(/\s/g, "");
 
-        // TODO: Dynamic column names
-        $("#qh-datatable").dataTable({
-            "ajax": {
-                "url": "/books/" + search_val + "/history_chart",
-                "data": {
-                    "table": hist_table,
-                    "date": hist_date, 
-                    "column_name": hist_col
-                },
+        $.ajax({
+            type: "GET",
+            data: {
+                table: hist_table,
+                date: hist_date,
+                column_name: hist_col
             },
-            columns: [
-                {title: 'Quantity', data: 'quantity'},
-                {title: 'Day', data: 'day'}
-            ],
-            order: [['1', 'desc']]
-        });
+            url: "/books/" + search_val + "/history_chart",
+            dataType: "json",
+            complete: function(d){
+                var col_name = d.responseJSON.title
+                $("#hist-datatable").dataTable({
+                    data: d.responseJSON.data,
+                    columns: [
+                        {title: col_name, data: 'value'},
+                        {title: 'Day', data: 'day'}
+                    ],
+                    order: [['1', 'desc']]
+                });
+            }
+        })
 
         $("#modal-chart").html("");
-        $("#qh-datatable").dataTable();
-        $("#modal-qh-datatable").hide();
+        $("#modal-hist-datatable").hide();
         $("#chart-spinner").show();
         $.ajax({
             type: "GET",
@@ -87,13 +90,13 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 $("#chart-spinner").hide();
                 $("#modal-chart").html($.parseJSON(result.responseText).qh_chart_data);
-                $("#modal-qh-datatable").show();
+                $("#modal-hist-datatable").show();
             }
         })
     })
 
     $('#historyModal').on('hidden.bs.modal', function () {
-        $("#qh-datatable").dataTable().fnDestroy();
+        $("#hist-datatable").dataTable().fnDestroy();
     })
       
     function searchBook(){
