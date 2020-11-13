@@ -87,7 +87,6 @@ class BookExportTemplatesController < ApplicationController
         redirect_to book_export_templates_url,
                     notice: 'Book export template was successfully deleted.'
       end
-      format.json { head :no_content }
     end
   end
 

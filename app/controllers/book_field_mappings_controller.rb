@@ -35,7 +35,6 @@ class BookFieldMappingsController < ApplicationController
         format.json { render :show, status: :created, location: @book_field_mapping }
       else
         format.html { render :new }
-        format.json { render json: @book_field_mapping.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -52,7 +51,6 @@ class BookFieldMappingsController < ApplicationController
         format.json { render :show, status: :ok, location: @book_field_mapping }
       else
         format.html { render :edit }
-        format.json { render json: @book_field_mapping.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -65,7 +63,6 @@ class BookFieldMappingsController < ApplicationController
         redirect_to book_field_mappings_url,
                     notice: 'Book field mapping was successfully destroyed.'
       end
-      format.json { head :no_content }
     end
   end
 

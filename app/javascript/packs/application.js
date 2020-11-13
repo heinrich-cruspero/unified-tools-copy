@@ -8,7 +8,7 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("jquery");
-require("jquery-ui");
+require("jquery-ui-dist/jquery-ui");
 require("bootstrap");
 require("bootstrap-table");
 require("bootstrap-daterangepicker");
