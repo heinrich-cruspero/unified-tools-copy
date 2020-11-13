@@ -11,7 +11,9 @@ class BookExportTemplate < ApplicationRecord
                                 allow_destroy: true,
                                 reject_if: :template_rejectable
 
-  validate :valid_field_mappings
+  validates_presence_of :name
+  validate :valid_field_mappings, on: :create
+  validates :book_field_mapping_ids, presence: true
 
   private
 
@@ -21,10 +23,8 @@ class BookExportTemplate < ApplicationRecord
 
   def valid_field_mappings
     field_mappings = book_field_mappings.collect(&:lookup_field)
-    if field_mappings.uniq.length != field_mappings.length
-      errors.add(:book_field_mappings, '- duplicate fields not allowed.')
-    elsif book_field_mappings.blank?
-      errors.add(:book_field_mappings, '- should have atleast one field.')
-    end
+    return unless field_mappings.uniq.length != field_mappings.length
+
+    errors.add(:book_field_mappings, '- duplicate fields not allowed.')
   end
 end

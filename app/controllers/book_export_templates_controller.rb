@@ -26,17 +26,8 @@ class BookExportTemplatesController < ApplicationController
   def create
     authorize BookExportTemplate
 
-    rm = []
-    create_params = book_export_template_params.clone
-    template_params = book_export_template_params[:book_field_mappings_attributes].to_h
-    template_params.each do |attr|
-      rm << attr[0].to_i if attr[1]['_destroy'] == '1'
-    end
-    create_params[:book_field_mapping_ids].reject!.with_index {
-       |_e, i| rm.include? i } if create_params[:book_field_mapping_ids]
-
     @book_export_template = BookExportTemplate.new(
-      create_params.except(:book_field_mappings_attributes)
+      book_export_template_params.except(:book_field_mappings_attributes)
     )
 
     respond_to do |format|
@@ -45,10 +36,8 @@ class BookExportTemplatesController < ApplicationController
           redirect_to @book_export_template,
                       notice: 'Book export template was successfully created.'
         end
-        format.json { render :show, status: :created, location: @book_export_template }
       else
         format.html { render :new }
-        format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -56,32 +45,36 @@ class BookExportTemplatesController < ApplicationController
   def update
     authorize BookExportTemplate
     respond_to do |format|
-      update_params = book_export_template_params.clone
-      template_params = book_export_template_params[:book_field_mappings_attributes].to_h
-      template_params.each do |attr|
-        update_params[:book_field_mapping_ids].delete(attr[1][:id]) if attr[1]['_destroy'] == '1'
-      end
       @template = BookExportTemplate.new
-      @template.assign_attributes(update_params.except(:book_field_mappings_attributes))
+      @template.assign_attributes(
+        book_export_template_params.except(:book_field_mappings_attributes)
+      )
 
       if @template.valid?
-
+        book_field_mappings = @book_export_template.book_field_mapping_ids
         @book_export_template.book_field_mappings.delete(
           *@book_export_template.book_field_mappings
         )
-        if @book_export_template.update(update_params.except(:book_field_mappings_attributes))
-          format.html do
-            redirect_to @book_export_template,
-                        notice: 'Book export template was successfully updated.'
+        begin
+          if @book_export_template.update(
+            book_export_template_params.except(:book_field_mappings_attributes)
+          )
+            format.html do
+              redirect_to @book_export_template,
+                          notice: 'Book export template was successfully updated.'
+            end
+          else
+            format.html { render :edit }
           end
-          format.json { render :show, status: :ok, location: @book_export_template }
-        else
+        rescue StandardError => e
+          # rollback
+          @book_export_template.reload
+          @book_export_template.update!(book_field_mapping_ids: book_field_mappings)
+          @book_export_template.errors.add(:base, e.message)
           format.html { render :edit }
-          format.json { render json: @book_export_template.errors, status: :unprocessable_entity }
         end
       else
         format.html { render :edit }
-        format.json { render json: @template.errors, status: :unprocessable_entity }
       end
     end
   end

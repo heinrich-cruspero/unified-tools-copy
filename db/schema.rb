@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_075511) do
+ActiveRecord::Schema.define(version: 2020_11_12_104017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,10 +147,12 @@ ActiveRecord::Schema.define(version: 2020_11_05_075511) do
   end
 
   create_table "book_export_template_field_mappings", force: :cascade do |t|
-    t.integer "book_export_template_id"
-    t.integer "book_field_mapping_id"
+    t.bigint "book_export_template_id"
+    t.bigint "book_field_mapping_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_export_template_id"], name: "index_book_export_field_mappings_template"
+    t.index ["book_field_mapping_id"], name: "index_field_mappings_book_export_template"
   end
 
   create_table "book_export_templates", force: :cascade do |t|
@@ -165,6 +167,7 @@ ActiveRecord::Schema.define(version: 2020_11_05_075511) do
     t.string "lookup_field"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["lookup_field"], name: "index_book_field_mappings_on_lookup_field", unique: true
   end
 
   create_table "books", force: :cascade do |t|
@@ -737,4 +740,6 @@ ActiveRecord::Schema.define(version: 2020_11_05_075511) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  add_foreign_key "book_export_template_field_mappings", "book_export_templates"
+  add_foreign_key "book_export_template_field_mappings", "book_field_mappings"
 end

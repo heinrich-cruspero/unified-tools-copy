@@ -30,6 +30,7 @@ $( document ).on('turbolinks:load', function() {
 
     $("#export_template_form").on('click', '.remove_fields', function(event){
       $(this).prev('input[type=hidden]').val('1');
+      $(this).closest('.field').find('.field-select').attr('disabled', 'disabled');
       $(this).closest('.field').hide();
       return event.preventDefault();
     })
