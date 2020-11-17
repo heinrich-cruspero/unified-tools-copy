@@ -43,14 +43,15 @@ class AmazonOrderItem < ApplicationRecord
       amazon_order_items = amazon_order_items.where('
         amazon_orders.purchase_date BETWEEN ? AND ?', start_date_f, end_date_f)
     end
+    amazon_order_items
   end
 
   def self.sale_type_filters(amazon_items)
-    amazon_order_items = if amazon_items
-                            amazon_items.group(:sale_type).count
-                          else
-                            AmazonOrderItem.group(:sale_type).count
-                          end
+    if amazon_items
+      amazon_items.group(:sale_type).count
+    else
+      AmazonOrderItem.group(:sale_type).count
+    end
   end
 
   def self.buyout_returned_filters(amazon_items)
@@ -61,7 +62,7 @@ class AmazonOrderItem < ApplicationRecord
       buyout_count = AmazonOrderItem.where(buy_out: true).count
       returned_count = AmazonOrderItem.where(returned: true).count
     end
-    convert_to_array([{"Buyout" => buyout_count}, {"Returned" => returned_count}])
+    convert_to_array([{ 'Buyout' => buyout_count }, { 'Returned' => returned_count }])
   end
 
   def self.convert_to_array(arr_hash)
@@ -71,18 +72,17 @@ class AmazonOrderItem < ApplicationRecord
       hash[val.keys[0]] = val.values[0]
       combination_a << hash.to_a.flatten
     end
-    return combination_a
+    combination_a
   end
 
   def self.charge_type_filters(amazon_items)
     if amazon_items
-      l_ext_count = amazon_items.where(charge_type: "l_ext").count
-      s_ext_count = amazon_items.where(charge_type: "s_ext").count
+      l_ext_count = amazon_items.where(charge_type: 'l_ext').count
+      s_ext_count = amazon_items.where(charge_type: 's_ext').count
     else
-      l_ext_count = AmazonOrderItem.where(charge_type: "l_ext").count
-      s_ext_count = AmazonOrderItem.where(charge_type: "s_ext").count
+      l_ext_count = AmazonOrderItem.where(charge_type: 'l_ext').count
+      s_ext_count = AmazonOrderItem.where(charge_type: 's_ext').count
     end
-    convert_to_array([{"Short Term" => s_ext_count}, {"Long Term" => l_ext_count}])
+    convert_to_array([{ 'Short Term' => s_ext_count }, { 'Long Term' => l_ext_count }])
   end
-
 end
