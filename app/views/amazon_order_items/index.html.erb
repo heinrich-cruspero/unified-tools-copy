@@ -70,3 +70,36 @@
   </div>
 </div>
 <%= render 'shared/block_modal' %>
+<div class="row">
+  <div class="col-sm">
+    <div class="chart_row">
+      <div class="chart">
+        <h2 class="chart-title">Sale/Rental</h2>
+        <div class="total-record">Total: <%= @sale_rental_filters.values.sum %></div>
+        <% unless @sale_rental_filters.values.sum == 0 %>
+          <%= pie_chart @sale_rental_filters, library: {pieSliceText: 'value-and-percentage'} %>
+        <% else %>
+          <div class="no_record">No Record Found</div>
+        <% end %>
+      </div>
+      <div class="chart">
+        <h2 class="chart-title">Buyout/Returned</h2>
+        <div class="total-record">Total: <%= total_count(@buyout_returned_filters) %></div>
+        <% unless filter_count_check(@buyout_returned_filters) %>
+          <%= pie_chart @buyout_returned_filters, library: {pieSliceText: 'value-and-percentage'} %>
+        <% else %>
+          <div class="no_record">No Record Found</div>
+        <% end %>
+      </div>
+      <div class="chart">
+        <h2 class="chart-title">Short/Long Term</h2>
+        <div class="total-record">Total: <%= total_count(@charge_type_filters) %></div>
+        <% unless filter_count_check(@charge_type_filters) %>
+          <%= pie_chart @charge_type_filters, library: {pieSliceText: 'value-and-percentage'} %>
+        <% else %>
+          <div class="no_record">No Record Found</div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
