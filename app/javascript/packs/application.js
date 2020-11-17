@@ -16,6 +16,8 @@ require("bootstrap-daterangepicker");
 require("@fortawesome/fontawesome-free");
 require("datatables.net");
 require("datatables.net-bs4");
+require("chartkick");
+require("chart.js");
 
 require("../custom/sidebar")
 require("../custom/amazon_table")
@@ -27,6 +29,7 @@ require("../custom/amazon_associated_items")
 require("../custom/amazon_shipment_data_table")
 require("../custom/combine_shipment_data_table")
 require("../custom/indaba_sku_data_table")
+
 
 import "@fortawesome/fontawesome-free/css/all.css";
 
