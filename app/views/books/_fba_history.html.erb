@@ -1,6 +1,6 @@
 <!-- FBA History -->
 <div class="detail-caption mt-4">
-    <h5>FBA History - FBAS: 11</h5>
+    <h5>FBA History - FBAS: <%= @book.fba_sellers unless @book.nil? %></h5>
 </div>
 <div id="detail-headers" class="book-details">
     <label class="col-detail title">Avg Price</label>

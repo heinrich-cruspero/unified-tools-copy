@@ -71,7 +71,12 @@
 
 .col-detail > div {
   padding:10px;
-  overflow: auto;
+  overflow-wrap: break-word;
+}
+
+.col-detail > #book-img {
+  padding:10px;
+  overflow-wrap: break-word;
 }
 
 .title {

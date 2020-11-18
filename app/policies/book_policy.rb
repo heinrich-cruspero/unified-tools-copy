@@ -29,4 +29,12 @@ class BookPolicy < ApplicationPolicy
   def history_chart?
     user.is_admin?
   end
+
+  def sales_rank_history?
+    user.is_admin?
+  end
+
+  def amazon_prices_history?
+    user.is_admin?
+  end
 end

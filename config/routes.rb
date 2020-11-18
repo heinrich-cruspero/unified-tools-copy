@@ -28,6 +28,8 @@ Rails.application.routes.draw do
       get 'fba_history'
       get 'lowest_history'
       get 'history_chart'
+      get 'sales_rank_history'
+      get 'amazon_prices_history'
     end
   end
 

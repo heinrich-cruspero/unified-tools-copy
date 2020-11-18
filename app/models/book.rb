@@ -140,235 +140,115 @@ class Book < ApplicationRecord
     ).references(:amazon_orders)
   end
 
-  # rubocop:disable  Metrics/MethodLength
   def monthly_averages
     monthly_averages = {}
-    client = IndabaService.call
-    datawh_conn = DatawhService.call
+    indaba_service = IndabaService.new
+    datawh_service = DatawhService.new
 
-    quantity_history = client.execute(
-      "SELECT AVG(TotalQuantity) AS 'Total',
-        AVG(PricingCustom8) AS 'OR',
-        AVG(PricingCustom2) AS 'INB',
-        CONCAT(MONTH(Date), '/', YEAR(Date)) AS 'Date'
-      FROM aa_ArchivedProductData
-      WHERE
-      ISBN = '#{ean}'
-      AND
-      Date > DATEADD(day, -366, GETDATE())
-      GROUP BY CONCAT(MONTH(Date), '/', YEAR(Date))
-      ORDER BY Date DESC;"
-    )
+    quantity_history = indaba_service.quantity_history(ean)
+    rental_hist_data = datawh_service.rental_history(isbn).to_a
+    fba_hist_data = datawh_service.fba_history(isbn).to_a
+    lowest_hist_data = datawh_service.lowest_history(isbn).to_a
 
-    rental_history = datawh_conn.exec(
-      "SELECT
-        AVG(CASE WHEN r.source = 'Amazon Warehouse Deals' THEN r.price ELSE NULL END) AS W,
-        AVG(CASE WHEN r.source != 'Amazon Warehouse Deals' THEN r.price ELSE NULL END) AS NW,
-        CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
-      FROM rental_prices r
-      WHERE
-      r.asin = '#{isbn}'
-      AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
-      GROUP BY CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT(YEAR FROM r.created_at))
-      ORDER BY CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT(YEAR FROM r.created_at)) DESC"
-    )
-    rental_hist_data = rental_history.to_a
+    weekly_fba_hist_data = datawh_service.weekly_fba_history(isbn).to_a
+    weekly_trade_in_hist_data = datawh_service.weekly_trade_in_history(isbn).to_a
+    weekly_lowest_hist_data = datawh_service.weekly_lowest_history(isbn).to_a
 
-    fba_history = datawh_conn.exec(
-      "SELECT
-        AVG(r.fba_price) AS Avg,
-        CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
-      GROUP BY CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT(YEAR FROM r.created_at))
-      ORDER BY CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT(YEAR FROM r.created_at)) DESC"
-    )
-    fba_hist_data = fba_history.to_a
+    sales_rank_hist_data = datawh_service.sales_rank_history(isbn).to_a
 
-    lowest_history = datawh_conn.exec(
-      "SELECT
-        AVG(r.lowest_price) AS Avg,
-        CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
-      GROUP BY CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT(YEAR FROM r.created_at))
-      ORDER BY CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT(YEAR FROM r.created_at)) DESC"
-    )
-    lowest_hist_data = lowest_history.to_a
-    datawh_conn.close
+    datawh_service.close
 
     monthly_averages.merge!({
                               quantity_history: quantity_history,
                               rental_history: rental_hist_data,
                               fba_history: fba_hist_data,
-                              lowest_history: lowest_hist_data
+                              lowest_history: lowest_hist_data,
+                              weekly_fba_history: weekly_fba_hist_data,
+                              weekly_trade_in_history: weekly_trade_in_hist_data,
+                              weekly_lowest_history: weekly_lowest_hist_data,
+                              sales_rank_history: sales_rank_hist_data
                             })
     monthly_averages
   end
-  # rubocop:enable  Metrics/MethodLength
 
   def total_quantity_history(month, year)
     data = {}
-    client = IndabaService.call
-
-    results = client.execute(
-      "SELECT TotalQuantity AS 'quantity', DAY(Date) AS 'day'
-      FROM aa_ArchivedProductData r
-      WHERE
-      ISBN = '#{ean}'
-      AND
-      YEAR(Date) = '#{year}'
-      AND
-      MONTH(Date) = '#{month}'
-      ORDER BY Date;"
-    )
+    indaba_service = IndabaService.new
+    results = indaba_service.total_quantity_history(ean, month, year)
 
     results.each do |result|
-      data.merge!("#{result['day']}": result['quantity'])
+      data.merge!("#{result['day']}": result['quantity'].nil? ? 0 : result['quantity'].to_i)
     end
     data
   end
 
   def or_quantity_history(month, year)
     data = {}
-    client = IndabaService.call
-
-    results = client.execute(
-      "SELECT PricingCustom8 AS 'quantity', DAY(Date) AS 'day'
-      FROM aa_ArchivedProductData r
-      WHERE
-      ISBN = '#{ean}'
-      AND
-      YEAR(Date) = '#{year}'
-      AND
-      MONTH(Date) = '#{month}'
-      ORDER BY Date;"
-    )
+    indaba_service = IndabaService.new
+    results = indaba_service.or_quantity_history(ean, month, year)
 
     results.each do |result|
-      data.merge!("#{result['day']}": result['quantity'])
+      data.merge!("#{result['day']}": result['quantity'].nil? ? 0 : result['quantity'].to_i)
     end
     data
   end
 
   def inb_quantity_history(month, year)
     data = {}
-    client = IndabaService.call
-
-    results = client.execute(
-      "SELECT PricingCustom2 AS 'quantity', DAY(Date) AS 'day'
-      FROM aa_ArchivedProductData r
-      WHERE
-      ISBN = '#{ean}'
-      AND
-      YEAR(Date) = '#{year}'
-      AND
-      MONTH(Date) = '#{month}'
-      ORDER BY Date;"
-    )
+    indaba_service = IndabaService.new
+    results = indaba_service.inb_quantity_history(ean, month, year)
 
     results.each do |result|
-      data.merge!("#{result['day']}": result['quantity'].to_i)
+      data.merge!("#{result['day']}": result['quantity'].nil? ? 0 : result['quantity'].to_i)
     end
     data
   end
 
   def w_rental_history(month, year)
     data = {}
-    client = DatawhService.call
+    datawh_service = DatawhService.new
+    results = datawh_service.w_rental_history(isbn, month, year)
 
-    results = client.exec(
-      "SELECT r.price, EXTRACT(DAY FROM r.created_at) AS day
-      FROM rental_prices r
-      WHERE
-      r.asin = '#{isbn}'
-      AND
-      r.source = 'Amazon Warehouse Deals'
-      AND
-      EXTRACT(YEAR FROM r.created_at) = '#{year}'
-      AND
-      EXTRACT(MONTH FROM r.created_at) = '#{month}'
-      ORDER BY r.created_at"
-    )
     results.each do |result|
       data.merge!("#{result['day']}": format('%<result>.2f', result: result['price'].to_f))
     end
-    client.close
+    datawh_service.close
     data
   end
 
   def nw_rental_history(month, year)
     data = {}
-    client = DatawhService.call
+    datawh_service = DatawhService.new
+    results = datawh_service.nw_rental_history(isbn, month, year)
 
-    results = client.exec(
-      "SELECT r.price, EXTRACT(DAY FROM r.created_at) AS day
-      FROM rental_prices r
-      WHERE
-      r.asin = '#{isbn}'
-      AND
-      r.source != 'Amazon Warehouse Deals'
-      AND
-      EXTRACT(YEAR FROM r.created_at) = '#{year}'
-      AND
-      EXTRACT(MONTH FROM r.created_at) = '#{month}'
-      ORDER BY r.created_at"
-    )
     results.each do |result|
       data.merge!("#{result['day']}": format('%<result>.2f', result: result['price'].to_f))
     end
-    client.close
+    datawh_service.close
     data
   end
 
   def avg_price_fba_history(month, year)
     data = {}
-    client = DatawhService.call
+    datawh_service = DatawhService.new
+    results = datawh_service.avg_price_fba_history(isbn, month, year)
 
-    results = client.exec(
-      "SELECT r.fba_price, EXTRACT(DAY FROM r.created_at) AS day
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      EXTRACT(YEAR FROM r.created_at) = '#{year}'
-      AND
-      EXTRACT(MONTH FROM r.created_at) = '#{month}'
-      ORDER BY r.created_at"
-    )
     results.each do |result|
       data.merge!("#{result['day']}": format('%<result>.2f', result: result['fba_price'].to_f))
     end
-    client.close
+    datawh_service.close
     data
   end
 
   def avg_price_lowest_history(month, year)
     data = {}
-    client = DatawhService.call
+    datawh_service = DatawhService.new
+    results = datawh_service.avg_price_lowest_history(isbn, month, year)
 
-    results = client.exec(
-      "SELECT r.lowest_price, EXTRACT(DAY FROM r.created_at) AS day
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      EXTRACT(YEAR FROM r.created_at) = '#{year}'
-      AND
-      EXTRACT(MONTH FROM r.created_at) = '#{month}'
-      ORDER BY r.created_at"
-    )
     results.each do |result|
       data.merge!("#{result['day']}": format('%<result>.2f', result: result['lowest_price'].to_f))
     end
-    client.close
+    datawh_service.close
     data
   end
 end

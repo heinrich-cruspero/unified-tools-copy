@@ -146,6 +146,75 @@ class BooksController < ApplicationController
   end
   # rubocop:enable  Metrics/MethodLength
 
+  def amazon_prices_history
+    authorize Book
+    fba = @monthly_averages.fetch(:weekly_fba_history, {})
+    trade = @monthly_averages.fetch(:weekly_trade_in_history, {})
+    lowest = @monthly_averages.fetch(:weekly_lowest_history, {})
+
+    fba_data = {}
+    trade_data = {}
+    lowest_data = {}
+    avg = 0
+    fba.each do |result|
+      avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
+      fba_data.merge!(
+        "#{result['week'].to_i.ordinalize} #{result['date']}": avg
+      )
+    end
+
+    trade.each do |result|
+      avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
+      trade_data.merge!(
+        "#{result['week'].to_i.ordinalize} #{result['date']}": avg
+      )
+    end
+
+    lowest.each do |result|
+      avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
+      lowest_data.merge!(
+        "#{result['week'].to_i.ordinalize} #{result['date']}": avg
+      )
+    end
+
+    respond_to do |format|
+      format.js do
+        render json: {
+          chart_data: render_to_string(
+            partial: 'amazon_prices_chart',
+            locals: {
+              fba_data: fba_data,
+              trade_data: trade_data,
+              lowest_data: lowest_data
+            }
+          )
+        }
+      end
+    end
+  end
+
+  def sales_rank_history
+    authorize Book
+    data = @monthly_averages.fetch(:sales_rank_history, {})
+    chart_data = {}
+    data.each do |result|
+      chart_data.merge!("#{result['date']}": result['avg'].nil? ? 0 : result['avg'].to_i)
+    end
+
+    respond_to do |format|
+      format.js do
+        render json: {
+          chart_data: render_to_string(
+            partial: 'sales_rank_chart',
+            locals: {
+              data: chart_data
+            }
+          )
+        }
+      end
+    end
+  end
+
   private
 
   def book_detail

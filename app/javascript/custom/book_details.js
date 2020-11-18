@@ -5,48 +5,80 @@ $( document ).on('turbolinks:load', function() {
     });
 
     let search_val = $('#search_book').val()
-    $.ajax({
-        type: "GET",
-        url: "/books/" + search_val + "/detail_guides",
-        dataType: "json",
-        complete: function(result){
-            $("#guides-div").html(result.responseJSON.html);
-        }
-    })
+    if (search_val) { 
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/detail_guides",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseJSON){
+                    $("#guides-div").html(result.responseJSON.html);
+                }
+            }
+        })
 
-    $.ajax({
-        type: "GET",
-        url: "/books/" + search_val + "/quantity_history",
-        dataType: "json",
-        complete: function(result){
-            $("#quantity-history-div").html(result.responseJSON.quantity_history);
-        }
-    })
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/quantity_history",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseJSON){
+                    $("#quantity-history-div").html(result.responseJSON.quantity_history);
+                }
+            }
+        })
 
-    $.ajax({
-        type: "GET",
-        url: "/books/" + search_val + "/rental_history",
-        dataType: "json",
-        complete: function(result){
-            $("#rental-history-div").html(result.responseJSON.rental_history);
-        }
-    })
-    $.ajax({
-        type: "GET",
-        url: "/books/" + search_val + "/fba_history",
-        dataType: "json",
-        complete: function(result){
-            $("#fba-history-div").html(result.responseJSON.fba_history);
-        }
-    })
-    $.ajax({
-        type: "GET",
-        url: "/books/" + search_val + "/lowest_history",
-        dataType: "json",
-        complete: function(result){
-            $("#lowest-history-div").html(result.responseJSON.lowest_history);
-        }
-    })
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/rental_history",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseJSON){
+                    $("#rental-history-div").html(result.responseJSON.rental_history);
+                }
+            }
+        })
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/fba_history",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseJSON){
+                    $("#fba-history-div").html(result.responseJSON.fba_history);
+                }
+            }
+        })
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/lowest_history",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseJSON){
+                    $("#lowest-history-div").html(result.responseJSON.lowest_history);
+                }
+            }
+        })
+
+        $("#amazon-prices-div").html("");
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/amazon_prices_history",
+            dataType: "js",
+            complete: function(result){
+                $("#amazon-prices-div").html($.parseJSON(result.responseText).chart_data);
+            }
+        })
+
+        $("#sales-rank-div").html("");
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/sales_rank_history",
+            dataType: "js",
+            complete: function(result){
+                $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
+            }
+        })
+    }
     
     $("#historyModal").on('show.bs.modal', function() {
         opener = document.activeElement;
