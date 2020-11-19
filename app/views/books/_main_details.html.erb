@@ -27,8 +27,8 @@
     <div class="book-details">
         <div class="col-detail">
             <p class="title title-sm">Image</p>
-            <div id="book-img">
-                <%= image_tag @book.default_image_url, :class => 'mx-auto d-block' %>
+            <div>
+                <%= image_tag @book.default_image_url, :id => 'book-img', :class => 'mx-auto d-block' %>
             </div>
         </div>
         <div class="col-detail">
