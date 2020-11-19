@@ -13,7 +13,7 @@ class IndabaService < ApplicationService
   end
 
   def quantity_history(ean)
-    @connection.execute(
+    res = @connection.execute(
       "SELECT AVG(TotalQuantity) AS 'Total',
         AVG(PricingCustom8) AS 'OR',
         AVG(PricingCustom2) AS 'INB',
@@ -26,10 +26,14 @@ class IndabaService < ApplicationService
       GROUP BY CONCAT(MONTH(Date), '/', YEAR(Date))
       ORDER BY Date DESC;"
     )
+    a = {}
+    res.each do |row|
+      a.merge!(row)
+    end
   end
 
   def total_quantity_history(ean, month, year)
-    @connection.execute(
+    res = @connection.execute(
       "SELECT TotalQuantity AS 'quantity', DAY(Date) AS 'day'
       FROM aa_ArchivedProductData r
       WHERE
@@ -40,10 +44,14 @@ class IndabaService < ApplicationService
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
     )
+    a = {}
+    res.each do |row|
+      a.merge!(row)
+    end
   end
 
   def or_quantity_history(ean, month, year)
-    @connection.execute(
+    res = @connection.execute(
       "SELECT PricingCustom8 AS 'quantity', DAY(Date) AS 'day'
       FROM aa_ArchivedProductData r
       WHERE
@@ -54,10 +62,14 @@ class IndabaService < ApplicationService
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
     )
+    a = {}
+    res.each do |row|
+      a.merge!(row)
+    end
   end
 
   def inb_quantity_history(ean, month, year)
-    @connection.execute(
+    res = @connection.execute(
       "SELECT PricingCustom2 AS 'quantity', DAY(Date) AS 'day'
       FROM aa_ArchivedProductData r
       WHERE
@@ -68,5 +80,13 @@ class IndabaService < ApplicationService
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
     )
+    a = {}
+    res.each do |row|
+      a.merge!(row)
+    end
+  end
+
+  def close
+    @connection.close
   end
 end

@@ -168,6 +168,7 @@ class Book < ApplicationRecord
                               weekly_lowest_history: weekly_lowest_hist_data,
                               sales_rank_history: sales_rank_hist_data
                             })
+    indaba_service.close
     monthly_averages
   end
 
@@ -179,6 +180,7 @@ class Book < ApplicationRecord
     results.each do |result|
       data.merge!("#{result['day']}": result['quantity'].nil? ? 0 : result['quantity'].to_i)
     end
+    indaba_service.close
     data
   end
 
@@ -190,6 +192,7 @@ class Book < ApplicationRecord
     results.each do |result|
       data.merge!("#{result['day']}": result['quantity'].nil? ? 0 : result['quantity'].to_i)
     end
+    indaba_service.close
     data
   end
 
@@ -201,6 +204,7 @@ class Book < ApplicationRecord
     results.each do |result|
       data.merge!("#{result['day']}": result['quantity'].nil? ? 0 : result['quantity'].to_i)
     end
+    indaba_service.close
     data
   end
 
