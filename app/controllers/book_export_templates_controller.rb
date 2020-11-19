@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 ##
-# rubocop:disable Metrics/ClassLength
 class BookExportTemplatesController < ApplicationController
   before_action :set_book_export_template, only: %i[show edit update destroy]
 
@@ -17,6 +16,7 @@ class BookExportTemplatesController < ApplicationController
   def new
     authorize BookExportTemplate
     @book_export_template = BookExportTemplate.new
+    @book_export_template.book_export_template_field_mappings.build
   end
 
   def edit
@@ -27,16 +27,19 @@ class BookExportTemplatesController < ApplicationController
     authorize BookExportTemplate
 
     @book_export_template = BookExportTemplate.new(
-      book_export_template_params.except(:book_field_mappings_attributes)
+      book_export_template_params
     )
-
     respond_to do |format|
-      if @book_export_template.save
-        format.html do
-          redirect_to @book_export_template,
-                      notice: 'Book export template was successfully created.'
+      begin
+        if @book_export_template.save
+          format.html do
+            redirect_to @book_export_template,
+                        notice: 'Book export template was successfully created.'
+          end
         end
-      else
+        format.html { render :new }
+      rescue ActiveRecord::RecordNotUnique => e
+        @book_export_template.errors.add(:base, 'Duplicate fields not allowed.')
         format.html { render :new }
       end
     end
@@ -45,33 +48,12 @@ class BookExportTemplatesController < ApplicationController
   def update
     authorize BookExportTemplate
     respond_to do |format|
-      @template = BookExportTemplate.new
-      @template.assign_attributes(
-        book_export_template_params.except(:book_field_mappings_attributes)
+      if @book_export_template.update(
+        book_export_template_params
       )
-
-      if @template.valid?
-        book_field_mappings = @book_export_template.book_field_mapping_ids
-        @book_export_template.book_field_mappings.delete(
-          *@book_export_template.book_field_mappings
-        )
-        begin
-          if @book_export_template.update(
-            book_export_template_params.except(:book_field_mappings_attributes)
-          )
-            format.html do
-              redirect_to @book_export_template,
-                          notice: 'Book export template was successfully updated.'
-            end
-          else
-            format.html { render :edit }
-          end
-        rescue StandardError => e
-          # rollback
-          @book_export_template.reload
-          @book_export_template.update!(book_field_mapping_ids: book_field_mappings)
-          @book_export_template.errors.add(:base, e.message)
-          format.html { render :edit }
+        format.html do
+          redirect_to @book_export_template,
+                      notice: 'Book export template was successfully updated.'
         end
       else
         format.html { render :edit }
@@ -121,8 +103,9 @@ class BookExportTemplatesController < ApplicationController
 
   def book_export_template_params
     params.require(:book_export_template).permit(:name,
-                                                 book_field_mappings_attributes: %i[id _destroy],
-                                                 book_field_mapping_ids: [])
+                                                 book_export_template_field_mappings_attributes: %i[
+                                                   id book_export_template_id
+                                                   book_field_mapping_id position _destroy
+                                                 ])
   end
 end
-# rubocop:enable Metrics/ClassLength

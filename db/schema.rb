@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_104017) do
+ActiveRecord::Schema.define(version: 2020_11_16_044757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,24 +149,28 @@ ActiveRecord::Schema.define(version: 2020_11_12_104017) do
   create_table "book_export_template_field_mappings", force: :cascade do |t|
     t.bigint "book_export_template_id"
     t.bigint "book_field_mapping_id"
+    t.integer "position", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["book_export_template_id"], name: "index_book_export_field_mappings_template"
-    t.index ["book_field_mapping_id"], name: "index_field_mappings_book_export_template"
+    t.index ["book_export_template_id", "book_field_mapping_id"], name: "index_book_export_template_field_mappings", unique: true
+    t.index ["book_export_template_id"], name: "book_export_template_index"
+    t.index ["book_field_mapping_id"], name: "book_field_mappings_index"
+    t.index ["position"], name: "index_book_export_template_field_mappings_on_position"
   end
 
   create_table "book_export_templates", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_book_export_templates_on_name"
+    t.index ["name"], name: "index_book_export_templates_on_name", unique: true
   end
 
   create_table "book_field_mappings", force: :cascade do |t|
-    t.string "display_name"
-    t.string "lookup_field"
+    t.string "display_name", null: false
+    t.string "lookup_field", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["display_name"], name: "index_book_field_mappings_on_display_name", unique: true
     t.index ["lookup_field"], name: "index_book_field_mappings_on_lookup_field", unique: true
   end
 

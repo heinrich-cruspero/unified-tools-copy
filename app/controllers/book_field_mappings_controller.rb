@@ -32,7 +32,6 @@ class BookFieldMappingsController < ApplicationController
           redirect_to @book_field_mapping,
                       notice: 'Book field mapping was successfully created.'
         end
-        format.json { render :show, status: :created, location: @book_field_mapping }
       else
         format.html { render :new }
       end
@@ -48,7 +47,6 @@ class BookFieldMappingsController < ApplicationController
           redirect_to @book_field_mapping,
                       notice: 'Book field mapping was successfully updated.'
         end
-        format.json { render :show, status: :ok, location: @book_field_mapping }
       else
         format.html { render :edit }
       end

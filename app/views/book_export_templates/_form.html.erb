@@ -12,7 +12,7 @@
         <% end %>
       <% end %>
       <% if @book_export_template.errors.any? %>
-        <% @book_export_template.errors.full_messages.each do |message| %>
+        <% @book_export_template.errors.each do |attr, message| %>
           <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
             <%= message %>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -35,11 +35,15 @@
     <label class="col-sm-1 col-form-label">Fields *</label>
     <div class="col-sm-11">
       <div id="field-mappings">
-        <%= form.fields_for :book_field_mappings do |field_mapping| %>
-          <%= render 'book_field_mappings', f: field_mapping %>
+        <%= form.fields_for :book_export_template_field_mappings do |field_mapping| %>
+          <%= render 'book_export_template_field_mappings', f: field_mapping %>
         <% end %>
-        <%= link_to_add_fields "Add Field", form, :book_field_mappings %>
-        
+
+      </div>
+      <div id="removed">
+      </div>
+      <div>
+        <%= link_to_add_fields "Add Field", form, :book_export_template_field_mappings %>
       </div>
     </div>
     

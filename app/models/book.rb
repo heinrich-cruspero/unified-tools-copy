@@ -255,5 +255,14 @@ class Book < ApplicationRecord
     datawh_service.close
     data
   end
+
+  def self.parse_csv(file)
+    ids = []
+    if file
+      CSV.foreach(file.path) do |row|
+        ids << row[0]
+      end
+    end
+  end
 end
 # rubocop:enable  Metrics/ClassLength

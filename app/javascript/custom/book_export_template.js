@@ -1,5 +1,16 @@
 $( document ).on('turbolinks:load', function() {
-    $("#field-mappings").sortable();
+    if ($('#field-mappings').length) {
+      $("#field-mappings").sortable({
+        update: function(event, ui){
+          $('#field-mappings').sortable("refresh");
+          $.map($(this).find('.ui-sortable-handle'), function(el){
+            $(el).find('input.field-position').val($(el).index());
+          })
+        },
+      });
+
+      
+    }
 
     $('#export-use-form').on('submit', function(e) {
       e.preventDefault();
@@ -24,7 +35,11 @@ $( document ).on('turbolinks:load', function() {
       let regexp, time;
       time = new Date().getTime();
       regexp = new RegExp($(this).data('id'), 'g');
-      $(this).before($(this).data('fields').replace(regexp, time));
+      $('#field-mappings').append($(this).data('fields').replace(regexp, time));
+      $('#field-mappings').sortable("refresh");
+      $.map($('#field-mappings').find('.ui-sortable-handle'), function(el){
+        $(el).find('input.field-position').val($(el).index());
+      })
       return event.preventDefault();
     })
 
@@ -32,6 +47,11 @@ $( document ).on('turbolinks:load', function() {
       $(this).prev('input[type=hidden]').val('1');
       $(this).closest('.field').find('.field-select').attr('disabled', 'disabled');
       $(this).closest('.field').hide();
+      $(this).closest('.ui-sortable-handle').appendTo('#removed');
+      $('#field-mappings').sortable("refresh");
+      $.map($('#field-mappings').find('.ui-sortable-handle'), function(el){
+        $(el).find('input.field-position').val($(el).index());
+      })
       return event.preventDefault();
     })
 });
