@@ -2,7 +2,6 @@
 
 ##
 class AmazonOrderItemsController < ApplicationController
-  include ChartHelper
   def index
     authorize AmazonOrderItem
     respond_to do |format|
