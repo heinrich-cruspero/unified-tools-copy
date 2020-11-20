@@ -7,8 +7,8 @@ class BookExportTemplateFieldMapping < ApplicationRecord
 
   default_scope { order('book_export_template_field_mappings.position ASC') }
 
-  validates :book_export_template_id, uniqueness: {
-    scope: :book_field_mapping_id,
-    message: "Duplicate fields not allowed."
-  }
+  # validates :book_export_template_id, uniqueness: {
+  #  scope: :book_field_mapping_id,
+  #  message: "- Duplicate fields not allowed."
+  # }
 end

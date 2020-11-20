@@ -8,9 +8,8 @@ $( document ).on('turbolinks:load', function() {
           })
         },
       });
-
-      
     }
+    $("#field-mappings").find('input[class="ui-sortable-handle"][type="hidden"]').appendTo('#hidden');
 
     $('#export-use-form').on('submit', function(e) {
       e.preventDefault();

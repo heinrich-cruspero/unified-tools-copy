@@ -1,28 +1,4 @@
 <%= form_for(@book_export_template, html: { id: :export_template_form }) do |form| %>
-  <div class="row">
-    <div class="col-sm">
-      <% if !@template.nil? %>
-        <% @template.errors.full_messages.each do |message| %>
-          <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
-            <%= message %>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        <% end %>
-      <% end %>
-      <% if @book_export_template.errors.any? %>
-        <% @book_export_template.errors.each do |attr, message| %>
-          <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
-            <%= message %>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
 
   <div class="form-group row">
     <label for="book_export_template_name" class="col-sm-1 col-form-label">Name *</label>
@@ -40,8 +16,8 @@
         <% end %>
 
       </div>
-      <div id="removed">
-      </div>
+      <div id="hidden"></div>
+      <div id="removed"></div>
       <div>
         <%= link_to_add_fields "Add Field", form, :book_export_template_field_mappings %>
       </div>

@@ -3,6 +3,8 @@
 ##
 class BookExportTemplate < ApplicationRecord
   has_many :book_export_template_field_mappings,
+           inverse_of: :book_export_template,
+           foreign_key: 'book_export_template_id',
            dependent: :destroy
   has_many :book_field_mappings,
            -> { order 'book_export_template_field_mappings.id' },
@@ -12,9 +14,9 @@ class BookExportTemplate < ApplicationRecord
                                 allow_destroy: true
 
   validates :name, presence: true, uniqueness: {
-    message: "Template name has already been taken."
+    message: '- Template name has already been taken.'
   }
   validates :book_export_template_field_mappings, presence: {
-    message: "Fields can't be blank."
+    message: "- Fields can't be blank."
   }
 end

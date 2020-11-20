@@ -30,18 +30,18 @@ class BookExportTemplatesController < ApplicationController
       book_export_template_params
     )
     respond_to do |format|
-      begin
-        if @book_export_template.save
-          format.html do
-            redirect_to @book_export_template,
-                        notice: 'Book export template was successfully created.'
-          end
+      if @book_export_template.save
+        format.html do
+          redirect_to @book_export_template,
+                      notice: 'Book export template was successfully created.'
         end
-        format.html { render :new }
-      rescue ActiveRecord::RecordNotUnique => e
-        @book_export_template.errors.add(:base, 'Duplicate fields not allowed.')
+      else
+        flash.now[:alert] = @book_export_template.errors.full_messages[0]
         format.html { render :new }
       end
+    rescue ActiveRecord::RecordNotUnique => e
+      flash.now[:alert] = 'Duplicate fields not allowed.'
+      format.html { render :new }
     end
   end
 
@@ -56,8 +56,12 @@ class BookExportTemplatesController < ApplicationController
                       notice: 'Book export template was successfully updated.'
         end
       else
-        format.html { render :edit }
+        flash[:alert] = @book_export_template.errors.full_messages[0]
+        format.html { redirect_to action: :edit }
       end
+    rescue ActiveRecord::RecordNotUnique => e
+      flash[:alert] = 'Duplicate fields not allowed.'
+      format.html { redirect_to action: :edit }
     end
   end
 
@@ -98,14 +102,12 @@ class BookExportTemplatesController < ApplicationController
 
   def set_book_export_template
     @book_export_template = BookExportTemplate.find(params[:id])
-    @template_field_mappings = @book_export_template.book_field_mappings.order(:display_name)
   end
 
   def book_export_template_params
     params.require(:book_export_template).permit(:name,
                                                  book_export_template_field_mappings_attributes: %i[
-                                                   id book_export_template_id
-                                                   book_field_mapping_id position _destroy
+                                                   id book_field_mapping_id position _destroy
                                                  ])
   end
 end

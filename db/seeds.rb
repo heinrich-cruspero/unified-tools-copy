@@ -10,4 +10,4 @@ Book.column_names[1..].each do |item|
   )
 end
 
-puts "Created Book Field Mappings."
+puts 'Created Book Field Mappings.'
