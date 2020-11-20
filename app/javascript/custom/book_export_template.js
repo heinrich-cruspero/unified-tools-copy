@@ -3,13 +3,11 @@ $( document ).on('turbolinks:load', function() {
       $("#field-mappings").sortable({
         update: function(event, ui){
           $('#field-mappings').sortable("refresh");
-          $.map($(this).find('.ui-sortable-handle'), function(el){
-            $(el).find('input.field-position').val($(el).index());
-          })
+          update_pos();
         },
       });
+      update_pos();
     }
-    $("#field-mappings").find('input[class="ui-sortable-handle"][type="hidden"]').appendTo('#hidden');
 
     $('#export-use-form').on('submit', function(e) {
       e.preventDefault();
@@ -36,9 +34,7 @@ $( document ).on('turbolinks:load', function() {
       regexp = new RegExp($(this).data('id'), 'g');
       $('#field-mappings').append($(this).data('fields').replace(regexp, time));
       $('#field-mappings').sortable("refresh");
-      $.map($('#field-mappings').find('.ui-sortable-handle'), function(el){
-        $(el).find('input.field-position').val($(el).index());
-      })
+      update_pos()
       return event.preventDefault();
     })
 
@@ -46,11 +42,14 @@ $( document ).on('turbolinks:load', function() {
       $(this).prev('input[type=hidden]').val('1');
       $(this).closest('.field').find('.field-select').attr('disabled', 'disabled');
       $(this).closest('.field').hide();
-      $(this).closest('.ui-sortable-handle').appendTo('#removed');
       $('#field-mappings').sortable("refresh");
-      $.map($('#field-mappings').find('.ui-sortable-handle'), function(el){
-        $(el).find('input.field-position').val($(el).index());
-      })
+      update_pos();
       return event.preventDefault();
     })
 });
+
+function update_pos(){
+  $.map($("#field-mappings").find('.nested-fields .field-select:enabled'), function(el, index){
+    $(el).closest('.nested-fields').find('input.field-position').val(index);
+  })
+}
