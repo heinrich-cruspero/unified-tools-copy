@@ -23,6 +23,13 @@ Rails.application.routes.draw do
     member do
       get 'details'
       get 'detail_guides'
+      get 'quantity_history'
+      get 'rental_history'
+      get 'fba_history'
+      get 'lowest_history'
+      get 'history_chart'
+      get 'sales_rank_history'
+      get 'amazon_prices_history'
     end
   end
 

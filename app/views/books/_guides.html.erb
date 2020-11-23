@@ -15,7 +15,8 @@
 
 <% if @guides.blank? %>
   <div class="no-data text-center">
-    No data available in table.
+    <div class="section-loader" id="guides-spinner"></div>
+    <div id="guides-no-data">No data available in table.</div>
   </div>
 <% else %>
   <!-- CURRENT GUIDES-->
@@ -45,13 +46,13 @@
         <div class="col-detail">
           <p class="title title-sm">List</p>
           <div>
-            <%= guide["data"].fetch("list_price", "N/A") %>
+            <%= number_with_delimiter(guide["data"].fetch("list_price", "N/A")) %>
           </div>
         </div>
         <div class="col-detail">
           <p class="title title-sm">Wholesale</p>
           <div>
-            <%= guide["data"].fetch("used_wholesale_price", "N/A") %>
+            <%= number_with_delimiter(guide["data"].fetch("used_wholesale_price", "N/A")) %>
           </div>
         </div>
         <div class="col-detail">

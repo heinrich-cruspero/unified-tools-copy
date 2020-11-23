@@ -1,0 +1,54 @@
+<!-- Rental History -->
+<div class="detail-caption mt-4">
+    <h5>Rental History</h5>
+</div>
+<div id="detail-headers" class="book-details">
+    <label class="col-detail title">W</label>
+    <label class="col-detail title">NW</label>
+    <label class="col-detail title">Month / Year</label>
+</div>
+<% if @book.nil? %>
+  <div class="no-data text-center">
+    No data available in table.
+  </div>
+<% else %>
+  <% unless @rental_history.blank? %>
+    <% @rental_history.each do |row| %>
+      <div class="book-details dotted-top qh-detail-row">
+        <input type="hidden" name="hist-table" value="rental-hist-table">
+        <div class="col-detail col-data">
+          <p class="title title-sm">W</p>
+          <div>
+              <%= number_with_delimiter(number_with_precision(row["w"] ? row["w"] : 0, precision: 2)) %>
+              <input type="hidden" name="qh-col-data" value="W-Price">
+              <button type="button" class="btn-sm btn-success plus-button ml-2" data-toggle="modal" data-target="#historyModal">
+                  <i class="fa fa-plus"></i>
+              </button>
+              
+          </div>
+        </div>
+        <div class="col-detail col-data">
+          <p class="title title-sm">NW</p>
+          <div>
+              <%= row.fetch("OR", 0).blank? ? 0 : number_with_delimiter(number_with_precision(row["nw"] ? row["nw"] : 0, precision: 2)) %>
+              <input type="hidden" name="qh-col-data" value="NW-Price">
+              <button type="button" class="btn-sm btn-success plus-button ml-2" data-toggle="modal" data-target="#historyModal">
+                  <i class="fa fa-plus plus-btn"></i>
+              </button>
+          </div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Month/Year</p>
+          <div class="qh-date">
+              <%= row.fetch("date", "") %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="no-data text-center">
+      <div class="section-loader" id="rh-spinner"></div>
+      <div id="rh-no-data">No data available in table.</div>
+    </div>
+  <% end %>
+<% end %>

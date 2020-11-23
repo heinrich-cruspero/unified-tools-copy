@@ -1,0 +1,21 @@
+<div class="text-center mb-4">
+    <h4>Daily <%= title %> for <%= date %></h4>
+</div>
+<div class="mb-5">
+    
+    <%= line_chart [
+            {name: title, data: data },
+        ],
+        id: "modal-history-chart",
+        download: {
+            filename: filename, 
+            background: "#ffffff",
+            title: title
+        },
+        curve: false,
+        legend: "bottom",
+        xtitle: "Day",
+        ytitle: ytitle
+    %>
+</div>
+
