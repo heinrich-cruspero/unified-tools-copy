@@ -16,6 +16,8 @@ require("bootstrap-daterangepicker");
 require("@fortawesome/fontawesome-free");
 require("datatables.net");
 require("datatables.net-bs4");
+require("chartkick");
+require("chart.js");
 
 require("../custom/sidebar")
 require("../custom/amazon_table")

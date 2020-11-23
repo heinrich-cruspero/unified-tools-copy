@@ -1,0 +1,17 @@
+<div class="mb-5">
+    
+    <%= line_chart [
+            {name: "Sales Rank", data: data},
+        ],
+        id: "sales-rank-history-chart",
+        download: {
+            filename: "historic_amazon_sales_rank", 
+            background: "#ffffff",
+            title: "Historic Amazon Sales Rank"
+        },
+        legend: "bottom",
+        xtitle: "",
+        ytitle: "Average Daily Sales Rank"
+    %>
+</div>
+

@@ -20,19 +20,19 @@
     <div class="book-details dotted-top">
       <div class="col-detail">
         <p class="title title-sm">Sale P</p>
-        <div><%= order.sale_quantity ? order.sale_quantity : 0 %></div>
+        <div><%= order.sale_quantity ? number_with_delimiter(order.sale_quantity) : 0 %></div>
       </div>
       <div class="col-detail">
         <p class="title title-sm">Sale Q</p>
-        <div><%= order.sale_avg_price ? number_to_currency(order.sale_avg_price) : 0.00 %></div>
+        <div><%= order.sale_avg_price ? number_with_delimiter(number_with_precision(order.sale_avg_price, precision: 2)) : 0.00 %></div>
       </div>
       <div class="col-detail">
         <p class="title title-sm">Rental P</p>
-        <div><%= order.rental_quantity ? order.rental_quantity : 0 %></div>
+        <div><%= order.rental_quantity ? number_with_delimiter(order.rental_quantity) : 0 %></div>
       </div>
       <div class="col-detail">
         <p class="title title-sm">Rental Q</p>
-        <div><%= order.rental_avg_price ? number_to_currency(order.rental_avg_price) : 0.00 %></div>
+        <div><%= order.rental_avg_price ? number_with_delimiter(number_with_precision(order.rental_avg_price, precision: 2)) : 0.00 %></div>
       </div>
       <div class="col-detail">
         <p class="title title-sm">Month/Year</p>
@@ -44,19 +44,19 @@
   <div id="amazon-orders-total-avg" class="book-details">
     <div class="col-detail">
       <p class="title title-sm">Sale P Total</p>
-      <div><%= @amazon_orders_totals.sale_quantity ? @amazon_orders_totals.sale_quantity : 0 %></div>
+      <div><%= @amazon_orders_totals.sale_quantity ? number_with_delimiter(@amazon_orders_totals.sale_quantity) : 0 %></div>
     </div>
     <div class="col-detail">
       <p class="title title-sm">Sale Q Total</p>
-      <div><%= @amazon_orders_totals.sale_avg_price ? number_to_currency(@amazon_orders_totals.sale_avg_price) : 0.00 %></div>
+      <div><%= @amazon_orders_totals.sale_avg_price ? number_with_delimiter(number_to_currency(@amazon_orders_totals.sale_avg_price)) : 0.00 %></div>
     </div>
     <div class="col-detail">
       <p class="title title-sm">Rental P Total</p>
-      <div><%= @amazon_orders_totals.rental_quantity ? @amazon_orders_totals.rental_quantity : 0 %></div>
+      <div><%= @amazon_orders_totals.rental_quantity ? number_with_delimiter(@amazon_orders_totals.rental_quantity) : 0 %></div>
     </div>
     <div class="col-detail">
       <p class="title title-sm">Rental Q Total</p>
-      <div><%= @amazon_orders_totals.rental_avg_price ? number_to_currency(@amazon_orders_totals.rental_avg_price) : 0.00 %></div>
+      <div><%= @amazon_orders_totals.rental_avg_price ? number_with_delimiter(number_to_currency(@amazon_orders_totals.rental_avg_price)) : 0.00 %></div>
     </div>
     <div class="col-detail">
       <p class="title">Totals</p>

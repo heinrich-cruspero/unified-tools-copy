@@ -71,7 +71,12 @@
 
 .col-detail > div {
   padding:10px;
-  overflow: auto;
+  overflow-wrap: break-word;
+}
+
+#book-img {
+  width: 100%;
+  max-width: 130px;
 }
 
 .title {
@@ -121,4 +126,110 @@
 
 .title-sm {
   display: none;
+}
+
+.plus-button {
+  background-color: #33b636 !important;
+  border: 1px #33b636 !important;
+  border-color: #33b636 !important;
+  border-radius: 50% !important;
+  outline: none !important;
+}
+
+.modal-content-hist{
+  min-height: 600px;
+}
+
+#hist-datatable_filter {
+  .form-control {
+    width: 70% !important;
+  }
+}
+
+.loader {
+  position: relative;
+  text-align: center;
+  margin: 200px auto 35px auto;
+  z-index: 9999;
+  display: block;
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(0, 0, 0, .3);
+  border-radius: 50%;
+  border-top-color: #000;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left:6px solid rgba(52, 58, 64,.15);
+  border-right:6px solid rgba(52, 58, 64,.15);
+  border-bottom:6px solid rgba(52, 58, 64,.15);
+  border-top:6px solid rgba(52, 58, 64,.8);
+  border-radius:100%;
+}
+
+.section-loader {
+  position: relative;
+  text-align: center;
+  margin: 50px auto 35px auto;
+  z-index: 9999;
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 5px solid rgba(0, 0, 0, .3);
+  border-radius: 50%;
+  border-top-color: #000;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left:6px solid rgba(52, 58, 64,.15);
+  border-right:6px solid rgba(52, 58, 64,.15);
+  border-bottom:6px solid rgba(52, 58, 64,.15);
+  border-top:6px solid rgba(52, 58, 64,.8);
+  border-radius:100%;
+}
+
+#hist-datatable_wrapper {
+  #hist-datatable {
+
+    tbody td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #ddd
+    }
+
+    tbody {
+
+      tr.odd {
+        background-color: #f9f9f9;
+      }
+    }
+
+    thead {
+      tr {
+        background-color: dimgrey;
+        color: white;
+        
+        th {
+          border-width: 0px;
+          padding: 10px 18px;
+          border-bottom: 1px solid #111;
+        }
+      }
+    }
+
+    tr {
+
+      td.character-column {
+        text-align: right;
+        vertical-align: top;
+      }
+
+      td.season-column,
+      td.episode-column {
+        text-align: center;
+        vertical-align: top;
+      }
+    }
+  }
 }

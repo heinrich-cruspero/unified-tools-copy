@@ -1,5 +1,5 @@
 <div class="row ml-1">
-  <div col-3>
+  <div>
     <div class="input-group mb-3 float-left">
       <%= text_field_tag :search_book, params[:search_book], value: params[:id], class: "form-control", type: "text"%>
     </div>
@@ -7,10 +7,66 @@
 </div>
 
 <div id="book-table">
-  <%= render 'main_details' %>
-  <%= render 'amazon_inventory_details' %>
+  <div id="main-details-div">
+    <%= render 'main_details' %>
+  </div>
+  <div id="amazon-inventory-div">
+    <%= render 'amazon_inventory_details' %>
+  </div>
   <div id="guides-div">
     <%= render 'guides' %>
   </div>
-  <%= render 'amazon_orders' %>
+  <div id="amazon-orders-div">
+    <%= render 'amazon_orders' %>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+      <div id="quantity-history-div">
+        <%= render 'quantity_history'%>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+      <div id="rental-history-div">
+        <%= render 'rental_history' %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+      <div id="fba-history-div">
+        <%= render 'fba_history' %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+      <div id="lowest-history-div">
+        <%= render 'lowest_history' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="text-center mt-4">
+          <h4>Historic Amazon Prices</h4>
+      </div>
+      <div class="section-loader" id="amazon-prices-spinner"></div>
+      <div id="amazon-prices-div">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="text-center mt-4">
+          <h4>Historic Amazon Sales Rank</h4>
+      </div>
+      <div class="section-loader" id="sales-rank-spinner"></div>
+      <div id="sales-rank-div">
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row">
+  </div> -->
+
 </div>
+
+
+<%= render 'history_modal' %>

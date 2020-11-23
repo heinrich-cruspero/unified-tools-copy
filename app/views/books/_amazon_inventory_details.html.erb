@@ -26,49 +26,49 @@
         <div class="col-detail">
             <p class="title title-sm">FBAQ</p>
             <div>
-                <%= @book.fbaq %>
+                <%= number_with_delimiter(@book.fbaq) %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">Inbound</p>
             <div>
-                <%= @book.inbq %>
+                <%= number_with_delimiter(@book.inbq) %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">ORQC</p>
             <div>
-                <%= @book.orq %>
+                <%= number_with_delimiter(@book.orq) %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">ORQT</p>
             <div>
-                <%= @book.orq_total %>
+                <%= number_with_delimiter(@book.orq_total) %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">FBAWQ</p>
             <div>
-                <%= @book.fba_sku_quantity %>
+                <%= number_with_delimiter(@book.fba_sku_quantity) %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">BZ&JQ</p>
             <div>
-                <%= @book.bz_j_sku_quantity %>
+                <%= number_with_delimiter(@book.bz_j_sku_quantity) %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">POQ</p>
             <div>
-                <%= @book.pending_order %>
+                <%= number_with_delimiter(@book.pending_order) %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">BOQ</p>
             <div>
-                <%= @book.buyouts %>
+                <%= number_with_delimiter(@book.buyouts) %>
             </div>
         </div>
         <div class="col-detail">
@@ -80,7 +80,7 @@
         <div class="col-detail">
             <p class="title title-sm">RQ</p>
             <div>
-                <%= @book.returns %>
+                <%= number_with_delimiter(@book.returns) %>
             </div>
         </div>
         <div class="col-detail">
