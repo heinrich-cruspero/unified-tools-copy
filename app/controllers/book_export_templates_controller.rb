@@ -39,9 +39,6 @@ class BookExportTemplatesController < ApplicationController
         flash.now[:alert] = @book_export_template.errors.full_messages[0]
         format.html { render :new }
       end
-    rescue ActiveRecord::RecordNotUnique => e
-      flash.now[:alert] = 'Duplicate fields not allowed.'
-      format.html { render :new }
     end
   end
 
@@ -59,9 +56,6 @@ class BookExportTemplatesController < ApplicationController
         flash[:alert] = @book_export_template.errors.full_messages[0]
         format.html { redirect_to action: :edit }
       end
-    rescue ActiveRecord::RecordNotUnique => e
-      flash[:alert] = 'Duplicate fields not allowed.'
-      format.html { redirect_to action: :edit }
     end
   end
 
