@@ -19,19 +19,17 @@
 1. GOOGLE_APP_ID
 2. GOOGLE_APP_SECRET
 
-# Credentials
-1. Run `EDITOR=vi rails credentials:edit`
-    secret_key_base: '*********'
-
-2. Save
+# Credentials `EDITOR=vi rails credentials:edit`
 
 ## AWS Credentials
-1. Run `EDITOR=vi rails credentials:edit` again to set up, aws configuration
-    aws:
-        access_key_id::
-        secret_access_key:
-        ses_smtp_username:
-        ses_smtp_password:
+    secret_key_base:
+
+## AWS Credentials
+    aws:  
+        access_key_id:  
+        secret_access_key:  
+        ses_smtp_username:  
+        ses_smtp_password:  
 
     development:
       aws:
@@ -42,18 +40,16 @@
       aws:
         region:
         bucket_name:
-
+        
 ## Job Error Email
-1. Run `EDITOR=vim rails credentials:edit` again to set up, jobs email group
     developer_email_group: ["marc@rev365.com", "karim@rev365.com", "ramya@rev365.com"]
 
-## Data Credentials
-1. Run `EDITOR=vim rails credentials:edit` again to set up, DataWH configuration
+## DataWH API
     datawh:
         url:
         api_token:
 
-2. set up IndabaFBAZ configuration
+## FBAZ DB
     indabafbaz:
         host:
         database:
@@ -61,10 +57,19 @@
         password:
         port:
 
-3. set up DataWH configuration
-    datawhdb:
-        host:
-        database:
-        username:
-        password:
-        port:
+## DataWh DB
+    development:
+        datawhdb:
+            host:
+            database:
+            username:
+            password:
+            port:
+
+    production:
+        datawhdb:
+            host:
+            database:
+            username:
+            password:
+            port:

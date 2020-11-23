@@ -1,5 +1,4 @@
 $( document ).on('turbolinks:load', function() {
-    
     $("#search_book").on("keyup", function(){
         searchBook();
     });

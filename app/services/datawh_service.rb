@@ -5,11 +5,11 @@
 class DatawhService
   def initialize
     @connection = PG.connect(
-      host: Rails.application.credentials[:datawhdb][:host],
-      dbname: Rails.application.credentials[:datawhdb][:database],
-      port: Rails.application.credentials[:datawhdb][:port],
-      user: Rails.application.credentials[:datawhdb][:username],
-      password: Rails.application.credentials[:datawhdb][:password]
+      host: Rails.application.credentials[Rails.env.to_sym][:datawhdb][:host],
+      dbname: Rails.application.credentials[Rails.env.to_sym][:datawhdb][:database],
+      port: Rails.application.credentials[Rails.env.to_sym][:datawhdb][:port],
+      user: Rails.application.credentials[Rails.env.to_sym][:datawhdb][:username],
+      password: Rails.application.credentials[Rails.env.to_sym][:datawhdb][:password]
     )
   end
 
