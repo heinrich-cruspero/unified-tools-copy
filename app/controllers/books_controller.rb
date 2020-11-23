@@ -40,6 +40,7 @@ class BooksController < ApplicationController
 
     data = @monthly_averages.fetch(:quantity_history, {})
     @quantity_history = data.count.positive? ? data : {}
+
     respond_to do |format|
       format.js { render json: { quantity_history: render_to_string(partial: 'quantity_history') } }
     end
@@ -148,33 +149,36 @@ class BooksController < ApplicationController
 
   def amazon_prices_history
     authorize Book
-    fba = @monthly_averages.fetch(:weekly_fba_history, {})
-    trade = @monthly_averages.fetch(:weekly_trade_in_history, {})
-    lowest = @monthly_averages.fetch(:weekly_lowest_history, {})
-
     fba_data = {}
     trade_data = {}
     lowest_data = {}
-    avg = 0
-    fba.each do |result|
-      avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
-      fba_data.merge!(
-        "#{result['week'].to_i.ordinalize} #{result['date']}": avg
-      )
-    end
 
-    trade.each do |result|
-      avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
-      trade_data.merge!(
-        "#{result['week'].to_i.ordinalize} #{result['date']}": avg
-      )
-    end
+    unless @monthly_averages.blank?
+      fba = @monthly_averages.fetch(:weekly_fba_history, {})
+      trade = @monthly_averages.fetch(:weekly_trade_in_history, {})
+      lowest = @monthly_averages.fetch(:weekly_lowest_history, {})
 
-    lowest.each do |result|
-      avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
-      lowest_data.merge!(
-        "#{result['week'].to_i.ordinalize} #{result['date']}": avg
-      )
+      avg = 0
+      fba.each do |result|
+        avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
+        fba_data.merge!(
+          "#{result['week'].to_i.ordinalize} #{result['date']}": avg
+        )
+      end
+
+      trade.each do |result|
+        avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
+        trade_data.merge!(
+          "#{result['week'].to_i.ordinalize} #{result['date']}": avg
+        )
+      end
+
+      lowest.each do |result|
+        avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
+        lowest_data.merge!(
+          "#{result['week'].to_i.ordinalize} #{result['date']}": avg
+        )
+      end
     end
 
     respond_to do |format|
@@ -195,10 +199,12 @@ class BooksController < ApplicationController
 
   def sales_rank_history
     authorize Book
-    data = @monthly_averages.fetch(:sales_rank_history, {})
     chart_data = {}
-    data.each do |result|
-      chart_data.merge!("#{result['date']}": result['avg'].nil? ? 0 : result['avg'].to_i)
+    unless @monthly_averages.blank?
+      data = @monthly_averages.fetch(:sales_rank_history, {})
+      data.each do |result|
+        chart_data.merge!("#{result['date']}": result['avg'].nil? ? 0 : result['avg'].to_i)
+      end
     end
 
     respond_to do |format|

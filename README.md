@@ -52,3 +52,19 @@
     datawh:
         url:
         api_token:
+
+2. set up IndabaFBAZ configuration
+    indabafbaz:
+        host:
+        database:
+        username:
+        password:
+        port:
+
+3. set up DataWH configuration
+    datawhdb:
+        host:
+        database:
+        username:
+        password:
+        port:

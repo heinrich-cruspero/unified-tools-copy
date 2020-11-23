@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ##
-class IndabaService < ApplicationService
+class IndabaService
   def initialize
     @connection = TinyTds::Client.new(
       host: Rails.application.credentials[:indabafbaz][:host],
@@ -25,11 +25,7 @@ class IndabaService < ApplicationService
       Date > DATEADD(day, -366, GETDATE())
       GROUP BY CONCAT(MONTH(Date), '/', YEAR(Date))
       ORDER BY Date DESC;"
-    )
-    a = {}
-    res.each do |row|
-      a.merge!(row)
-    end
+    ).to_a
   end
 
   def total_quantity_history(ean, month, year)
@@ -43,11 +39,7 @@ class IndabaService < ApplicationService
       AND
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
-    )
-    a = {}
-    res.each do |row|
-      a.merge!(row)
-    end
+    ).to_a
   end
 
   def or_quantity_history(ean, month, year)
@@ -61,11 +53,7 @@ class IndabaService < ApplicationService
       AND
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
-    )
-    a = {}
-    res.each do |row|
-      a.merge!(row)
-    end
+    ).to_a
   end
 
   def inb_quantity_history(ean, month, year)
@@ -79,11 +67,7 @@ class IndabaService < ApplicationService
       AND
       MONTH(Date) = '#{month}'
       ORDER BY Date;"
-    )
-    a = {}
-    res.each do |row|
-      a.merge!(row)
-    end
+    ).to_a
   end
 
   def close

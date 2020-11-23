@@ -2,7 +2,7 @@
 
 ##
 # rubocop:disable  Metrics/ClassLength
-class DatawhService < ApplicationService
+class DatawhService
   def initialize
     @connection = PG.connect(
       host: Rails.application.credentials[:datawhdb][:host],

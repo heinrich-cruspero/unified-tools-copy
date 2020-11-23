@@ -15,7 +15,8 @@
 
 <% if @guides.blank? %>
   <div class="no-data text-center">
-    No data available in table.
+    <div class="section-loader" id="guides-spinner"></div>
+    <div id="guides-no-data">No data available in table.</div>
   </div>
 <% else %>
   <!-- CURRENT GUIDES-->

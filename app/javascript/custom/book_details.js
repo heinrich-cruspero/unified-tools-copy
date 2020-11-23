@@ -5,7 +5,8 @@ $( document ).on('turbolinks:load', function() {
     });
 
     let search_val = $('#search_book').val()
-    if (search_val) { 
+    if (search_val) {
+        $("#guides-no-data").hide();
         $.ajax({
             type: "GET",
             url: "/books/" + search_val + "/detail_guides",
@@ -13,10 +14,12 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 if (result.responseJSON){
                     $("#guides-div").html(result.responseJSON.html);
+                    $("#guides-spinner").hide();
                 }
             }
         })
 
+        $("#qh-no-data").hide();
         $.ajax({
             type: "GET",
             url: "/books/" + search_val + "/quantity_history",
@@ -24,10 +27,12 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 if (result.responseJSON){
                     $("#quantity-history-div").html(result.responseJSON.quantity_history);
+                    $("#qh-spinner").hide();
                 }
             }
         })
 
+        $("#rh-no-data").hide();
         $.ajax({
             type: "GET",
             url: "/books/" + search_val + "/rental_history",
@@ -35,9 +40,12 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 if (result.responseJSON){
                     $("#rental-history-div").html(result.responseJSON.rental_history);
+                    $("#rh-spinner").hide();
                 }
             }
         })
+
+        $("#fba-no-data").hide();
         $.ajax({
             type: "GET",
             url: "/books/" + search_val + "/fba_history",
@@ -45,9 +53,12 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 if (result.responseJSON){
                     $("#fba-history-div").html(result.responseJSON.fba_history);
+                    $("#fba-spinner").hide();
                 }
             }
         })
+
+        $("#lowest-no-data").hide();
         $.ajax({
             type: "GET",
             url: "/books/" + search_val + "/lowest_history",
@@ -55,6 +66,7 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 if (result.responseJSON){
                     $("#lowest-history-div").html(result.responseJSON.lowest_history);
+                    $("#lowest-spinner").hide();
                 }
             }
         })
@@ -65,7 +77,10 @@ $( document ).on('turbolinks:load', function() {
             url: "/books/" + search_val + "/amazon_prices_history",
             dataType: "js",
             complete: function(result){
-                $("#amazon-prices-div").html($.parseJSON(result.responseText).chart_data);
+                $("#amazon-prices-spinner").hide();
+                if (result.responseText){
+                    $("#amazon-prices-div").html($.parseJSON(result.responseText).chart_data);
+                }
             }
         })
 
@@ -75,7 +90,10 @@ $( document ).on('turbolinks:load', function() {
             url: "/books/" + search_val + "/sales_rank_history",
             dataType: "js",
             complete: function(result){
-                $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
+                $("#sales-rank-spinner").hide();
+                if (result.responseText){
+                    $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
+                }
             }
         })
     }
