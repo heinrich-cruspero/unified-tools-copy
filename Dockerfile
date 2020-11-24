@@ -9,7 +9,7 @@ ADD https://dl.yarnpkg.com/debian/pubkey.gpg /tmp/yarn-pubkey.gpg
 RUN apt-key add /tmp/yarn-pubkey.gpg && rm /tmp/yarn-pubkey.gpg
 RUN echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
 RUN apt-get update -qq
-RUN apt-get install -y build-essential libpq-dev nodejs npm yarn
+RUN apt-get install -y build-essential libpq-dev nodejs npm yarn freetds-dev
 
 # clean up
 RUN apt-get clean autoclean && apt-get autoremove -y
@@ -30,8 +30,6 @@ RUN bundle install --without development test
 
 # Copy the whole app
 COPY . $APP_HOME
-
-RUN chmod +x scripts/db_migrate.sh
 
 EXPOSE 3000
 CMD bundle exec puma -C config/puma.rb
