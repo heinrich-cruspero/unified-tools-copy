@@ -24,7 +24,6 @@ AWS_REPO_NAME="unified-tools"
 AWS_REPO_URL="470123955518.dkr.ecr.us-west-2.amazonaws.com/$AWS_REPO_NAME"
 
 Service="UnifiedTools"
-JobsService="UnifiedToolsJobs"
 DevTask="DevUnifiedTools"
 ProdTask="ProdUnifiedTools"
 
@@ -51,7 +50,6 @@ if $UPDATE_PROD ; then
     docker tag $AWS_REPO_NAME:latest $AWS_REPO_URL:latest_prod
     aws ecr get-login-password --region us-west-2 --profile bba-ecr | docker login --username AWS --password-stdin $AWS_REPO_URL:latest_prod && docker push $AWS_REPO_URL:latest_prod
     aws ecs update-service --region us-west-2 --profile bba-ecr --cluster Production --service $Service --force-new-deployment >/dev/null
-    aws ecs update-service --region us-west-2 --profile bba-ecr --cluster Production --service $JobsService --force-new-deployment >/dev/null
 
     if $RUN_MIGRATION ; then
       aws ecs run-task --region us-west-2 --profile bba-ecr --cluster Production --task-definition $ProdTask --launch-type 'FARGATE' --overrides '{"containerOverrides": [{"name": "Web", "command": ["bundle","exec","rake","db:migrate"]}]}' --network-configuration '{"awsvpcConfiguration": {"subnets": ["subnet-6fdaf90b", "subnet-a2e992d4"], "securityGroups": ["sg-63cd231a"]}}' >/dev/null
