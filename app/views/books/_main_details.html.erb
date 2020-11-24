@@ -28,7 +28,7 @@
         <div class="col-detail">
             <p class="title title-sm">Image</p>
             <div>
-                <%= image_tag @book.default_image_url, :class => 'mx-auto d-block' %>
+                <%= image_tag @book.default_image_url, :id => 'book-img', :class => 'mx-auto d-block' %>
             </div>
         </div>
         <div class="col-detail">
@@ -61,13 +61,13 @@
         <div class="col-detail">
             <p class="title title-sm">List</p>
             <div>
-                <%= @book.list_price ? @book.list_price : 'N/A' %>
+                <%= @book.list_price ? number_with_delimiter(@book.list_price) : 'N/A' %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">Wholesale</p>
             <div>
-                <%= @book.max_used_wholesale_price ? @book.max_used_wholesale_price : 'N/A' %> <br>
+                <%= @book.max_used_wholesale_price ? number_with_delimiter(@book.max_used_wholesale_price) : 'N/A' %> <br>
                 <%= @book.edition_status_code ? @book.edition_status_code : 'N/A' %>
                 <%= @book.edition_status_date ? @book.edition_status_date : 'N/A' %>
             </div>
@@ -75,15 +75,15 @@
         <div class="col-detail">
             <p class="title title-sm">Amazon Low</p>
             <div>
-                7d: <%= @book.amazon_ca_low ? @book.amazon_ca_low : 'N/A' %> <br>
-                1/<%= Book.jan_year %>: <%= @book.lowest_price_jan_average ? @book.lowest_price_jan_average : 'N/A' %> <br>
-                8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
+                7d: <%= @book.amazon_ca_low ? number_with_delimiter(@book.amazon_ca_low) : 'N/A' %> <br>
+                1/<%= Book.jan_year %>: <%= @book.lowest_price_jan_average ? number_with_delimiter(@book.lowest_price_jan_average) : 'N/A' %> <br>
+                8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? number_with_delimiter(@book.lowest_price_aug_average) : 'N/A' %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">FBA Low</p>
             <div>
-                7d: <%= @book.weekly_fba ? @book.weekly_fba : 'N/A' %> <br>
+                7d: <%= @book.weekly_fba ? number_with_delimiter(@book.weekly_fba) : 'N/A' %> <br>
                 8/<%= Book.aug_year %>: <%= @book.lowest_price_aug_average ? @book.lowest_price_aug_average : 'N/A' %>
             </div>
         </div>
@@ -91,16 +91,16 @@
             <p class="title title-sm">Amazon Rental</p>
             <div>
                 7d: <%= @book.lowest_rental_average ? @book.lowest_rental_average : 'N/A' %> <br>
-                8/<%= Book.aug_year %>: <%= @book.lowest_rental_august_average ? @book.lowest_rental_august_average : 'N/A' %>
+                8/<%= Book.aug_year %>: <%= @book.lowest_rental_august_average ? number_with_delimiter(@book.lowest_rental_august_average) : 'N/A' %>
             </div>
         </div>
         <div class="col-detail">
             <p class="title title-sm">Sales Rank</p>
             <div>
-                7d: <%= @book.weekly_sales_rank ? @book.weekly_sales_rank : 'N/A' %> <br>
-                1/<%= Book.jan_year %>: <%= @book.sales_rank_jan_average ? @book.sales_rank_jan_average : 'N/A' %> <br>
-                8/<%= Book.aug_year%> : <%= @book.sales_rank_aug_average ? @book.sales_rank_aug_average : 'N/A' %> <br>
-                OE: <%= @book.oe_isbn_rec ? @book.oe_isbn_rec.sales_rank : 'N/A' %>
+                7d: <%= @book.weekly_sales_rank ? number_with_delimiter(@book.weekly_sales_rank) : 'N/A' %> <br>
+                1/<%= Book.jan_year %>: <%= @book.sales_rank_jan_average ? number_with_delimiter(@book.sales_rank_jan_average) : 'N/A' %> <br>
+                8/<%= Book.aug_year%> : <%= @book.book_qa_aug_rank ? number_with_delimiter(@book.book_qa_aug_rank) : 'N/A' %> <br>
+                OE: <%= @book.oe_isbn_rec ? number_with_delimiter(@book.oe_isbn_rec.sales_rank) : 'N/A' %>
             </div>
         </div>
         <div class="col-detail">

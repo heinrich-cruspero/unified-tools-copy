@@ -1,0 +1,22 @@
+<!-- Quantity History Modal -->
+<div class="modal fade book-detail-modal" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="quantityHistory" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-hist" role="document">
+    <div class="modal-content modal-content-hist">
+      <div class="modal-header">
+        <h5 class="modal-title">Daily Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="loader" id="chart-spinner"></div>
+        
+        <div id="modal-chart"></div>
+        <div id="modal-hist-datatable" class="pl-4 pr-4">
+          <%= render "history_datatable" %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
