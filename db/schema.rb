@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_105936) do
+ActiveRecord::Schema.define(version: 2020_09_28_105937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,9 +47,11 @@ ActiveRecord::Schema.define(version: 2020_09_28_105936) do
     t.date "action_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "charge_type"
     t.index ["action_date"], name: "index_amazon_order_items_on_action_date"
     t.index ["amazon_order_id"], name: "index_amazon_order_items_on_amazon_order_id"
     t.index ["asin"], name: "index_amazon_order_items_on_asin"
+    t.index ["charge_type"], name: "index_amazon_order_items_on_charge_type"
     t.index ["due_date"], name: "index_amazon_order_items_on_due_date"
     t.index ["order_item_id"], name: "index_amazon_order_items_on_order_item_id", unique: true
     t.index ["rni"], name: "index_amazon_order_items_on_rni"

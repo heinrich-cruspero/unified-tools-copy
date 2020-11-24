@@ -366,6 +366,25 @@ table.dataTable {
   border-radius: 5px;
 }
 
+.purchase-date-filter .fa-times {
+  position: absolute;
+  top: 10px;
+  left: 208px;
+}
+#amazon-order-item-purchase-date-filter {
+  width: auto;
+  border-radius: 5px;
+}
+.date-filter .fa-times {
+  position: absolute;
+  top: 10px;
+}
+
+.search-purchase-date {
+  position: absolute;
+  top: 10px;
+}
+
 @media only screen and (max-width: 768px) {
   .paging_full_numbers {
     .paginate_button {
@@ -375,4 +394,35 @@ table.dataTable {
       display: block !important;
     }
   }
+}
+.amazon-item-filter-button {
+  margin-right: 10px;
+}
+.select_sale_type_filter {
+  border-radius: 5px !important;
+}
+.chart_row {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 10px;
+  margin-top: 29px;
+}
+.chart {
+  display: table-cell;
+}
+.chart-title {
+  text-align: center;
+  font-size: 27px;
+  font-weight: bold;
+}
+.total-record {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+.no_record{
+  text-align: center;
+  margin-top: 143px;
+  font-weight: bold;
 }
