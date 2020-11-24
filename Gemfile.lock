@@ -330,14 +330,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara
-<<<<<<< HEAD
-<<<<<<< HEAD
   chartkick
-=======
-  cocoon
->>>>>>> books export init
-=======
->>>>>>> fixes, fmt
   delayed_job_active_record
   devise
   factory_bot_rails

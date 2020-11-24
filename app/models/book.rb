@@ -263,6 +263,7 @@ class Book < ApplicationRecord
         ids << row[0]
       end
     end
+    ids
   end
 end
 # rubocop:enable  Metrics/ClassLength
