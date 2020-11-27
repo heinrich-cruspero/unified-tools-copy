@@ -23,7 +23,7 @@ class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
   def record_map(record)
     record_mappings = {}
     @template_keys.each do |item|
-      record_mappings.store(item.to_sym, record[item])
+      record_mappings.store(item.to_sym, record.send(item))
     end
     record_mappings
   end

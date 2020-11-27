@@ -35,6 +35,53 @@ class Book < ApplicationRecord
     prev_year
   end
 
+  def max_wh
+    max_wh = nil
+    max_wh = max_used_wholesale_price.split('-')[0] unless max_used_wholesale_price.nil?
+    max_wh
+  end
+
+  def company
+    company = nil
+    company = max_used_wholesale_price.split('-')[1] unless max_used_wholesale_price.nil?
+    company
+  end
+
+  def oe_aug_rank
+    oe_book = Book.where(isbn: oe_isbn).first
+    return oe_book.sales_rank_aug_average unless oe_book.nil?
+  end
+
+  def oe_list_price
+    oe_book = Book.where(isbn: oe_isbn).first
+    return oe_book.list_price unless oe_book.nil?
+  end
+
+  def oe_two_years_wh_max
+    oe_book = Book.where(isbn: oe_isbn).first
+    return oe_book.two_years_wh_max unless oe_book.nil?
+  end
+
+  def oe_one_year_highest_wholesale_price
+    oe_book = Book.where(isbn: oe_isbn).first
+    return oe_book.one_year_highest_wholesale_price unless oe_book.nil?
+  end
+
+  def oe_yearly_fbaz_rented_quantity
+    oe_book = Book.where(isbn: oe_isbn).first
+    return oe_book.yearly_fbaz_rented_quantity unless oe_book.nil?
+  end
+
+  def oe_yearly_fbaz_sold_quantity
+    oe_book = Book.where(isbn: oe_isbn).first
+    return oe_book.oe_yearly_fbaz_sold_quantity unless oe_book.nil?
+  end
+
+  def oe_yearly_main_sold_quantity
+    oe_book = Book.where(isbn: oe_isbn).first
+    return oe_book.yearly_main_sold_quantity unless oe_book.nil?
+  end
+
   def book_qa_aug_rank
     return unless qa_aug_rank
 
@@ -93,6 +140,87 @@ class Book < ApplicationRecord
     else
       {}
     end
+  end
+
+  def amazon_orders_7ds
+    res = AmazonOrderItem.joins(:amazon_order).where(asin: isbn).where(
+      'item_price > ?', 0
+    ).where('quantity_ordered > ?', 0).where.not(
+      amazon_orders: { status: 'Canceled' }
+    ).where(
+      'amazon_orders.purchase_date >= ?', 1.week.ago
+    ).select(
+      "
+        sum(quantity_ordered) as total_quantity_ordered
+      "
+    ).references(:amazon_orders)
+    res = res.nil? ? 0 : res[0].total_quantity_ordered
+  end
+
+  def amazon_orders_30ds
+    res = AmazonOrderItem.joins(:amazon_order).where(asin: isbn).where(
+      'item_price > ?', 0
+    ).where('quantity_ordered > ?', 0).where.not(
+      amazon_orders: { status: 'Canceled' }
+    ).where(
+      'amazon_orders.purchase_date >= ?', 30.days.ago
+    ).select(
+      "
+        sum(quantity_ordered) as total_quantity_ordered
+      "
+    ).references(:amazon_orders)
+    res = res.nil? ? 0 : res[0].total_quantity_ordered
+  end
+
+  def amazon_orders_90ds
+    res = AmazonOrderItem.joins(:amazon_order).where(asin: isbn).where(
+      'item_price > ?', 0
+    ).where('quantity_ordered > ?', 0).where.not(
+      amazon_orders: { status: 'Canceled' }
+    ).where(
+      'amazon_orders.purchase_date >= ?', 90.days.ago
+    ).select(
+      "
+        sum(quantity_ordered) as total_quantity_ordered
+      "
+    ).references(:amazon_orders)
+    res = res.nil? ? 0 : res[0].total_quantity_ordered
+  end
+
+  def amazon_orders_180ds_sale
+    res = AmazonOrderItem.joins(:amazon_order).where(asin: isbn).where(
+      'item_price > ?', 0
+    ).where('quantity_ordered > ?', 0).where.not(
+      amazon_orders: { status: 'Canceled' }
+    ).where(
+      'amazon_orders.purchase_date > ?', 180.days.ago
+    ).where(
+      'sale_type = ?', 0
+    ).select(
+      "
+        avg(item_price) as sale_avg_price
+      "
+    ).references(:amazon_orders)
+    res = res[0].sale_avg_price.nil? ? 0 : res[0].sale_avg_price
+    format('%<result>.2f', result: res).to_f
+  end
+
+  def amazon_orders_180ds_rental
+    res = AmazonOrderItem.joins(:amazon_order).where(asin: isbn).where(
+      'item_price > ?', 0
+    ).where('quantity_ordered > ?', 0).where.not(
+      amazon_orders: { status: 'Canceled' }
+    ).where(
+      'amazon_orders.purchase_date > ?', 180.days.ago
+    ).where(
+      'sale_type = ?', 1
+    ).select(
+      "
+        avg(item_price) as sale_avg_price
+      "
+    ).references(:amazon_orders)
+    res = res[0].sale_avg_price.nil? ? 0 : res[0].sale_avg_price
+    format('%<result>.2f', result: res).to_f
   end
 
   def amazon_orders
