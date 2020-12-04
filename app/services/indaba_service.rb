@@ -13,7 +13,7 @@ class IndabaService
   end
 
   def quantity_history(ean)
-    res = @connection.execute(
+    @connection.execute(
       "SELECT AVG(TotalQuantity) AS 'Total',
         AVG(PricingCustom8) AS 'OR',
         AVG(PricingCustom2) AS 'INB',
@@ -29,7 +29,7 @@ class IndabaService
   end
 
   def total_quantity_history(ean, month, year)
-    res = @connection.execute(
+    @connection.execute(
       "SELECT TotalQuantity AS 'quantity', DAY(Date) AS 'day'
       FROM aa_ArchivedProductData r
       WHERE
@@ -43,7 +43,7 @@ class IndabaService
   end
 
   def or_quantity_history(ean, month, year)
-    res = @connection.execute(
+    @connection.execute(
       "SELECT PricingCustom8 AS 'quantity', DAY(Date) AS 'day'
       FROM aa_ArchivedProductData r
       WHERE
@@ -57,7 +57,7 @@ class IndabaService
   end
 
   def inb_quantity_history(ean, month, year)
-    res = @connection.execute(
+    @connection.execute(
       "SELECT PricingCustom2 AS 'quantity', DAY(Date) AS 'day'
       FROM aa_ArchivedProductData r
       WHERE
