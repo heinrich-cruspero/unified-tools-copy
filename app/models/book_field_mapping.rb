@@ -14,7 +14,7 @@ class BookFieldMapping < ApplicationRecord
        oe_one_year_highest_wholesale_price oe_yearly_fbaz_rented_quantity
        oe_yearly_fbaz_sold_quantity oe_yearly_main_sold_quantity
        amazon_orders_7ds amazon_orders_30ds amazon_orders_90ds
-       amazon_orders_180ds_sale amazon_orders_180ds_rental]
+       amazon_orders_180ds_sale amazon_orders_180ds_rental oe_qa_jan_rank]
   end
 
   private

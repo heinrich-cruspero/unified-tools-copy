@@ -44,6 +44,7 @@ namespace :book_export do
       # custom fields
       'max_wh': 'Max WH',
       'company': 'Company',
+      'oe_qa_jan_rank': 'OEJanRank',
       'oe_aug_rank': 'OE Aug Rank',
       'oe_list_price': 'OEList',
       'oe_two_years_wh_max': 'OE2YRWH',

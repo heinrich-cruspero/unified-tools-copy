@@ -7,7 +7,7 @@ class Book < ApplicationRecord
   include PgSearch
 
   def oe_isbn_rec
-    @oe_book = Book.where(oe_isbn: oe_isbn).take
+    Book.where(isbn: oe_isbn).take
   end
 
   def default_image_url
@@ -43,39 +43,36 @@ class Book < ApplicationRecord
     max_used_wholesale_price.split('-')[1] unless max_used_wholesale_price.nil?
   end
 
+  def oe_qa_jan_rank
+    oe_isbn_rec&.qa_jan_rank
+  end
+
   def oe_aug_rank
-    oe_book = Book.where(isbn: oe_isbn).first
-    return oe_book.sales_rank_aug_average unless oe_book.nil?
+    oe_isbn_rec&.sales_rank_aug_average
   end
 
   def oe_list_price
-    oe_book = Book.where(isbn: oe_isbn).first
-    return oe_book.list_price unless oe_book.nil?
+    oe_isbn_rec&.list_price
   end
 
   def oe_two_years_wh_max
-    oe_book = Book.where(isbn: oe_isbn).first
-    return oe_book.two_years_wh_max unless oe_book.nil?
+    oe_isbn_rec&.two_years_wh_max
   end
 
   def oe_one_year_highest_wholesale_price
-    oe_book = Book.where(isbn: oe_isbn).first
-    return oe_book.one_year_highest_wholesale_price unless oe_book.nil?
+    oe_isbn_rec&.one_year_highest_wholesale_price
   end
 
   def oe_yearly_fbaz_rented_quantity
-    oe_book = Book.where(isbn: oe_isbn).first
-    return oe_book.yearly_fbaz_rented_quantity unless oe_book.nil?
+    oe_isbn_rec&.yearly_fbaz_rented_quantity
   end
 
   def oe_yearly_fbaz_sold_quantity
-    oe_book = Book.where(isbn: oe_isbn).first
-    return oe_book.oe_yearly_fbaz_sold_quantity unless oe_book.nil?
+    oe_isbn_rec&.yearly_fbaz_sold_quantity
   end
 
   def oe_yearly_main_sold_quantity
-    oe_book = Book.where(isbn: oe_isbn).first
-    return oe_book.yearly_main_sold_quantity unless oe_book.nil?
+    oe_isbn_rec&.yearly_main_sold_quantity
   end
 
   def book_qa_aug_rank
