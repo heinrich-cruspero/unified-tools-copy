@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 ##
-# rubocop:disable  Metrics/BlockLength
 namespace :book_export do
   desc 'Updates book export template field mapping display names.'
 
   task set_field_mapping_names: :environment do
     file = File.read("#{::Rails.root}/lib/assets/template_field_names.json")
     field_names = JSON.parse(file)
-    
+
     book_field_mappings = BookFieldMapping.all
     book_field_mappings.each do |field|
       name = field_names[field.lookup_field]
@@ -49,4 +48,3 @@ namespace :book_export do
     end
   end
 end
-# rubocop:enable  Metrics/BlockLength
