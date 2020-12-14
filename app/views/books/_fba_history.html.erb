@@ -18,9 +18,11 @@
         <div class="col-detail col-data">
           <p class="title title-sm">Avg Price</p>
           <div>
-              <%= number_with_delimiter(number_with_precision(row["avg"] ? row["avg"] : 0, precision: 2)) %>
+              <label class="pr-2">
+                <%= number_with_delimiter(number_with_precision(row["avg"] ? row["avg"] : 0, precision: 2)) %>
+              </label>
               <input type="hidden" name="qh-col-data" value="FBA-Price">
-              <button type="button" class="btn-sm btn-success plus-button ml-2" data-toggle="modal" data-target="#historyModal">
+              <button type="button" class="btn-sm btn-success plus-button ml-0" data-toggle="modal" data-target="#historyModal">
                   <i class="fa fa-plus"></i>
               </button>
           </div>

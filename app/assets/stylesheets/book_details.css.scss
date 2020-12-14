@@ -70,7 +70,7 @@
 };
 
 .col-detail > div {
-  padding:10px;
+  padding:6px;
   overflow-wrap: break-word;
 }
 
@@ -83,23 +83,27 @@
   font-weight: bold;
   margin-bottom: 0;
   color: #08C;
-  border-bottom: 0.5px solid #dee2e6;
   background-color: #f2f2f2;
 }
 
 .title {
+  overflow-wrap: break-word;
   font-weight: bold;
-  padding: 10px;
+  padding: 6px;
   margin-bottom: 0;
   color: #08C;
   border-bottom: 0.5px solid #dee2e6;
   background-color: #f2f2f2;
 }
 
+.qh-date {
+  padding-top: 10px !important;
+}
+
 .detail-caption {
   border: 1px solid #ccc;
   width: 100%;
-  padding: 10px;
+  padding: 6px;
   background-color: #f2f2f2;
 }
 
