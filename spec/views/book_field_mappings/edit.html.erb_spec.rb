@@ -4,7 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'book_field_mappings/edit', type: :view do
   before(:each) do
-    @book_field_mapping = assign(:book_field_mapping, BookFieldMapping.create!)
+    @book_field_mapping = assign(:book_field_mapping, BookFieldMapping.create!(
+                                                        display_name: 'EAN', lookup_field: 'ean'
+                                                      ))
   end
 
   it 'renders the edit book_field_mapping form' do

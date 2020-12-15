@@ -11,9 +11,12 @@ RSpec.describe 'Amazon order items index page spec', type: :feature do
   scenario '#index page' do
     visit amazon_order_items_path
     click_link 'Sign in with Google'
-
     expect(page).to have_content('Amazon Order Items')
-    expect(page).to have_css('table[data-source="/amazon_order_items.json"]')
+    expect(page).to have_css(
+      'table[data-source="/amazon_order_items.json?filters%5Bbuy_out%'\
+      '5D=&filters%5Bpurchase_end_date%5D=&filters%5Bpurchase_start_date%'\
+      '5D=&filters%5Breturned%5D=&filters%5Bsale_type%5D="]'
+    )
     within 'table#amazon-order-items-datatable' do
       expect(page).to have_text 'ASIN'
       expect(page).to have_text 'Amazon Order Id'

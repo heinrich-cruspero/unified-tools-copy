@@ -13,7 +13,10 @@ RSpec.describe 'Amazon order index page spec', type: :feature do
     click_link 'Sign in with Google'
 
     expect(page).to have_content('Amazon Orders')
-    expect(page).to have_css('table[data-source="/amazon_orders.json"]')
+    expect(page).to have_css(
+      'table[data-source="/amazon_orders.json?filters%5B'\
+      'purchase_end_date%5D=&filters%5Bpurchase_start_date%5D="]'
+    )
     within 'table#amazon-orders-datatable' do
       expect(page).to have_text 'Order'
       expect(page).to have_text 'Total'
