@@ -4,6 +4,15 @@
       <h1 class="h2">Books</h1>
     </div>
   </div>
+  <div class="col-sm">
+    <div class="btn-toolbar mb-2 mb-md-0 float-right">
+      <div class="btn-grp mr-2">
+        <%= button_to book_export_templates_path, method: :get, class: "btn btn-secondary" do %>
+          <i class="fa fa-plus"></i>&nbsp;Export
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="row">
   <div class="col-sm">

@@ -1,6 +1,6 @@
 <!-- Quantity History -->
 <div class="detail-caption mt-4">
-    <h5>Quantity History</h5>
+    <label class="table-title">Quantity History</label>
 </div>
 <div id="detail-headers" class="book-details">
     <label class="col-detail title">TQ AVG</label>
@@ -20,9 +20,11 @@
         <div class="col-detail col-data">
           <p class="title title-sm">TQ AVG</p>
           <div>
-              <%= number_with_delimiter(row.fetch("Total", 0)) %>
+              <label class="pr-2">
+                <%= number_with_delimiter(row.fetch("Total", 0)) %>
+              </label>
               <input type="hidden" name="qh-col-data" value="Total-Quantity">
-              <button type="button" class="btn-sm btn-success plus-button ml-2" data-toggle="modal" data-target="#historyModal">
+              <button type="button" class="btn-sm btn-success plus-button ml-0" data-toggle="modal" data-target="#historyModal">
                   <i class="fa fa-plus"></i>
               </button>
               
@@ -31,9 +33,11 @@
         <div class="col-detail col-data">
           <p class="title title-sm">ORQ AVG</p>
           <div>
-              <%= row.fetch("OR", 0).blank? ? 0 : number_with_delimiter(number_with_precision(row.fetch("OR", 0), precision: 0)) %>
+              <label class="pr-2">
+                <%= row.fetch("OR", 0).blank? ? 0 : number_with_delimiter(number_with_precision(row.fetch("OR", 0), precision: 0)) %>
+              </label>
               <input type="hidden" name="qh-col-data" value="OR-Quantity">
-              <button type="button" class="btn-sm btn-success plus-button ml-2" data-toggle="modal" data-target="#historyModal">
+              <button type="button" class="btn-sm btn-success plus-button ml-0" data-toggle="modal" data-target="#historyModal">
                   <i class="fa fa-plus plus-btn"></i>
               </button>
           </div>
@@ -41,9 +45,11 @@
         <div class="col-detail col-data">
           <p class="title title-sm">INBQ AVG</p>
           <div>
-              <%= row.fetch("INB", 0).blank? ? 0 : number_with_delimiter(number_with_precision(row.fetch("INB", 0), precision: 0)) %>
+              <label class="pr-2">
+                <%= row.fetch("INB", 0).blank? ? 0 : number_with_delimiter(number_with_precision(row.fetch("INB", 0), precision: 0)) %>
+              </label>
               <input type="hidden" name="qh-col-data" value="INB-Quantity">
-              <button type="button" class="btn-sm btn-success plus-button ml-2" data-toggle="modal" data-target="#historyModal">
+              <button type="button" class="btn-sm btn-success plus-button ml-0" data-toggle="modal" data-target="#historyModal">
                   <i class="fa fa-plus"></i>
               </button>
           </div>

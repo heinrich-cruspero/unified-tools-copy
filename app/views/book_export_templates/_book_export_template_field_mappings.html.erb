@@ -1,0 +1,11 @@
+<div class="nested-fields mt-2 mb-3">
+    <div class="field">
+        
+        <%= f.hidden_field :position, class: "field-position" %>
+        <%= f.collection_select :book_field_mapping_id, BookFieldMapping.order(:id).all,:id, :display_name, {}, {class: "field-select"} %>
+        
+        <span class="fa fa-arrows-alt ml-1"></span>&nbsp;
+        <%= f.hidden_field :_destroy %>
+        <%= link_to "Remove", "#", class: 'remove_fields' %>
+    </div>
+</div>

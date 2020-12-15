@@ -7,7 +7,7 @@ class Book < ApplicationRecord
   include PgSearch
 
   def oe_isbn_rec
-    @oe_book = Book.where(oe_isbn: oe_isbn).take
+    Book.where(isbn: oe_isbn).take
   end
 
   def default_image_url
@@ -33,6 +33,46 @@ class Book < ApplicationRecord
     return year if month > 8
 
     prev_year
+  end
+
+  def max_wh
+    max_used_wholesale_price.split('-')[0] unless max_used_wholesale_price.nil?
+  end
+
+  def company
+    max_used_wholesale_price.split('-')[1] unless max_used_wholesale_price.nil?
+  end
+
+  def oe_qa_jan_rank
+    oe_isbn_rec&.qa_jan_rank
+  end
+
+  def oe_aug_rank
+    oe_isbn_rec&.sales_rank_aug_average
+  end
+
+  def oe_list_price
+    oe_isbn_rec&.list_price
+  end
+
+  def oe_two_years_wh_max
+    oe_isbn_rec&.two_years_wh_max
+  end
+
+  def oe_one_year_highest_wholesale_price
+    oe_isbn_rec&.one_year_highest_wholesale_price
+  end
+
+  def oe_yearly_fbaz_rented_quantity
+    oe_isbn_rec&.yearly_fbaz_rented_quantity
+  end
+
+  def oe_yearly_fbaz_sold_quantity
+    oe_isbn_rec&.yearly_fbaz_sold_quantity
+  end
+
+  def oe_yearly_main_sold_quantity
+    oe_isbn_rec&.yearly_main_sold_quantity
   end
 
   def book_qa_aug_rank
@@ -93,6 +133,59 @@ class Book < ApplicationRecord
     else
       {}
     end
+  end
+
+  def amazon_orders_7ds
+    res = amazon_order_query.where(
+      'amazon_orders.purchase_date > ?', 1.week.ago
+    ).select('sum(quantity_ordered) as total_quantity_ordered')
+    res = res[0].total_quantity_ordered.nil? ? 0 : res[0].total_quantity_ordered
+    format('%<result>.2f', result: res).to_f
+  end
+
+  def amazon_orders_30ds
+    res = amazon_order_query.where(
+      'amazon_orders.purchase_date > ?', 30.days.ago
+    ).select('sum(quantity_ordered) as total_quantity_ordered')
+
+    res = res[0].total_quantity_ordered.nil? ? 0 : res[0].total_quantity_ordered
+    format('%<result>.2f', result: res).to_f
+  end
+
+  def amazon_orders_90ds
+    res = amazon_order_query.where(
+      'amazon_orders.purchase_date > ?', 90.days.ago
+    ).select('sum(quantity_ordered) as total_quantity_ordered')
+    res = res[0].total_quantity_ordered.nil? ? 0 : res[0].total_quantity_ordered
+    format('%<result>.2f', result: res).to_f
+  end
+
+  def amazon_orders_180ds_sale
+    res = amazon_order_query.where(
+      'amazon_orders.purchase_date > ?', 180.days.ago
+    ).where('sale_type = ?', 0).select(
+      'avg(item_price) as sale_avg_price'
+    )
+    res = res[0].sale_avg_price.nil? ? 0 : res[0].sale_avg_price
+    format('%<result>.2f', result: res).to_f
+  end
+
+  def amazon_orders_180ds_rental
+    res = amazon_order_query.where(
+      'amazon_orders.purchase_date > ?', 180.days.ago
+    ).where('sale_type = ?', 1).select(
+      'avg(item_price) as sale_avg_price'
+    )
+    res = res[0].sale_avg_price.nil? ? 0 : res[0].sale_avg_price
+    format('%<result>.2f', result: res).to_f
+  end
+
+  def amazon_order_query
+    AmazonOrderItem.joins(:amazon_order).where(asin: isbn).where(
+      'item_price > ?', 0
+    ).where('quantity_ordered > ?', 0).where.not(
+      amazon_orders: { status: 'Canceled' }
+    ).references(:amazon_orders)
   end
 
   def amazon_orders
@@ -254,6 +347,16 @@ class Book < ApplicationRecord
     end
     datawh_service.close
     data
+  end
+
+  def self.parse_csv(file)
+    ids = []
+    if file
+      CSV.foreach(file.path) do |row|
+        ids << row[0]
+      end
+    end
+    ids
   end
 end
 # rubocop:enable  Metrics/ClassLength

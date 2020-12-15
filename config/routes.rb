@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :book_field_mappings
+  resources :book_export_templates do
+    member do
+      get 'use'
+      post 'use'
+    end
+  end
   resources :amazon_shipments do
     collection do
       get 'indaba_skus'

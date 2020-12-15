@@ -8,6 +8,7 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("jquery");
+require("jquery-ui-dist/jquery-ui");
 require("bootstrap");
 require("bootstrap-table");
 require("bootstrap-daterangepicker");
@@ -24,6 +25,7 @@ require("../custom/amazon_table")
 require("../custom/indaba_sku_tab")
 require("../custom/book")
 require("../custom/book_details")
+require("../custom/book_export_template")
 require("../custom/amazon_order")
 require("../custom/amazon_order_item")
 require("../custom/amazon_associated_items")
