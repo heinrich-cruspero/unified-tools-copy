@@ -1,6 +1,6 @@
 <!-- Title Headers -->
 <div class="detail-caption mt-4">
-    <h5>Guides</h5>
+    <label class="table-title">Guides</label>
 </div>
 <div id="detail-headers" class="book-details">
   <label class="col-detail title">Guide</label>
@@ -21,7 +21,7 @@
 <% else %>
   <!-- CURRENT GUIDES-->
   <div class="detail-caption">
-    <h5>Current Guides</h5>
+    <label class="table-title">Current Guides</label>
   </div>
   <% @guides["current_guides"].each do |guide| %>
     <div class="book-details dotted-top"> 
@@ -75,7 +75,7 @@
   <% end %>
   <!-- PREVIOUS GUIDES-->
   <div class="detail-caption">
-    <h5>Previous Guides</h5>
+    <label class="table-title">Previous Guides</label>
   </div>
   <% @guides["previous_guides"].each do |guide| %>
     <div class="book-details dotted-top">
