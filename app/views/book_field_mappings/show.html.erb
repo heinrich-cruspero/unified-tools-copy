@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-sm">
+        <div class="float-right">
+            <%= link_to edit_book_field_mapping_path(@book_field_mapping), class: 'btn btn-secondary ml-2' do %>
+              <span class="fa fa-file"></span>
+              Edit
+            <% end %>
+            <%= link_to new_book_field_mapping_path, class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-plus"></span>
+                New
+            <% end %>
+            <%= link_to @book_field_mapping, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ml-2' do %>
+              <span class="fa fa-trash"></span>
+              Delete
+            <% end %>
+            <%= link_to book_field_mappings_path, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-list"> </span>
+                Return to List
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered mt-3">
+  <thead class="thead-light">
+    <tr>
+      <th colspan="5">Field Mapping</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td>ID</td>
+        <td><%= @book_field_mapping.id %></td>
+      </tr>
+      <tr>
+        <td>Display Name</td>
+        <td><%= @book_field_mapping.display_name %></td>
+      </tr>
+      <tr>
+        <td>Lookup Field</td>
+        <td><%= @book_field_mapping.lookup_field %></td>
+      </tr>
+      <tr>
+        <td>Created At</td>
+        <td><%= @book_field_mapping.created_at %></td>
+      </tr>
+      <tr>
+        <td>Updated At</td>
+        <td><%= @book_field_mapping.updated_at %></td>
+      </tr>
+    
+  </tbody>
+</table>
