@@ -3,7 +3,7 @@
 ##
 # rubocop:disable  Metrics/ClassLength
 class BooksController < ApplicationController
-  before_action :book_detail, :monthly_averages, except: [:index]
+  before_action :book_detail, except: [:index]
 
   def index
     authorize Book
@@ -38,7 +38,7 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:quantity_history, {})
+    data = @book.quantity_history
     @quantity_history = data.count.positive? ? data : {}
 
     respond_to do |format|
@@ -50,7 +50,7 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:rental_history, {})
+    data = @book.rental_history
     @rental_history = data.count.positive? ? data : {}
     respond_to do |format|
       format.js { render json: { rental_history: render_to_string(partial: 'rental_history') } }
@@ -61,7 +61,7 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:fba_history, {})
+    data = @book.fba_history
     @fba_history = data.count.positive? ? data : {}
     respond_to do |format|
       format.js { render json: { fba_history: render_to_string(partial: 'fba_history') } }
@@ -72,7 +72,7 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    data = @monthly_averages.fetch(:lowest_history, {})
+    data = @book.lowest_history
     @lowest_history = data.count.positive? ? data : {}
     respond_to do |format|
       format.js { render json: { lowest_history: render_to_string(partial: 'lowest_history') } }
@@ -153,10 +153,10 @@ class BooksController < ApplicationController
     trade_data = {}
     lowest_data = {}
 
-    unless @monthly_averages.blank?
-      fba = @monthly_averages.fetch(:weekly_fba_history, {})
-      trade = @monthly_averages.fetch(:weekly_trade_in_history, {})
-      lowest = @monthly_averages.fetch(:weekly_lowest_history, {})
+    unless @book.nil?
+      fba = @book.weekly_fba_history
+      trade = @book.weekly_trade_in_history
+      lowest = @book.weekly_lowest_history
 
       avg = 0
       fba.each do |result|
@@ -200,8 +200,8 @@ class BooksController < ApplicationController
   def sales_rank_history
     authorize Book
     chart_data = {}
-    unless @monthly_averages.blank?
-      data = @monthly_averages.fetch(:sales_rank_history, {})
+    unless @book.nil?
+      data = @book.sales_rank_history
       data.each do |result|
         chart_data.merge!("#{result['date']}": result['avg'].nil? ? 0 : result['avg'].to_i)
       end
@@ -225,10 +225,6 @@ class BooksController < ApplicationController
 
   def book_detail
     @book = Book.search_ean_isbn(params[:id]).last
-  end
-
-  def monthly_averages
-    @monthly_averages = @book.monthly_averages unless @book.nil?
   end
 end
 # rubocop:enable  Metrics/ClassLength
