@@ -233,36 +233,60 @@ class Book < ApplicationRecord
     ).references(:amazon_orders)
   end
 
-  def monthly_averages
-    monthly_averages = {}
+  def quantity_history
     indaba_service = IndabaService.new
-    datawh_service = DatawhService.new
-
     quantity_history = indaba_service.quantity_history(ean)
-    rental_hist_data = datawh_service.rental_history(isbn).to_a
-    fba_hist_data = datawh_service.fba_history(isbn).to_a
-    lowest_hist_data = datawh_service.lowest_history(isbn).to_a
-
-    weekly_fba_hist_data = datawh_service.weekly_fba_history(isbn).to_a
-    weekly_trade_in_hist_data = datawh_service.weekly_trade_in_history(isbn).to_a
-    weekly_lowest_hist_data = datawh_service.weekly_lowest_history(isbn).to_a
-
-    sales_rank_hist_data = datawh_service.sales_rank_history(isbn).to_a
-
-    datawh_service.close
-
-    monthly_averages.merge!({
-                              quantity_history: quantity_history,
-                              rental_history: rental_hist_data,
-                              fba_history: fba_hist_data,
-                              lowest_history: lowest_hist_data,
-                              weekly_fba_history: weekly_fba_hist_data,
-                              weekly_trade_in_history: weekly_trade_in_hist_data,
-                              weekly_lowest_history: weekly_lowest_hist_data,
-                              sales_rank_history: sales_rank_hist_data
-                            })
     indaba_service.close
-    monthly_averages
+    quantity_history
+  end
+
+  def rental_history
+    datawh_service = DatawhService.new
+    rental_hist_data = datawh_service.rental_history(isbn).to_a
+    datawh_service.close
+    rental_hist_data
+  end
+
+  def fba_history
+    datawh_service = DatawhService.new
+    fba_hist_data = datawh_service.fba_history(isbn).to_a
+    datawh_service.close
+    fba_hist_data
+  end
+
+  def lowest_history
+    datawh_service = DatawhService.new
+    lowest_hist_data = datawh_service.lowest_history(isbn).to_a
+    datawh_service.close
+    lowest_hist_data
+  end
+
+  def weekly_fba_history
+    datawh_service = DatawhService.new
+    weekly_fba_hist_data = datawh_service.weekly_fba_history(isbn).to_a
+    datawh_service.close
+    weekly_fba_hist_data
+  end
+
+  def weekly_trade_in_history
+    datawh_service = DatawhService.new
+    weekly_trade_in_hist_data = datawh_service.weekly_trade_in_history(isbn).to_a
+    datawh_service.close
+    weekly_trade_in_hist_data
+  end
+
+  def weekly_lowest_history
+    datawh_service = DatawhService.new
+    weekly_lowest_hist_data = datawh_service.weekly_lowest_history(isbn).to_a
+    datawh_service.close
+    weekly_lowest_hist_data
+  end
+
+  def sales_rank_history
+    datawh_service = DatawhService.new
+    sales_rank_hist_data = datawh_service.sales_rank_history(isbn).to_a
+    datawh_service.close
+    sales_rank_hist_data
   end
 
   def total_quantity_history(month, year)
