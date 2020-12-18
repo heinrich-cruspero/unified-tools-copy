@@ -23,12 +23,10 @@ class CsvDownloadJob < ApplicationJob
 
     key = "downloads/#{user_id}/#{Time.now}/#{file_name}"
     obj = s3.bucket(bucket).object(key)
-
     obj.upload_stream(tempfile: true) do |write_stream|
       write_stream << CSV.generate_line(datatable.view_columns.keys)
-      datatable.records.find_each do |order_item|
+      datatable.records.each do |order_item|
         record_map = datatable.record_map(order_item)
-
         write_stream << CSV.generate_line(record_map.values)
       end
     end

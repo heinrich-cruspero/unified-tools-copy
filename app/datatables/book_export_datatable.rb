@@ -4,6 +4,7 @@
 class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
   def initialize(params)
     super
+    @display_name_keys = {}
     @template_keys = template_keys
     @view_columns ||= template_columns
   end
@@ -33,6 +34,7 @@ class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
     template = BookExportTemplate.find(params[:id])
     template.book_field_mappings.each do |field|
       attributes << field.lookup_field.to_sym
+      @display_name_keys[field.lookup_field.to_sym] = field.display_name
     end
     attributes
   end
@@ -40,7 +42,8 @@ class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
   def template_columns
     cols = {}
     @template_keys.each do |attr|
-      cols[attr] = { source: "Book.#{attr}" }
+      display_name = @display_name_keys[attr]
+      cols[display_name] = { source: "Book.#{attr}" }
     end
     cols
   end
