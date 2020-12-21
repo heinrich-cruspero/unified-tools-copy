@@ -35,7 +35,7 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
         source: 'AmazonOrder.zipcode',
         cond: :string_eq
       },
-       country_code: {
+      country_code: {
         source: 'AmazonOrder.country_code',
         cond: :string_eq
       },
