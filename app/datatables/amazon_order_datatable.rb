@@ -35,6 +35,10 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
         source: 'AmazonOrder.zipcode',
         cond: :string_eq
       },
+       country_code: {
+        source: 'AmazonOrder.country_code',
+        cond: :string_eq
+      },
       order_total: {
         source: 'AmazonOrder.order_total',
         searchable: false
@@ -54,6 +58,7 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
         state: record.state,
         city: record.city,
         zipcode: record.zipcode,
+        country_code: record.country_code,
         order_total: record.order_total,
         purchase_date: record.purchase_date,
         amazon_order_item: link_to('Order Items', amazon_order_path(record),
