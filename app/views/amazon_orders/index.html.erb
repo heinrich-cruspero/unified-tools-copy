@@ -34,7 +34,7 @@
 </div>
 <div class="row">
   <div class="col-sm">
-    <table id="amazon-orders-datatable" data-source="<%= amazon_orders_path(format: :json, filters: {purchase_start_date: @purchase_start_date, purchase_end_date: @purchase_end_date} ) %>">
+    <table id="amazon-orders-datatable" data-source="<%= amazon_orders_path(format: :json, filters: {purchase_start_date: @purchase_start_date, purchase_end_date: @purchase_end_date} ) %>" data-turbolinks='false'>
       <thead>
         <tr>
           <th>Amazon Order ID</th>

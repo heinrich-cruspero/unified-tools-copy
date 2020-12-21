@@ -78,6 +78,7 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
       state: record.state,
       city: record.city,
       zipcode: record.zipcode,
+      order_type: record.amazon_order_items&.pluck(:sale_type)&.join(""),
       order_total: record.order_total,
       purchase_date: record.purchase_date
     }

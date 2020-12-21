@@ -44,7 +44,7 @@
 
 <div class="row">
   <div class="col-sm">
-    <table id="amazon-order-items-datatable" data-source="<%= amazon_order_items_path(format: :json, filters: {returned: @returned, purchase_start_date: @start_date, purchase_end_date: @end_date, buy_out: @buy_out, sale_type: @sale_type} ) %>" style="text-align: center; width:100%;">
+    <table id="amazon-order-items-datatable" data-source="<%= amazon_order_items_path(format: :json, filters: {returned: @returned, purchase_start_date: @start_date, purchase_end_date: @end_date, buy_out: @buy_out, sale_type: @sale_type} ) %>" style="text-align: center; width:100%;" data-turbolinks='false'>
       <thead>
         <tr>
           <th>Amazon Order Id</th>
