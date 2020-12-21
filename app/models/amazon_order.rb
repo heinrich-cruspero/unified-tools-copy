@@ -16,7 +16,7 @@ class AmazonOrder < ApplicationRecord
           order.city,
           order.state,
           order.zipcode,
-          order.amazon_order_items&.pluck(:sale_type)&.join("")
+          order.amazon_order_items&.pluck(:sale_type)&.join('')
         ]
       end
     end
