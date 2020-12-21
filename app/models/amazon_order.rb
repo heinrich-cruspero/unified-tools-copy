@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-#
+##
 class AmazonOrder < ApplicationRecord
   has_many :amazon_order_items, dependent: :destroy
-  enum market_place: {us: 1, mx: 2, ca: 3, br: 4}
+  enum market_place: { us: 1, mx: 2, ca: 3, br: 4 }
 
   def self.to_csv
     attributes = %w[amazon_order_id city state zip order_type]
@@ -13,7 +13,7 @@ class AmazonOrder < ApplicationRecord
       all.each do |order|
         csv << [
           order.amazon_order_id,
-          order.city, 
+          order.city,
           order.state,
           order.zipcode,
           order.amazon_order_items.pluck(:sale_type)
