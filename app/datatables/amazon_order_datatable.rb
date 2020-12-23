@@ -39,6 +39,10 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
         source: 'AmazonOrder.country_code',
         cond: :string_eq
       },
+      sale_type: {
+        source: 'AmazonOrderItem.sale_type',
+        searchable: false
+      },
       order_total: {
         source: 'AmazonOrder.order_total',
         searchable: false
@@ -59,6 +63,7 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
         city: record.city,
         zipcode: record.zipcode,
         country_code: record.country_code,
+        sale_type: record.amazon_order_items&.pluck(:sale_type)&.first,
         order_total: record.order_total,
         purchase_date: record.purchase_date,
         amazon_order_item: link_to('Order Items', amazon_order_path(record),
@@ -78,7 +83,8 @@ class AmazonOrderDatatable < AjaxDatatablesRails::ActiveRecord
       state: record.state,
       city: record.city,
       zipcode: record.zipcode,
-      order_type: record.amazon_order_items&.pluck(:sale_type)&.join(''),
+      country_code: record.country_code,
+      sale_type: record.amazon_order_items&.pluck(:sale_type)&.first,
       order_total: record.order_total,
       purchase_date: record.purchase_date
     }

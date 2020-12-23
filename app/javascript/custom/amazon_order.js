@@ -12,6 +12,7 @@ $( document ).on('turbolinks:load', function() {
             {"data": "city"},
             {"data": "zipcode"},
             {"data": "country_code"},
+            {"data": "sale_type"},
             {"data": "order_total"},
             {"data": "purchase_date"},
             {"data": "amazon_order_item"}

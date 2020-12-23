@@ -6,7 +6,7 @@ class AmazonOrder < ApplicationRecord
   enum market_place: { us: 1, mx: 2, ca: 3 }
 
   def self.to_csv
-    attributes = %w[amazon_order_id city state zip order_type]
+    attributes = %w[amazon_order_id city state zip country_code sale_type]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -16,7 +16,8 @@ class AmazonOrder < ApplicationRecord
           order.city,
           order.state,
           order.zipcode,
-          order.amazon_order_items&.pluck(:sale_type)&.join('')
+          order.country_code,
+          order.amazon_order_items&.pluck(:sale_type)&.first,
         ]
       end
     end
@@ -33,8 +34,7 @@ class AmazonOrder < ApplicationRecord
   end
 
   def self.index(params)
-    amazon_orders = AmazonOrder.all
-
+    amazon_orders = AmazonOrder.includes(:amazon_order_items)
     if params.present?
       purchase_start_date = params[:purchase_start_date]
       purchase_end_date = params[:purchase_end_date]
