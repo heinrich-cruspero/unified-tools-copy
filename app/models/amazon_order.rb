@@ -17,7 +17,7 @@ class AmazonOrder < ApplicationRecord
           order.state,
           order.zipcode,
           order.country_code,
-          order.amazon_order_items&.pluck(:sale_type)&.first,
+          order.amazon_order_items&.pluck(:sale_type)&.first
         ]
       end
     end
