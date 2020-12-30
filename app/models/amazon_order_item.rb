@@ -46,7 +46,8 @@ class AmazonOrderItem < ApplicationRecord
     amazon_order_items
   end
 
-  def self.sale_type_filters(amazon_items)
+  def self.sale_type_filters(amazon_items, sale_type)
+    amazon_items = amazon_items.where(sale_type: sale_type) if sale_type.present?
     if amazon_items
       amazon_items.group(:sale_type).count
     else
