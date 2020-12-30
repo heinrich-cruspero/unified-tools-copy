@@ -5,6 +5,12 @@ $( document ).on('turbolinks:load', function() {
         "scrollX": true,
         "ajax": $('#amazon-orders-datatable').data('source'),
         "pagingType": "full_numbers",
+        "aoColumnDefs": [
+          {
+            "bSortable": false,
+            "aTargets": [ -1 ]
+          }
+        ],
         "columns": [
             {"data": "amazon_order_id"},
             {"data": "status"},

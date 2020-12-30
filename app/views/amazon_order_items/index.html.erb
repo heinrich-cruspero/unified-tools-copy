@@ -36,7 +36,8 @@
         <i class="fa fa-times"></i>
       </a>
       <label class="col-form-label amazon-item-filter-button">Sale Type</label>
-      <%= select_tag "sale_type", options_for_select([ "sale", "rental" ]), {:include_blank => true, :class => 'form-control select_sale_type_filter amazon-item-filter-button'} %>
+      <% selected_sale_type = params[:filters] ? params[:filters][:sale_type] : nil %>
+      <%= select_tag "sale_type", options_for_select([ "sale", "rental" ], selected_sale_type), {:include_blank => true, :class => 'form-control select_sale_type_filter amazon-item-filter-button'} %>
       </a>
     </div>
   </div>
