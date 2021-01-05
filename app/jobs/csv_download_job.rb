@@ -26,10 +26,13 @@ class CsvDownloadJob < ApplicationJob
 
     obj.upload_stream(tempfile: true) do |write_stream|
       write_stream << CSV.generate_line(datatable.view_columns.keys)
-      datatable.records.each do |order_item|
-        record_map = datatable.record_map(order_item)
-
-        write_stream << CSV.generate_line(record_map.values)
+      if datatable_class == 'BookExportDatatable'
+        generate_book_export_csv(params, datatable, write_stream)
+      else
+        datatable.records.each do |order_item|
+          record_map = datatable.record_map(order_item)
+          write_stream << CSV.generate_line(record_map.values)
+        end
       end
     end
 
@@ -41,5 +44,19 @@ class CsvDownloadJob < ApplicationJob
       "file_download_channel:#{user_id}",
       download_url: url
     )
+  end
+
+  def generate_book_export_csv(params, datatable, write_stream)
+    book_ids = params[:ids]
+    book_id_type = params[:book_id].to_sym
+    book_ids.each do |id|
+      book = datatable.records.find { |rec| rec[book_id_type] == id }
+      if book.nil?
+        write_stream << CSV.generate_line([''])
+      else
+        record_map = datatable.record_map(book)
+        write_stream << CSV.generate_line(record_map.values)
+      end
+    end
   end
 end
