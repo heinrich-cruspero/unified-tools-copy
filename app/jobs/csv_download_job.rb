@@ -48,14 +48,14 @@ class CsvDownloadJob < ApplicationJob
 
   def generate_book_export_csv(params, datatable, write_stream)
     book_ids = params[:ids]
-    book_id_type = params[:book_id].to_sym
+    book_id_type = params[:book_id]
     book_ids.each do |id|
-      book = datatable.records.find { |rec| rec[book_id_type] == id }
-      if book.nil?
-        write_stream << CSV.generate_line([''])
-      else
-        record_map = datatable.record_map(book)
+      book = datatable.records.where(book_id_type => id)
+      if book.exists?
+        record_map = datatable.record_map(book.first)
         write_stream << CSV.generate_line(record_map.values)
+      else
+        write_stream << CSV.generate_line([id])
       end
     end
   end
