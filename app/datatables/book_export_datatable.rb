@@ -32,9 +32,6 @@ class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
   def template_keys
     attributes = %w[]
     template = BookExportTemplate.find(params[:id])
-    book_id = BookFieldMapping.where(lookup_field: params[:book_id]).first
-    attributes << book_id.lookup_field.to_sym
-    @display_name_keys[book_id.lookup_field.to_sym] = book_id.display_name
     template.book_field_mappings.each do |field|
       attributes << field.lookup_field.to_sym
       @display_name_keys[field.lookup_field.to_sym] = field.display_name

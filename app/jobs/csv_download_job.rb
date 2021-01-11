@@ -49,13 +49,21 @@ class CsvDownloadJob < ApplicationJob
   def generate_book_export_csv(params, datatable, write_stream)
     book_ids = params[:ids]
     book_id_type = params[:book_id]
+    keys = datatable.template_keys
+
+    col_count = keys.count
+    empty_line = Array.new(col_count)
+    id_in_fields = keys.include?(book_id_type.to_sym)
+    id_index = id_in_fields ? keys.index(book_id_type.to_sym) : nil
+
     book_ids.each do |id|
       book = datatable.records.where(book_id_type => id)
       if book.exists?
         record_map = datatable.record_map(book.first)
         write_stream << CSV.generate_line(record_map.values)
       else
-        write_stream << CSV.generate_line([id])
+        id_index ? empty_line[id_index] = id : empty_line
+        write_stream << CSV.generate_line(empty_line)
       end
     end
   end
