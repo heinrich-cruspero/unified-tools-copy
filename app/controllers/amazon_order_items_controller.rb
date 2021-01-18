@@ -11,10 +11,7 @@ class AmazonOrderItemsController < ApplicationController
       @start_date = filters[:purchase_start_date]
       @end_date = filters[:purchase_end_date]
       @sale_type = filters[:sale_type]
-      @date_filter_records = AmazonOrderItem.filter_purchase_date_records(@start_date, @end_date)
-      @sale_rental_filters = AmazonOrderItem.sale_type_filters(@date_filter_records, @sale_type)
-      @buyout_returned_filters = AmazonOrderItem.buyout_returned_filters(@date_filter_records)
-      @charge_type_filters = AmazonOrderItem.charge_type_filters(@date_filter_records)
+      @filter_records = AmazonOrderItem.index(params[:filters])
       format.html
       format.json { render json: AmazonOrderItemDatatable.new(params, view_context: view_context) }
       format.csv do

@@ -436,3 +436,47 @@ table.dataTable {
   margin-top: 143px;
   font-weight: bold;
 }
+
+.date-filter {
+  position: relative;
+}
+.footer_table {
+  margin: 50px;
+}
+
+.top_td {
+  border: 2px solid #8c8c8c;
+  text-align: center;
+}
+
+.footer_table table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table.records_table td {
+  padding: 8px;
+  border: 2px solid #8c8c8c;
+}
+table.records_table th {
+  padding: 8px;
+  border: 2px solid #8c8c8c;
+}
+
+.footer_table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+@media (max-width:767px) {
+  .chart_row{
+    display: flex;
+    flex-flow: column;
+  }
+  .chart {
+    margin: 20px auto;
+  }
+  .chart-title {
+    font-size: 22px;
+  }
+}
