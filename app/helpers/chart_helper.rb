@@ -15,9 +15,10 @@ module ChartHelper
   end
 
   def sale_type_filters(amazon_items)
-    sale_count = amazon_items.where(sale_type: 'sale').count.to_s(:delimited)
-    rental_count = amazon_items.where(sale_type: 'rental').count.to_s(:delimited)
-    convert_to_array([{ 'Sale' => sale_count }, { 'Rental' => rental_count }])
+    amazon_items
+      .where.not(sale_type: nil)
+      .group_by(&:sale_type)
+      .map { |key, value| [key, value.count.to_s(:delimited)] }
   end
 
   def buyout_returned_filters(amazon_items)
@@ -37,8 +38,9 @@ module ChartHelper
   end
 
   def charge_type_filters(amazon_items)
-    l_ext_count = amazon_items.where(charge_type: 'l_ext').count.to_s(:delimited)
-    s_ext_count = amazon_items.where(charge_type: 's_ext').count.to_s(:delimited)
-    convert_to_array([{ 'Short Term' => s_ext_count }, { 'Long Term' => l_ext_count }])
+    amazon_items
+      .where.not(charge_type: nil)
+      .group_by(&:charge_type)
+      .map { |key, value| [key, value.count.to_s(:delimited)] }
   end
 end

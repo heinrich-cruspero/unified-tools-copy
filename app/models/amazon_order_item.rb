@@ -20,13 +20,14 @@ class AmazonOrderItem < ApplicationRecord
 
       if returned.present?
         amazon_order_items = amazon_order_items.where(returned: returned)
+      end
 
       # filter by buy_out
-      elsif buy_out.present?
+      if buy_out.present?
         amazon_order_items = amazon_order_items.where(buy_out: buy_out)
-
+      end
       # filter by sale_type
-      elsif sale_type.present?
+      if sale_type.present?
         amazon_order_items = amazon_order_items.where(sale_type: sale_type)
       end
 

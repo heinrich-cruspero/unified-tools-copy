@@ -407,6 +407,7 @@ table.dataTable {
 }
 .amazon-item-filter-button {
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 .select_sale_type_filter {
   border-radius: 5px !important;
@@ -419,7 +420,7 @@ table.dataTable {
   margin-top: 29px;
 }
 .chart {
-  display: table-cell;
+  margin: 20px auto;
 }
 .chart-title {
   text-align: center;
@@ -441,7 +442,8 @@ table.dataTable {
   position: relative;
 }
 .footer_table {
-  margin: 50px;
+  margin: 50px auto;
+  width:100%;
 }
 
 .top_td {
@@ -467,16 +469,29 @@ table.records_table th {
 .footer_table tr:nth-child(even) {
   background-color: #dddddd;
 }
-
-@media (max-width:767px) {
-  .chart_row{
-    display: flex;
-    flex-flow: column;
-  }
-  .chart {
-    margin: 20px auto;
-  }
-  .chart-title {
-    font-size: 22px;
-  }
+.date-range-filter{
+  max-width: 300px;
+  width:100%;
+}
+.purchase_date_box {
+  display: inherit;
+  position: relative;
+  margin-right: auto;     
+}
+.date-filter{
+  position: absolute;
+  right: 20px;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none !important;
+}
+.select_sale_type_filter{
+  max-width: 150px;
+  width: 100%;
+}
+.chart #chart-1, .chart #chart-2, .chart #chart-3{
+  display: inline-block;
 }
