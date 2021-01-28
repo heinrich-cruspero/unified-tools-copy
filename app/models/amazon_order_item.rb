@@ -5,7 +5,7 @@ class AmazonOrderItem < ApplicationRecord
   belongs_to :amazon_order
   enum sale_type: %i[sale rental]
 
-  TYPES = ['Concession', 'Returns', 'Buyouts', 'Short Extensions', 'Long Extensions']
+  TYPES = ['Concession', 'Returns', 'Buyouts', 'Short Extensions', 'Long Extensions'].freeze
 
   def self.index(params)
     amazon_order_items = AmazonOrderItem.joins(:amazon_order).all
@@ -13,23 +13,16 @@ class AmazonOrderItem < ApplicationRecord
       purchase_start_date = params[:purchase_start_date]
       purchase_end_date = params[:purchase_end_date]
       # filter by returned
-
       returned = params[:returned]
       buy_out = params[:buy_out]
       sale_type = params[:sale_type]
 
-      if returned.present?
-        amazon_order_items = amazon_order_items.where(returned: returned)
-      end
+      amazon_order_items = amazon_order_items.where(returned: returned) if returned.present?
 
       # filter by buy_out
-      if buy_out.present?
-        amazon_order_items = amazon_order_items.where(buy_out: buy_out)
-      end
+      amazon_order_items = amazon_order_items.where(buy_out: buy_out) if buy_out.present?
       # filter by sale_type
-      if sale_type.present?
-        amazon_order_items = amazon_order_items.where(sale_type: sale_type)
-      end
+      amazon_order_items = amazon_order_items.where(sale_type: sale_type) if sale_type.present?
 
       if purchase_start_date.present? && purchase_end_date.present?
         start_date = purchase_start_date.to_date
