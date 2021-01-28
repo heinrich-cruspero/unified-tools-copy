@@ -3,7 +3,7 @@
 ##
 module ChartHelper
   def filter_count_check(records)
-    if records.flatten.grep(Integer).reduce(0, :+).zero?
+    if records.flatten.map(&:to_i).sum.zero?
       true
     else
       false
@@ -11,6 +11,36 @@ module ChartHelper
   end
 
   def total_count(records)
-    records.flatten.grep(Integer).reduce(0, :+)
+    records.flatten.map(&:to_i).sum.to_s(:delimited)
+  end
+
+  def sale_type_filters(amazon_items)
+    amazon_items
+      .where.not(sale_type: nil)
+      .group_by(&:sale_type)
+      .map { |key, value| [key, value.count.to_s(:delimited)] }
+  end
+
+  def buyout_returned_filters(amazon_items)
+    buyout_count = amazon_items.where(buy_out: true).count.to_s(:delimited)
+    returned_count = amazon_items.where(returned: true).count.to_s(:delimited)
+    convert_to_array([{ 'Buyout' => buyout_count }, { 'Returned' => returned_count }])
+  end
+
+  def convert_to_array(arr_hash)
+    combination_a = []
+    arr_hash.each do |val|
+      hash = {}
+      hash[val.keys[0]] = val.values[0]
+      combination_a << hash.to_a.flatten
+    end
+    combination_a
+  end
+
+  def charge_type_filters(amazon_items)
+    amazon_items
+      .where.not(charge_type: nil)
+      .group_by(&:charge_type)
+      .map { |key, value| [key, value.count.to_s(:delimited)] }
   end
 end

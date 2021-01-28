@@ -375,7 +375,7 @@ table.dataTable {
   left: 208px;
 }
 #amazon-order-item-purchase-date-filter {
-  width: auto;
+  width: 250px;
   border-radius: 5px;
 }
 .date-filter .fa-times {
@@ -407,6 +407,7 @@ table.dataTable {
 }
 .amazon-item-filter-button {
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 .select_sale_type_filter {
   border-radius: 5px !important;
@@ -419,7 +420,7 @@ table.dataTable {
   margin-top: 29px;
 }
 .chart {
-  display: table-cell;
+  margin: 20px auto;
 }
 .chart-title {
   text-align: center;
@@ -435,4 +436,62 @@ table.dataTable {
   text-align: center;
   margin-top: 143px;
   font-weight: bold;
+}
+
+.date-filter {
+  position: relative;
+}
+.footer_table {
+  margin: 50px auto;
+  width:100%;
+}
+
+.top_td {
+  border: 2px solid #8c8c8c;
+  text-align: center;
+}
+
+.footer_table table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table.records_table td {
+  padding: 8px;
+  border: 2px solid #8c8c8c;
+}
+table.records_table th {
+  padding: 8px;
+  border: 2px solid #8c8c8c;
+}
+
+.footer_table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.date-range-filter{
+  max-width: 300px;
+  width:100%;
+}
+.purchase_date_box {
+  display: inherit;
+  position: relative;
+}
+.date-filter{
+  position: absolute;
+  right: 20px;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none !important;
+}
+.select_sale_type_filter{
+  max-width: 150px;
+  min-width: 150px;
+  width: 100%;
+}
+.chart #chart-1, .chart #chart-2, .chart #chart-3{
+  display: inline-block;
 }

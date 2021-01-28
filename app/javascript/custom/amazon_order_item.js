@@ -19,6 +19,7 @@ $( document ).on('turbolinks:load', function() {
             {"data": "buy_out_price"},
             {"data": "expired"},
             {"data": "due_date"},
+            {"data": "charge_type"},
             {"data": "action_date"}
         ]
     });
