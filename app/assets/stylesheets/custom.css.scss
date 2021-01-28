@@ -375,7 +375,7 @@ table.dataTable {
   left: 208px;
 }
 #amazon-order-item-purchase-date-filter {
-  width: auto;
+  width: 250px;
   border-radius: 5px;
 }
 .date-filter .fa-times {
@@ -476,7 +476,6 @@ table.records_table th {
 .purchase_date_box {
   display: inherit;
   position: relative;
-  margin-right: auto;     
 }
 .date-filter{
   position: absolute;
@@ -490,6 +489,7 @@ table.records_table th {
 }
 .select_sale_type_filter{
   max-width: 150px;
+  min-width: 150px;
   width: 100%;
 }
 .chart #chart-1, .chart #chart-2, .chart #chart-3{
