@@ -30,21 +30,25 @@
       <% else %>
         <a href="<%= amazon_order_items_path(filters: {buy_out: 1, returned: @returned, purchase_start_date: @start_date, purchase_end_date: @end_date, sale_type: @sale_type}) %>" class="btn btn-secondary amazon-item-filter-button">Buy Out</a>
       <% end %>
-      <label class="col-form-label amazon-item-filter-button">Purchase Date</label>
-      <input type="text" class="form-control date-range-filter amazon-item-filter-button" id="amazon-order-item-purchase-date-filter" <% if !@start_date.blank? and !@end_date.blank? %>value="<%= @start_date %> - <%= @end_date %>"<% end %> />
-      <a href="<%= amazon_order_items_path(filters: {returned: @returned, purchase_start_date: nil, purchase_end_date: nil, buy_out: @buy_out, sale_type: @sale_type}) %>" class="btn date-filter" >
-        <i class="fa fa-times"></i>
-      </a>
-      <label class="col-form-label amazon-item-filter-button">Sale Type</label>
-      <%= select_tag "sale_type", options_for_select([ "sale", "rental" ]), {:include_blank => true, :class => 'form-control select_sale_type_filter amazon-item-filter-button'} %>
-      </a>
+      <div class="purchase_date_box d-flex flex-wrap">
+        <label class="col-form-label amazon-item-filter-button">Purchase Date</label>
+        <input type="text" class="form-control date-range-filter amazon-item-filter-button" id="amazon-order-item-purchase-date-filter" <% if !@start_date.blank? and !@end_date.blank? %>value="<%= @start_date %> - <%= @end_date %>"<% end %> />
+        <a href="<%= amazon_order_items_path(filters: {returned: @returned, purchase_start_date: nil, purchase_end_date: nil, buy_out: @buy_out, sale_type: @sale_type}) %>" class="btn date-filter" >
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+      <div class="purchase_date_box">
+        <label class="col-form-label amazon-item-filter-button">Sale Type</label>
+        <% selected_sale_type = params[:filters] ? params[:filters][:sale_type] : nil %>
+        <%= select_tag "sale_type", options_for_select([ "sale", "rental" ], selected_sale_type), {:include_blank => true, :class => 'form-control select_sale_type_filter amazon-item-filter-button'} %>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-sm">
-    <table id="amazon-order-items-datatable" data-source="<%= amazon_order_items_path(format: :json, filters: {returned: @returned, purchase_start_date: @start_date, purchase_end_date: @end_date, buy_out: @buy_out, sale_type: @sale_type} ) %>" style="text-align: center; width:100%;">
+    <table id="amazon-order-items-datatable" data-source="<%= amazon_order_items_path(format: :json, filters: {returned: @returned, purchase_start_date: @start_date, purchase_end_date: @end_date, buy_out: @buy_out, sale_type: @sale_type} ) %>" style="text-align: center; width:100%;" data-turbolinks='false'>
       <thead>
         <tr>
           <th>Amazon Order Id</th>
@@ -60,6 +64,7 @@
           <th>Buy Out Price</th>
           <th>Expired</th>
           <th>Due Date</th>
+          <th>Charge Type</th>
           <th>Action Date</th>
         </tr>
       </thead>
@@ -70,36 +75,3 @@
   </div>
 </div>
 <%= render 'shared/block_modal' %>
-<div class="row">
-  <div class="col-sm">
-    <div class="chart_row">
-      <div class="chart">
-        <h2 class="chart-title">Sale/Rental</h2>
-        <div class="total-record">Total: <%= @sale_rental_filters.values.sum %></div>
-        <% unless @sale_rental_filters.values.sum == 0 %>
-          <%= pie_chart @sale_rental_filters, library: {pieSliceText: 'value-and-percentage'} %>
-        <% else %>
-          <div class="no_record">No Record Found</div>
-        <% end %>
-      </div>
-      <div class="chart">
-        <h2 class="chart-title">Buyout/Returned</h2>
-        <div class="total-record">Total: <%= total_count(@buyout_returned_filters) %></div>
-        <% unless filter_count_check(@buyout_returned_filters) %>
-          <%= pie_chart @buyout_returned_filters, library: {pieSliceText: 'value-and-percentage'} %>
-        <% else %>
-          <div class="no_record">No Record Found</div>
-        <% end %>
-      </div>
-      <div class="chart">
-        <h2 class="chart-title">Short/Long Term</h2>
-        <div class="total-record">Total: <%= total_count(@charge_type_filters) %></div>
-        <% unless filter_count_check(@charge_type_filters) %>
-          <%= pie_chart @charge_type_filters, library: {pieSliceText: 'value-and-percentage'} %>
-        <% else %>
-          <div class="no_record">No Record Found</div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
