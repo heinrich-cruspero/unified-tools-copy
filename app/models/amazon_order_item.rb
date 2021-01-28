@@ -12,13 +12,13 @@ class AmazonOrderItem < ApplicationRecord
     if params.present?
       purchase_start_date = params[:purchase_start_date]
       purchase_end_date = params[:purchase_end_date]
-      # filter by returned
+
       returned = params[:returned]
       buy_out = params[:buy_out]
       sale_type = params[:sale_type]
 
+      # filter by returned
       amazon_order_items = amazon_order_items.where(returned: returned) if returned.present?
-
       # filter by buy_out
       amazon_order_items = amazon_order_items.where(buy_out: buy_out) if buy_out.present?
       # filter by sale_type
