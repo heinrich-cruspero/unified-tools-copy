@@ -11,11 +11,13 @@ module ChartHelper
   end
 
   def sale_type_filters(amazon_items)
-    group_hash = amazon_items
-      .select('amazon_order_items.sale_type')
-      .where.not(sale_type: nil)
-      .group(:sale_type).count
-    [group_hash.map {|k, v| [ [k].map(&:humanize).join(' '), v.to_s(:delimited)] }.to_h, group_hash.values.sum.to_s(:delimited)]
+    amazon_items_hash = amazon_items.select('amazon_order_items.sale_type')
+                                    .where.not(sale_type: nil)
+                                    .group(:sale_type).count
+    [
+      amazon_items_hash.map { |k, v| [[k].map(&:humanize).join(' '), v.to_s(:delimited)] }.to_h,
+      amazon_items_hash.values.sum.to_s(:delimited)
+    ]
   end
 
   def buyout_returned_filters(amazon_items)
@@ -35,11 +37,12 @@ module ChartHelper
   end
 
   def charge_type_filters(amazon_items)
-    group_hash = amazon_items
-      .select('amazon_order_items.charge_type')
-      .where.not(charge_type: nil)
-      .group(:charge_type).count
-    [group_hash.map {|k, v| [ [k].map(&:humanize).join(' '), v.to_s(:delimited)] }.to_h, group_hash.values.sum.to_s(:delimited)]
+    amazon_items_hash = amazon_items.select('amazon_order_items.charge_type')
+                                    .where.not(charge_type: nil)
+                                    .group(:charge_type).count
+    [
+      amazon_items_hash.map { |k, v| [[k].map(&:humanize).join(' '), v.to_s(:delimited)] }.to_h,
+      amazon_items_hash.values.sum.to_s(:delimited)
+    ]
   end
-
 end
