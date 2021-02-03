@@ -16,7 +16,7 @@ module ChartHelper
 
   def sale_type_filters(amazon_items)
     amazon_items
-      .select("amazon_order_items.sale_type")
+      .select('amazon_order_items.sale_type')
       .where.not(sale_type: nil)
       .group(:sale_type).count
   end
@@ -39,7 +39,7 @@ module ChartHelper
 
   def charge_type_filters(amazon_items)
     amazon_items
-      .select("amazon_order_items.charge_type")
+      .select('amazon_order_items.charge_type')
       .where.not(charge_type: nil)
       .group(:charge_type).count
   end
