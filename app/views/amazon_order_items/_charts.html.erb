@@ -5,9 +5,9 @@
         <div class="chart">
           <h2 class="chart-title">Sale/Rental</h2>
           <% @sale_rental_filters = sale_type_filters(@filter_records) %>
-          <div class="total-record">Total: <%= total_count(@sale_rental_filters) %></div>
+          <div class="total-record">Total: <%= @sale_rental_filters.values.count.to_s(:delimited) %></div>
           <% unless filter_count_check(@sale_rental_filters) %>
-            <%= pie_chart @sale_rental_filters, library: {pieSliceText: 'value-and-percentage'} %>
+            <%= pie_chart convert_to_delimited(@sale_rental_filters), library: {pieSliceText: 'value-and-percentage'} %>
           <% else %>
             <div class="no_record">No Record Found</div>
           <% end %>
@@ -29,9 +29,9 @@
         <div class="chart">
           <h2 class="chart-title">Short/Long Term</h2>
           <% @charge_type_filters = charge_type_filters(@filter_records) %>
-          <div class="total-record">Total: <%= total_count(@charge_type_filters) %></div>
+          <div class="total-record">Total: <%= @charge_type_filters.values.count.to_s(:delimited) %></div>
           <% unless filter_count_check(@charge_type_filters) %>
-            <%= pie_chart @charge_type_filters, library: {pieSliceText: 'value-and-percentage'} %>
+            <%= pie_chart convert_to_delimited(@charge_type_filters), library: {pieSliceText: 'value-and-percentage'} %>
           <% else %>
             <div class="no_record">No Record Found</div>
           <% end %>
