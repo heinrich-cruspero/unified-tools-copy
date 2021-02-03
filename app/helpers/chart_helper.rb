@@ -16,9 +16,9 @@ module ChartHelper
 
   def sale_type_filters(amazon_items)
     amazon_items
+      .select("amazon_order_items.sale_type")
       .where.not(sale_type: nil)
-      .group_by(&:sale_type)
-      .map { |key, value| [key, value.count.to_s(:delimited)] }
+      .group(:sale_type).count
   end
 
   def buyout_returned_filters(amazon_items)
@@ -39,8 +39,12 @@ module ChartHelper
 
   def charge_type_filters(amazon_items)
     amazon_items
+      .select("amazon_order_items.charge_type")
       .where.not(charge_type: nil)
-      .group_by(&:charge_type)
-      .map { |key, value| [key, value.count.to_s(:delimited)] }
+      .group(:charge_type).count
+  end
+
+  def convert_to_delimited(values)
+    values.map { |key, value| [key, value.to_s(:delimited)] }
   end
 end
