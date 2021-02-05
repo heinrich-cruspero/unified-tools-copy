@@ -15,14 +15,14 @@ module ChartHelper
                                     .where.not(sale_type: nil)
                                     .group(:sale_type).count
     [
-      amazon_items_hash.map { |k, v| [[k].map(&:humanize).join(' '), v.to_s(:delimited)] }.to_h,
+      amazon_items_hash.map { |k, v| [[k].map(&:humanize).join(' '), v] }.to_h,
       amazon_items_hash.values.sum.to_s(:delimited)
     ]
   end
 
   def buyout_returned_filters(amazon_items)
-    buyout_count = amazon_items.where(buy_out: true).count.to_s(:delimited)
-    returned_count = amazon_items.where(returned: true).count.to_s(:delimited)
+    buyout_count = amazon_items.where(buy_out: true).count
+    returned_count = amazon_items.where(returned: true).count
     convert_to_array([{ 'Buyout' => buyout_count }, { 'Returned' => returned_count }])
   end
 
@@ -41,7 +41,7 @@ module ChartHelper
                                     .where.not(charge_type: nil)
                                     .group(:charge_type).count
     [
-      amazon_items_hash.map { |k, v| [[k].map(&:humanize).join(' '), v.to_s(:delimited)] }.to_h,
+      amazon_items_hash.map { |k, v| [[k].map(&:humanize).join(' '), v] }.to_h,
       amazon_items_hash.values.sum.to_s(:delimited)
     ]
   end

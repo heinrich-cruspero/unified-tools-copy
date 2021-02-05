@@ -7,7 +7,7 @@
           <% @sale_rental_filters, s_total = sale_type_filters(@filter_records) %>
           <div class="total-record">Total: <%= s_total %></div>
           <% unless filter_count_check(@sale_rental_filters) %>
-            <%= pie_chart @sale_rental_filters, library: {pieSliceText: 'value-and-percentage'} %>
+            <%= pie_chart @sale_rental_filters, thousands: ",", library: {pieSliceText: 'value-and-percentage'} %>
           <% else %>
             <div class="no_record">No Record Found</div>
           <% end %>
@@ -19,7 +19,7 @@
           <% @buyout_returned_filters = buyout_returned_filters(@filter_records) %>
           <div class="total-record">Total: <%= total_count(@buyout_returned_filters) %></div>
           <% unless filter_count_check(@buyout_returned_filters) %>
-            <%= pie_chart @buyout_returned_filters , library: {pieSliceText: 'value-and-percentage'} %>
+            <%= pie_chart @buyout_returned_filters , thousands: ",", library: {pieSliceText: 'value-and-percentage'} %>
           <% else %>
             <div class="no_record">No Record Found</div>
           <% end %>
@@ -31,7 +31,7 @@
           <% @charge_type_filters, c_total = charge_type_filters(@filter_records) %>
           <div class="total-record">Total: <%= c_total %></div>
           <% unless filter_count_check(@charge_type_filters) %>
-            <%= pie_chart @charge_type_filters, library: {pieSliceText: 'value-and-percentage'} %>
+            <%= pie_chart @charge_type_filters, thousands: ",", library: {pieSliceText: 'value-and-percentage'} %>
           <% else %>
             <div class="no_record">No Record Found</div>
           <% end %>
