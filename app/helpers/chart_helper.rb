@@ -15,7 +15,7 @@ module ChartHelper
                                     .where.not(sale_type: nil)
                                     .group(:sale_type).count
     [
-      amazon_items_hash.map { |k, v| [[k].map(&:humanize).join(' '), v] }.to_h,
+      amazon_items_hash.transform_keys { |k| [k].map(&:humanize).join(' ') },
       amazon_items_hash.values.sum.to_s(:delimited)
     ]
   end
@@ -41,7 +41,7 @@ module ChartHelper
                                     .where.not(charge_type: nil)
                                     .group(:charge_type).count
     [
-      amazon_items_hash.map { |k, v| [[k].map(&:humanize).join(' '), v] }.to_h,
+      amazon_items_hash.transform_keys { |k| [k].map(&:humanize).join(' ') },
       amazon_items_hash.values.sum.to_s(:delimited)
     ]
   end
