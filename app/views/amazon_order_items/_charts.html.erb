@@ -47,11 +47,11 @@
       <table class="records_table">
         <tr>
           <th class="top_th">Sales:</th>
-          <td colspan="2" class="top_td"><%= @sale_rental_filters["Sale"] || 0 %></td>
+          <td colspan="2" class="top_td"><%= number_with_delimiter(@sale_rental_filters["Sale"], :delimiter => ',') || 0 %></td>
         </tr>
         <tr>
           <th class="top_th">Rentals:</th>
-          <td colspan="2" class="top_td"><%= @sale_rental_filters["Rental"] || 0 %></td>
+          <td colspan="2" class="top_td"><%= number_with_delimiter(@sale_rental_filters["Rental"], :delimiter => ',') || 0 %></td>
         </tr>
         <tr class="table_th">
           <th>Type</th>
