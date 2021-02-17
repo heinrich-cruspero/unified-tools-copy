@@ -18,10 +18,11 @@
 #Required Environment Variables
 1. GOOGLE_APP_ID
 2. GOOGLE_APP_SECRET
+3. RAILS_MASTER_KEY or config/master.key
 
 # Credentials `EDITOR=vi rails credentials:edit`
 
-## AWS Credentials
+## Secret Key Base
     secret_key_base:
 
 ## AWS Credentials
