@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_15_182213) do
+ActiveRecord::Schema.define(version: 2021_02_22_045517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -442,6 +442,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_182213) do
     t.decimal "yearly_fbaz_rented_price", precision: 10, scale: 2
     t.decimal "rent_avg", precision: 10, scale: 2
     t.string "ne_isbn"
+    t.decimal "nw_jan_avg", default: "0.0", null: false
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
@@ -584,6 +585,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_182213) do
     t.index ["nw_aug_avg"], name: "index_books_on_nw_aug_avg"
     t.index ["nw_dec_avg"], name: "index_books_on_nw_dec_avg"
     t.index ["nw_feb_avg"], name: "index_books_on_nw_feb_avg"
+    t.index ["nw_jan_avg"], name: "index_books_on_nw_jan_avg"
     t.index ["nw_jul_avg"], name: "index_books_on_nw_jul_avg"
     t.index ["nw_jun_avg"], name: "index_books_on_nw_jun_avg"
     t.index ["nw_mar_avg"], name: "index_books_on_nw_mar_avg"
