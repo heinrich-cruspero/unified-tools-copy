@@ -229,7 +229,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_045517) do
     t.decimal "list_price", default: "0.0", null: false
     t.decimal "used_wholesale_price", default: "0.0", null: false
     t.decimal "new_wholesale_price", default: "0.0", null: false
-    t.integer "copyright_year", default: 0, null: false
+    t.integer "copyright_year", default: 0
     t.decimal "trade_in", default: "0.0", null: false
     t.decimal "amazon_price", default: "0.0", null: false
     t.decimal "lowest_good_price", default: "0.0", null: false
