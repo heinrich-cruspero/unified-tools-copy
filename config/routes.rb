@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable  Metrics/BlockLength
 Rails.application.routes.draw do
   resources :book_field_mappings
   resources :book_export_templates do
@@ -18,7 +19,6 @@ Rails.application.routes.draw do
       post 'delete_skus'
       post 'export'
       get 'export'
-
       post 'index'
       get 'index'
       post 'combine'
@@ -38,6 +38,10 @@ Rails.application.routes.draw do
       get 'sales_rank_history'
       get 'amazon_prices_history'
     end
+    collection do
+      get 'link_oe_isbn'
+      post 'link_oe_isbn'
+    end
   end
 
   resources :amazon_orders, only: %i[index show] do
@@ -55,3 +59,4 @@ Rails.application.routes.draw do
 
   root to: 'books#index'
 end
+# rubocop:enable  Metrics/BlockLength

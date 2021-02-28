@@ -37,4 +37,8 @@ class BookPolicy < ApplicationPolicy
   def amazon_prices_history?
     user.is_admin?
   end
+
+  def link_oe_isbn?
+    user.is_admin?
+  end
 end
