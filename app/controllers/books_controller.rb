@@ -223,24 +223,17 @@ class BooksController < ApplicationController
 
   def link_oe_isbn
     authorize Book
-    return if request.format.html?
+    return if request.get?
 
-    respond_to do |format|
-      format.html
-      format.csv do
-        csv_text = File.read(params[:csv_file])
-        csv = CSV.parse(csv_text, headers: true)
-        csv.each do |row|
-          isbn = row['isbn']
-          oe_isbn = row['oe_isbn']
+    uploaded_file = params[:csv_file]
 
-          book = Book.find_by(isbn: isbn)
-          book&.update(oe_isbn: oe_isbn)
-        end
-
-        # todo
-        redirect_to books_path
-      end
+    if uploaded_file
+      csv_text = File.read(uploaded_file)
+      csv = CSV.parse(csv_text, headers: true).map(&:to_h)
+      LinkOeIsbnCsvJob.perform_later(csv)
+      redirect_to books_url, flash: { notice: 'Processing imported file.' }
+    else
+      redirect_to link_oe_isbn_books_url, flash: { error: 'Missing csv file.' }
     end
   end
 
