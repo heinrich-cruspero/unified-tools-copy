@@ -56,10 +56,14 @@ class CsvDownloadJob < ApplicationJob
     id_in_fields = keys.include?(book_id_type.to_sym)
     id_index = id_in_fields ? keys.index(book_id_type.to_sym) : nil
 
+    records = {}
+    datatable.records.each do |record|
+      records[record.send(book_id_type)] = record
+    end
+
     book_ids.each do |id|
-      book = datatable.records.where(book_id_type => id)
-      if book.exists?
-        record_map = datatable.record_map(book.first)
+      if records[id]
+        record_map = datatable.record_map(records[id])
         write_stream << CSV.generate_line(record_map.values)
       else
         id_index ? empty_line[id_index] = id : empty_line
