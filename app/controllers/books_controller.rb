@@ -223,10 +223,15 @@ class BooksController < ApplicationController
 
   def link_oe_isbn
     authorize Book
-    return if request.get?
 
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def link_oe_isbn_import
+    authorize Book
     uploaded_file = params[:csv_file]
-
     if uploaded_file
       csv_text = File.read(uploaded_file)
       csv = CSV.parse(csv_text, headers: true).map(&:to_h)
