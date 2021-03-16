@@ -221,6 +221,27 @@ class BooksController < ApplicationController
     end
   end
 
+  def link_oe_isbn
+    authorize Book
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def link_oe_isbn_import
+    authorize Book
+    uploaded_file = params[:csv_file]
+    if uploaded_file
+      csv_text = File.read(uploaded_file)
+      csv = CSV.parse(csv_text, headers: true).map(&:to_h)
+      LinkOeIsbnCsvJob.perform_later(csv)
+      redirect_to books_url, flash: { notice: 'Processing imported file.' }
+    else
+      redirect_to link_oe_isbn_books_url, flash: { error: 'Missing csv file.' }
+    end
+  end
+
   private
 
   def book_detail

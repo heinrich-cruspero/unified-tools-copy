@@ -1,0 +1,120 @@
+book1:
+  author: Isidro Lockman
+  title: Frequent Hearses
+  edition: 8e6
+  publisher: Enedina Barton
+  publication_date: 01-01-2021
+  weight: 1
+  isbn: 0521448077
+  edition_status_code: 1
+  edition_status_date: 01-25-2021
+  list_price: 1
+  used_wholesale_price: 1
+  nebraska_wh: 1
+  qa_aug_low: 1
+  lowest_good_price: 1
+  qa_low: 1
+  yearly_low: 1
+  qa_fba_low: 1
+  monthly_sqf: 1
+  monthly_spf: 1
+  monthly_rqf: 1
+  monthly_rpf: 1
+  one_year_highest_wholesale_price: 1
+  two_years_wh_max: 1
+book2:
+  author: Alysha Aufderhar Sr.
+  title: The Stars' Tennis Balls
+  edition: 9d1
+  publisher: Bernard Parker
+  publication_date: 01-01-2021
+  weight: 1
+  isbn: 0130224847
+  edition_status_code: 1
+  edition_status_date: 01-25-2021
+  list_price: 1
+  used_wholesale_price: 1
+  nebraska_wh: 1
+  qa_aug_low: 1
+  lowest_good_price: 1
+  qa_low: 1
+  yearly_low: 1
+  qa_fba_low: 1
+  monthly_sqf: 1
+  monthly_spf: 1
+  monthly_rqf: 1
+  monthly_rpf: 1
+  one_year_highest_wholesale_price: 1
+  two_years_wh_max: 1
+book3:
+  author: Shirl Reichert III
+  title: Blood's a Rover
+  edition: 015d
+  publisher: Jeffry Schinner
+  publication_date: 01-01-2021
+  weight: 1
+  isbn: 0230224869
+  edition_status_code: 1
+  edition_status_date: 01-25-2021
+  list_price: 1
+  used_wholesale_price: 1
+  nebraska_wh: 1
+  qa_aug_low: 1
+  lowest_good_price: 1
+  qa_low: 1
+  yearly_low: 1
+  qa_fba_low: 1
+  monthly_sqf: 1
+  monthly_spf: 1
+  monthly_rqf: 1
+  monthly_rpf: 1
+  one_year_highest_wholesale_price: 1
+  two_years_wh_max: 1
+book4:
+  author: Shaun Jaskolski
+  title: The Daffodil Sky
+  edition: da1
+  publisher: Miss Bettyann Barrows
+  publication_date: 01-01-2021
+  weight: 1
+  isbn: 0307238024
+  edition_status_code: 1
+  edition_status_date: 01-25-2021
+  list_price: 1
+  used_wholesale_price: 1
+  nebraska_wh: 1
+  qa_aug_low: 1
+  lowest_good_price: 1
+  qa_low: 1
+  yearly_low: 1
+  qa_fba_low: 1
+  monthly_sqf: 1
+  monthly_spf: 1
+  monthly_rqf: 1
+  monthly_rpf: 1
+  one_year_highest_wholesale_price: 1
+  two_years_wh_max: 1
+book5:
+  author: Cordia Kub
+  title: Tender Is the Night
+  edition: 6c5
+  publisher: Lajuana Torphy DDS
+  publication_date: 01-01-2021
+  weight: 1
+  isbn: 0394309790
+  edition_status_code: 1
+  edition_status_date: 01-25-2021
+  list_price: 1
+  used_wholesale_price: 1
+  nebraska_wh: 1
+  qa_aug_low: 1
+  lowest_good_price: 1
+  qa_low: 1
+  yearly_low: 1
+  qa_fba_low: 1
+  monthly_sqf: 1
+  monthly_spf: 1
+  monthly_rqf: 1
+  monthly_rpf: 1
+  one_year_highest_wholesale_price: 1
+  two_years_wh_max: 1

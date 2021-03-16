@@ -41,4 +41,18 @@ RSpec.describe BooksController, type: :controller do
       expect(response.code).to eq('302')
     end
   end
+
+  describe 'GET #link_oe_isbn' do
+    it 'returns a success response' do
+      get :link_oe_isbn
+      expect(response.code).to eq('302')
+    end
+  end
+
+  describe 'POST #link_oe_isbn_import' do
+    it 'returns a success response' do
+      get :link_oe_isbn_import
+      expect(response.code).to eq('302')
+    end
+  end
 end
