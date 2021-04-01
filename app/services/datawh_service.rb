@@ -40,6 +40,7 @@ class DatawhService
       AND
       r.created_at > (NOW() - '366 DAYS'::INTERVAL)
       GROUP BY Date
+      HAVING AVG(r.fba_price) > 0
       ORDER BY Date DESC"
     )
   end
@@ -71,6 +72,7 @@ class DatawhService
       AND
       r.created_at > (NOW() - '366 DAYS'::INTERVAL)
       GROUP BY Date
+      HAVING AVG(r.lowest_price) > 0
       ORDER BY Date DESC"
     )
   end
