@@ -44,9 +44,10 @@ class AmazonShipmentsController < ApplicationController
       format.html
       format.json { render json: IndabaSkuDatatable.new(params) }
       format.csv do
-        params[:length] = '-1'
-        send_data datatable_to_csv(IndabaSkuDatatable.new(params)),
-                  filename: "amazon_shipments_indaba_skus-#{Date.today}.csv"
+        params.permit!
+        CsvDownloadJob.perform_later(params, 'IndabaSkuDatatable', "amazon_shipments_indaba_skus-#{Date.today}.csv",
+                                     current_user.id)
+        head :ok
       end
     end
   end

@@ -49,12 +49,15 @@ $( document ).on('turbolinks:load', function() {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    $container = $('#content');
-    $container
-        .on('click', '#export-indaba-sku-submit-button', onIndabaSKUExportButtonClick)
-
-    function onIndabaSKUExportButtonClick(event) {
-        event.preventDefault();
-        onExportSubmit(this, $('#indaba-sku-datatable').DataTable().ajax.params());
-    }
+    $('#export-indaba-sku-submit-button').on('click', function (e) {
+        e.preventDefault();
+        const url = $(this).attr('href')
+        const params = $.param($('#indaba-sku-datatable').DataTable().ajax.params());
+        const delimiter = url.includes('?') ? '&' : '?';
+        $.get(url + delimiter + params);
+        $('#blockModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
 });

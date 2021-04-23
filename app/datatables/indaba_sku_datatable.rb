@@ -44,38 +44,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
   # rubocop:disable Metrics/AbcSize
   def data
     records.map do |record|
-      {
-        az_sku: record.amazon_shipment.az_sku,
-        isbn: record.amazon_shipment.isbn,
-        shipment_id: record.amazon_shipment.shipment_id,
-        sku: record.sku,
-        quantity: record.quantity,
-        condition: record.amazon_shipment.condition,
-        author: record.amazon_shipment.book.author,
-        title: record.amazon_shipment.book.title,
-        edition: record.amazon_shipment.book.edition,
-        status_code: record.amazon_shipment.edition_status_code,
-        stat_date: record.amazon_shipment.edition_status_date,
-        list: record.amazon_shipment.list_price,
-        MBS_WH: record.amazon_shipment.used_wholesale_price,
-        NBC_WH: record.amazon_shipment.nebraska_wh,
-        QaPC3: record.amazon_shipment.qa_aug_low,
-        ALow: record.amazon_shipment.lowest_good_price,
-        QaLow: record.amazon_shipment.qa_low,
-        YLow: record.amazon_shipment.yearly_low,
-        QaFBALow: record.amazon_shipment.qa_fba_low,
-        "30SQF": record.amazon_shipment.monthly_sqf,
-        "30SPF": record.amazon_shipment.monthly_spf,
-        "30RQF": record.amazon_shipment.monthly_rqf,
-        "30RPF": record.amazon_shipment.monthly_rpf,
-        "1YRWH": record.amazon_shipment.one_year_highest_wholesale_price,
-        "2YRWH": record.amazon_shipment.two_years_wh_max,
-        publisher: record.amazon_shipment.book.publisher,
-        pub_date: record.amazon_shipment.book.publication_date,
-        weight: record.amazon_shipment.book.weight,
-        file_name: record.amazon_shipment.amazon_shipment_file.name,
-        import_date: record.amazon_shipment.amazon_shipment_file.date
-      }
+      record_map(record)
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -93,5 +62,40 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
         from_date..to_date
       )
     end
+  end
+
+  def record_map(record)
+    {
+      az_sku: record.amazon_shipment.az_sku,
+      isbn: record.amazon_shipment.isbn,
+      shipment_id: record.amazon_shipment.shipment_id,
+      sku: record.sku,
+      quantity: record.quantity,
+      condition: record.amazon_shipment.condition,
+      author: record.amazon_shipment.book.author,
+      title: record.amazon_shipment.book.title,
+      edition: record.amazon_shipment.book.edition,
+      status_code: record.amazon_shipment.edition_status_code,
+      stat_date: record.amazon_shipment.edition_status_date,
+      list: record.amazon_shipment.list_price,
+      MBS_WH: record.amazon_shipment.used_wholesale_price,
+      NBC_WH: record.amazon_shipment.nebraska_wh,
+      QaPC3: record.amazon_shipment.qa_aug_low,
+      ALow: record.amazon_shipment.lowest_good_price,
+      QaLow: record.amazon_shipment.qa_low,
+      YLow: record.amazon_shipment.yearly_low,
+      QaFBALow: record.amazon_shipment.qa_fba_low,
+      "30SQF": record.amazon_shipment.monthly_sqf,
+      "30SPF": record.amazon_shipment.monthly_spf,
+      "30RQF": record.amazon_shipment.monthly_rqf,
+      "30RPF": record.amazon_shipment.monthly_rpf,
+      "1YRWH": record.amazon_shipment.one_year_highest_wholesale_price,
+      "2YRWH": record.amazon_shipment.two_years_wh_max,
+      publisher: record.amazon_shipment.book.publisher,
+      pub_date: record.amazon_shipment.book.publication_date,
+      weight: record.amazon_shipment.book.weight,
+      file_name: record.amazon_shipment.amazon_shipment_file.name,
+      import_date: record.amazon_shipment.amazon_shipment_file.date
+    }
   end
 end
