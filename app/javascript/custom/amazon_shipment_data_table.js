@@ -21,12 +21,15 @@ $( document ).on('turbolinks:load', function() {
         ]
     });
 
-    $container = $('#content');
-    $container
-        .on('click', '#export-amazon-shipments-submit-button', onAmazonShipmentExportButtonClick)
-
-    function onAmazonShipmentExportButtonClick(event) {
-        event.preventDefault();
-        onExportSubmit(this, $('#amazon-shipments-datatable').DataTable().ajax.params());
-    }
+    $('#export-amazon-shipments-submit-button').on('click', function (e) {
+        e.preventDefault();
+        const url = $(this).attr('href')
+        const params = $.param($('#amazon-shipments-datatable').DataTable().ajax.params());
+        const delimiter = url.includes('?') ? '&' : '?';
+        $.get(url + delimiter + params);
+        $('#blockModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
 });
