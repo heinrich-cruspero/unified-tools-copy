@@ -41,13 +41,11 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
     }
   end
 
-  # rubocop:disable Metrics/AbcSize
   def data
     records.map do |record|
       record_map(record)
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def get_raw_records(*)
     # insert query here
@@ -64,6 +62,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def record_map(record)
     {
       az_sku: record.amazon_shipment.az_sku,
@@ -98,4 +97,5 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
       import_date: record.amazon_shipment.amazon_shipment_file.date
     }
   end
+  # rubocop:enable Metrics/AbcSize
 end

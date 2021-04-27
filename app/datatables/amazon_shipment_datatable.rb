@@ -47,9 +47,9 @@ class AmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
 
   def record_map(record)
     {
-      isbn: record.isbn, 
+      isbn: record.isbn,
       shipment_id: record.shipment_id,
-      condition: record.condition, 
+      condition: record.condition,
       az_sku: record.az_sku,
       fulfillment_network_sku: record.fulfillment_network_sku,
       quantity_shipped: record.quantity_shipped,

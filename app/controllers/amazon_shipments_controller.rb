@@ -14,7 +14,8 @@ class AmazonShipmentsController < ApplicationController
       format.json { render json: AmazonShipmentDatatable.new(params) }
       format.csv do
         params.permit!
-        CsvDownloadJob.perform_later(params, 'AmazonShipmentDatatable', "amazon_shipments-#{Date.today}.csv",
+        CsvDownloadJob.perform_later(params, 'AmazonShipmentDatatable',
+                                     "amazon_shipments-#{Date.today}.csv",
                                      current_user.id)
         head :ok
       end
@@ -29,7 +30,8 @@ class AmazonShipmentsController < ApplicationController
       format.json { render json: CombineAmazonShipmentDatatable.new(params) }
       format.csv do
         params.permit!
-        CsvDownloadJob.perform_later(params, 'CombineAmazonShipmentDatatable', "amazon_shipments_combined-#{Date.today}.csv",
+        CsvDownloadJob.perform_later(params, 'CombineAmazonShipmentDatatable',
+                                     "amazon_shipments_combined-#{Date.today}.csv",
                                      current_user.id)
         head :ok
       end
@@ -45,7 +47,8 @@ class AmazonShipmentsController < ApplicationController
       format.json { render json: IndabaSkuDatatable.new(params) }
       format.csv do
         params.permit!
-        CsvDownloadJob.perform_later(params, 'IndabaSkuDatatable', "amazon_shipments_indaba_skus-#{Date.today}.csv",
+        CsvDownloadJob.perform_later(params, 'IndabaSkuDatatable',
+                                     "amazon_shipments_indaba_skus-#{Date.today}.csv",
                                      current_user.id)
         head :ok
       end
