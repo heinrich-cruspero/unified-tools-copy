@@ -18,7 +18,7 @@ $( document ).on('turbolinks:load', function() {
     $('#export-combined-shipments-submit-button').on('click', function (e) {
         e.preventDefault();
         const url = $(this).attr('href')
-        const params = $.param($('#amazon-shipments-datatable').DataTable().ajax.params());
+        const params = $.param($('#combine-shipments-datatable').DataTable().ajax.params());
         const delimiter = url.includes('?') ? '&' : '?';
         $.get(url + delimiter + params);
         $('#blockModal').modal({

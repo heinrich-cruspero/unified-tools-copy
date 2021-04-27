@@ -3,7 +3,6 @@
 ##
 class AmazonShipmentsController < ApplicationController
   include AmazonShipmentCsvModule
-  include AmazonShipmentDatatableModule
 
   def index
     authorize AmazonShipment
