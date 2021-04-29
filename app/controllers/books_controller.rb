@@ -242,6 +242,44 @@ class BooksController < ApplicationController
     end
   end
 
+  def add_isbn
+    authorize Book
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def add_isbn_import
+    authorize Book
+    uploaded_file = params[:csv_file]
+    if uploaded_file
+      csv_text = File.read(uploaded_file)
+      csv = CSV.parse(csv_text, headers: true).map(&:to_h)
+      data_is_valid = true
+      error_message = nil
+
+      # validate csv entries
+      csv.each_with_index do |data, i|
+        invalid_fields = data.select { |_k, v| v.nil? }.keys
+        data_is_valid = invalid_fields.empty?
+        error_message = "Missing required fields: #{invalid_fields}, on line #{i + 1}"
+        break unless data_is_valid
+      end
+
+      unless data_is_valid
+        return redirect_to add_isbn_books_path,
+                           flash: { error: error_message }
+      end
+
+      flash[:notice] = 'Processed imported file.'
+      flash.keep(:notice)
+      AddIsbnCsvJob.perform_later(csv, current_user.id, books_url)
+    else
+      redirect_to add_isbn_books_path, flash: { error: 'Missing csv file.' }
+    end
+  end
+
   private
 
   def book_detail

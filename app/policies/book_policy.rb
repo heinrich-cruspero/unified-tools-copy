@@ -45,4 +45,12 @@ class BookPolicy < ApplicationPolicy
   def link_oe_isbn_import?
     user.is_admin?
   end
+
+  def add_isbn?
+    user.is_admin?
+  end
+
+  def add_isbn_import?
+    user.is_admin?
+  end
 end
