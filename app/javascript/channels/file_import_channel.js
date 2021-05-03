@@ -14,8 +14,7 @@ function file_import_channel(){
       console.log('Received on FileImportChannel')
 
       $("#blockModal").modal('hide');
-      window.location = data.redirect_url
-      
+      window.location.reload();
       consumer.disconnect()
     }
   });

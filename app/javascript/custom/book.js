@@ -36,11 +36,11 @@ $( document ).on('turbolinks:load', function() {
     // add Isbns
     $('#add-isbn-form').on('submit', function(e) {
         e.preventDefault();
-        const export_url = $(this).attr('action');
+        const import_url = $(this).attr('action');
         let form_data = new FormData(this);
   
         $.ajax({
-          url: export_url,
+          url: import_url,
           data: form_data,
           cache: false,
           processData: false,

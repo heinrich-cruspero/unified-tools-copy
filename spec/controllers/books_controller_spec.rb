@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 require 'faker'
-
+# rubocop:disable Metrics/BlockLength
 RSpec.describe BooksController, type: :controller do
   before(:each) do
     sign_in create(:user)
@@ -55,4 +55,19 @@ RSpec.describe BooksController, type: :controller do
       expect(response.code).to eq('302')
     end
   end
+
+  describe 'GET #add_isbn' do
+    it 'returns a success response' do
+      get :add_isbn
+      expect(response.code).to eq('302')
+    end
+  end
+
+  describe 'POST #add_isbn_import' do
+    it 'returns a success response' do
+      get :add_isbn_import
+      expect(response.code).to eq('302')
+    end
+  end
 end
+# rubocop:enable Metrics/BlockLength
