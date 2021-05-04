@@ -205,12 +205,12 @@ class Book < ApplicationRecord
           THEN quantity_ordered ELSE NULL END) as rental_quantity,
         avg(CASE WHEN sale_type=1
           THEN (item_price/quantity_ordered) ELSE NULL END) as rental_avg_price,
-        date(amazon_orders.purchase_date)
+        to_char(purchase_date,'YYYY/MM') as date
       "
     ).group(
-      'date(amazon_orders.purchase_date)'
+      'date'
     ).order(
-      'date(amazon_orders.purchase_date) DESC'
+      'date DESC'
     ).references(:amazon_orders)
   end
 

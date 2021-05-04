@@ -36,7 +36,10 @@
       </div>
       <div class="col-detail">
         <p class="title title-sm">Month/Year</p>
-        <div><%= order.date&.strftime('%m/%Y') %></div>
+        <div>
+          <% date_parts = order.date&.split('/') %>
+          <%= "#{date_parts[1]}/#{date_parts[0]}" if date_parts&.count == 2 %>
+        </div>
       </div>
     </div>
   <% end %>
