@@ -55,7 +55,7 @@ class DatawhService
       WHERE
       r.isbn = '#{isbn}'
       AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
+      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date, Week
       ORDER BY Date ASC, Week ASC"
     )
@@ -65,12 +65,12 @@ class DatawhService
     @connection.exec(
       "SELECT
         AVG(r.lowest_price) AS Avg,
-        CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
+        to_char(r.created_at,'YYYY/MM') AS Date
       FROM amazon_data r
       WHERE
       r.isbn = '#{isbn}'
       AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
+      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date
       HAVING AVG(r.lowest_price) > 0
       ORDER BY Date DESC"
@@ -87,7 +87,7 @@ class DatawhService
       WHERE
       r.isbn = '#{isbn}'
       AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
+      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date, Week
       ORDER BY Date ASC, Week ASC"
     )
@@ -101,7 +101,7 @@ class DatawhService
       WHERE
       r.isbn = '#{isbn}'
       AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
+      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date
       ORDER BY Date DESC"
     )
@@ -116,7 +116,7 @@ class DatawhService
       WHERE
       r.isbn = '#{isbn}'
       AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
+      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date, Week
       ORDER BY Date ASC, Week ASC"
     )
@@ -130,7 +130,7 @@ class DatawhService
       WHERE
       r.isbn = '#{isbn}'
       AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
+      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date
       ORDER BY Date ASC"
     )
