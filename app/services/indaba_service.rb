@@ -17,13 +17,13 @@ class IndabaService
       "SELECT AVG(TotalQuantity) AS 'Total',
         AVG(PricingCustom8) AS 'OR',
         AVG(PricingCustom2) AS 'INB',
-        CONCAT(MONTH(Date), '/', YEAR(Date)) AS 'Date'
+        FORMAT(Date,'yyyy/MM') AS 'date'
       FROM aa_ArchivedProductData
       WHERE
       ISBN = '#{ean}'
       AND
       Date > DATEADD(day, -366, GETDATE())
-      GROUP BY CONCAT(MONTH(Date), '/', YEAR(Date))
+      GROUP BY FORMAT(Date,'yyyy/MM')
       ORDER BY Date DESC;"
     ).to_a
   end
