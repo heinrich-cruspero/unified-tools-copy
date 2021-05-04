@@ -36,7 +36,7 @@
       </div>
       <div class="col-detail">
         <p class="title title-sm">Month/Year</p>
-        <div><%= order.date %></div>
+        <div><%= order.date&.strftime('%m/%Y') %></div>
       </div>
     </div>
   <% end %>
