@@ -16,14 +16,14 @@ class DatawhService
   def rental_history(isbn)
     @connection.exec(
       "SELECT
-        AVG(CASE WHEN r.source = 'Amazon Warehouse Deals' THEN r.price ELSE NULL END) AS W,
-        AVG(CASE WHEN r.source != 'Amazon Warehouse Deals' THEN r.price ELSE NULL END) AS NW,
-        CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
+        AVG(CASE WHEN r.source iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS W,
+        AVG(CASE WHEN r.source NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS NW,
+        to_char(r.created_at,'YYYY/MM') AS Date
       FROM rental_prices r
       WHERE
       r.asin = '#{isbn}'
       AND
-      r.created_at > (NOW() - '366 DAYS'::INTERVAL)
+      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date
       ORDER BY Date DESC"
     )
@@ -143,7 +143,7 @@ class DatawhService
       WHERE
       r.asin = '#{isbn}'
       AND
-      r.source = 'Amazon Warehouse Deals'
+      r.source iLIKE 'Amazon%'
       AND
       EXTRACT(YEAR FROM r.created_at) = '#{year}'
       AND
@@ -159,7 +159,7 @@ class DatawhService
       WHERE
       r.asin = '#{isbn}'
       AND
-      r.source != 'Amazon Warehouse Deals'
+      r.source NOT iLIKE 'Amazon%'
       AND
       EXTRACT(YEAR FROM r.created_at) = '#{year}'
       AND
