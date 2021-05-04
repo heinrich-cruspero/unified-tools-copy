@@ -26,7 +26,8 @@ COPY package.json $APP_HOME/
 
 # Run bundle & yarn install to install gems inside the gemfile
 RUN gem install bundler:2.1.4
-RUN bundle install --without development test
+RUN bundle config set without 'development test'
+RUN bundle install
 
 # Copy the whole app
 COPY . $APP_HOME
