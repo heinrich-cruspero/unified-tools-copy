@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ##
+# rubocop:disable  Metrics/ClassLength
 class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
   def view_columns
     # Declare strings in this format: ModelName.column_name
@@ -41,49 +42,50 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
     }
   end
 
-  # rubocop:disable Metrics/AbcSize
   def data
     records.map do |record|
-      {
-        az_sku: record.amazon_shipment.az_sku,
-        isbn: record.amazon_shipment.isbn,
-        shipment_id: record.amazon_shipment.shipment_id,
-        sku: record.sku,
-        quantity: record.quantity,
-        condition: record.amazon_shipment.condition,
-        author: record.amazon_shipment.book.author,
-        title: record.amazon_shipment.book.title,
-        edition: record.amazon_shipment.book.edition,
-        status_code: record.amazon_shipment.edition_status_code,
-        stat_date: record.amazon_shipment.edition_status_date,
-        list: record.amazon_shipment.list_price,
-        MBS_WH: record.amazon_shipment.used_wholesale_price,
-        NBC_WH: record.amazon_shipment.nebraska_wh,
-        QaPC3: record.amazon_shipment.qa_aug_low,
-        ALow: record.amazon_shipment.lowest_good_price,
-        QaLow: record.amazon_shipment.qa_low,
-        YLow: record.amazon_shipment.yearly_low,
-        QaFBALow: record.amazon_shipment.qa_fba_low,
-        "30SQF": record.amazon_shipment.monthly_sqf,
-        "30SPF": record.amazon_shipment.monthly_spf,
-        "30RQF": record.amazon_shipment.monthly_rqf,
-        "30RPF": record.amazon_shipment.monthly_rpf,
-        "1YRWH": record.amazon_shipment.one_year_highest_wholesale_price,
-        "2YRWH": record.amazon_shipment.two_years_wh_max,
-        publisher: record.amazon_shipment.book.publisher,
-        pub_date: record.amazon_shipment.book.publication_date,
-        weight: record.amazon_shipment.book.weight,
-        file_name: record.amazon_shipment.amazon_shipment_file.name,
-        import_date: record.amazon_shipment.amazon_shipment_file.date
-      }
+      record_map(record)
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
+  # rubocop:disable  Metrics/MethodLength
   def get_raw_records(*)
     # insert query here
     if params[:data].nil?
-      IndabaSku.joins(amazon_shipment: %i[book amazon_shipment_file]).all
+      IndabaSku.joins(amazon_shipment: %i[book amazon_shipment_file]).select(
+        "
+          amazon_shipments.az_sku,
+          amazon_shipments.isbn,
+          amazon_shipments.shipment_id,
+          indaba_skus.sku,
+          indaba_skus.quantity,
+          amazon_shipments.condition,
+          books.author,
+          books.title,
+          books.edition,
+          amazon_shipments.edition_status_code,
+          amazon_shipments.edition_status_date,
+          amazon_shipments.list_price,
+          amazon_shipments.used_wholesale_price,
+          amazon_shipments.nebraska_wh,
+          amazon_shipments.qa_aug_low,
+          amazon_shipments.lowest_good_price,
+          amazon_shipments.qa_low,
+          amazon_shipments.yearly_low,
+          amazon_shipments.qa_fba_low,
+          amazon_shipments.monthly_sqf,
+          amazon_shipments.monthly_spf,
+          amazon_shipments.monthly_rqf,
+          amazon_shipments.monthly_rpf,
+          amazon_shipments.one_year_highest_wholesale_price,
+          amazon_shipments.two_years_wh_max,
+          books.publisher,
+          books.publication_date,
+          books.weight,
+          amazon_shipment_files.name,
+          amazon_shipment_files.date
+        "
+      ).all
     else
       dates = params['data'].split(' - ')
       from_date = Date.parse dates[0]
@@ -91,7 +93,77 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
       IndabaSku.joins(amazon_shipment: %i[book amazon_shipment_file]).where(
         'amazon_shipment_files.date in (?)',
         from_date..to_date
+      ).select(
+        "
+          amazon_shipments.az_sku,
+          amazon_shipments.isbn,
+          amazon_shipments.shipment_id,
+          indaba_skus.sku,
+          indaba_skus.quantity,
+          amazon_shipments.condition,
+          books.author,
+          books.title,
+          books.edition,
+          amazon_shipments.edition_status_code,
+          amazon_shipments.edition_status_date,
+          amazon_shipments.list_price,
+          amazon_shipments.used_wholesale_price,
+          amazon_shipments.nebraska_wh,
+          amazon_shipments.qa_aug_low,
+          amazon_shipments.lowest_good_price,
+          amazon_shipments.qa_low,
+          amazon_shipments.yearly_low,
+          amazon_shipments.qa_fba_low,
+          amazon_shipments.monthly_sqf,
+          amazon_shipments.monthly_spf,
+          amazon_shipments.monthly_rqf,
+          amazon_shipments.monthly_rpf,
+          amazon_shipments.one_year_highest_wholesale_price,
+          amazon_shipments.two_years_wh_max,
+          books.publisher,
+          books.publication_date,
+          books.weight,
+          amazon_shipment_files.name,
+          amazon_shipment_files.date
+        "
       )
     end
   end
+  # rubocop:enable  Metrics/MethodLength
+
+  def record_map(record)
+    {
+      az_sku: record.az_sku,
+      isbn: record.isbn,
+      shipment_id: record.shipment_id,
+      sku: record.sku,
+      quantity: record.quantity,
+      condition: record.condition,
+      author: record.author,
+      title: record.title,
+      edition: record.edition,
+      status_code: record.edition_status_code,
+      stat_date: record.edition_status_date,
+      list: record.list_price,
+      MBS_WH: record.used_wholesale_price,
+      NBC_WH: record.nebraska_wh,
+      QaPC3: record.qa_aug_low,
+      ALow: record.lowest_good_price,
+      QaLow: record.qa_low,
+      YLow: record.yearly_low,
+      QaFBALow: record.qa_fba_low,
+      "30SQF": record.monthly_sqf,
+      "30SPF": record.monthly_spf,
+      "30RQF": record.monthly_rqf,
+      "30RPF": record.monthly_rpf,
+      "1YRWH": record.one_year_highest_wholesale_price,
+      "2YRWH": record.two_years_wh_max,
+      publisher: record.publisher,
+      pub_date: record.publication_date,
+      weight: record.weight,
+      file_name: record.name,
+      import_date: record.date
+    }
+  end
 end
+# rubocop:enable  Metrics/ClassLength

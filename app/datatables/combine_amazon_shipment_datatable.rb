@@ -17,14 +17,7 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
 
   def data
     records.map do |record|
-      {
-        shipment_id: record.shipment_id,
-        quantity_shipped: record.quantity_shipped,
-        quantity_in_case: record.quantity_in_case,
-        quantity_received: record.quantity_received,
-        quantity_difference: record.quantity_difference,
-        created_at: record.import_date.strftime('%Y-%m-%d')
-      }
+      record_map(record)
     end
   end
 
@@ -47,5 +40,16 @@ class CombineAmazonShipmentDatatable < AjaxDatatablesRails::ActiveRecord
       sum(quantity_shipped - quantity_received) as quantity_difference,
       amazon_shipment_files.date as import_date
     ').group('shipment_id', 'amazon_shipment_files.date')
+  end
+
+  def record_map(record)
+    {
+      shipment_id: record.shipment_id,
+      quantity_shipped: record.quantity_shipped,
+      quantity_in_case: record.quantity_in_case,
+      quantity_received: record.quantity_received,
+      quantity_difference: record.quantity_difference,
+      created_at: record.import_date.strftime('%Y-%m-%d')
+    }
   end
 end

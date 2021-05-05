@@ -3,7 +3,6 @@
 ##
 class AmazonShipmentsController < ApplicationController
   include AmazonShipmentCsvModule
-  include AmazonShipmentDatatableModule
 
   def index
     authorize AmazonShipment
@@ -13,9 +12,11 @@ class AmazonShipmentsController < ApplicationController
       format.html
       format.json { render json: AmazonShipmentDatatable.new(params) }
       format.csv do
-        params[:length] = '-1'
-        send_data datatable_to_csv(AmazonShipmentDatatable.new(params)),
-                  filename: "amazon_shipments-#{Date.today}.csv"
+        params.permit!
+        CsvDownloadJob.perform_later(params, 'AmazonShipmentDatatable',
+                                     "amazon_shipments-#{Date.today}.csv",
+                                     current_user.id)
+        head :ok
       end
     end
   end
@@ -27,9 +28,11 @@ class AmazonShipmentsController < ApplicationController
       format.html
       format.json { render json: CombineAmazonShipmentDatatable.new(params) }
       format.csv do
-        params[:length] = '-1'
-        send_data datatable_to_csv(CombineAmazonShipmentDatatable.new(params)),
-                  filename: "amazon_shipments_combined-#{Date.today}.csv"
+        params.permit!
+        CsvDownloadJob.perform_later(params, 'CombineAmazonShipmentDatatable',
+                                     "amazon_shipments_combined-#{Date.today}.csv",
+                                     current_user.id)
+        head :ok
       end
     end
   end
@@ -42,9 +45,11 @@ class AmazonShipmentsController < ApplicationController
       format.html
       format.json { render json: IndabaSkuDatatable.new(params) }
       format.csv do
-        params[:length] = '-1'
-        send_data datatable_to_csv(IndabaSkuDatatable.new(params)),
-                  filename: "amazon_shipments_indaba_skus-#{Date.today}.csv"
+        params.permit!
+        CsvDownloadJob.perform_later(params, 'IndabaSkuDatatable',
+                                     "amazon_shipments_indaba_skus-#{Date.today}.csv",
+                                     current_user.id)
+        head :ok
       end
     end
   end
