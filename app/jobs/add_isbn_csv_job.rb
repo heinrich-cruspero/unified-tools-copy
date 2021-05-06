@@ -2,7 +2,11 @@
 
 ##
 class AddIsbnCsvJob < ApplicationJob
-  queue_as :delayed_job
+  queue_as :default
+
+  def priority
+    -1
+  end
 
   def perform(*args)
     csv_data = args[0]
