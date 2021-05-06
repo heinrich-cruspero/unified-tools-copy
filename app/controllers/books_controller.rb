@@ -255,28 +255,31 @@ class BooksController < ApplicationController
     authorize Book
     uploaded_file = params[:csv_file]
     if uploaded_file
-      csv_text = File.read(uploaded_file)
-      csv = CSV.parse(csv_text, headers: true)
-      csv_hash = CSV.parse(csv_text, headers: true).map(&:to_h)
+      begin
+        csv_text = File.read(uploaded_file)
+        csv = CSV.parse(csv_text, headers: true)
+        csv_hash = csv.map(&:to_h)
 
-      # validate column headers
-      valid_columns = validate_headers(csv.headers)
-      unless valid_columns
-        return redirect_to add_isbn_books_path,
-                           flash: { error: 'Invalid CSV, missing required columns.' }
+        # validate column headers
+        valid_columns = validate_headers(csv.headers)
+        unless valid_columns
+          return redirect_to add_isbn_books_path,
+                             flash: { error: 'Invalid CSV file: missing required columns.' }
+        end
+        # validate csv entries
+        data_is_valid, error_message = validate_entries(csv)
+        unless data_is_valid
+          return redirect_to add_isbn_books_path,
+                             flash: { error: error_message }
+        end
+
+        flash[:notice] = 'Processed imported file.'
+        flash.keep(:notice)
+        AddIsbnCsvJob.perform_later(csv_hash, current_user.id)
+      rescue CSV::MalformedCSVError => e
+        redirect_to add_isbn_books_path,
+                    flash: { error: "Invalid CSV file: #{e.message}" }
       end
-
-      # validate csv entries
-      data_is_valid, error_message = validate_entries(csv_hash)
-
-      unless data_is_valid
-        return redirect_to add_isbn_books_path,
-                           flash: { error: error_message }
-      end
-
-      flash[:notice] = 'Processed imported file.'
-      flash.keep(:notice)
-      AddIsbnCsvJob.perform_later(csv_hash, current_user.id)
     else
       redirect_to add_isbn_books_path, flash: { error: 'Missing csv file.' }
     end

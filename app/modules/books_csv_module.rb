@@ -10,7 +10,9 @@ module BooksCsvModule
     is_valid
   end
 
-  def validate_entries(csv_hash)
+  def validate_entries(csv)
+    csv_hash = csv.map(&:to_h)
+
     is_valid = true
     error_message = nil
     # validate csv entries

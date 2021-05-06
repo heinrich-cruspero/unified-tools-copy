@@ -29,7 +29,7 @@ RSpec.describe BooksCsvModule do
   end
 
   it 'validates entries' do
-    csv = CSV.parse(csv_data, headers: true).map(&:to_h)
+    csv = CSV.parse(csv_data, headers: true)
     is_valid, _err = validate_entries(csv)
     expect(is_valid).to eq true
   end
