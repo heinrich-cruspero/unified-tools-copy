@@ -41,6 +41,9 @@ Rails.application.routes.draw do
     collection do
       get 'link_oe_isbn'
       post 'link_oe_isbn_import'
+
+      get 'add_isbn'
+      post 'add_isbn_import'
     end
   end
 

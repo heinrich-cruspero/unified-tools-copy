@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-sm">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+      <h1 class="h2">Books - Add ISBN/s</h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <div class="custom-file">
+      <%= form_tag(add_isbn_import_books_path, id: 'add-isbn-form', multipart: true) do %>
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <p><b>Book ISBN Data:</b></p>
+                <p class="input-note">Note: Enter isbns with its corresponding fields
+                                      (isbn, ean, title, author, edition, publisher) 
+                                      without double/single quotes, in CSV format. <br>
+                example - <br> 
+                isbn,ean,title,author,edition,publisher<br> 
+                0002171856,1002171856,The Couple in the Widow,CAMERON HOLMES,1,Bookends<br> 
+                0004334523,1004334523,Gone Town,REGAN SOWLE,2,Find Your Bind<br>
+                0004723570,1004723570,Innocent Eyes,LESLEY RAY,4,The Lookbooks<br>
+                </p>
+                <%= file_field_tag 'csv_file', class: 'mb-3' %>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm">
+                <%= submit_tag "Submit", class: 'btn btn-secondary csv-btn', data: { disable_with: false }%>
+            </div>
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/block_modal' %>

@@ -4,6 +4,7 @@
 # rubocop:disable  Metrics/ClassLength
 class BooksController < ApplicationController
   before_action :book_detail, except: [:index]
+  include BooksCsvModule
 
   def index
     authorize Book
@@ -239,6 +240,47 @@ class BooksController < ApplicationController
       redirect_to books_url, flash: { notice: 'Processing imported file.' }
     else
       redirect_to link_oe_isbn_books_url, flash: { error: 'Missing csv file.' }
+    end
+  end
+
+  def add_isbn
+    authorize Book
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def add_isbn_import
+    authorize Book
+    uploaded_file = params[:csv_file]
+    if uploaded_file
+      begin
+        csv_text = File.read(uploaded_file)
+        csv = CSV.parse(csv_text, headers: true)
+        csv_hash = csv.map(&:to_h)
+
+        # validate column headers
+        valid_columns = validate_headers(csv.headers)
+        unless valid_columns
+          return redirect_to add_isbn_books_path,
+                             flash: { error: 'Invalid CSV file: missing required columns.' }
+        end
+        # validate csv entries
+        data_is_valid, error_message = validate_entries(csv)
+        unless data_is_valid
+          return redirect_to add_isbn_books_path,
+                             flash: { error: error_message }
+        end
+
+        AddIsbnCsvJob.perform_later(csv_hash, current_user.id)
+        head :ok
+      rescue CSV::MalformedCSVError => e
+        redirect_to add_isbn_books_path,
+                    flash: { error: "Invalid CSV file: #{e.message}" }
+      end
+    else
+      redirect_to add_isbn_books_path, flash: { error: 'Missing csv file.' }
     end
   end
 
