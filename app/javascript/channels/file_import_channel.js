@@ -14,7 +14,8 @@ function file_import_channel(){
       console.log('Received on FileImportChannel')
 
       $("#blockModal").modal('hide');
-      window.location.reload();
+      $(".alert").remove();
+      $(".main-content").prepend("<div class='alert alert-info'>Processed imported file.</div>");
       consumer.disconnect()
     }
   });

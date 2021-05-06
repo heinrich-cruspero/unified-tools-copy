@@ -273,8 +273,6 @@ class BooksController < ApplicationController
                              flash: { error: error_message }
         end
 
-        flash[:notice] = 'Processed imported file.'
-        flash.keep(:notice)
         AddIsbnCsvJob.perform_later(csv_hash, current_user.id)
         head :ok
       rescue CSV::MalformedCSVError => e
