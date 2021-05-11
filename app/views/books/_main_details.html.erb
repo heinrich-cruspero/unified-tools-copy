@@ -100,7 +100,7 @@
                 7d: <%= @book.weekly_sales_rank ? number_with_delimiter(@book.weekly_sales_rank) : '' %> <br>
                 1/<%= Book.jan_year %>: <%= @book.sales_rank_jan_average ? number_with_delimiter(@book.sales_rank_jan_average) : '' %> <br>
                 8/<%= Book.aug_year%> : <%= @book.book_qa_aug_rank ? number_with_delimiter(@book.book_qa_aug_rank) : '' %> <br>
-                OE: <%= @book.oe_isbn_rec ? number_with_delimiter(@book.oe_isbn_rec.sales_rank) : '' %>
+                OE: <%= @book.oe_isbn_rec ? number_with_delimiter(@book.oe_isbn_rec.qa_aug_rank) : '' %>
             </div>
         </div>
         <div class="col-detail">
