@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_154425) do
+ActiveRecord::Schema.define(version: 2021_05_12_125337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_154425) do
     t.decimal "list_price", default: "0.0", null: false
     t.decimal "used_wholesale_price", default: "0.0", null: false
     t.decimal "new_wholesale_price", default: "0.0", null: false
-    t.integer "copyright_year", default: 0
+    t.integer "copyright_year", default: 0, null: false
     t.decimal "trade_in", default: "0.0", null: false
     t.decimal "amazon_price", default: "0.0", null: false
     t.decimal "lowest_good_price", default: "0.0", null: false
@@ -444,6 +444,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_154425) do
     t.decimal "rent_avg", precision: 10, scale: 2
     t.string "ne_isbn"
     t.decimal "nw_jan_avg", default: "0.0", null: false
+    t.datetime "last_scanned"
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
@@ -516,6 +517,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_154425) do
     t.index ["inbq"], name: "index_books_on_inbq"
     t.index ["isbn"], name: "index_books_on_isbn"
     t.index ["jan_rush_in_stock"], name: "index_books_on_jan_rush_in_stock"
+    t.index ["last_scanned"], name: "index_books_on_last_scanned"
     t.index ["life"], name: "index_books_on_life"
     t.index ["list_price"], name: "index_books_on_list_price"
     t.index ["low_apr_avg"], name: "index_books_on_low_apr_avg"
