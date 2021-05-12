@@ -202,8 +202,8 @@ class BooksController < ApplicationController
     authorize Book
     chart_data = {}
     unless @book.nil?
-      data = @book.sales_rank_history
-      data.each do |result|
+      @sales_rank_data = @book.sales_rank_history
+      @sales_rank_data.each do |result|
         chart_data.merge!("#{result['date']}": result['avg'].nil? ? 0 : result['avg'].to_i)
       end
     end
@@ -216,7 +216,8 @@ class BooksController < ApplicationController
             locals: {
               data: chart_data
             }
-          )
+          ),
+          min_sales_rank_history: render_to_string(partial: 'min_sales_rank_history')
         }
       end
     end

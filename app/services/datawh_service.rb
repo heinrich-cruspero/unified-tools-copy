@@ -125,6 +125,7 @@ class DatawhService
   def sales_rank_history(isbn)
     @connection.exec(
       "SELECT AVG(r.sales_rank),
+      MIN(r.sales_rank) as min_sales_rank,
       CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
       FROM amazon_data r
       WHERE

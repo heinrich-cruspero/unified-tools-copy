@@ -83,6 +83,7 @@ $( document ).on('turbolinks:load', function() {
             }
         })
 
+        $("#min-srh-no-data").hide();
         $("#sales-rank-div").html("");
         $.ajax({
             type: "GET",
@@ -90,7 +91,9 @@ $( document ).on('turbolinks:load', function() {
             dataType: "js",
             complete: function(result){
                 $("#sales-rank-spinner").hide();
+                $("#min-srh-spinner").hide();
                 if (result.responseText){
+                    $("#min-sales-rank-history-div").html($.parseJSON(result.responseText).min_sales_rank_history);
                     $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
                 }
             }
