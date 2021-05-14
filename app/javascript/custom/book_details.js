@@ -91,10 +91,24 @@ $( document ).on('turbolinks:load', function() {
             dataType: "js",
             complete: function(result){
                 $("#sales-rank-spinner").hide();
-                $("#min-srh-spinner").hide();
                 if (result.responseText){
                     $("#min-sales-rank-history-div").html($.parseJSON(result.responseText).min_sales_rank_history);
                     $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
+                    $("#min-srh-spinner").hide();
+                }
+            }
+        })
+
+        // amazon orders
+        $("#ao-no-data").hide();
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/amazon_orders",
+            dataType: "js",
+            complete: function(result){
+                if (result.responseText){
+                    $("#amazon-orders-div").html($.parseJSON(result.responseText).amazon_orders);
+                    $("#ao-spinner").hide();
                 }
             }
         })

@@ -74,3 +74,11 @@
             username:
             password:
             port:
+
+## Indaba Main DB
+    indabamain:
+        host:
+        database:
+        username:
+        password:
+        port:
