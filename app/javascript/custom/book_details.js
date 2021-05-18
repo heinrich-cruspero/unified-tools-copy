@@ -166,7 +166,8 @@ $( document ).on('turbolinks:load', function() {
     })
       
     function searchBook(){
-        let book_val = $('#search_book').val()
+        let book_val = $('#search_book').val().replace(/-/g, '')
+
         if (book_val.length == 10 || book_val.length == 13) {
             window.location.pathname = "/books/" + book_val + "/details"
         }
