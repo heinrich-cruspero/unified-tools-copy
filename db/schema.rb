@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_125337) do
+ActiveRecord::Schema.define(version: 2021_05_21_025814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -445,6 +445,7 @@ ActiveRecord::Schema.define(version: 2021_05_12_125337) do
     t.string "ne_isbn"
     t.decimal "nw_jan_avg", default: "0.0", null: false
     t.datetime "last_scanned"
+    t.decimal "supplier_low", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
@@ -656,6 +657,7 @@ ActiveRecord::Schema.define(version: 2021_05_12_125337) do
     t.index ["sku"], name: "index_books_on_sku"
     t.index ["store_name"], name: "index_books_on_store_name"
     t.index ["subject"], name: "index_books_on_subject"
+    t.index ["supplier_low"], name: "index_books_on_supplier_low"
     t.index ["supplier_price"], name: "index_books_on_supplier_price"
     t.index ["texas_wh"], name: "index_books_on_texas_wh"
     t.index ["third_fba"], name: "index_books_on_third_fba"
