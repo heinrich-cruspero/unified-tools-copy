@@ -2,7 +2,7 @@
     <div class="field">
         
         <%= f.hidden_field :position, class: "field-position" %>
-        <%= f.collection_select :book_field_mapping_id, BookFieldMapping.order(:id).all,:id, :display_name, {}, {class: "field-select"} %>
+        <%= f.collection_select :book_field_mapping_id, BookFieldMapping.order(:display_name).all,:id, :display_name, {}, {class: "field-select"} %>
         
         <span class="fa fa-arrows-alt ml-1"></span>&nbsp;
         <%= f.hidden_field :_destroy %>
