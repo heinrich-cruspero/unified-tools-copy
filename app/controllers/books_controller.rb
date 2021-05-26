@@ -218,117 +218,51 @@ class BooksController < ApplicationController
     end
   end
 
-  # rubocop:disable  Metrics/MethodLength
-  def amazon_orders # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def amazon_orders
     authorize Book
 
-    @amazon_orders = []
-    @amazon_orders_totals = nil
-    main_q_totals = 0
-    main_p_totals = 0.00
-    main_direct_q_totals = 0
-    main_direct_p_totals = 0.00
+    @amazon_orders = nil
+    @sale_q_totals = 0
+    @sale_p_totals = 0.00
+    @rental_q_totals = 0
+    @rental_p_totals = 0.00
+    @main_q_totals = 0
+    @main_p_totals = 0.00
+    @main_direct_q_totals = 0
+    @main_direct_p_totals = 0.00
 
     unless @book.nil?
+      @amazon_orders = @book.amazon_orders
+      amazon_orders_totals = @book.amazon_orders_totals.take
 
-      @amazon_orders = if @book.amazon_orders.nil?
-                         []
-                       else
-                         @book.amazon_orders.as_json
-                       end
-      @amazon_orders_totals = if @book.amazon_orders_totals.nil?
-                                []
-                              else
-                                @book.amazon_orders_totals.take.as_json
-                              end
-      main_copy_sales = @book.main_copy_sales
-      main_copy_direct_sales = @book.main_copy_direct_sales
+      @main_copy_sales = @book.main_copy_sales
+      @main_copy_direct_sales = @book.main_copy_direct_sales
 
-      @amazon_orders.map do |hash|
-        hash.merge!({
-          "main_quantity": 0,
-          "main_avg_price": 0.00,
-          "direct_quantity": 0,
-          "direct_avg_price": 0.00
-        }.stringify_keys)
-      end
+      # amazon order totals
+      @sale_q_totals = amazon_orders_totals.sale_quantity
+      @sale_p_totals = amazon_orders_totals.sale_avg_price
+      @rental_q_totals = amazon_orders_totals.rental_quantity
+      @rental_p_totals = amazon_orders_totals.rental_avg_price
 
-      # main
-      unless main_copy_sales.blank?
-        # totals
-        main_q_totals = main_copy_sales.inject(0) do |sum, hash|
+      unless @main_copy_sales.blank?
+        # main totals
+        @main_q_totals = @main_copy_sales.inject(0) do |sum, hash|
           sum + hash['quantity']
         end
-        main_p_totals = main_copy_sales.inject(0) do |sum, hash|
+        @main_p_totals = @main_copy_sales.inject(0) do |sum, hash|
           sum + hash['avg_price']
-        end.to_f / main_copy_sales.count
-
-        # map main
-        main_copy_sales.each do |rec|
-          match = @amazon_orders.find { |h| h['date'] == rec['date'] }
-          if match
-            match.merge!({
-              "main_quantity": rec['quantity'],
-              "main_avg_price": rec['avg_price']
-            }.stringify_keys)
-          else
-            @amazon_orders.append({
-              "sale_quantity": 0,
-              "sale_avg_price": 0.00,
-              "rental_quantity": 0,
-              "rental_avg_price": 0.00,
-              "main_quantity": rec['quantity'],
-              "main_avg_price": rec['avg_price'],
-              "direct_quantity": 0,
-              "direct_avg_price": 0.00,
-              "date": rec['date']
-            }.stringify_keys)
-          end
-        end
+        end.to_f / @main_copy_sales.count
       end
 
-      # main direct
-      unless main_copy_direct_sales.blank?
-        main_direct_q_totals = main_copy_direct_sales.inject(0) do |sum, hash|
+      unless @main_copy_direct_sales.blank?
+        # main direct totals
+        @main_direct_q_totals = @main_copy_direct_sales.inject(0) do |sum, hash|
           sum + hash['quantity']
         end
-        main_direct_p_totals = main_copy_direct_sales.inject(0) do |sum, hash|
+        @main_direct_p_totals = @main_copy_direct_sales.inject(0) do |sum, hash|
           sum + hash['avg_price']
-        end.to_f / main_copy_direct_sales.count
-
-        main_copy_direct_sales.each do |rec|
-          match = @amazon_orders.find { |h| h['date'] == rec['date'] }
-          if match
-            match.merge!({
-              "direct_quantity": rec['quantity'],
-              "direct_avg_price": rec['avg_price']
-            }.stringify_keys)
-          else
-            @amazon_orders.append({
-              "sale_quantity": 0,
-              "sale_avg_price": 0.00,
-              "rental_quantity": 0,
-              "rental_avg_price": 0.00,
-              "main_quantity": 0,
-              "main_avg_price": 0.00,
-              "direct_quantity": rec['quantity'],
-              "direct_avg_price": rec['avg_price'],
-              "date": rec['date']
-            }.stringify_keys)
-          end
-        end
+        end.to_f / @main_copy_direct_sales.count
       end
-
-      @amazon_orders_totals.merge!({
-        "main_quantity": main_q_totals,
-        "main_avg_price": main_p_totals,
-        "direct_quantity": main_direct_q_totals,
-        "direct_avg_price": main_direct_p_totals
-      }.stringify_keys)
-
-      @amazon_orders.sort_by! do |hash|
-        hash['date'].split('/').reverse
-      end.reverse!
     end
 
     respond_to do |format|
@@ -339,7 +273,6 @@ class BooksController < ApplicationController
       end
     end
   end
-  # rubocop:enable  Metrics/MethodLength
 
   def link_oe_isbn
     authorize Book

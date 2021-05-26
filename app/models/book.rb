@@ -205,7 +205,7 @@ class Book < ApplicationRecord
           THEN quantity_ordered ELSE NULL END) as rental_quantity,
         avg(CASE WHEN sale_type=1
           THEN (item_price/quantity_ordered) ELSE NULL END) as rental_avg_price,
-        to_char(purchase_date,'MM/YYYY') as date
+        to_char(purchase_date,'YYYY/MM') as date
       "
     ).group(
       'date'
