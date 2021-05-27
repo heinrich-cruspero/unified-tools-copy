@@ -3,6 +3,7 @@
     <label class="table-title">Rental History</label>
 </div>
 <div id="detail-headers" class="book-details">
+    <label class="col-detail title">Renters</label>
     <label class="col-detail title">W</label>
     <label class="col-detail title">NW</label>
     <label class="col-detail title">Month / Year</label>
@@ -16,6 +17,14 @@
     <% @rental_history.each do |row| %>
       <div class="book-details dotted-top qh-detail-row">
         <input type="hidden" name="hist-table" value="rental-hist-table">
+        <div class="col-detail col-data">
+          <p class="title title-sm">Renters</p>
+          <div>
+              <label class="pr-2">
+                <%= number_with_delimiter(row["seller_count"] ? row["seller_count"] : 0) %>
+              </label>
+          </div>
+        </div>
         <div class="col-detail col-data">
           <p class="title title-sm">W</p>
           <div>

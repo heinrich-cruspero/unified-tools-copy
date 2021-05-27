@@ -61,7 +61,8 @@
         <div class="col-detail">
             <p class="title title-sm">List</p>
             <div>
-                <%= @book.list_price ? number_with_delimiter(@book.list_price) : '' %>
+                <%= @book.list_price ? number_with_delimiter(@book.list_price) : '' %> <br>
+                OE: <%= @book.oe_list_price ? number_with_delimiter(@book.oe_list_price) : '' %>
             </div>
         </div>
         <div class="col-detail">

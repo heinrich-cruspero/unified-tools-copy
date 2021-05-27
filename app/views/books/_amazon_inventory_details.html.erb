@@ -14,6 +14,7 @@
     <label class="col-detail title">BO%</label>
     <label class="col-detail title">RQ</label>
     <label class="col-detail title">R%</label>
+    <label class="col-detail title">TQ</label>
 </div>
 
 <% if @book.nil? %>
@@ -87,6 +88,12 @@
             <p class="title title-sm">R%</p>
             <div>
                 <%= @book.returns_percentage %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">TQ</p>
+            <div>
+                <%= @book.total_quantity %>
             </div>
         </div>
     </div>

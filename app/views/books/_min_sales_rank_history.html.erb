@@ -1,0 +1,39 @@
+<!-- Title Headers -->
+<div class="detail-caption mt-4">
+    <label class="table-title">Sales Rank History</label>
+</div>
+
+<div id="detail-headers" class="book-details">
+  <label class="col-detail title">Min</label>
+  <label class="col-detail title">Month / Year</label>
+</div>
+
+<% if @book.nil? %>
+  <div class="no-data text-center">
+    No data available in table.
+  </div>
+<% else %>
+  <!-- Sales Rank Data -->
+  <% unless @sales_rank_data.blank? %>
+    <% @sales_rank_data.reverse().each do |data| %>
+      <div class="book-details dotted-top">
+        <div class="col-detail">
+          <p class="title title-sm">Min</p>
+          <div><%= data["min_sales_rank"] ? number_with_delimiter(data["min_sales_rank"]) : 0 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Month/Year</p>
+          <div>
+            <% date_parts = data.fetch("date", "")&.split('/') %>
+            <%= "#{date_parts[0].rjust(2, "0")}/#{date_parts[1]}" if date_parts&.count == 2 %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="no-data text-center">
+      <div class="section-loader" id="min-srh-spinner"></div>
+      <div id="min-srh-no-data">No data available in table.</div>
+    </div>
+  <% end %>
+<% end %>
