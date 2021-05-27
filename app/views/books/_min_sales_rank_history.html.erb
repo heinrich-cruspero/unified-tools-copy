@@ -15,7 +15,7 @@
 <% else %>
   <!-- Sales Rank Data -->
   <% unless @sales_rank_data.blank? %>
-    <% @sales_rank_data.reverse().each do |data| %>
+    <% @sales_rank_data.each do |data| %>
       <div class="book-details dotted-top">
         <div class="col-detail">
           <p class="title title-sm">Min</p>
@@ -25,7 +25,7 @@
           <p class="title title-sm">Month/Year</p>
           <div>
             <% date_parts = data.fetch("date", "")&.split('/') %>
-            <%= "#{date_parts[0].rjust(2, "0")}/#{date_parts[1]}" if date_parts&.count == 2 %>
+            <%= "#{date_parts[1]}/#{date_parts[0]}" if date_parts&.count == 2 %>
           </div>
         </div>
       </div>

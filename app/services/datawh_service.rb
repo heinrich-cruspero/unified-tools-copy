@@ -125,16 +125,18 @@ class DatawhService
 
   def sales_rank_history(isbn)
     @connection.exec(
-      "SELECT AVG(r.sales_rank),
-      MIN(r.sales_rank) as min_sales_rank,
-      CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
+      "SELECT
+        AVG(r.sales_rank) AS AVG,
+        MIN(r.sales_rank) as min_sales_rank,
+        to_char(r.created_at,'YYYY/MM') AS Date
       FROM amazon_data r
       WHERE
       r.isbn = '#{isbn}'
       AND
       r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date
-      ORDER BY Date ASC"
+      HAVING AVG(r.sales_rank) > 0
+      ORDER BY Date DESC"
     )
   end
 
