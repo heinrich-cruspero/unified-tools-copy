@@ -40,8 +40,9 @@ class DatawhService
       r.isbn = '#{isbn}'
       AND
       r.created_at > (NOW() - (INTERVAL '1 YEAR'))
+      AND
+      r.fba_price > 0
       GROUP BY Date
-      HAVING AVG(r.fba_price) > 0
       ORDER BY Date DESC"
     )
   end
@@ -72,8 +73,9 @@ class DatawhService
       r.isbn = '#{isbn}'
       AND
       r.created_at > (NOW() - (INTERVAL '1 YEAR'))
+      AND
+      r.lowest_price > 0
       GROUP BY Date
-      HAVING AVG(r.lowest_price) > 0
       ORDER BY Date DESC"
     )
   end
