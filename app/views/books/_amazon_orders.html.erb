@@ -2,67 +2,108 @@
 <div class="detail-caption mt-4">
     <label class="table-title">Amazon Orders - AVG Turns: <%= @book? @book.average_turns : 'N/A' %> - ROI: <%= @book? @book.roi : 'N/A' %></label>
 </div>
-<div id="detail-headers" class="book-details">
-  <label class="col-detail title">Sale Q</label>
-  <label class="col-detail title">Sale P</label>
-  <label class="col-detail title">Rental P</label>
-  <label class="col-detail title">Rental Q</label>
-  <label class="col-detail title">Month/Year</label>
-</div>
 
 <% if @book.nil? %>
   <div class="no-data text-center">
     No data available in table.
   </div>
 <% else %>
-  <!-- AMAZON ORDERS -->
-  <% @amazon_orders.each do |order| %>
-    <div class="book-details dotted-top">
+  <% unless @amazon_orders_totals.blank? %>
+    <div id="amazon-orders-total-avg" class="book-details">
       <div class="col-detail">
-        <p class="title title-sm">Sale P</p>
-        <div><%= order.sale_quantity ? number_with_delimiter(order.sale_quantity) : 0 %></div>
+        <p class="title title-sm">Sale P Total</p>
+        <div><%= @amazon_orders_totals["sale_quantity"] ? number_with_delimiter(@amazon_orders_totals["sale_quantity"]) : 0 %></div>
       </div>
       <div class="col-detail">
-        <p class="title title-sm">Sale Q</p>
-        <div><%= order.sale_avg_price ? number_with_delimiter(number_with_precision(order.sale_avg_price, precision: 2)) : 0.00 %></div>
+        <p class="title title-sm">Sale Q Total</p>
+        <div><%= @amazon_orders_totals["sale_avg_price"] ? number_with_delimiter(number_to_currency(@amazon_orders_totals["sale_avg_price"])) : 0.00 %></div>
       </div>
       <div class="col-detail">
-        <p class="title title-sm">Rental P</p>
-        <div><%= order.rental_quantity ? number_with_delimiter(order.rental_quantity) : 0 %></div>
+        <p class="title title-sm">Rental Q Total</p>
+        <div><%= @amazon_orders_totals["rental_quantity"] ? number_with_delimiter(@amazon_orders_totals["rental_quantity"]) : 0 %></div>
       </div>
       <div class="col-detail">
-        <p class="title title-sm">Rental Q</p>
-        <div><%= order.rental_avg_price ? number_with_delimiter(number_with_precision(order.rental_avg_price, precision: 2)) : 0.00 %></div>
+        <p class="title title-sm">Rental P Total</p>
+        <div><%= @amazon_orders_totals["rental_avg_price"] ? number_with_delimiter(number_to_currency(@amazon_orders_totals["rental_avg_price"])) : 0.00 %></div>
       </div>
       <div class="col-detail">
-        <p class="title title-sm">Month/Year</p>
-        <div>
-          <% date_parts = order.date&.split('/') %>
-          <%= "#{date_parts[1]}/#{date_parts[0]}" if date_parts&.count == 2 %>
-        </div>
+        <p class="title title-sm">Main Q Total</p>
+        <div><%= @amazon_orders_totals["main_quantity"] ? number_with_delimiter(@amazon_orders_totals["main_quantity"]) : 0 %></div>
       </div>
+      <div class="col-detail">
+        <p class="title title-sm">Main P Total</p>
+        <div><%= @amazon_orders_totals["main_avg_price"] ? number_with_delimiter(number_to_currency(@amazon_orders_totals["main_avg_price"])) : 0.00 %></div>
+      </div>
+      <div class="col-detail">
+        <p class="title title-sm">Direct Q Total</p>
+        <div><%= @amazon_orders_totals["direct_quantity"] ? number_with_delimiter(@amazon_orders_totals["direct_quantity"]) : 0 %></div>
+      </div>
+      <div class="col-detail">
+        <p class="title title-sm">Direct P Total</p>
+        <div><%= @amazon_orders_totals["direct_avg_price"] ? number_with_delimiter(number_to_currency(@amazon_orders_totals["direct_avg_price"])) : 0.00 %></div>
+      </div>
+      <div class="col-detail">
+        <p class="title">Totals</p>
+      </div>
+    </div>
+
+    <div id="detail-headers" class="book-details">
+      <label class="col-detail title">Sale Q</label>
+      <label class="col-detail title">Sale P</label>
+      <label class="col-detail title">Rental Q</label>
+      <label class="col-detail title">Rental P</label>
+      <label class="col-detail title">Main Q</label>
+      <label class="col-detail title">Main P</label>
+      <label class="col-detail title">Direct Q</label>
+      <label class="col-detail title">Direct P</label>
+      <label class="col-detail title">Month / Year</label>
     </div>
   <% end %>
-  <!-- AMAZON ORDERS TOTAL -->
-  <div id="amazon-orders-total-avg" class="book-details">
-    <div class="col-detail">
-      <p class="title title-sm">Sale P Total</p>
-      <div><%= @amazon_orders_totals.sale_quantity ? number_with_delimiter(@amazon_orders_totals.sale_quantity) : 0 %></div>
-    </div>
-    <div class="col-detail">
-      <p class="title title-sm">Sale Q Total</p>
-      <div><%= @amazon_orders_totals.sale_avg_price ? number_with_delimiter(number_to_currency(@amazon_orders_totals.sale_avg_price)) : 0.00 %></div>
-    </div>
-    <div class="col-detail">
-      <p class="title title-sm">Rental P Total</p>
-      <div><%= @amazon_orders_totals.rental_quantity ? number_with_delimiter(@amazon_orders_totals.rental_quantity) : 0 %></div>
-    </div>
-    <div class="col-detail">
-      <p class="title title-sm">Rental Q Total</p>
-      <div><%= @amazon_orders_totals.rental_avg_price ? number_with_delimiter(number_to_currency(@amazon_orders_totals.rental_avg_price)) : 0.00 %></div>
-    </div>
-    <div class="col-detail">
-      <p class="title">Totals</p>
-    </div>
-  </div>
+
+  <!-- AMAZON ORDERS -->
+  <% unless @amazon_orders.blank? %>
+    <% @amazon_orders.each do |order| %>
+      <div class="book-details dotted-top">
+        <div class="col-detail">
+          <p class="title title-sm">Sale P</p>
+          <div><%= order["sale_quantity"] ? number_with_delimiter(order["sale_quantity"]) : 0 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Sale Q</p>
+          <div><%= order["sale_avg_price"] ? number_with_delimiter(number_with_precision(order["sale_avg_price"], precision: 2)) : 0.00 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Rental P</p>
+          <div><%= order["rental_quantity"] ? number_with_delimiter(order["rental_quantity"]) : 0 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Rental Q</p>
+          <div><%= order["rental_avg_price"] ? number_with_delimiter(number_with_precision(order["rental_avg_price"], precision: 2)) : 0.00 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Main Q</p>
+          <div><%= order["main_quantity"] ? number_with_delimiter(order["main_quantity"]) : 0 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Main P</p>
+          <div><%= order["main_avg_price"] ? number_with_delimiter(number_with_precision(order["main_avg_price"], precision: 2)) : 0.00 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Direct Q</p>
+          <div><%= order["direct_quantity"] ? number_with_delimiter(order["direct_quantity"]) : 0 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Direct P</p>
+          <div><%= order["direct_avg_price"] ? number_with_delimiter(number_with_precision(order["direct_avg_price"], precision: 2)) : 0.00 %></div>
+        </div>
+        <div class="col-detail">
+          <p class="title title-sm">Month/Year</p>
+          <div>
+            <% date_parts = order.fetch("date", "")&.split('/') %>
+            <%= "#{date_parts[0]}/#{date_parts[1]}" if date_parts&.count == 2 %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>

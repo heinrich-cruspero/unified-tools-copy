@@ -205,7 +205,7 @@ class Book < ApplicationRecord
           THEN quantity_ordered ELSE NULL END) as rental_quantity,
         avg(CASE WHEN sale_type=1
           THEN (item_price/quantity_ordered) ELSE NULL END) as rental_avg_price,
-        to_char(purchase_date,'YYYY/MM') as date
+        to_char(purchase_date,'MM/YYYY') as date
       "
     ).group(
       'date'
@@ -371,6 +371,22 @@ class Book < ApplicationRecord
     end
     datawh_service.close
     data
+  end
+
+  def main_copy_sales
+    indaba_main_service = IndabaMainService.new
+    results = indaba_main_service.main_copy_sales(ean)
+
+    indaba_main_service.close
+    results
+  end
+
+  def main_copy_direct_sales
+    indaba_main_service = IndabaMainService.new
+    results = indaba_main_service.main_copy_direct_sales(ean)
+
+    indaba_main_service.close
+    results
   end
 
   def self.parse_csv(file)

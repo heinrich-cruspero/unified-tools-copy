@@ -83,6 +83,7 @@ $( document ).on('turbolinks:load', function() {
             }
         })
 
+        $("#min-srh-no-data").hide();
         $("#sales-rank-div").html("");
         $.ajax({
             type: "GET",
@@ -91,7 +92,23 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 $("#sales-rank-spinner").hide();
                 if (result.responseText){
+                    $("#min-sales-rank-history-div").html($.parseJSON(result.responseText).min_sales_rank_history);
                     $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
+                    $("#min-srh-spinner").hide();
+                }
+            }
+        })
+
+        // amazon orders
+        $("#ao-no-data").hide();
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/amazon_orders",
+            dataType: "js",
+            complete: function(result){
+                if (result.responseText){
+                    $("#amazon-orders-div").html($.parseJSON(result.responseText).amazon_orders);
+                    $("#ao-spinner").hide();
                 }
             }
         })
@@ -149,7 +166,8 @@ $( document ).on('turbolinks:load', function() {
     })
       
     function searchBook(){
-        let book_val = $('#search_book').val()
+        let book_val = $('#search_book').val().replace(/-/g, '')
+
         if (book_val.length == 10 || book_val.length == 13) {
             window.location.pathname = "/books/" + book_val + "/details"
         }

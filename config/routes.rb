@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     member do
       get 'details'
       get 'detail_guides'
+      get 'amazon_orders'
       get 'quantity_history'
       get 'rental_history'
       get 'fba_history'
