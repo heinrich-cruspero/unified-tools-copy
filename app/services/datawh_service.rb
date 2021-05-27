@@ -32,15 +32,16 @@ class DatawhService
   def fba_history(isbn)
     @connection.exec(
       "SELECT
-        AVG(CASE WHEN r.fba_price > 0 THEN r.fba_price END) AS Avg,
+        AVG(r.fba_price) AS Avg,
         to_char(r.created_at,'YYYY/MM') AS Date
       FROM amazon_data r
       WHERE
       r.isbn = '#{isbn}'
       AND
       r.created_at > (NOW() - (INTERVAL '1 YEAR'))
+      AND
+      r.fba_price > 0
       GROUP BY Date
-      HAVING AVG(r.fba_price) > 0
       ORDER BY Date DESC"
     )
   end
@@ -64,15 +65,16 @@ class DatawhService
   def lowest_history(isbn)
     @connection.exec(
       "SELECT
-        AVG(CASE WHEN r.lowest_price > 0 THEN r.lowest_price END) AS Avg,
+        AVG(r.lowest_price) AS Avg,
         to_char(r.created_at,'YYYY/MM') AS Date
       FROM amazon_data r
       WHERE
       r.isbn = '#{isbn}'
       AND
       r.created_at > (NOW() - (INTERVAL '1 YEAR'))
+      AND
+      r.lowest_price > 0
       GROUP BY Date
-      HAVING AVG(r.lowest_price) > 0
       ORDER BY Date DESC"
     )
   end
