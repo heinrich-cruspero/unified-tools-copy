@@ -219,7 +219,7 @@ class BooksController < ApplicationController
   end
 
   # rubocop:disable  Metrics/MethodLength
-  def amazon_orders # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
+  def amazon_orders # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     authorize Book
 
     @amazon_orders = []
