@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_21_025814) do
+ActiveRecord::Schema.define(version: 2021_05_31_065131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,7 +304,6 @@ ActiveRecord::Schema.define(version: 2021_05_21_025814) do
     t.decimal "one_eighty_fba", default: "0.0", null: false
     t.integer "orq_ninety", default: 0, null: false
     t.integer "wantlist_qty", default: 0, null: false
-    t.integer "pending_order", default: 0, null: false
     t.decimal "low_jan_avg", default: "0.0", null: false
     t.decimal "low_feb_avg", default: "0.0", null: false
     t.decimal "low_mar_avg", default: "0.0", null: false
@@ -431,7 +430,6 @@ ActiveRecord::Schema.define(version: 2021_05_21_025814) do
     t.decimal "two_years_wh_max", default: "0.0", null: false
     t.decimal "two_years_wh_min", default: "0.0", null: false
     t.integer "valore_pending_order", default: 0, null: false
-    t.decimal "chegg_avg_price", default: "0.0", null: false
     t.decimal "one_year_highest_wholesale_price", default: "0.0", null: false
     t.decimal "weight", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -476,7 +474,6 @@ ActiveRecord::Schema.define(version: 2021_05_21_025814) do
     t.index ["buyouts_percentage"], name: "index_books_on_buyouts_percentage"
     t.index ["bz_j_sku_quantity"], name: "index_books_on_bz_j_sku_quantity"
     t.index ["c_life"], name: "index_books_on_c_life"
-    t.index ["chegg_avg_price"], name: "index_books_on_chegg_avg_price"
     t.index ["comments"], name: "index_books_on_comments"
     t.index ["competitive_sellers"], name: "index_books_on_competitive_sellers"
     t.index ["copyright"], name: "index_books_on_copyright"
@@ -617,7 +614,6 @@ ActiveRecord::Schema.define(version: 2021_05_21_025814) do
     t.index ["orq_total"], name: "index_books_on_orq_total"
     t.index ["out_of_print_date"], name: "index_books_on_out_of_print_date"
     t.index ["peak_price"], name: "index_books_on_peak_price"
-    t.index ["pending_order"], name: "index_books_on_pending_order"
     t.index ["pnep"], name: "index_books_on_pnep"
     t.index ["pricing_custom_12"], name: "index_books_on_pricing_custom_12"
     t.index ["pricing_custom_14"], name: "index_books_on_pricing_custom_14"
