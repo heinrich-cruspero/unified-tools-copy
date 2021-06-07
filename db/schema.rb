@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_31_065131) do
+ActiveRecord::Schema.define(version: 2021_06_07_182200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -283,7 +283,6 @@ ActiveRecord::Schema.define(version: 2021_05_31_065131) do
     t.decimal "c_life", default: "0.0", null: false
     t.decimal "r_life", default: "0.0", null: false
     t.decimal "life", default: "0.0", null: false
-    t.decimal "max_all_wholesale_price", default: "0.0", null: false
     t.decimal "ninety_nw", default: "0.0", null: false
     t.decimal "ninety_w", default: "0.0", null: false
     t.decimal "one_eighty_nw", default: "0.0", null: false
@@ -341,7 +340,6 @@ ActiveRecord::Schema.define(version: 2021_05_31_065131) do
     t.integer "sales_rank_nov_avg", default: 0, null: false
     t.integer "sales_rank_dec_avg", default: 0, null: false
     t.decimal "weekly_tradein", default: "0.0", null: false
-    t.decimal "follet_wh", default: "0.0", null: false
     t.decimal "nebraska_wh", default: "0.0", null: false
     t.decimal "texas_wh", default: "0.0", null: false
     t.decimal "main_min_price", default: "0.0", null: false
@@ -505,7 +503,6 @@ ActiveRecord::Schema.define(version: 2021_05_31_065131) do
     t.index ["fbaz_flag"], name: "index_books_on_fbaz_flag"
     t.index ["fbaz_low"], name: "index_books_on_fbaz_low"
     t.index ["fcb_price"], name: "index_books_on_fcb_price"
-    t.index ["follet_wh"], name: "index_books_on_follet_wh"
     t.index ["forty_percent_rental"], name: "index_books_on_forty_percent_rental"
     t.index ["grade"], name: "index_books_on_grade"
     t.index ["grid_lowest"], name: "index_books_on_grid_lowest"
@@ -543,7 +540,6 @@ ActiveRecord::Schema.define(version: 2021_05_31_065131) do
     t.index ["main_price"], name: "index_books_on_main_price"
     t.index ["main_quantity_in_inventory"], name: "index_books_on_main_quantity_in_inventory"
     t.index ["manual_add"], name: "index_books_on_manual_add"
-    t.index ["max_all_wholesale_price"], name: "index_books_on_max_all_wholesale_price"
     t.index ["max_used_wholesale_price"], name: "index_books_on_max_used_wholesale_price"
     t.index ["max_wholesale_comments"], name: "index_books_on_max_wholesale_comments"
     t.index ["max_wholesale_price"], name: "index_books_on_max_wholesale_price"
