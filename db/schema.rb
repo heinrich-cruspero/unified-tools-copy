@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_07_182200) do
+ActiveRecord::Schema.define(version: 2021_06_16_120739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -442,6 +442,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_182200) do
     t.decimal "nw_jan_avg", default: "0.0", null: false
     t.datetime "last_scanned"
     t.decimal "supplier_low", precision: 10, scale: 2, default: "0.0", null: false
+    t.boolean "uploaded_to_s3", default: false, null: false
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
@@ -669,6 +670,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_182200) do
     t.index ["two_years_sold_quantity_all"], name: "index_books_on_two_years_sold_quantity_all"
     t.index ["two_years_wh_max"], name: "index_books_on_two_years_wh_max"
     t.index ["two_years_wh_min"], name: "index_books_on_two_years_wh_min"
+    t.index ["uploaded_to_s3"], name: "index_books_on_uploaded_to_s3"
     t.index ["used_wholesale_price"], name: "index_books_on_used_wholesale_price"
     t.index ["valore_pending_order"], name: "index_books_on_valore_pending_order"
     t.index ["wantlist_qty"], name: "index_books_on_wantlist_qty"
