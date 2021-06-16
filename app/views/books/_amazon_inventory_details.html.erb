@@ -3,6 +3,7 @@
     <label class="table-title">Amazon Inventory</label>
 </div>
 <div id="detail-headers" class="book-details">
+    <label class="col-detail title">TQ</label>
     <label class="col-detail title">FBAQ</label>
     <label class="col-detail title">Inbound</label>
     <label class="col-detail title">ORQC</label>
@@ -13,7 +14,6 @@
     <label class="col-detail title">BO%</label>
     <label class="col-detail title">RQ</label>
     <label class="col-detail title">R%</label>
-    <label class="col-detail title">TQ</label>
 </div>
 
 <% if @book.nil? %>
@@ -23,6 +23,12 @@
 <% else %>
     <!-- Detail content -->
     <div class="book-details mb-1">
+        <div class="col-detail">
+            <p class="title title-sm">TQ</p>
+            <div>
+                <%= @book.total_quantity %>
+            </div>
+        </div>
         <div class="col-detail">
             <p class="title title-sm">FBAQ</p>
             <div>
@@ -81,12 +87,6 @@
             <p class="title title-sm">R%</p>
             <div>
                 <%= @book.returns_percentage %>
-            </div>
-        </div>
-        <div class="col-detail">
-            <p class="title title-sm">TQ</p>
-            <div>
-                <%= @book.total_quantity %>
             </div>
         </div>
     </div>

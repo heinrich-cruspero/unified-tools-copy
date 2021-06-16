@@ -16,7 +16,7 @@ class DatawhService
   def rental_history(isbn)
     @connection.exec(
       "SELECT
-        COUNT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN 1 ELSE NULL END) as seller_count,
+        COUNT(DISTINCT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN r.seller END)) as seller_count,
         AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS W,
         AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS NW,
         to_char(r.created_at,'YYYY/MM') AS Date
