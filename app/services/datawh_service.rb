@@ -17,7 +17,8 @@ class DatawhService
     @connection.exec(
       "WITH rental_prices_query AS (
         SELECT
-          COUNT(DISTINCT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN r.seller END)) as renters,
+          COUNT(DISTINCT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN r.seller END)
+          ) as renters,
           AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS w,
           AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS nw,
           to_char(r.created_at, 'YYYY/MM') AS Date
@@ -46,40 +47,6 @@ class DatawhService
     )
   end
 
-  def rental_history(isbn)
-    @connection.exec(
-      "SELECT
-        COUNT(DISTINCT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN r.seller END)) as seller_count,
-        AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS W,
-        AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS NW,
-        to_char(r.created_at,'YYYY/MM') AS Date
-      FROM rental_prices r
-      WHERE
-      r.asin = '#{isbn}'
-      AND
-      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-      GROUP BY Date
-      ORDER BY Date DESC"
-    )
-  end
-
-  def fba_history(isbn)
-    @connection.exec(
-      "SELECT
-        AVG(r.fba_price) AS Avg,
-        to_char(r.created_at,'YYYY/MM') AS Date
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-      AND
-      r.fba_price > 0
-      GROUP BY Date
-      ORDER BY Date DESC"
-    )
-  end
-
   def weekly_fba_history(isbn)
     @connection.exec(
       "SELECT
@@ -93,23 +60,6 @@ class DatawhService
       r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date, Week
       ORDER BY Date ASC, Week ASC"
-    )
-  end
-
-  def lowest_history(isbn)
-    @connection.exec(
-      "SELECT
-        AVG(r.lowest_price) AS Avg,
-        to_char(r.created_at,'YYYY/MM') AS Date
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-      AND
-      r.lowest_price > 0
-      GROUP BY Date
-      ORDER BY Date DESC"
     )
   end
 

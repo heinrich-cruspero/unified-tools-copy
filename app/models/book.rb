@@ -247,27 +247,6 @@ class Book < ApplicationRecord
     quantity_history
   end
 
-  def rental_history
-    datawh_service = DatawhService.new
-    rental_hist_data = datawh_service.rental_history(isbn).to_a
-    datawh_service.close
-    rental_hist_data
-  end
-
-  def fba_history
-    datawh_service = DatawhService.new
-    fba_hist_data = datawh_service.fba_history(isbn).to_a
-    datawh_service.close
-    fba_hist_data
-  end
-
-  def lowest_history
-    datawh_service = DatawhService.new
-    lowest_hist_data = datawh_service.lowest_history(isbn).to_a
-    datawh_service.close
-    lowest_hist_data
-  end
-
   def weekly_fba_history
     datawh_service = DatawhService.new
     weekly_fba_hist_data = datawh_service.weekly_fba_history(isbn).to_a

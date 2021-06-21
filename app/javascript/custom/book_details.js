@@ -33,57 +33,6 @@ $( document ).on('turbolinks:load', function() {
 
         })
 
-        $("#qh-no-data").hide();
-        $.ajax({
-            type: "GET",
-            url: "/books/" + search_val + "/quantity_history",
-            dataType: "json",
-            complete: function(result){
-                if (result.responseJSON){
-                    $("#quantity-history-div").html(result.responseJSON.quantity_history);
-                    $("#qh-spinner").hide();
-                }
-            }
-        })
-
-        $("#rh-no-data").hide();
-        $.ajax({
-            type: "GET",
-            url: "/books/" + search_val + "/rental_history",
-            dataType: "json",
-            complete: function(result){
-                if (result.responseJSON){
-                    $("#rental-history-div").html(result.responseJSON.rental_history);
-                    $("#rh-spinner").hide();
-                }
-            }
-        })
-
-        $("#fba-no-data").hide();
-        $.ajax({
-            type: "GET",
-            url: "/books/" + search_val + "/fba_history",
-            dataType: "json",
-            complete: function(result){
-                if (result.responseJSON){
-                    $("#fba-history-div").html(result.responseJSON.fba_history);
-                    $("#fba-spinner").hide();
-                }
-            }
-        })
-
-        $("#lowest-no-data").hide();
-        $.ajax({
-            type: "GET",
-            url: "/books/" + search_val + "/lowest_history",
-            dataType: "json",
-            complete: function(result){
-                if (result.responseJSON){
-                    $("#lowest-history-div").html(result.responseJSON.lowest_history);
-                    $("#lowest-spinner").hide();
-                }
-            }
-        })
 
         $("#amazon-prices-div").html("");
         $.ajax({
@@ -98,7 +47,6 @@ $( document ).on('turbolinks:load', function() {
             }
         })
 
-        $("#min-srh-no-data").hide();
         $("#sales-rank-div").html("");
         $.ajax({
             type: "GET",
@@ -107,9 +55,7 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 $("#sales-rank-spinner").hide();
                 if (result.responseText){
-                    $("#min-sales-rank-history-div").html($.parseJSON(result.responseText).min_sales_rank_history);
                     $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
-                    $("#min-srh-spinner").hide();
                 }
             }
         })
