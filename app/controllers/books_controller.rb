@@ -30,53 +30,7 @@ class BooksController < ApplicationController
     end
   end
 
-  def quantity_history
-    authorize Book
-    return if @book.nil?
-
-    data = @book.quantity_history
-    @quantity_history = data.count.positive? ? data : {}
-
-    respond_to do |format|
-      format.js { render json: { quantity_history: render_to_string(partial: 'quantity_history') } }
-    end
-  end
-
-  def rental_history
-    authorize Book
-    return if @book.nil?
-
-    data = @book.rental_history
-    @rental_history = data.count.positive? ? data : {}
-    respond_to do |format|
-      format.js { render json: { rental_history: render_to_string(partial: 'rental_history') } }
-    end
-  end
-
-  def fba_history
-    authorize Book
-    return if @book.nil?
-
-    data = @book.fba_history
-    @fba_history = data.count.positive? ? data : {}
-    respond_to do |format|
-      format.js { render json: { fba_history: render_to_string(partial: 'fba_history') } }
-    end
-  end
-
-  def lowest_history
-    authorize Book
-    return if @book.nil?
-
-    data = @book.lowest_history
-    @lowest_history = data.count.positive? ? data : {}
-    respond_to do |format|
-      format.js { render json: { lowest_history: render_to_string(partial: 'lowest_history') } }
-    end
-  end
-
-  # rubocop:disable  Metrics/MethodLength
-  def history_chart # rubocop:disable  Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def history_chart
     authorize Book
     return if @book.nil?
 
@@ -87,9 +41,17 @@ class BooksController < ApplicationController
     file_name = column_name.split('-').join('_')
     column_title = nil
 
-    if table == 'quantity-hist-table'
-      column_title = 'Quantity'
+    if table == 'all-hist-table'
+      column_title = 'Price'
       case column_name
+      when 'Lowest-Price'
+        @chart_data = @book.avg_price_lowest_history(date.month, date.year)
+      when 'FBA-Price'
+        @chart_data = @book.avg_price_fba_history(date.month, date.year)
+      when 'NW-Price'
+        @chart_data = @book.nw_rental_history(date.month, date.year)
+      when 'W-Price'
+        @chart_data = @book.w_rental_history(date.month, date.year)
       when 'Total-Quantity'
         @chart_data = @book.total_quantity_history(date.month, date.year)
       when 'OR-Quantity'
@@ -97,27 +59,8 @@ class BooksController < ApplicationController
       when 'INB-Quantity'
         @chart_data = @book.inb_quantity_history(date.month, date.year)
       end
-    elsif table == 'lowest-hist-table'
-      column_title = 'Price'
-      case column_name
-      when 'Lowest-Price'
-        @chart_data = @book.avg_price_lowest_history(date.month, date.year)
-      end
-    elsif table == 'rental-hist-table'
-      column_title = 'Price'
-      case column_name
-      when 'W-Price'
-        @chart_data = @book.w_rental_history(date.month, date.year)
-      when 'NW-Price'
-        @chart_data = @book.nw_rental_history(date.month, date.year)
-      end
-    elsif table == 'fba-hist-table'
-      column_title = 'Price'
-      case column_name
-      when 'FBA-Price'
-        @chart_data = @book.avg_price_fba_history(date.month, date.year)
-      end
     end
+
     @datatable_data = []
     @chart_data.each do |key, value|
       @datatable_data << { "day": key, "value": value }
@@ -141,7 +84,6 @@ class BooksController < ApplicationController
       format.json { render json: { data: @datatable_data, title: column_title } }
     end
   end
-  # rubocop:enable  Metrics/MethodLength
 
   def amazon_prices_history
     authorize Book
@@ -211,8 +153,7 @@ class BooksController < ApplicationController
             locals: {
               data: chart_data
             }
-          ),
-          min_sales_rank_history: render_to_string(partial: 'min_sales_rank_history')
+          )
         }
       end
     end
@@ -340,6 +281,37 @@ class BooksController < ApplicationController
     end
   end
   # rubocop:enable  Metrics/MethodLength
+
+  def all_history
+    authorize Book
+    return if @book.nil?
+
+    # Hist Data from Datawh
+    datawh_history_data = @book.all_history
+    datawh_history = datawh_history_data.count.positive? ? datawh_history_data : {}
+
+    # Hist Data from Indaba
+    quantity_hist_data = @book.quantity_history
+    quantity_history = quantity_hist_data.count.positive? ? quantity_hist_data : {}
+
+    @all_history = quantity_history
+
+    # Merge DataWH data with DataWH
+    unless datawh_history.blank?
+      datawh_history.each do |rec|
+        match = @all_history.find { |h| h['date'] == rec['date'] }
+        match&.merge!(rec.stringify_keys)
+      end
+    end
+
+    respond_to do |format|
+      format.js do
+        render json: {
+          all_history: render_to_string(partial: 'all_history_details')
+        }
+      end
+    end
+  end
 
   def link_oe_isbn
     authorize Book

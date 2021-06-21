@@ -13,37 +13,37 @@ class DatawhService
     )
   end
 
-  def rental_history(isbn)
+  def all_history(isbn)
     @connection.exec(
-      "SELECT
-        COUNT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN 1 ELSE NULL END) as seller_count,
-        AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS W,
-        AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS NW,
-        to_char(r.created_at,'YYYY/MM') AS Date
-      FROM rental_prices r
-      WHERE
-      r.asin = '#{isbn}'
-      AND
-      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-      GROUP BY Date
-      ORDER BY Date DESC"
-    )
-  end
-
-  def fba_history(isbn)
-    @connection.exec(
-      "SELECT
-        AVG(r.fba_price) AS Avg,
-        to_char(r.created_at,'YYYY/MM') AS Date
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-      AND
-      r.fba_price > 0
-      GROUP BY Date
-      ORDER BY Date DESC"
+      "WITH rental_prices_query AS (
+        SELECT
+          COUNT(DISTINCT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN r.seller END)
+          ) as renters,
+          AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS w,
+          AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END) AS nw,
+          to_char(r.created_at, 'YYYY/MM') AS Date
+        FROM rental_prices r
+        WHERE r.asin = '#{isbn}'
+        AND r.created_at > (NOW() - (INTERVAL '1 YEAR'))
+        GROUP BY Date
+        ORDER BY Date DESC
+      ), amazon_data_query AS (
+          SELECT
+            AVG(a.fba_price) FILTER (WHERE a.fba_price > 0) AS fba_avg,
+            AVG(a.lowest_price) FILTER (WHERE a.lowest_price > 0) AS lowest_avg,
+            MIN(a.sales_rank) as min_sales_rank,
+            to_char(a.created_at,'YYYY/MM') AS Date
+          FROM amazon_data a
+          WHERE a.isbn = '#{isbn}'
+          AND a.created_at > (NOW() - (INTERVAL '1 YEAR'))
+          GROUP BY Date
+          ORDER BY Date DESC
+      )
+      SELECT Date, COALESCE(lowest_avg, 0.00) as lowest_avg, COALESCE(fba_avg, 0.00) as fba_avg,
+          COALESCE(nw, 0.00) as nw, COALESCE(w, 0.00) as w, COALESCE(renters, 0) as renters,
+          COALESCE(min_sales_rank, 0) as min_sales_rank
+      FROM rental_prices_query
+      FULL OUTER JOIN amazon_data_query USING (Date)"
     )
   end
 
@@ -60,23 +60,6 @@ class DatawhService
       r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date, Week
       ORDER BY Date ASC, Week ASC"
-    )
-  end
-
-  def lowest_history(isbn)
-    @connection.exec(
-      "SELECT
-        AVG(r.lowest_price) AS Avg,
-        to_char(r.created_at,'YYYY/MM') AS Date
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-      AND
-      r.lowest_price > 0
-      GROUP BY Date
-      ORDER BY Date DESC"
     )
   end
 
