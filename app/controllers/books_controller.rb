@@ -30,7 +30,7 @@ class BooksController < ApplicationController
     end
   end
 
-  def history_chart # rubocop:disable  Metrics/CyclomaticComplexity
+  def history_chart
     authorize Book
     return if @book.nil?
 
@@ -160,7 +160,7 @@ class BooksController < ApplicationController
   end
 
   # rubocop:disable  Metrics/MethodLength
-  def amazon_orders # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def amazon_orders # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
     authorize Book
 
     @amazon_orders = []
