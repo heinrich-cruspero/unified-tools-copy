@@ -233,6 +233,13 @@ class Book < ApplicationRecord
     ).references(:amazon_orders)
   end
 
+  def all_history
+    datawh_service = DatawhService.new
+    all_hist_data = datawh_service.all_history(isbn).to_a
+    datawh_service.close
+    all_hist_data
+  end
+
   def quantity_history
     indaba_service = IndabaService.new
     quantity_history = indaba_service.quantity_history(ean)

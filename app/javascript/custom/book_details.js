@@ -18,6 +18,21 @@ $( document ).on('turbolinks:load', function() {
             }
         })
 
+        // all history
+        $("#all-hist-no-data").hide();
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/all_history",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseJSON){
+                    $("#all-history-div").html(result.responseJSON.all_history);
+                    $("#all-hist-spinner").hide();
+                }
+            }
+
+        })
+
         $("#qh-no-data").hide();
         $.ajax({
             type: "GET",
