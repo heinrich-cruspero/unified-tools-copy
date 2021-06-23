@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_16_120739) do
+ActiveRecord::Schema.define(version: 2021_06_22_071155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -443,6 +443,9 @@ ActiveRecord::Schema.define(version: 2021_06_16_120739) do
     t.datetime "last_scanned"
     t.decimal "supplier_low", precision: 10, scale: 2, default: "0.0", null: false
     t.boolean "uploaded_to_s3", default: false, null: false
+    t.integer "rc", default: 0, null: false
+    t.integer "monthly_rc", default: 0, null: false
+    t.integer "one_eighty_rc", default: 0, null: false
     t.index ["amazon_ca_listing"], name: "index_books_on_amazon_ca_listing"
     t.index ["amazon_ca_low"], name: "index_books_on_amazon_ca_low"
     t.index ["amazon_ca_new"], name: "index_books_on_amazon_ca_new"
@@ -551,6 +554,7 @@ ActiveRecord::Schema.define(version: 2021_06_16_120739) do
     t.index ["monthly_fba"], name: "index_books_on_monthly_fba"
     t.index ["monthly_low"], name: "index_books_on_monthly_low"
     t.index ["monthly_nw"], name: "index_books_on_monthly_nw"
+    t.index ["monthly_rc"], name: "index_books_on_monthly_rc"
     t.index ["monthly_rpf"], name: "index_books_on_monthly_rpf"
     t.index ["monthly_rqf"], name: "index_books_on_monthly_rqf"
     t.index ["monthly_sold_price_all"], name: "index_books_on_monthly_sold_price_all"
@@ -596,6 +600,7 @@ ActiveRecord::Schema.define(version: 2021_06_16_120739) do
     t.index ["one_eighty_fba"], name: "index_books_on_one_eighty_fba"
     t.index ["one_eighty_low"], name: "index_books_on_one_eighty_low"
     t.index ["one_eighty_nw"], name: "index_books_on_one_eighty_nw"
+    t.index ["one_eighty_rc"], name: "index_books_on_one_eighty_rc"
     t.index ["one_eighty_rpf"], name: "index_books_on_one_eighty_rpf"
     t.index ["one_eighty_rqf"], name: "index_books_on_one_eighty_rqf"
     t.index ["one_eighty_sale_price_all"], name: "index_books_on_one_eighty_sale_price_all"
@@ -627,6 +632,7 @@ ActiveRecord::Schema.define(version: 2021_06_16_120739) do
     t.index ["qa_rent"], name: "index_books_on_qa_rent"
     t.index ["qa_sales_rank"], name: "index_books_on_qa_sales_rank"
     t.index ["r_life"], name: "index_books_on_r_life"
+    t.index ["rc"], name: "index_books_on_rc"
     t.index ["rental_history"], name: "index_books_on_rental_history"
     t.index ["returns"], name: "index_books_on_returns"
     t.index ["returns_percentage"], name: "index_books_on_returns_percentage"
