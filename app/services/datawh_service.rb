@@ -44,6 +44,34 @@ class DatawhService
     )
   end
 
+  def guide_max_price_history(isbn)
+    @connection.exec(
+      "SELECT res.date as Date,
+          COALESCE(MAX(price) FILTER(WHERE guide LIKE 'Nebraska%'), 0) as nbcwh,
+          COALESCE(MAX(price) FILTER(WHERE guide LIKE 'MBS%'), 0) as mbswh
+      FROM
+        (SELECT
+            gp.name as guide,
+            gd.used_wholesale_price as price,
+            to_char(gi.effective_date,'YYYY/MM') AS date
+        FROM guide_data gd
+        INNER JOIN guide_imports gi ON gd.guide_import_id=gi.id
+        INNER JOIN guide_providers gp ON gi.guide_provider_id=gp.id
+        WHERE gd.isbn='#{isbn}'
+        AND gi.effective_date > (NOW() - INTERVAL '1 YEAR')
+        UNION
+        SELECT gp.name as guide,
+            gd.used_wholesale_price as price,
+            to_char(gi.expiration_date,'YYYY/MM') AS date
+        FROM guide_data gd
+        INNER JOIN guide_imports gi ON gd.guide_import_id=gi.id
+        INNER JOIN guide_providers gp ON gi.guide_provider_id=gp.id
+        WHERE gd.isbn = '#{isbn}'
+        AND gi.expiration_date > (NOW() - INTERVAL '1 YEAR')) as res
+      GROUP BY Date"
+    )
+  end
+
   def weekly_fba_history(isbn)
     @connection.exec(
       "SELECT

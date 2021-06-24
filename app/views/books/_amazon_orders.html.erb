@@ -56,7 +56,7 @@
       <label class="col-detail title">Main P</label>
       <label class="col-detail title">Direct Q</label>
       <label class="col-detail title">Direct P</label>
-      <label class="col-detail title">Month / Year</label>
+      <label class="col-detail title">Date</label>
     </div>
   <% end %>
 
@@ -97,7 +97,7 @@
           <div><%= order["direct_avg_price"] ? number_with_delimiter(number_with_precision(order["direct_avg_price"], precision: 2)) : 0.00 %></div>
         </div>
         <div class="col-detail">
-          <p class="title title-sm">Month/Year</p>
+          <p class="title title-sm">Date</p>
           <div>
             <% date_parts = order.fetch("date", "")&.split('/') %>
             <%= "#{date_parts[0]}/#{date_parts[1]}" if date_parts&.count == 2 %>

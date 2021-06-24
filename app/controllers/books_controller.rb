@@ -287,9 +287,17 @@ class BooksController < ApplicationController
     quantity_hist_data = @book.quantity_history
     quantity_history = quantity_hist_data.count.positive? ? quantity_hist_data : {}
 
+    # Guide Max Prices History
+    guide_max_price_hist_data = @book.guide_max_price_history
+    guide_max_price_history = if guide_max_price_hist_data.count.positive?
+                                guide_max_price_hist_data
+                              else
+                                {}
+                              end
+
     @all_history = quantity_history
 
-    # Merge DataWH data with DataWH
+    # Merge DataWH data with Indaba
     unless rental_history.blank?
       rental_history.each do |rec|
         match = @all_history.find { |h| h['date'] == rec['date'] }
@@ -299,6 +307,14 @@ class BooksController < ApplicationController
 
     unless amazon_history.blank?
       amazon_history.each do |rec|
+        match = @all_history.find { |h| h['date'] == rec['date'] }
+        match&.merge!(rec.stringify_keys)
+      end
+    end
+
+    # Merge Guide Data
+    unless guide_max_price_history.blank?
+      guide_max_price_history.each do |rec|
         match = @all_history.find { |h| h['date'] == rec['date'] }
         match&.merge!(rec.stringify_keys)
       end

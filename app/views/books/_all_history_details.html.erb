@@ -13,6 +13,8 @@
     <label class="col-detail title">TQ AVG</label>
     <label class="col-detail title">ORQ AVG</label>
     <label class="col-detail title">INBQ AVG</label>
+    <label class="col-detail title">MBSWH</label>
+    <label class="col-detail title">NBCWH</label>
 </div>
 <% if @book.nil? %>
   <div class="no-data text-center">
@@ -133,6 +135,24 @@
               <button type="button" class="btn-sm btn-success plus-button ml-0" data-toggle="modal" data-target="#historyModal">
                   <i class="fa fa-plus"></i>
               </button>
+          </div>
+        </div>
+
+        <div class="col-detail col-data">
+          <p class="title title-sm">MBSWH</p>
+          <div>
+              <label class="pr-2">
+                <%= number_with_delimiter(number_with_precision(row.fetch("mbswh", 0), precision: 2)) %>
+              </label>
+          </div>
+        </div>
+
+        <div class="col-detail col-data">
+          <p class="title title-sm">NBCWH</p>
+          <div>
+              <label class="pr-2">
+                <%= number_with_delimiter(number_with_precision(row.fetch("nbcwh", 0), precision: 2)) %>
+              </label>
           </div>
         </div>
         

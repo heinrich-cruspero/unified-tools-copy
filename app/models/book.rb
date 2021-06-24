@@ -247,6 +247,13 @@ class Book < ApplicationRecord
     amazon_hist_data
   end
 
+  def guide_max_price_history
+    datawh_service = DatawhService.new
+    max_price_hist_data = datawh_service.guide_max_price_history(isbn).to_a
+    datawh_service.close
+    max_price_hist_data
+  end
+
   def quantity_history
     indaba_service = IndabaService.new
     quantity_history = indaba_service.quantity_history(ean)
