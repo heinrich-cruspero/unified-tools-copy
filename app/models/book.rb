@@ -233,11 +233,18 @@ class Book < ApplicationRecord
     ).references(:amazon_orders)
   end
 
-  def all_history
+  def rental_prices_history
     datawh_service = DatawhService.new
-    all_hist_data = datawh_service.all_history(isbn).to_a
+    rental_hist_data = datawh_service.rental_prices_history(isbn).to_a
     datawh_service.close
-    all_hist_data
+    rental_hist_data
+  end
+
+  def amazon_data_history
+    datawh_service = DatawhService.new
+    amazon_hist_data = datawh_service.amazon_data_history(isbn).to_a
+    datawh_service.close
+    amazon_hist_data
   end
 
   def quantity_history

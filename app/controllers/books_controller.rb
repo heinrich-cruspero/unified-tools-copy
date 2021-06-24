@@ -287,8 +287,11 @@ class BooksController < ApplicationController
     return if @book.nil?
 
     # Hist Data from Datawh
-    datawh_history_data = @book.all_history
-    datawh_history = datawh_history_data.count.positive? ? datawh_history_data : {}
+    rental_history_data = @book.rental_prices_history
+    rental_history = rental_history_data.count.positive? ? rental_history_data : {}
+
+    amazon_history_data = @book.amazon_data_history
+    amazon_history = amazon_history_data.count.positive? ? amazon_history_data : {}
 
     # Hist Data from Indaba
     quantity_hist_data = @book.quantity_history
@@ -297,8 +300,15 @@ class BooksController < ApplicationController
     @all_history = quantity_history
 
     # Merge DataWH data with DataWH
-    unless datawh_history.blank?
-      datawh_history.each do |rec|
+    unless rental_history.blank?
+      rental_history.each do |rec|
+        match = @all_history.find { |h| h['date'] == rec['date'] }
+        match&.merge!(rec.stringify_keys)
+      end
+    end
+
+    unless amazon_history.blank?
+      amazon_history.each do |rec|
         match = @all_history.find { |h| h['date'] == rec['date'] }
         match&.merge!(rec.stringify_keys)
       end
