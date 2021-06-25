@@ -93,20 +93,12 @@ class BooksController < ApplicationController
 
     unless @book.nil?
       fba = @book.weekly_fba_history
-      trade = @book.weekly_trade_in_history
       lowest = @book.weekly_lowest_history
 
       avg = 0
       fba.each do |result|
         avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
         fba_data.merge!(
-          "#{result['week'].to_i.ordinalize} #{result['date']}": avg
-        )
-      end
-
-      trade.each do |result|
-        avg = format('%<result>.2f', result: result['avg'].to_f) unless result['avg'].nil?
-        trade_data.merge!(
           "#{result['week'].to_i.ordinalize} #{result['date']}": avg
         )
       end
@@ -126,7 +118,6 @@ class BooksController < ApplicationController
             partial: 'amazon_prices_chart',
             locals: {
               fba_data: fba_data,
-              trade_data: trade_data,
               lowest_data: lowest_data
             }
           )

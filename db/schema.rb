@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_071155) do
+ActiveRecord::Schema.define(version: 2021_06_25_050444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,7 +231,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.decimal "used_wholesale_price", default: "0.0", null: false
     t.decimal "new_wholesale_price", default: "0.0", null: false
     t.integer "copyright_year", default: 0, null: false
-    t.decimal "trade_in", default: "0.0", null: false
     t.decimal "amazon_price", default: "0.0", null: false
     t.decimal "lowest_good_price", default: "0.0", null: false
     t.decimal "lowest_price", default: "0.0", null: false
@@ -669,7 +668,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.index ["total_quantity"], name: "index_books_on_total_quantity"
     t.index ["total_quantity_supplier"], name: "index_books_on_total_quantity_supplier"
     t.index ["trade_flag"], name: "index_books_on_trade_flag"
-    t.index ["trade_in"], name: "index_books_on_trade_in"
     t.index ["two_years_fbaz_rented_quantity"], name: "index_books_on_two_years_fbaz_rented_quantity"
     t.index ["two_years_fbaz_sold_quantity"], name: "index_books_on_two_years_fbaz_sold_quantity"
     t.index ["two_years_main_sold_quantity"], name: "index_books_on_two_years_main_sold_quantity"

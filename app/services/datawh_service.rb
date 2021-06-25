@@ -76,35 +76,6 @@ class DatawhService
     )
   end
 
-  def trade_in_history(isbn)
-    @connection.exec(
-      "SELECT AVG(r.trade_in),
-      CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-      GROUP BY Date
-      ORDER BY Date DESC"
-    )
-  end
-
-  def weekly_trade_in_history(isbn)
-    @connection.exec(
-      "SELECT AVG(r.trade_in),
-      TO_CHAR(r.created_at, 'W') AS Week,
-      CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
-      FROM amazon_data r
-      WHERE
-      r.isbn = '#{isbn}'
-      AND
-      r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-      GROUP BY Date, Week
-      ORDER BY Date ASC, Week ASC"
-    )
-  end
-
   def sales_rank_history(isbn)
     @connection.exec(
       "SELECT

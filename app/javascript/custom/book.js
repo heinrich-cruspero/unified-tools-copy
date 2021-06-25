@@ -21,7 +21,6 @@ $( document ).on('turbolinks:load', function() {
             {"data": "list_price"},
             {"data": "used_wholesale_price"},
             {"data": "max_wholesale_price"},
-            {"data": "trade_in"},
             {"data": "lowest_price"},
             {"data": "sales_rank"},
             {"data": "sales_rank_aug_avg"},
