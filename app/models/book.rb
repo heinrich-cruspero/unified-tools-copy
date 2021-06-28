@@ -261,13 +261,6 @@ class Book < ApplicationRecord
     weekly_fba_hist_data
   end
 
-  def weekly_trade_in_history
-    datawh_service = DatawhService.new
-    weekly_trade_in_hist_data = datawh_service.weekly_trade_in_history(isbn).to_a
-    datawh_service.close
-    weekly_trade_in_hist_data
-  end
-
   def weekly_lowest_history
     datawh_service = DatawhService.new
     weekly_lowest_hist_data = datawh_service.weekly_lowest_history(isbn).to_a
