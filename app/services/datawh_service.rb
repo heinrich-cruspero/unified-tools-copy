@@ -49,7 +49,7 @@ class DatawhService
       "SELECT
         AVG(r.fba_price) AS Avg,
         TO_CHAR(r.created_at, 'W') AS Week,
-        CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
+        to_char(r.created_at,'YYYY/MM') AS Date
       FROM amazon_data r
       WHERE
       r.isbn = '#{isbn}'
@@ -65,7 +65,7 @@ class DatawhService
       "SELECT
         AVG(r.lowest_price) AS Avg,
         TO_CHAR(r.created_at, 'W') AS Week,
-        CONCAT(EXTRACT(MONTH FROM r.created_at), '/', EXTRACT( YEAR FROM r.created_at)) AS Date
+        to_char(r.created_at,'YYYY/MM') AS Date
       FROM amazon_data r
       WHERE
       r.isbn = '#{isbn}'

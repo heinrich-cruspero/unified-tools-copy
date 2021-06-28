@@ -88,7 +88,6 @@ class BooksController < ApplicationController
   def amazon_prices_history
     authorize Book
     fba_data = {}
-    trade_data = {}
     lowest_data = {}
 
     unless @book.nil?
