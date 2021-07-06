@@ -18,21 +18,28 @@ $( document ).on('turbolinks:load', function() {
             }
         })
 
-        // all history
+        // history table
         $("#all-hist-no-data").hide();
-        $.ajax({
-            type: "GET",
-            url: "/books/" + search_val + "/all_history",
-            dataType: "json",
-            complete: function(result){
-                if (result.responseJSON){
-                    $("#all-history-div").html(result.responseJSON.all_history);
-                    $("#all-hist-spinner").hide();
-                }
-            }
+        $.when(getHistoryData("quantity_history")).done(function() {
+            $.when(getHistoryData("rental_history")).done(function() {
+                $.when(getHistoryData("amazon_history")).done(function() {
+                    $.when(getHistoryData("guide_data_history")).done(function() {
+                        $.ajax({
+                            type: "GET",
+                            url: "/books/" + search_val + "/all_history",
+                            dataType: "json",
+                            complete: function(result){
+                                if (result.responseJSON){
+                                    $("#all-history-div").html(result.responseJSON.all_history);
+                                    $("#all-hist-spinner").hide();
+                                }
+                            }
+                        });
+                    });
 
-        })
-
+                });
+            });
+        });
 
         $("#amazon-prices-div").html("");
         $.ajax({
@@ -132,5 +139,12 @@ $( document ).on('turbolinks:load', function() {
         if (book_val.length == 10 || book_val.length == 13) {
             window.location.pathname = "/books/" + book_val + "/details"
         }
+    }
+
+    function getHistoryData(source) {
+        return $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/" + source,
+        })
     }
 });

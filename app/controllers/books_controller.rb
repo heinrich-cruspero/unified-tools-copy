@@ -6,6 +6,8 @@ class BooksController < ApplicationController
   before_action :book_detail, except: [:index]
   include BooksCsvModule
 
+  @all_history_data = {}
+
   def index
     authorize Book
 
@@ -276,16 +278,83 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    # Hist Data from Datawh
+    @all_history = @@all_history_data
+
+    respond_to do |format|
+      format.js do
+        render json: {
+          all_history: render_to_string(partial: 'all_history_details')
+        }
+      end
+    end
+  end
+
+  def quantity_history
+    authorize Book
+    return if @book.nil?
+
+    # # Hist Data from Indaba
+    quantity_hist_data = @book.quantity_history
+    quantity_history = quantity_hist_data.count.positive? ? quantity_hist_data : {}
+
+    @@all_history_data = quantity_history
+
+    respond_to do |format|
+      format.js do
+        head :ok
+      end
+    end
+  end
+
+  def rental_history
+    authorize Book
+    return if @book.nil?
+
+    # Rental hist Data from Datawh
     rental_history_data = @book.rental_prices_history
     rental_history = rental_history_data.count.positive? ? rental_history_data : {}
 
+    # Merge Rental History from DataWH
+    unless rental_history.blank?
+      rental_history.each do |rec|
+        match = @@all_history_data.find { |h| h['date'] == rec['date'] }
+        match&.merge!(rec.stringify_keys)
+      end
+    end
+
+    respond_to do |format|
+      format.js do
+        head :ok
+      end
+    end
+  end
+
+  def amazon_history
+    authorize Book
+    return if @book.nil?
+
+    # Amazon History from Datawh
     amazon_history_data = @book.amazon_data_history
     amazon_history = amazon_history_data.count.positive? ? amazon_history_data : {}
 
-    # Hist Data from Indaba
-    quantity_hist_data = @book.quantity_history
-    quantity_history = quantity_hist_data.count.positive? ? quantity_hist_data : {}
+    # Merge Amazon History
+    unless amazon_history.blank?
+      amazon_history.each do |rec|
+        match = @@all_history_data.find { |h| h['date'] == rec['date'] }
+        match&.merge!(rec.stringify_keys)
+      end
+    end
+
+    respond_to do |format|
+      format.js do
+        head :ok
+      end
+    end
+  end
+
+  def guide_data_history
+    authorize Book
+    return if @book.nil?
 
     # Guide Max Prices History
     guide_max_price_hist_data = @book.guide_max_price_history
@@ -295,36 +364,17 @@ class BooksController < ApplicationController
                                 {}
                               end
 
-    @all_history = quantity_history
-
-    # Merge DataWH data with Indaba
-    unless rental_history.blank?
-      rental_history.each do |rec|
-        match = @all_history.find { |h| h['date'] == rec['date'] }
-        match&.merge!(rec.stringify_keys)
-      end
-    end
-
-    unless amazon_history.blank?
-      amazon_history.each do |rec|
-        match = @all_history.find { |h| h['date'] == rec['date'] }
-        match&.merge!(rec.stringify_keys)
-      end
-    end
-
     # Merge Guide Data
     unless guide_max_price_history.blank?
       guide_max_price_history.each do |rec|
-        match = @all_history.find { |h| h['date'] == rec['date'] }
+        match = @@all_history_data.find { |h| h['date'] == rec['date'] }
         match&.merge!(rec.stringify_keys)
       end
     end
 
     respond_to do |format|
       format.js do
-        render json: {
-          all_history: render_to_string(partial: 'all_history_details')
-        }
+        head :ok
       end
     end
   end

@@ -14,6 +14,22 @@ class BookPolicy < ApplicationPolicy
     user.is_admin?
   end
 
+  def quantity_history?
+    user.is_admin?
+  end
+
+  def rental_history?
+    user.is_admin?
+  end
+
+  def amazon_history?
+    user.is_admin?
+  end
+
+  def guide_data_history?
+    user.is_admin?
+  end
+
   def amazon_orders?
     user.is_admin?
   end
