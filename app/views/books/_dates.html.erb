@@ -1,0 +1,18 @@
+<div class="detail-caption mt-4 br-0">
+    <label class="table-title">History</label>
+</div>
+<div id="detail-headers" class="book-details">
+    <label class="col-detail title">Date</label>
+</div>
+<% ((Date.today - 365)..Date.today).map{|d| "#{d.year}/#{d.month}"}.uniq.reverse.each do |date| %>
+    <div class="book-details dotted-top qh-detail-row p-0">
+        <input type="hidden" name="hist-table" value="all-hist-table">
+        <div class="col-detail">
+          <p class="title title-sm">Date</p>
+          <div>
+            <% date_parts = date&.split('/') %>
+            <%= "#{date_parts[1]}/#{date_parts[0]}" if date_parts&.count == 2 %>
+          </div>
+        </div>
+    </div>
+<% end %>

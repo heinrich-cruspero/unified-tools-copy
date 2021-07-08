@@ -6,8 +6,6 @@ class BooksController < ApplicationController
   before_action :book_detail, except: [:index]
   include BooksCsvModule
 
-  @all_history_data = {}
-
   def index
     authorize Book
 
@@ -274,21 +272,6 @@ class BooksController < ApplicationController
   end
   # rubocop:enable  Metrics/MethodLength
 
-  def all_history
-    authorize Book
-    return if @book.nil?
-
-    @all_history = @@all_history_data
-
-    respond_to do |format|
-      format.js do
-        render json: {
-          all_history: render_to_string(partial: 'all_history_details')
-        }
-      end
-    end
-  end
-
   def quantity_history
     authorize Book
     return if @book.nil?
@@ -297,11 +280,13 @@ class BooksController < ApplicationController
     quantity_hist_data = @book.quantity_history
     quantity_history = quantity_hist_data.count.positive? ? quantity_hist_data : {}
 
-    @@all_history_data = quantity_history
+    @quantity_history_data = quantity_history
 
     respond_to do |format|
       format.js do
-        head :ok
+        render json: {
+          quantity_history: render_to_string(partial: 'quantity_history')
+        }
       end
     end
   end
@@ -314,17 +299,13 @@ class BooksController < ApplicationController
     rental_history_data = @book.rental_prices_history
     rental_history = rental_history_data.count.positive? ? rental_history_data : {}
 
-    # Merge Rental History from DataWH
-    unless rental_history.blank?
-      rental_history.each do |rec|
-        match = @@all_history_data.find { |h| h['date'] == rec['date'] }
-        match&.merge!(rec.stringify_keys)
-      end
-    end
+    @rental_history_data = rental_history
 
     respond_to do |format|
       format.js do
-        head :ok
+        render json: {
+          rental_history: render_to_string(partial: 'rental_history')
+        }
       end
     end
   end
@@ -337,17 +318,13 @@ class BooksController < ApplicationController
     amazon_history_data = @book.amazon_data_history
     amazon_history = amazon_history_data.count.positive? ? amazon_history_data : {}
 
-    # Merge Amazon History
-    unless amazon_history.blank?
-      amazon_history.each do |rec|
-        match = @@all_history_data.find { |h| h['date'] == rec['date'] }
-        match&.merge!(rec.stringify_keys)
-      end
-    end
+    @amazon_history_data = amazon_history
 
     respond_to do |format|
       format.js do
-        head :ok
+        render json: {
+          amazon_history: render_to_string(partial: 'amazon_history')
+        }
       end
     end
   end
@@ -364,17 +341,13 @@ class BooksController < ApplicationController
                                 {}
                               end
 
-    # Merge Guide Data
-    unless guide_max_price_history.blank?
-      guide_max_price_history.each do |rec|
-        match = @@all_history_data.find { |h| h['date'] == rec['date'] }
-        match&.merge!(rec.stringify_keys)
-      end
-    end
+    @guide_max_price_history_data = guide_max_price_history
 
     respond_to do |format|
       format.js do
-        head :ok
+        render json: {
+          guide_data_history: render_to_string(partial: 'guide_data_history')
+        }
       end
     end
   end

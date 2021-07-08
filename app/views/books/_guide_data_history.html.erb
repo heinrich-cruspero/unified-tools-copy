@@ -1,0 +1,47 @@
+<!-- Guide Max Prices History -->
+<div class="detail-caption mt-4 bl-0">
+    <label class="table-title nv">Max Prices</label>
+</div>
+<div id="detail-headers" class="book-details">
+    <label class="col-detail title">MBSWH</label>
+    <label class="col-detail title">NBCWH</label>
+</div>
+<% if @book.nil? %>
+  <div class="no-data text-center">
+    No data available in table.
+  </div>
+<% else %>
+  <% unless @guide_max_price_history_data.blank? %>
+    <% @guide_max_price_history_data.each do |row| %>
+      <div class="book-details dotted-top qh-detail-row p-0">
+        <input type="hidden" name="hist-table" value="all-hist-table">
+        <div class="hist-date col-detail">
+          <p class="date-title">
+            <% date_parts = row.fetch("date", "")&.split('/') %>
+            <%= "#{date_parts[1]}/#{date_parts[0]}" if date_parts&.count == 2 %>
+          </p>
+        </div>
+        <div class="col-detail col-data">
+          <p class="title title-sm">MBSWH</p>
+          <div>
+              <label class="pr-2 mb-0">
+                <%= number_with_delimiter(number_with_precision(row.fetch("mbswh", 0), precision: 2)) %>
+              </label>
+          </div>
+        </div>
+        <div class="col-detail col-data">
+          <p class="title title-sm">NBCWH</p>
+          <div>
+              <label class="pr-2 mb-0">
+                <%= number_with_delimiter(number_with_precision(row.fetch("nbcwh", 0), precision: 2)) %>
+              </label>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="no-data text-center">
+      <div class="section-loader" id="all-hist-spinner"></div>
+    </div>
+  <% end %>
+<% end %>

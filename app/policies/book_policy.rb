@@ -10,10 +10,6 @@ class BookPolicy < ApplicationPolicy
     user.is_admin?
   end
 
-  def all_history?
-    user.is_admin?
-  end
-
   def quantity_history?
     user.is_admin?
   end

@@ -18,28 +18,58 @@ $( document ).on('turbolinks:load', function() {
             }
         })
 
-        // history table
-        $("#all-hist-no-data").hide();
-        $.when(getHistoryData("quantity_history")).done(function() {
-            $.when(getHistoryData("rental_history")).done(function() {
-                $.when(getHistoryData("amazon_history")).done(function() {
-                    $.when(getHistoryData("guide_data_history")).done(function() {
-                        $.ajax({
-                            type: "GET",
-                            url: "/books/" + search_val + "/all_history",
-                            dataType: "json",
-                            complete: function(result){
-                                if (result.responseJSON){
-                                    $("#all-history-div").html(result.responseJSON.all_history);
-                                    $("#all-hist-spinner").hide();
-                                }
-                            }
-                        });
-                    });
+        // quantity history
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/quantity_history",
+            dataType: "json",
+            complete: function(result){
+                // $("#amazon-prices-spinner").hide();
+                if (result.responseText){
+                    $("#quantity-history-div").html(result.responseJSON.quantity_history);
+                }
+            }
+        })
 
-                });
-            });
-        });
+        // rental history
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/rental_history",
+            dataType: "json",
+            complete: function(result){
+                // $("#amazon-prices-spinner").hide();
+                if (result.responseText){
+                    $("#rental-history-div").html(result.responseJSON.rental_history);
+                }
+            }
+        })
+
+        // amazon history
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/amazon_history",
+            dataType: "json",
+            complete: function(result){
+                // $("#amazon-prices-spinner").hide();
+                if (result.responseText){
+                    $("#amazon-history-div").html(result.responseJSON.amazon_history);
+                }
+            }
+        })
+
+        // guide data max price history
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/guide_data_history",
+            dataType: "json",
+            complete: function(result){
+                // $("#amazon-prices-spinner").hide();
+                if (result.responseText){
+                    $("#guide-data-history-div").html(result.responseJSON.guide_data_history);
+                }
+            }
+        })
+
 
         $("#amazon-prices-div").html("");
         $.ajax({
