@@ -61,6 +61,6 @@ Rails.application.routes.draw do
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  root to: 'books#index'
+  root to: 'home#dashboard'
 end
 # rubocop:enable  Metrics/BlockLength

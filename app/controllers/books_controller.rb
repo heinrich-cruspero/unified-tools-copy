@@ -9,7 +9,6 @@ class BooksController < ApplicationController
   def index
     authorize Book
 
-    @book = Book.last
     respond_to do |format|
       format.html
       format.json { render json: BookDatatable.new(params) }
@@ -276,7 +275,7 @@ class BooksController < ApplicationController
     authorize Book
     return if @book.nil?
 
-    # # Hist Data from Indaba
+    # Hist Data from Indaba
     quantity_hist_data = @book.quantity_history
     @quantity_history_data = Book.parse_monthly_history(quantity_hist_data)
 

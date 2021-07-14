@@ -4,7 +4,7 @@
 # rubocop:disable  Metrics/ClassLength
 class Book < ApplicationRecord
   include HTTParty
-  include PgSearch
+  include PgSearch::Model
 
   def oe_isbn_rec
     Book.where(isbn: oe_isbn).take

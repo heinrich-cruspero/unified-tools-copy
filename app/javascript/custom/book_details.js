@@ -16,7 +16,7 @@ $( document ).on('turbolinks:load', function() {
                     $("#guides-spinner").hide();
                 }
             }
-        })
+        });
 
         // quantity history
         $.ajax({
@@ -28,7 +28,7 @@ $( document ).on('turbolinks:load', function() {
                     $("#quantity-history-div").html(result.responseJSON.quantity_history);
                 }
             }
-        })
+        });
 
         // rental history
         $.ajax({
@@ -40,7 +40,7 @@ $( document ).on('turbolinks:load', function() {
                     $("#rental-history-div").html(result.responseJSON.rental_history);
                 }
             }
-        })
+        });
 
         // amazon history
         $.ajax({
@@ -52,7 +52,7 @@ $( document ).on('turbolinks:load', function() {
                     $("#amazon-history-div").html(result.responseJSON.amazon_history);
                 }
             }
-        })
+        });
 
         // guide data max price history
         $.ajax({
@@ -64,8 +64,7 @@ $( document ).on('turbolinks:load', function() {
                     $("#guide-data-history-div").html(result.responseJSON.guide_data_history);
                 }
             }
-        })
-
+        });
 
         $("#amazon-prices-div").html("");
         $.ajax({
@@ -78,7 +77,7 @@ $( document ).on('turbolinks:load', function() {
                     $("#amazon-prices-div").html($.parseJSON(result.responseText).chart_data);
                 }
             }
-        })
+        });
 
         $("#sales-rank-div").html("");
         $.ajax({
@@ -91,7 +90,7 @@ $( document ).on('turbolinks:load', function() {
                     $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
                 }
             }
-        })
+        });
 
         // amazon orders
         $.ajax({
@@ -104,7 +103,7 @@ $( document ).on('turbolinks:load', function() {
                 }
                 $("#ao-spinner").hide();
             }
-        })
+        });
     }
     
     $("#historyModal").on('show.bs.modal', function() {
@@ -133,7 +132,7 @@ $( document ).on('turbolinks:load', function() {
                     order: [['1', 'desc']]
                 });
             }
-        })
+        });
 
         $("#modal-chart").html("");
         $("#modal-hist-datatable").hide();
@@ -151,12 +150,12 @@ $( document ).on('turbolinks:load', function() {
                 $("#modal-chart").html($.parseJSON(result.responseText).qh_chart_data);
                 $("#modal-hist-datatable").show();
             }
-        })
-    })
+        });
+    });
 
     $('#historyModal').on('hidden.bs.modal', function () {
         $("#hist-datatable").dataTable().fnDestroy();
-    })
+    });
       
     function searchBook(){
         let book_val = $('#search_book').val().replace(/-/g, '')
@@ -164,6 +163,5 @@ $( document ).on('turbolinks:load', function() {
         if (book_val.length == 10 || book_val.length == 13) {
             window.location.pathname = "/books/" + book_val + "/details"
         }
-    }
-
+    };
 });
