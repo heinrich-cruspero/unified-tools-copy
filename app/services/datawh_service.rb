@@ -16,13 +16,14 @@ class DatawhService
   def rental_prices_history(isbn)
     @connection.exec(
       "SELECT
-        COUNT(DISTINCT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN r.seller END)
+        COUNT(DISTINCT(r.seller)
         ) as renters,
         COALESCE(AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END), 0) AS w,
         COALESCE(AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END), 0) AS nw,
         to_char(r.created_at, 'YYYY/MM') AS Date
       FROM rental_prices r
       WHERE r.asin = '#{isbn}'
+      AND r.seller != 'RockCityBooks'
       AND r.created_at > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date
       ORDER BY Date DESC"
