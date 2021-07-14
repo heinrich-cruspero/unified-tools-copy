@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_071155) do
+ActiveRecord::Schema.define(version: 2021_07_14_172302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -205,7 +205,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.date "out_of_print_date"
     t.date "edition_status_date"
     t.date "publication_date"
-    t.date "pnep"
     t.string "subject"
     t.string "image_url"
     t.string "book_scouter_vendor_1"
@@ -231,7 +230,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.decimal "used_wholesale_price", default: "0.0", null: false
     t.decimal "new_wholesale_price", default: "0.0", null: false
     t.integer "copyright_year", default: 0, null: false
-    t.decimal "trade_in", default: "0.0", null: false
     t.decimal "amazon_price", default: "0.0", null: false
     t.decimal "lowest_good_price", default: "0.0", null: false
     t.decimal "lowest_price", default: "0.0", null: false
@@ -248,8 +246,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.integer "fba_sellers", default: 0, null: false
     t.decimal "lowest_price_jan_average", default: "0.0", null: false
     t.integer "sales_rank_jan_average", default: 0, null: false
-    t.decimal "lowest_rental_august_average", default: "0.0", null: false
-    t.decimal "fba_august_average", default: "0.0", null: false
     t.integer "fba_sku_quantity", default: 0, null: false
     t.integer "bz_j_sku_quantity", default: 0, null: false
     t.integer "total_quantity_supplier", default: 0, null: false
@@ -282,7 +278,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.decimal "oe_life", default: "0.0", null: false
     t.decimal "c_life", default: "0.0", null: false
     t.decimal "r_life", default: "0.0", null: false
-    t.decimal "life", default: "0.0", null: false
     t.decimal "ninety_nw", default: "0.0", null: false
     t.decimal "ninety_w", default: "0.0", null: false
     t.decimal "one_eighty_nw", default: "0.0", null: false
@@ -302,7 +297,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.integer "weekly_sales_rank", default: 0, null: false
     t.decimal "one_eighty_fba", default: "0.0", null: false
     t.integer "orq_ninety", default: 0, null: false
-    t.integer "wantlist_qty", default: 0, null: false
     t.decimal "low_jan_avg", default: "0.0", null: false
     t.decimal "low_feb_avg", default: "0.0", null: false
     t.decimal "low_mar_avg", default: "0.0", null: false
@@ -363,7 +357,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.decimal "supplier_price", default: "0.0", null: false
     t.decimal "fbaz_low", default: "0.0", null: false
     t.decimal "fba_seventh", default: "0.0", null: false
-    t.decimal "peak_price", default: "0.0", null: false
     t.decimal "roi", default: "0.0", null: false
     t.integer "monthly_sold_quantity_direct", default: 0, null: false
     t.decimal "monthly_amazon_trade_in", default: "0.0", null: false
@@ -488,7 +481,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.index ["email_price"], name: "index_books_on_email_price"
     t.index ["fba_apr_avg"], name: "index_books_on_fba_apr_avg"
     t.index ["fba_aug_avg"], name: "index_books_on_fba_aug_avg"
-    t.index ["fba_august_average"], name: "index_books_on_fba_august_average"
     t.index ["fba_dec_avg"], name: "index_books_on_fba_dec_avg"
     t.index ["fba_feb_avg"], name: "index_books_on_fba_feb_avg"
     t.index ["fba_jan_avg"], name: "index_books_on_fba_jan_avg"
@@ -517,7 +509,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.index ["isbn"], name: "index_books_on_isbn"
     t.index ["jan_rush_in_stock"], name: "index_books_on_jan_rush_in_stock"
     t.index ["last_scanned"], name: "index_books_on_last_scanned"
-    t.index ["life"], name: "index_books_on_life"
     t.index ["list_price"], name: "index_books_on_list_price"
     t.index ["low_apr_avg"], name: "index_books_on_low_apr_avg"
     t.index ["low_aug_avg"], name: "index_books_on_low_aug_avg"
@@ -536,7 +527,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.index ["lowest_price_aug_average"], name: "index_books_on_lowest_price_aug_average"
     t.index ["lowest_price_jan_average"], name: "index_books_on_lowest_price_jan_average"
     t.index ["lowest_rental"], name: "index_books_on_lowest_rental"
-    t.index ["lowest_rental_august_average"], name: "index_books_on_lowest_rental_august_average"
     t.index ["lowest_rental_average"], name: "index_books_on_lowest_rental_average"
     t.index ["main_fifth_price"], name: "index_books_on_main_fifth_price"
     t.index ["main_flag"], name: "index_books_on_main_flag"
@@ -615,8 +605,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.index ["orq_ninety"], name: "index_books_on_orq_ninety"
     t.index ["orq_total"], name: "index_books_on_orq_total"
     t.index ["out_of_print_date"], name: "index_books_on_out_of_print_date"
-    t.index ["peak_price"], name: "index_books_on_peak_price"
-    t.index ["pnep"], name: "index_books_on_pnep"
     t.index ["pricing_custom_12"], name: "index_books_on_pricing_custom_12"
     t.index ["pricing_custom_14"], name: "index_books_on_pricing_custom_14"
     t.index ["pricing_custom_15"], name: "index_books_on_pricing_custom_15"
@@ -669,7 +657,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.index ["total_quantity"], name: "index_books_on_total_quantity"
     t.index ["total_quantity_supplier"], name: "index_books_on_total_quantity_supplier"
     t.index ["trade_flag"], name: "index_books_on_trade_flag"
-    t.index ["trade_in"], name: "index_books_on_trade_in"
     t.index ["two_years_fbaz_rented_quantity"], name: "index_books_on_two_years_fbaz_rented_quantity"
     t.index ["two_years_fbaz_sold_quantity"], name: "index_books_on_two_years_fbaz_sold_quantity"
     t.index ["two_years_main_sold_quantity"], name: "index_books_on_two_years_main_sold_quantity"
@@ -679,7 +666,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_071155) do
     t.index ["uploaded_to_s3"], name: "index_books_on_uploaded_to_s3"
     t.index ["used_wholesale_price"], name: "index_books_on_used_wholesale_price"
     t.index ["valore_pending_order"], name: "index_books_on_valore_pending_order"
-    t.index ["wantlist_qty"], name: "index_books_on_wantlist_qty"
     t.index ["weekly_chegg_sale_quantity"], name: "index_books_on_weekly_chegg_sale_quantity"
     t.index ["weekly_direct_price_all"], name: "index_books_on_weekly_direct_price_all"
     t.index ["weekly_direct_qty_all"], name: "index_books_on_weekly_direct_qty_all"
