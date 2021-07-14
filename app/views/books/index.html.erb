@@ -30,15 +30,6 @@
 </div>
 <div class="row">
   <div class="col-sm">
-    <div class="input-group mb-3 float-left">
-      <% if @book.present? %>
-        <%= link_to "Book Details", details_book_path(@book.ean), target: "_blank", class: "btn btn-info" %>
-      <%end%>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm">
     <table id="books-datatable" data-source="<%= books_path(format: :json) %>" data-turbolinks='false'>
       <thead>
         <tr>

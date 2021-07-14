@@ -3,11 +3,7 @@
     <label class="table-title">Amazon Orders - AVG Turns: <%= @book? @book.average_turns : 'N/A' %> - ROI: <%= @book? @book.roi : 'N/A' %></label>
 </div>
 
-<% if @book.nil? %>
-  <div class="no-data text-center">
-    No data available in table.
-  </div>
-<% else %>
+<% unless @book.nil? %>
   <% unless @amazon_orders_totals.blank? %>
     <div id="amazon-orders-total-avg" class="book-details">
       <div class="col-detail">
@@ -56,7 +52,7 @@
       <label class="col-detail title">Main P</label>
       <label class="col-detail title">Direct Q</label>
       <label class="col-detail title">Direct P</label>
-      <label class="col-detail title">Month / Year</label>
+      <label class="col-detail title">Date</label>
     </div>
   <% end %>
 
@@ -97,7 +93,7 @@
           <div><%= order["direct_avg_price"] ? number_with_delimiter(number_with_precision(order["direct_avg_price"], precision: 2)) : 0.00 %></div>
         </div>
         <div class="col-detail">
-          <p class="title title-sm">Month/Year</p>
+          <p class="title title-sm">Date</p>
           <div>
             <% date_parts = order.fetch("date", "")&.split('/') %>
             <%= "#{date_parts[0]}/#{date_parts[1]}" if date_parts&.count == 2 %>
@@ -105,5 +101,9 @@
         </div>
       </div>
     <% end %>
+  <% else %>
+    <div class="no-data text-center" id="ao-spinner">
+      <div class="section-loader"></div>
+    </div>
   <% end %>
 <% end %>

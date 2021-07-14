@@ -1,0 +1,63 @@
+<!-- Amazon History -->
+<div class="detail-caption mt-4 br-0 bl-0">
+    <label class="table-title nv">Amazon History</label>
+</div>
+<div id="detail-headers" class="book-details">
+    <label class="col-detail title">Low</label>
+    <label class="col-detail title">FBALow</label>
+    <label class="col-detail title">SalesRank</label>
+</div>
+
+<% unless @book.nil? %>
+  <% unless @amazon_history_data.blank? %>
+    <% @amazon_history_data.each do |row| %>
+      <div class="book-details dotted-top qh-detail-row p-0">
+        <input type="hidden" name="hist-table" value="all-hist-table">
+        <div class="hist-date col-detail">
+          <% date_parts = row.fetch("date", "")&.split('/') %>
+          <p class="date-title qh-date">
+            <%= "#{date_parts[1]}/#{date_parts[0]}" if date_parts&.count == 2 %>
+          </p>
+        </div>
+        <div class="col-detail col-data">
+          <p class="title title-sm">Low</p>
+          <div>
+              <label class="pr-2 mb-0">
+                <%= number_with_delimiter(number_with_precision(row.fetch("lowest_avg", 0), precision: 2)) %>
+              </label>
+              <input type="hidden" name="qh-col-data" value="Lowest-Price">
+              <button type="button" class="btn-success plus-button ml-0 float-right" data-toggle="modal" data-target="#historyModal">
+                  <i class="fa fa-plus"></i>
+              </button>
+              
+          </div>
+        </div>
+        <div class="col-detail col-data">
+          <p class="title title-sm">FBALow</p>
+          <div>
+              <label class="pr-2 mb-0">
+                <%= number_with_delimiter(number_with_precision(row.fetch("fba_avg", 0), precision: 2)) %>
+              </label>
+              <input type="hidden" name="qh-col-data" value="FBA-Price">
+              <button type="button" class="btn-success plus-button ml-0 float-right" data-toggle="modal" data-target="#historyModal">
+                  <i class="fa fa-plus"></i>
+              </button>
+              
+          </div>
+        </div>
+        <div class="col-detail col-data">
+          <p class="title title-sm">SalesRank</p>
+          <div>
+              <label class="pr-2 mb-0">
+                <%= number_with_delimiter(row.fetch("min_sales_rank", 0)) %>
+              </label>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="no-data text-center">
+      <div class="section-loader" id="all-hist-spinner"></div>
+    </div>
+  <% end %>
+<% end %>

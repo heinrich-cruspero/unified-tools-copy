@@ -4,7 +4,7 @@
 # rubocop:disable  Metrics/ClassLength
 class Book < ApplicationRecord
   include HTTParty
-  include PgSearch
+  include PgSearch::Model
 
   def oe_isbn_rec
     Book.where(isbn: oe_isbn).take
@@ -247,6 +247,13 @@ class Book < ApplicationRecord
     amazon_hist_data
   end
 
+  def guide_max_price_history
+    datawh_service = DatawhService.new
+    max_price_hist_data = datawh_service.guide_max_price_history(isbn).to_a
+    datawh_service.close
+    max_price_hist_data
+  end
+
   def quantity_history
     indaba_service = IndabaService.new
     quantity_history = indaba_service.quantity_history(ean)
@@ -383,6 +390,25 @@ class Book < ApplicationRecord
       end
     end
     ids
+  end
+
+  def self.parse_monthly_history(hist_data)
+    data = []
+    dates = ((Date.today - 365)..Date.today).map do |d|
+      d.strftime('%Y/%m')
+    end.uniq.reverse
+
+    dates.each do |date|
+      match = hist_data.find { |h| h['date'] == date }
+      if match
+        data.append(match.stringify_keys)
+      else
+        data.append({
+          "date": date
+        }.stringify_keys)
+      end
+    end
+    data
   end
 end
 # rubocop:enable  Metrics/ClassLength

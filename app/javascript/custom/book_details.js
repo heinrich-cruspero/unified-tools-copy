@@ -16,23 +16,55 @@ $( document ).on('turbolinks:load', function() {
                     $("#guides-spinner").hide();
                 }
             }
-        })
+        });
 
-        // all history
-        $("#all-hist-no-data").hide();
+        // quantity history
         $.ajax({
             type: "GET",
-            url: "/books/" + search_val + "/all_history",
+            url: "/books/" + search_val + "/quantity_history",
             dataType: "json",
             complete: function(result){
-                if (result.responseJSON){
-                    $("#all-history-div").html(result.responseJSON.all_history);
-                    $("#all-hist-spinner").hide();
+                if (result.responseText){
+                    $("#quantity-history-div").html(result.responseJSON.quantity_history);
                 }
             }
+        });
 
-        })
+        // rental history
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/rental_history",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseText){
+                    $("#rental-history-div").html(result.responseJSON.rental_history);
+                }
+            }
+        });
 
+        // amazon history
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/amazon_history",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseText){
+                    $("#amazon-history-div").html(result.responseJSON.amazon_history);
+                }
+            }
+        });
+
+        // guide data max price history
+        $.ajax({
+            type: "GET",
+            url: "/books/" + search_val + "/guide_data_history",
+            dataType: "json",
+            complete: function(result){
+                if (result.responseText){
+                    $("#guide-data-history-div").html(result.responseJSON.guide_data_history);
+                }
+            }
+        });
 
         $("#amazon-prices-div").html("");
         $.ajax({
@@ -45,7 +77,7 @@ $( document ).on('turbolinks:load', function() {
                     $("#amazon-prices-div").html($.parseJSON(result.responseText).chart_data);
                 }
             }
-        })
+        });
 
         $("#sales-rank-div").html("");
         $.ajax({
@@ -58,10 +90,9 @@ $( document ).on('turbolinks:load', function() {
                     $("#sales-rank-div").html($.parseJSON(result.responseText).chart_data);
                 }
             }
-        })
+        });
 
         // amazon orders
-        $("#ao-no-data").hide();
         $.ajax({
             type: "GET",
             url: "/books/" + search_val + "/amazon_orders",
@@ -69,10 +100,10 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 if (result.responseText){
                     $("#amazon-orders-div").html($.parseJSON(result.responseText).amazon_orders);
-                    $("#ao-spinner").hide();
                 }
+                $("#ao-spinner").hide();
             }
-        })
+        });
     }
     
     $("#historyModal").on('show.bs.modal', function() {
@@ -101,7 +132,7 @@ $( document ).on('turbolinks:load', function() {
                     order: [['1', 'desc']]
                 });
             }
-        })
+        });
 
         $("#modal-chart").html("");
         $("#modal-hist-datatable").hide();
@@ -119,12 +150,12 @@ $( document ).on('turbolinks:load', function() {
                 $("#modal-chart").html($.parseJSON(result.responseText).qh_chart_data);
                 $("#modal-hist-datatable").show();
             }
-        })
-    })
+        });
+    });
 
     $('#historyModal').on('hidden.bs.modal', function () {
         $("#hist-datatable").dataTable().fnDestroy();
-    })
+    });
       
     function searchBook(){
         let book_val = $('#search_book').val().replace(/-/g, '')
@@ -132,5 +163,5 @@ $( document ).on('turbolinks:load', function() {
         if (book_val.length == 10 || book_val.length == 13) {
             window.location.pathname = "/books/" + book_val + "/details"
         }
-    }
+    };
 });

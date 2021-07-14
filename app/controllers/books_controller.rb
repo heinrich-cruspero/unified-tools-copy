@@ -9,7 +9,6 @@ class BooksController < ApplicationController
   def index
     authorize Book
 
-    @book = Book.last
     respond_to do |format|
       format.html
       format.json { render json: BookDatatable.new(params) }
@@ -272,42 +271,69 @@ class BooksController < ApplicationController
   end
   # rubocop:enable  Metrics/MethodLength
 
-  def all_history
+  def quantity_history
     authorize Book
     return if @book.nil?
 
-    # Hist Data from Datawh
-    rental_history_data = @book.rental_prices_history
-    rental_history = rental_history_data.count.positive? ? rental_history_data : {}
-
-    amazon_history_data = @book.amazon_data_history
-    amazon_history = amazon_history_data.count.positive? ? amazon_history_data : {}
-
     # Hist Data from Indaba
     quantity_hist_data = @book.quantity_history
-    quantity_history = quantity_hist_data.count.positive? ? quantity_hist_data : {}
-
-    @all_history = quantity_history
-
-    # Merge DataWH data with DataWH
-    unless rental_history.blank?
-      rental_history.each do |rec|
-        match = @all_history.find { |h| h['date'] == rec['date'] }
-        match&.merge!(rec.stringify_keys)
-      end
-    end
-
-    unless amazon_history.blank?
-      amazon_history.each do |rec|
-        match = @all_history.find { |h| h['date'] == rec['date'] }
-        match&.merge!(rec.stringify_keys)
-      end
-    end
+    @quantity_history_data = Book.parse_monthly_history(quantity_hist_data)
 
     respond_to do |format|
       format.js do
         render json: {
-          all_history: render_to_string(partial: 'all_history_details')
+          quantity_history: render_to_string(partial: 'quantity_history')
+        }
+      end
+    end
+  end
+
+  def rental_history
+    authorize Book
+    return if @book.nil?
+
+    # Rental hist Data from Datawh
+    rental_history_data = @book.rental_prices_history
+    @rental_history_data = Book.parse_monthly_history(rental_history_data)
+
+    respond_to do |format|
+      format.js do
+        render json: {
+          rental_history: render_to_string(partial: 'rental_history')
+        }
+      end
+    end
+  end
+
+  def amazon_history
+    authorize Book
+    return if @book.nil?
+
+    # Amazon History from Datawh
+    amazon_history_data = @book.amazon_data_history
+    @amazon_history_data = Book.parse_monthly_history(amazon_history_data)
+
+    respond_to do |format|
+      format.js do
+        render json: {
+          amazon_history: render_to_string(partial: 'amazon_history')
+        }
+      end
+    end
+  end
+
+  def guide_data_history
+    authorize Book
+    return if @book.nil?
+
+    # Guide Max Prices History
+    guide_max_price_hist_data = @book.guide_max_price_history
+    @guide_max_price_history_data = Book.parse_monthly_history(guide_max_price_hist_data)
+
+    respond_to do |format|
+      format.js do
+        render json: {
+          guide_data_history: render_to_string(partial: 'guide_data_history')
         }
       end
     end

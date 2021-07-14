@@ -38,8 +38,27 @@
     border-right: 0.5px solid #dee2e6;
   }
 
+  .hist-date {
+    display: unset !important;
+  }
+
   .hidden {
     display: none;
+  }
+
+  #dates-div {
+    display: none;
+  }
+
+  .detail-caption {
+    border: 1px solid #ccc !important;
+    width: 100%;
+    padding: 6px;
+    background-color: #f2f2f2;
+  }
+
+  .nv {
+    visibility: visible !important;
   }
 }
 
@@ -96,6 +115,16 @@
   background-color: #f2f2f2;
 }
 
+.date-title {
+  overflow-wrap: break-word;
+  font-size: 17px;
+  padding: 6px;
+  margin-bottom: 0;
+  color: #08C;
+  border-bottom: 0.5px solid #dee2e6;
+  background-color: #f2f2f2;
+}
+
 .qh-date {
   padding-top: 10px !important;
 }
@@ -138,6 +167,26 @@
 
 .title-sm {
   display: none;
+}
+
+.bl-0 {
+  border-left: 0px;
+}
+
+.br-0 {
+  border-right: 0px;
+}
+
+.b-0 {
+  border: 0px;
+}
+
+.hist-date {
+  display: none;
+}
+
+.nv {
+  visibility: hidden;
 }
 
 .plus-button {

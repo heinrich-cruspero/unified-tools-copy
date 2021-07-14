@@ -31,7 +31,10 @@ Rails.application.routes.draw do
       get 'details'
       get 'detail_guides'
       get 'amazon_orders'
-      get 'all_history'
+      get 'quantity_history'
+      get 'rental_history'
+      get 'amazon_history'
+      get 'guide_data_history'
       get 'history_chart'
       get 'sales_rank_history'
       get 'amazon_prices_history'
@@ -58,6 +61,6 @@ Rails.application.routes.draw do
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  root to: 'books#index'
+  root to: 'home#dashboard'
 end
 # rubocop:enable  Metrics/BlockLength

@@ -1,8 +1,17 @@
 <nav id="sidebar" class="active">
   <div class="sidebar-header">
-    <h3>BBA</h3>
+    <a href="<%= root_path %>">
+      <h3>BBA</h3>
+    </a>
   </div>
   <ul class="list-unstyled components">
+    <li>
+      <% ean = Book.last.ean %>
+      <a href="<%= details_book_path(ean) unless ean.nil? %>" target= "_blank">
+        <i class="fas fa-book"></i>
+        Book Details
+      </a>
+    </li>
     <li>
       <a href="<%= books_path %>">
         <i class="fas fa-book"></i>
