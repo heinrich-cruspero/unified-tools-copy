@@ -391,5 +391,24 @@ class Book < ApplicationRecord
     end
     ids
   end
+
+  def self.parse_monthly_history(hist_data)
+    data = []
+    dates = ((Date.today - 365)..Date.today).map do |d|
+      d.strftime('%Y/%m')
+    end.uniq.reverse
+
+    dates.each do |date|
+      match = hist_data.find { |h| h['date'] == date }
+      if match
+        data.append(match.stringify_keys)
+      else
+        data.append({
+          "date": date
+        }.stringify_keys)
+      end
+    end
+    data
+  end
 end
 # rubocop:enable  Metrics/ClassLength

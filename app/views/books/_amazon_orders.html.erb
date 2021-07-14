@@ -3,11 +3,7 @@
     <label class="table-title">Amazon Orders - AVG Turns: <%= @book? @book.average_turns : 'N/A' %> - ROI: <%= @book? @book.roi : 'N/A' %></label>
 </div>
 
-<% if @book.nil? %>
-  <div class="no-data text-center">
-    No data available in table.
-  </div>
-<% else %>
+<% unless @book.nil? %>
   <% unless @amazon_orders_totals.blank? %>
     <div id="amazon-orders-total-avg" class="book-details">
       <div class="col-detail">
@@ -105,5 +101,9 @@
         </div>
       </div>
     <% end %>
+  <% else %>
+    <div class="no-data text-center" id="ao-spinner">
+      <div class="section-loader"></div>
+    </div>
   <% end %>
 <% end %>

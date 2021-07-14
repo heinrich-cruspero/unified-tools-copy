@@ -7,11 +7,8 @@
     <label class="col-detail title">FBALow</label>
     <label class="col-detail title">SalesRank</label>
 </div>
-<% if @book.nil? %>
-  <div class="no-data text-center">
-    No data available in table.
-  </div>
-<% else %>
+
+<% unless @book.nil? %>
   <% unless @amazon_history_data.blank? %>
     <% @amazon_history_data.each do |row| %>
       <div class="book-details dotted-top qh-detail-row p-0">

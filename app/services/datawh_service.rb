@@ -15,101 +15,60 @@ class DatawhService
 
   def rental_prices_history(isbn)
     @connection.exec(
-      "WITH date_series_query AS (
-        SELECT TO_CHAR(created_at, 'YYYY/MM') AS Date
-        FROM generate_series(
-          (NOW() - INTERVAL '1 YEAR')::DATE,
-          NOW()::DATE,
-          '1 MONTH'
-        ) AS created_at
-        ORDER BY created_at DESC
-      ), rental_prices_query AS (
-        SELECT
-          COUNT(DISTINCT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN r.seller END)
-          ) as renters,
-          COALESCE(AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END), 0) AS w,
-          COALESCE(AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END), 0) AS nw,
-          to_char(r.created_at, 'YYYY/MM') AS Date
-        FROM rental_prices r
-        WHERE r.asin = '#{isbn}'
-        AND r.created_at > (NOW() - (INTERVAL '1 YEAR'))
-        GROUP BY Date
-        ORDER BY Date DESC
-      )
-      SELECT Date, COALESCE(w, 0.00) AS w, COALESCE(nw, 0.00) AS nw, COALESCE(renters, 0) AS renters
-      FROM rental_prices_query
-      FULL OUTER JOIN date_series_query USING (Date)"
+      "SELECT
+        COUNT(DISTINCT(CASE WHEN r.seller NOT iLIKE 'RockCityBooks%' THEN r.seller END)
+        ) as renters,
+        COALESCE(AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END), 0) AS w,
+        COALESCE(AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END), 0) AS nw,
+        to_char(r.created_at, 'YYYY/MM') AS Date
+      FROM rental_prices r
+      WHERE r.asin = '#{isbn}'
+      AND r.created_at > (NOW() - (INTERVAL '1 YEAR'))
+      GROUP BY Date
+      ORDER BY Date DESC"
     )
   end
 
   def amazon_data_history(isbn)
     @connection.exec(
-      "WITH date_series_query AS (
-        SELECT TO_CHAR(created_at, 'YYYY/MM') AS Date
-        FROM generate_series(
-          (NOW() - INTERVAL '1 YEAR')::DATE,
-          NOW()::DATE,
-          '1 MONTH'
-        ) AS created_at
-        ORDER BY created_at DESC
-      ), amazon_query AS (
-        SELECT
-          COALESCE(AVG(a.fba_price) FILTER (WHERE a.fba_price > 0), 0) AS fba_avg,
-          COALESCE(AVG(a.lowest_price) FILTER (WHERE a.lowest_price > 0), 0) AS lowest_avg,
-          MIN(a.sales_rank) as min_sales_rank,
-          to_char(a.created_at,'YYYY/MM') AS Date
-        FROM amazon_data a
-        WHERE a.isbn = '#{isbn}'
-        AND a.created_at > (NOW() - (INTERVAL '1 YEAR'))
-        GROUP BY Date
-        ORDER BY Date DESC
-      )
-      SELECT Date, COALESCE(fba_avg, 0) AS fba_avg,
-        COALESCE(lowest_avg, 0) AS lowest_avg,
-        COALESCE(min_sales_rank, 0) AS min_sales_rank
-      FROM amazon_query
-      FULL OUTER JOIN date_series_query USING (Date)"
+      "SELECT
+        COALESCE(AVG(a.fba_price) FILTER (WHERE a.fba_price > 0), 0) AS fba_avg,
+        COALESCE(AVG(a.lowest_price) FILTER (WHERE a.lowest_price > 0), 0) AS lowest_avg,
+        MIN(a.sales_rank) as min_sales_rank,
+        to_char(a.created_at,'YYYY/MM') AS Date
+      FROM amazon_data a
+      WHERE a.isbn = '#{isbn}'
+      AND a.created_at > (NOW() - (INTERVAL '1 YEAR'))
+      GROUP BY Date
+      ORDER BY Date DESC"
     )
   end
 
   def guide_max_price_history(isbn)
     @connection.exec(
-      "WITH date_series_query AS (
-        SELECT TO_CHAR(created_at, 'YYYY/MM') AS Date
-        FROM generate_series(
-          (NOW() - INTERVAL '1 YEAR')::DATE,
-          NOW()::DATE,
-          '1 MONTH'
-        ) AS created_at
-        ORDER BY created_at DESC
-      ), guide_data_query AS (
-        SELECT res.date as Date,
-            COALESCE(MAX(price) FILTER(WHERE guide LIKE 'Nebraska%'), 0) as nbcwh,
-            COALESCE(MAX(price) FILTER(WHERE guide LIKE 'MBS%'), 0) as mbswh
-        FROM
-          (SELECT
-              gp.name as guide,
-              gd.used_wholesale_price as price,
-              to_char(gi.effective_date,'YYYY/MM') AS date
-          FROM guide_data gd
-          INNER JOIN guide_imports gi ON gd.guide_import_id=gi.id
-          INNER JOIN guide_providers gp ON gi.guide_provider_id=gp.id
-          WHERE gd.isbn='#{isbn}'
-          AND gi.effective_date > (NOW() - INTERVAL '1 YEAR')
-          UNION
-          SELECT gp.name as guide,
-              gd.used_wholesale_price as price,
-              to_char(gi.expiration_date,'YYYY/MM') AS date
-          FROM guide_data gd
-          INNER JOIN guide_imports gi ON gd.guide_import_id=gi.id
-          INNER JOIN guide_providers gp ON gi.guide_provider_id=gp.id
-          WHERE gd.isbn = '#{isbn}'
-          AND gi.expiration_date > (NOW() - INTERVAL '1 YEAR')) as res
-        GROUP BY Date
-      )
-      SELECT Date, COALESCE(nbcwh, 0) AS nbcwh, COALESCE(mbswh, 0) AS mbswh
-      FROM guide_data_query
-      FULL OUTER JOIN date_series_query USING (Date)"
+      "SELECT res.date as Date,
+          COALESCE(MAX(price) FILTER(WHERE guide LIKE 'Nebraska%'), 0) as nbcwh,
+          COALESCE(MAX(price) FILTER(WHERE guide LIKE 'MBS%'), 0) as mbswh
+      FROM
+        (SELECT
+            gp.name as guide,
+            gd.used_wholesale_price as price,
+            to_char(gi.effective_date,'YYYY/MM') AS date
+        FROM guide_data gd
+        INNER JOIN guide_imports gi ON gd.guide_import_id=gi.id
+        INNER JOIN guide_providers gp ON gi.guide_provider_id=gp.id
+        WHERE gd.isbn='#{isbn}'
+        AND gi.effective_date > (NOW() - INTERVAL '1 YEAR')
+        UNION
+        SELECT gp.name as guide,
+            gd.used_wholesale_price as price,
+            to_char(gi.expiration_date,'YYYY/MM') AS date
+        FROM guide_data gd
+        INNER JOIN guide_imports gi ON gd.guide_import_id=gi.id
+        INNER JOIN guide_providers gp ON gi.guide_provider_id=gp.id
+        WHERE gd.isbn = '#{isbn}'
+        AND gi.expiration_date > (NOW() - INTERVAL '1 YEAR')) as res
+      GROUP BY Date"
     )
   end
 

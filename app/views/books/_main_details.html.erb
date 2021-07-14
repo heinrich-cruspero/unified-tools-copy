@@ -17,12 +17,7 @@
     <label class="col-detail title">Subject</label>
 </div>
 
-
-<% if @book.nil? %>
-    <div class="no-data text-center">
-        No data available in table.
-    </div>
-<% else %>
+<% unless @book.nil? %>
     <!-- Detail content -->
     <div class="book-details">
         <div class="col-detail">

@@ -16,11 +16,7 @@
     <label class="col-detail title">R%</label>
 </div>
 
-<% if @book.nil? %>
-    <div class="no-data text-center">
-        No data available in table.
-    </div>
-<% else %>
+<% unless @book.nil? %>
     <!-- Detail content -->
     <div class="book-details mb-1">
         <div class="col-detail">

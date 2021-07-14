@@ -6,11 +6,8 @@
     <label class="col-detail title">MBSWH</label>
     <label class="col-detail title">NBCWH</label>
 </div>
-<% if @book.nil? %>
-  <div class="no-data text-center">
-    No data available in table.
-  </div>
-<% else %>
+
+<% unless @book.nil? %>
   <% unless @guide_max_price_history_data.blank? %>
     <% @guide_max_price_history_data.each do |row| %>
       <div class="book-details dotted-top qh-detail-row p-0">

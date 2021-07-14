@@ -278,9 +278,7 @@ class BooksController < ApplicationController
 
     # # Hist Data from Indaba
     quantity_hist_data = @book.quantity_history
-    quantity_history = quantity_hist_data.count.positive? ? quantity_hist_data : {}
-
-    @quantity_history_data = quantity_history
+    @quantity_history_data = Book.parse_monthly_history(quantity_hist_data)
 
     respond_to do |format|
       format.js do
@@ -297,9 +295,7 @@ class BooksController < ApplicationController
 
     # Rental hist Data from Datawh
     rental_history_data = @book.rental_prices_history
-    rental_history = rental_history_data.count.positive? ? rental_history_data : {}
-
-    @rental_history_data = rental_history
+    @rental_history_data = Book.parse_monthly_history(rental_history_data)
 
     respond_to do |format|
       format.js do
@@ -316,9 +312,7 @@ class BooksController < ApplicationController
 
     # Amazon History from Datawh
     amazon_history_data = @book.amazon_data_history
-    amazon_history = amazon_history_data.count.positive? ? amazon_history_data : {}
-
-    @amazon_history_data = amazon_history
+    @amazon_history_data = Book.parse_monthly_history(amazon_history_data)
 
     respond_to do |format|
       format.js do
@@ -335,13 +329,7 @@ class BooksController < ApplicationController
 
     # Guide Max Prices History
     guide_max_price_hist_data = @book.guide_max_price_history
-    guide_max_price_history = if guide_max_price_hist_data.count.positive?
-                                guide_max_price_hist_data
-                              else
-                                {}
-                              end
-
-    @guide_max_price_history_data = guide_max_price_history
+    @guide_max_price_history_data = Book.parse_monthly_history(guide_max_price_hist_data)
 
     respond_to do |format|
       format.js do

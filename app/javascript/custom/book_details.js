@@ -24,7 +24,6 @@ $( document ).on('turbolinks:load', function() {
             url: "/books/" + search_val + "/quantity_history",
             dataType: "json",
             complete: function(result){
-                // $("#amazon-prices-spinner").hide();
                 if (result.responseText){
                     $("#quantity-history-div").html(result.responseJSON.quantity_history);
                 }
@@ -37,7 +36,6 @@ $( document ).on('turbolinks:load', function() {
             url: "/books/" + search_val + "/rental_history",
             dataType: "json",
             complete: function(result){
-                // $("#amazon-prices-spinner").hide();
                 if (result.responseText){
                     $("#rental-history-div").html(result.responseJSON.rental_history);
                 }
@@ -50,7 +48,6 @@ $( document ).on('turbolinks:load', function() {
             url: "/books/" + search_val + "/amazon_history",
             dataType: "json",
             complete: function(result){
-                // $("#amazon-prices-spinner").hide();
                 if (result.responseText){
                     $("#amazon-history-div").html(result.responseJSON.amazon_history);
                 }
@@ -63,7 +60,6 @@ $( document ).on('turbolinks:load', function() {
             url: "/books/" + search_val + "/guide_data_history",
             dataType: "json",
             complete: function(result){
-                // $("#amazon-prices-spinner").hide();
                 if (result.responseText){
                     $("#guide-data-history-div").html(result.responseJSON.guide_data_history);
                 }
@@ -98,7 +94,6 @@ $( document ).on('turbolinks:load', function() {
         })
 
         // amazon orders
-        $("#ao-no-data").hide();
         $.ajax({
             type: "GET",
             url: "/books/" + search_val + "/amazon_orders",
@@ -106,8 +101,8 @@ $( document ).on('turbolinks:load', function() {
             complete: function(result){
                 if (result.responseText){
                     $("#amazon-orders-div").html($.parseJSON(result.responseText).amazon_orders);
-                    $("#ao-spinner").hide();
                 }
+                $("#ao-spinner").hide();
             }
         })
     }
@@ -171,10 +166,4 @@ $( document ).on('turbolinks:load', function() {
         }
     }
 
-    function getHistoryData(source) {
-        return $.ajax({
-            type: "GET",
-            url: "/books/" + search_val + "/" + source,
-        })
-    }
 });

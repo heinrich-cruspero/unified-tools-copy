@@ -13,12 +13,7 @@
   <label class="col-detail title">Grade</label>
 </div>
 
-<% if @guides.blank? %>
-  <div class="no-data text-center">
-    <div class="section-loader" id="guides-spinner"></div>
-    <div id="guides-no-data">No data available in table.</div>
-  </div>
-<% else %>
+<% unless @guides.blank? %>
   <!-- CURRENT GUIDES-->
   <div class="detail-caption">
     <label class="table-title">Current Guides</label>
