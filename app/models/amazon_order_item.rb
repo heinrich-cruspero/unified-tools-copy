@@ -37,6 +37,7 @@ class AmazonOrderItem < ApplicationRecord
   end
 
   def self.type_details(type, amazon_order_items)
+    total_count = amazon_order_items.count
     if type == 'Concession'
       amazon_order_items = []
     elsif type == 'Returns'
@@ -48,7 +49,8 @@ class AmazonOrderItem < ApplicationRecord
     elsif type == 'Long Extensions'
       amazon_order_items = amazon_order_items.where(charge_type: 'l_ext')
     end
-    { type => amazon_order_items.count.to_s(:delimited) }
+    { type => amazon_order_items.count.to_s(:delimited),
+      'percentage' => ((amazon_order_items.count / total_count.to_f) * 100).round(2) }
   end
 
   def self.rental_count(amazon_items)
