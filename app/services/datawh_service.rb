@@ -182,6 +182,42 @@ class DatawhService
     )
   end
 
+  def guide_imports
+    @connection.exec(
+      "SELECT gi.id, gi.file_name, gp.name, gi.created_at,
+              gi.effective_date, gi.expiration_date, gi.imported
+        FROM guide_imports gi
+      LEFT JOIN guide_providers gp ON gi.guide_provider_id = gp.id
+      "
+    )
+  end
+
+  def guide_providers
+    @connection.exec(
+      'SELECT id, name FROM guide_providers'
+    )
+  end
+
+  def insert_into_guide_imports(guide_provider_id, file_name,
+                                uploaded_at, effective_date, expiration_date)
+
+    @connection.exec("
+      INSERT INTO guide_imports(guide_provider_id, file_name,
+                                uploaded_at, effective_date, expiration_date, created_at)
+      VALUES(#{guide_provider_id}, '#{file_name}', '#{uploaded_at}',
+              '#{effective_date}', '#{expiration_date}', NOW())
+      RETURNING id
+    ")
+  end
+
+  def update_guide_import_s3_url(id, s3_url)
+    @connection.exec("
+      UPDATE guide_imports
+      SET s3_url='#{s3_url}'
+      WHERE id=#{id}
+    ")
+  end
+
   def close
     @connection.close
   end
