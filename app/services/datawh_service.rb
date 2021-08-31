@@ -20,11 +20,11 @@ class DatawhService
         ) as renters,
         COALESCE(AVG(CASE WHEN r.seller iLIKE 'Amazon%' THEN r.price ELSE NULL END), 0) AS w,
         COALESCE(AVG(CASE WHEN r.seller NOT iLIKE 'Amazon%' THEN r.price ELSE NULL END), 0) AS nw,
-        to_char(r.created_at, 'YYYY/MM') AS Date
-      FROM rental_prices r
+        to_char(r.scan_date, 'YYYY/MM') AS Date
+      FROM rental_prices_histories r
       WHERE r.asin = '#{isbn}'
       AND r.seller != 'RockCityBooks'
-      AND r.created_at > (NOW() - (INTERVAL '1 YEAR'))
+      AND r.scan_date > (NOW() - (INTERVAL '1 YEAR'))
       GROUP BY Date
       ORDER BY Date DESC"
     )
@@ -124,33 +124,33 @@ class DatawhService
 
   def w_rental_history(isbn, month, year)
     @connection.exec(
-      "SELECT r.price, EXTRACT(DAY FROM r.created_at) AS day
-      FROM rental_prices r
+      "SELECT r.price, EXTRACT(DAY FROM r.scan_date) AS day
+      FROM rental_prices_histories r
       WHERE
       r.asin = '#{isbn}'
       AND
       r.seller iLIKE 'Amazon%'
       AND
-      EXTRACT(YEAR FROM r.created_at) = '#{year}'
+      EXTRACT(YEAR FROM r.scan_date) = '#{year}'
       AND
-      EXTRACT(MONTH FROM r.created_at) = '#{month}'
-      ORDER BY r.created_at"
+      EXTRACT(MONTH FROM r.scan_date) = '#{month}'
+      ORDER BY r.scan_date"
     )
   end
 
   def nw_rental_history(isbn, month, year)
     @connection.exec(
-      "SELECT r.price, EXTRACT(DAY FROM r.created_at) AS day
-      FROM rental_prices r
+      "SELECT r.price, EXTRACT(DAY FROM r.scan_date) AS day
+      FROM rental_prices_histories r
       WHERE
       r.asin = '#{isbn}'
       AND
       r.seller NOT iLIKE 'Amazon%'
       AND
-      EXTRACT(YEAR FROM r.created_at) = '#{year}'
+      EXTRACT(YEAR FROM r.scan_date) = '#{year}'
       AND
-      EXTRACT(MONTH FROM r.created_at) = '#{month}'
-      ORDER BY r.created_at"
+      EXTRACT(MONTH FROM r.scan_date) = '#{month}'
+      ORDER BY r.scan_date"
     )
   end
 
