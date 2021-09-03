@@ -32,17 +32,14 @@ class GuideImportsController < ApplicationController
       @guide_import.file_name = @guide_import.build_s3_filename
 
       if @guide_import.valid?
-        unless @guide_import.valid_headers
-          return redirect_to new_guide_import_path,
-                             flash: { error: "Invalid CSV file: missing required headers. #{GuideImport.headers}" }
+        File.open(Rails.root.join('tmp', @guide_import.file_name), 'wb') do |file|
+          file.write(@guide_import.file.read)
         end
-
-        csv_data = @guide_import.csv_data
 
         guide_import_id = @guide_import.insert_to_datawh
         UploadGuideImportJob.perform_later(
           current_user.id, guide_import_id.to_i,
-          @guide_import.file_name, csv_data
+          @guide_import.file_name
         )
 
         redirect_to guide_imports_path, flash: {
@@ -69,5 +66,4 @@ class GuideImportsController < ApplicationController
   def guide_providers
     @guide_providers = GuideImport.guide_providers
   end
-
 end

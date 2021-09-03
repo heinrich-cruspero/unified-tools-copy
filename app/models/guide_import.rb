@@ -58,16 +58,4 @@ class GuideImport
 
     errors.add(:file, 'Must be a valid CSV file.')
   end
-
-  def valid_headers
-    csv_headers = CSV.open(file, &:readline)
-    csv_headers == GuideImport.headers
-  end
-
-  def csv_data
-    csv_text = File.read(file)
-    csv = CSV.parse(csv_text, headers: true)
-    csv_hash = csv.map(&:to_h)
-    csv_hash
-  end
 end

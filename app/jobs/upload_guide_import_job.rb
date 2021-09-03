@@ -12,7 +12,6 @@ class UploadGuideImportJob < ApplicationJob
     user_id = args[0]
     guide_import_id = args[1]
     file_name = args[2]
-    file_data = args[3]
 
     s3 = Aws::S3::Resource.new(region:
         Rails.application.credentials[Rails.env.to_sym][:aws][:region])
@@ -21,12 +20,8 @@ class UploadGuideImportJob < ApplicationJob
     key = "#{Rails.env}/pending/#{file_name}"
     obj = s3.bucket(bucket).object(key)
 
-    obj.upload_stream do |write_stream|
-      write_stream << CSV.generate_line(file_data.first.keys)
-      file_data.each do |row|
-        write_stream << CSV.generate_line(row.values)
-      end
-    end
+    obj.upload_file(Rails.root.join('tmp', file_name))
+    File.delete(Rails.root.join('tmp', file_name))
 
     # Update s3_url of guide_import
     datawh_service = DatawhService.new
