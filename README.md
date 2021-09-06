@@ -33,7 +33,13 @@
         access_key_id:  
         secret_access_key:  
         ses_smtp_username:  
-        ses_smtp_password:  
+        ses_smtp_password:
+
+        datawh:
+            access_key_id:
+            secret_access_key:
+            region:
+            bucket_name:
 
     development:
       aws:

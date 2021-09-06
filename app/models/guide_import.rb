@@ -54,7 +54,7 @@ class GuideImport
   end
 
   def correct_document_type
-    return if file.content_type.in?(%w[text/csv])
+    return if file.content_type.in?(%w[text/csv application/x-dbf])
 
     errors.add(:file, 'Must be a valid CSV file.')
   end
