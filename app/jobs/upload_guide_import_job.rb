@@ -29,7 +29,7 @@ class UploadGuideImportJob < ApplicationJob
     datawh_service.update_guide_import_s3_url(guide_import_id, obj.public_url)
 
     ActionCable.server.broadcast(
-      "guide_import_channel:#{user_id}",
+      "file_import_channel:#{user_id}",
       {}
     )
   end

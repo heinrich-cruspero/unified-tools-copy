@@ -23,4 +23,5 @@ function file_import_channel(){
 
 $( document ).on('turbolinks:load', function() {
   $('#add-isbn-form').on('submit', file_import_channel);
+  $('#guide-import-form').on('submit', file_import_channel);
 });
