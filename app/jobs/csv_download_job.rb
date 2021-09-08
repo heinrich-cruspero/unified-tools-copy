@@ -17,9 +17,10 @@ class CsvDownloadJob < ApplicationJob
     params[:length] = '-1'
     params = ActionController::Parameters.new(params)
     datatable = datatable_class.constantize.send('new', params)
-    s3 = Aws::S3::Resource.new(region:
-                                   Rails.application.credentials[Rails.env.to_sym][:aws][:region])
-    bucket = Rails.application.credentials[Rails.env.to_sym][:aws][:bucket_name]
+    s3 = Aws::S3::Resource.new(
+      region: Rails.application.credentials[Rails.env.to_sym][:unified_s3][:region]
+    )
+    bucket = Rails.application.credentials[Rails.env.to_sym][:unified_s3][:bucket_name]
 
     key = "downloads/#{user_id}/#{Time.now}/#{file_name}"
     obj = s3.bucket(bucket).object(key)

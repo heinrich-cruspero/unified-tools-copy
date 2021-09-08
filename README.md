@@ -35,19 +35,21 @@
         ses_smtp_username:  
         ses_smtp_password:
 
-        datawh:
-            access_key_id:
-            secret_access_key:
-            region:
-            bucket_name:
-
     development:
-      aws:
+      unified_s3:
+        region:
+        bucket_name:
+
+      datawh_s3:
         region:
         bucket_name:
 
     production:
-      aws:
+      unified_s3:
+        region:
+        bucket_name:
+    
+      datawh_s3:
         region:
         bucket_name:
         
