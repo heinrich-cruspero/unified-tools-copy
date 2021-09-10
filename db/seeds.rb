@@ -14,3 +14,9 @@ column_names.each do |item|
 end
 
 puts 'Created Book Field Mappings.'
+
+%i[User Admin StoreManager].each do |role|
+  Role.find_or_create_by(
+    name: role
+  )
+end

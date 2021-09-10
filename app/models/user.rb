@@ -5,6 +5,15 @@ class User < ApplicationRecord
   devise :timeoutable, :database_authenticatable, :trackable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
+  has_many :user_roles, 
+            inverse_of: :user, 
+            foreign_key: 'user_id'
+  has_many :roles, through: :user_roles
+  accepts_nested_attributes_for :user_roles,
+                                allow_destroy: true
+
+  has_many :permissions, as: :authorizable
+
   validates :email, presence: true
 
   enum role: %i[User Admin]
