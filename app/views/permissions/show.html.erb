@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-sm">
+        <div class="float-right">
+            <%= link_to edit_permission_path(@permission), class: 'btn btn-secondary ml-2' do %>
+              <span class="fa fa-file"></span>
+              Edit
+            <% end %>
+            <%= link_to new_permission_path, class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-plus"></span>
+                New
+            <% end %>
+            <%= link_to @permission, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ml-2' do %>
+              <span class="fa fa-trash"></span>
+              Delete
+            <% end %>
+            <%= link_to permissions_path, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-list"> </span>
+                Return to List
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered mt-3">
+  <thead class="thead-light">
+    <tr>
+      <th colspan="5">Field Mapping</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td>ID</td>
+        <td><%= @permission.id %></td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td><%= @permission.name %></td>
+      </tr>
+      <tr>
+        <td>Authorizable ID</td>
+        <td><%= @permission.authorizable_id %></td>
+      </tr>
+      <tr>
+        <td>Authorizable Type</td>
+        <td><%= @permission.authorizable_type %></td>
+      </tr>
+      <tr>
+        <td>Permissible ID</td>
+        <td><%= @permission.permissible_id %></td>
+      </tr>
+      <tr>
+        <td>Permissible Type</td>
+        <td><%= @permission.permissible_type %></td>
+      </tr>
+      <tr>
+        <td>Created At</td>
+        <td><%= @permission.created_at %></td>
+      </tr>
+      <tr>
+        <td>Updated At</td>
+        <td><%= @permission.updated_at %></td>
+      </tr>
+  </tbody>
+</table>

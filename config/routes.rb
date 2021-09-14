@@ -61,6 +61,8 @@ Rails.application.routes.draw do
   resources :roles
 
   resources :permission_types
+
+  resources :permissions
   
   resources :users, only: %i[index edit update delete]
   devise_for :users,
