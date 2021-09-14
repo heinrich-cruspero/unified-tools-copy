@@ -59,6 +59,9 @@ Rails.application.routes.draw do
   resources :amazon_order_items, only: [:index]
 
   resources :roles
+
+  resources :permission_types
+  
   resources :users, only: %i[index edit update delete]
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

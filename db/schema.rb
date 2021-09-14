@@ -473,6 +473,14 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["sku"], name: "index_indaba_skus_on_sku"
   end
 
+  create_table "permission_types", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_permission_types_on_name", unique: true
+  end
+
   create_table "permissions", force: :cascade do |t|
     t.string "name"
     t.integer "authorizable_id"
