@@ -516,6 +516,24 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
+  create_table "route_actions", force: :cascade do |t|
+    t.bigint "route_id"
+    t.integer "action", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["id", "route_id"], name: "index_route_actions_on_id_and_route_id", unique: true
+    t.index ["route_id"], name: "index_route_actions_on_route_id"
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.string "path"
+    t.integer "feature_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feature_id"], name: "index_routes_on_feature_id"
+    t.index ["id", "feature_id"], name: "index_routes_on_id_and_feature_id", unique: true
+  end
+
   create_table "user_roles", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "role_id"
