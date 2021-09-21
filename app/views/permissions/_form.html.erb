@@ -1,4 +1,4 @@
-<%= form_with(model: permission, local: true) do |form| %>
+<%= form_with(model: permission, local: true, id: :permission_form) do |form| %>
   <% if permission.errors.any? %>
     
       <% permission.errors.full_messages.each do |message| %>
@@ -22,27 +22,43 @@
     <div class="col-sm-3"></div>
   </div>
   <div class="form-group row">
-    <label class="col-sm-1 col-form-label">Authorizable ID *</label>
+    <label class="col-sm-1 col-form-label">Authorizable</label>
     <div class="col-sm-3">
-      <%= form.text_field :authorizable_id, class: "form-control" %>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="authorizable_options" id="user-radio-option" value="user">
+        <label class="form-check-label" for="user-radio-option">User</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="authorizable_options" id="role-radio-option" value="role">
+        <label class="form-check-label" for="role-radio-option">Role</label>
+      </div>
+      <small class="form-text text-muted">
+        Select the type you want to authorize.
+      </small>
+      <div id="authorizable-user">
+        <%= form.hidden_field :authorizable_user_type, value: "User" %>
+        <%= form.collection_select :authorizable_user_id, User.all, :id, :email, { include_blank: "Select User"}, {class: "authorizable-select user form-control"} %>
+      </div>
+      <div id="authorizable-role">
+        <%= form.hidden_field :authorizable_role_type, value: "Role" %>
+        <%= form.collection_select :authorizable_role_id, Role.all.where.not(name: "Admin"), :id, :name, { include_blank: "Select Role"}, {class: "authorizable-select role form-control"} %>
+      </div>
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-sm-1 col-form-label">Authorizable Type *</label>
-    <div class="col-sm-3">
-      <%= form.text_field :authorizable_type, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-1 col-form-label">Permissible ID *</label>
-    <div class="col-sm-3">
-      <%= form.text_field :permissible_id, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-1 col-form-label">Permissible Type *</label>
-    <div class="col-sm-3">
-      <%= form.text_field :permissible_type, class: "form-control" %>
+    <label class="col-sm-1 col-form-label">Book Export Fields</label>
+    <div class="col-sm-11">
+      <div id="permission-field-mappings">
+        <%= form.fields_for :book_field_mapping_permissions do |field_mapping| %>
+          <%= render 'book_field_mapping_permissions', f: field_mapping %>
+        <% end %>
+
+      </div>
+      <div id="hidden"></div>
+      <div id="removed"></div>
+      <div>
+        <%= link_to_add_fields "Add Field", form, :book_field_mapping_permissions %>
+      </div>
     </div>
   </div>
   <div class="form-group row">

@@ -22,9 +22,7 @@
       <th style="width: 10%">Name</th>
       <th style="width: 10%">Authorizable ID</th>
       <th style="width: 10%">Authorizable Type</th>
-      <th style="width: 10%">Permissible ID</th>
-      <th style="width: 10%">Permissible Type</th>
-      <th style="width: 10%">Access Granted</th>
+      <th style="width: 20%">Book Export Fields</th>
       <th style="width: 10%">Created At</th>
       <th style="width: 10%">Updated At</th>
       <th style="width: 20%">Action</th>
@@ -37,9 +35,13 @@
         <td><%= permission.name %></td>
         <td><%= permission.authorizable_id %></td>
         <td><%= permission.authorizable_type %></td>
-        <td><%= permission.permissible_id %></td>
-        <td><%= permission.permissible_type %></td>
-        <td><%= permission.access_granted %></td>
+        <td>
+          <ul class="list-group">
+            <% permission.book_field_mappings.each do |field_mapping| %>
+              <li class="list-group-item"><%= field_mapping.display_name %></li>
+            <% end %>
+          </ul>
+        </td>
         <td><%= permission.created_at.strftime("%B %d, %Y %H:%M") %></td>
         <td><%= permission.updated_at.strftime("%B %d, %Y %H:%M") %></td>
         <td>

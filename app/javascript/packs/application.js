@@ -32,6 +32,8 @@ require("../custom/amazon_associated_items")
 require("../custom/amazon_shipment_data_table")
 require("../custom/combine_shipment_data_table")
 require("../custom/indaba_sku_data_table")
+require("../custom/permission")
+require("../custom/user")
 
 
 import "@fortawesome/fontawesome-free/css/all.css";

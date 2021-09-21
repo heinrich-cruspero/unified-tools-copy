@@ -170,6 +170,14 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["name"], name: "index_book_export_templates_on_name", unique: true
   end
 
+  create_table "book_field_mapping_permissions", force: :cascade do |t|
+    t.bigint "permission_id"
+    t.bigint "book_field_mapping_id"
+    t.index ["book_field_mapping_id"], name: "index_book_field_mapping_permissions_on_book_field_mapping_id"
+    t.index ["permission_id", "book_field_mapping_id"], name: "index_book_field_mapping_permissions", unique: true
+    t.index ["permission_id"], name: "index_book_field_mapping_permissions_on_permission_id"
+  end
+
   create_table "book_field_mappings", force: :cascade do |t|
     t.string "display_name", null: false
     t.string "lookup_field", null: false
@@ -462,6 +470,14 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "features", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_features_on_name", unique: true
+  end
+
   create_table "indaba_skus", force: :cascade do |t|
     t.bigint "amazon_shipment_id", null: false
     t.string "sku", null: false
@@ -473,27 +489,15 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["sku"], name: "index_indaba_skus_on_sku"
   end
 
-  create_table "permission_types", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_permission_types_on_name", unique: true
-  end
-
   create_table "permissions", force: :cascade do |t|
     t.string "name"
     t.integer "authorizable_id"
     t.string "authorizable_type"
-    t.integer "permissible_id"
-    t.string "permissible_type"
-    t.boolean "access_granted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["authorizable_type", "authorizable_id"], name: "index_permissions_on_authorizable_type_and_authorizable_id"
     t.index ["name", "authorizable_type", "authorizable_id"], name: "index_permission_authorizable", unique: true
-    t.index ["name", "permissible_type", "permissible_id"], name: "index_permission_permissible", unique: true
-    t.index ["permissible_type", "permissible_id"], name: "index_permissions_on_permissible_type_and_permissible_id"
+    t.index ["name"], name: "index_permissions_on_name", unique: true
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -537,6 +541,8 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
 
   add_foreign_key "book_export_template_field_mappings", "book_export_templates"
   add_foreign_key "book_export_template_field_mappings", "book_field_mappings"
+  add_foreign_key "book_field_mapping_permissions", "book_field_mappings"
+  add_foreign_key "book_field_mapping_permissions", "permissions"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end

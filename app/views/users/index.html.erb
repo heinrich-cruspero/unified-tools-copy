@@ -10,10 +10,10 @@
   <thead class="thead-light">
     <tr>
       <th style="width: 10%">Email</th>
-      <th style="width: 30%">Roles</th>
+      <th style="width: 20%">Roles</th>
       <th style="width: 30%">Permissions</th>
-      <th style="width: 5%">Created At</th>
-      <th style="width: 5%">Updated At</th>
+      <th style="width: 10%">Created At</th>
+      <th style="width: 10%">Updated At</th>
       <th style="width: 20%">Action</th>
     </tr>
   </thead>
@@ -29,7 +29,15 @@
             <% end %>
           </ul>
         </td>
-        <td></td>
+        <td>
+          <% unless user.permissions.empty? %>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <%= user.permissions.first.name %>
+              </li>
+            </ul>
+          <% end %>
+        </td>
         <td><%= user.created_at.strftime("%B %d, %Y %H:%M") %></td>
         <td><%= user.updated_at.strftime("%B %d, %Y %H:%M") %></td>
         <td>

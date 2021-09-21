@@ -5,14 +5,12 @@ class User < ApplicationRecord
   devise :timeoutable, :database_authenticatable, :trackable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
-  has_many :user_roles, 
-            inverse_of: :user, 
-            foreign_key: 'user_id'
+  has_many :user_roles,
+           inverse_of: :user,
+           foreign_key: 'user_id'
   has_many :roles, through: :user_roles
-  accepts_nested_attributes_for :user_roles,
-                                allow_destroy: true
 
-  has_many :permissions, as: :authorizable
+  has_many :permissions, as: :authorizable, dependent: :destroy
 
   validates :email, presence: true
 

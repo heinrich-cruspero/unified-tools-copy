@@ -24,7 +24,7 @@
 <table class="table table-bordered mt-3">
   <thead class="thead-light">
     <tr>
-      <th colspan="5">Field Mapping</th>
+      <th colspan="3">Permission</th>
     </tr>
   </thead>
 
@@ -46,12 +46,16 @@
         <td><%= @permission.authorizable_type %></td>
       </tr>
       <tr>
-        <td>Permissible ID</td>
-        <td><%= @permission.permissible_id %></td>
-      </tr>
-      <tr>
-        <td>Permissible Type</td>
-        <td><%= @permission.permissible_type %></td>
+        <td>Book Export Fields</td>
+        <td>
+          <ul class="list-group">
+            <% @permission.book_field_mappings.each do |field_mapping| %>
+              <li class="list-group-item">
+                <%= field_mapping.display_name %>
+              </li>
+            <% end %>
+          </ul>
+        </td>
       </tr>
       <tr>
         <td>Created At</td>

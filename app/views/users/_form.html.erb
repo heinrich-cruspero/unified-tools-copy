@@ -24,18 +24,7 @@
     <div class="col-sm-6">
       <%= form.collection_check_boxes(:role_ids, Role.all, :id, :name) do |p| %>
         <div class="form-check">
-          <%= p.check_box(class: "form-check-input") %>
-          <%= p.label(class: "form-check-label") %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-1 col-form-label">Permissions *</label>
-    <div class="col-sm-6">
-      <%= form.collection_check_boxes(:permission_ids, Permission.all, :id, :name) do |p| %>
-        <div class="form-check">
-          <%= p.check_box(class: "form-check-input") %>
+          <%= p.check_box(class: "form-check-input user-role-checkbox") %>
           <%= p.label(class: "form-check-label") %>
         </div>
       <% end %>
