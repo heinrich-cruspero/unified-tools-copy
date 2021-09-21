@@ -174,6 +174,14 @@ ActiveRecord::Schema.define(version: 2021_11_16_103647) do
     t.index ["user_id"], name: "index_book_export_templates_on_user_id"
   end
 
+  create_table "book_field_mapping_permissions", force: :cascade do |t|
+    t.bigint "permission_id"
+    t.bigint "book_field_mapping_id"
+    t.index ["book_field_mapping_id"], name: "index_book_field_mapping_permissions_on_book_field_mapping_id"
+    t.index ["permission_id", "book_field_mapping_id"], name: "index_book_field_mapping_permissions", unique: true
+    t.index ["permission_id"], name: "index_book_field_mapping_permissions_on_permission_id"
+  end
+
   create_table "book_field_mappings", force: :cascade do |t|
     t.string "display_name", null: false
     t.string "lookup_field", null: false

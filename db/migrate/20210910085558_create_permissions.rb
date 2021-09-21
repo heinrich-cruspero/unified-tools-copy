@@ -5,12 +5,13 @@ class CreatePermissions < ActiveRecord::Migration[6.0]
       t.integer :authorizable_id
       t.string :authorizable_type
 
-      t.integer :permissible_id
-      t.string :permissible_type
-
-      t.boolean :access_granted, default: false
-
+      t.index [:name], unique: true
       t.timestamps
+    end
+
+    create_table(:book_field_mapping_permissions) do |t|
+      t.references :permission, foreign_key: true
+      t.references :book_field_mapping, foreign_key: true
     end
 
     add_index :permissions, 
@@ -19,10 +20,10 @@ class CreatePermissions < ActiveRecord::Migration[6.0]
               name: "index_permission_authorizable"
     add_index :permissions, [ :authorizable_type, :authorizable_id ]
 
-    add_index :permissions, 
-              [ :name, :permissible_type, :permissible_id ], 
-              unique: true,
-              name: "index_permission_permissible"
-    add_index :permissions, [ :permissible_type, :permissible_id ]
+    add_index(:book_field_mapping_permissions,
+      [ :permission_id, :book_field_mapping_id ],
+      unique: true,
+      name: "index_book_field_mapping_permissions"
+    )
   end
 end
