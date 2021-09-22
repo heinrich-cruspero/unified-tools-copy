@@ -40,4 +40,8 @@ class User < ApplicationRecord
     )
     user
   end
+
+  def name
+    email
+  end
 end

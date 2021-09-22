@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-sm">
-        <h2>Edit Permission</h2>
+        <h2>New RouteAction</h2>
     </div>
     <div class="col-sm">
         <div class="float-right">
-            <%= link_to new_permission_path, class: 'btn btn-secondary ml-2' do %>
+            <%= link_to new_route_action_path, class: 'btn btn-secondary ml-2' do %>
                 <span class="fa fa-plus"></span>
                 New
             <% end %>
-            <%= link_to permissions_path, class:"btn btn-secondary ml-2" do %>
+            <%= link_to route_actions_path, class:"btn btn-secondary ml-2" do %>
                 <span class="fa fa-list"> </span>
                 Return to List
             <% end %>
@@ -18,6 +18,6 @@
 
 <div class="row mt-3">
     <div class="col-sm border-top p-3">
-        <%= render 'form', permission: @permission %>
+        <%= render 'form', route_action: @route_action %>
     </div>
 </div>

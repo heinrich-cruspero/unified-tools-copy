@@ -1,0 +1,37 @@
+<%= form_with(model: route_action, local: true, id: :permission_form) do |form| %>
+  <% if route_action.errors.any? %>
+    
+      <% route_action.errors.full_messages.each do |message| %>
+        <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
+          <%= message.html_safe %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+    
+  <% end %>
+
+  <div class="form-group row">
+    <label for="route_action" class="col-sm-1 col-form-label">
+      Route *
+    </label>
+    <div class="col-sm-3">
+      <%= form.collection_select :route_id, Route.all, :id, :path, {}, {class: "form-control"} %>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-1 col-form-label">Action</label>
+    <div class="col-sm-3">
+      <%= form.select :action, RouteAction.actions.keys.map { |w| [w.humanize, w]}, {}, {class: "form-control"} %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= form.submit "Save" %>
+      </div>
+    </div>
+  </div>
+<% end %>

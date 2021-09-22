@@ -1,0 +1,40 @@
+<%= form_with(model: feature, local: true, id: :feature_form) do |form| %>
+  <% if feature.errors.any? %>
+    
+      <% feature.errors.full_messages.each do |message| %>
+        <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
+          <%= message.html_safe %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+    
+  <% end %>
+
+  <div class="form-group row">
+    <label for="feature_name" class="col-sm-1 col-form-label">
+      Name *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :name, required: true, class: "form-control" %>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="form-group row">
+    <label for="feature_description" class="col-sm-1 col-form-label">
+      Description *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :description, required: true, class: "form-control" %>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= form.submit "Save" %>
+      </div>
+    </div>
+  </div>
+<% end %>

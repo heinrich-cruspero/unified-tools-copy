@@ -1,0 +1,63 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="<%= permissions_path %>">Permissions</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="<%= features_path %>">Features</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="<%= routes_path %>">Routes</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="<%= route_actions_path %>">Route Actions</a>
+  </li>
+</ul>
+<div class="row mt-3 mb-3">
+  <div class="col-sm">
+    <div class="btn-toolbar mb-2 mb-md-0 float-right">
+      <div class="btn-group mr-2">
+        <%= link_to new_route_path, class: 'btn btn-secondary ml-2' do %>
+          <span class="fa fa-plus"></span>
+          New
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th style="width: 10%">Path</th>
+      <th style="width: 10%">Feature</th>
+      <th style="width: 10%">Created At</th>
+      <th style="width: 10%">Updated At</th>
+      <th style="width: 20%">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @routes.each do |route| %>
+      <tr>
+        <td><%= route.path %></td>
+        <td>
+            <% unless route.feature.nil? %>
+                <%= route.feature.name %>
+            <% end %>
+        </td>
+        <td><%= route.created_at.strftime("%B %d, %Y %H:%M") %></td>
+        <td><%= route.updated_at.strftime("%B %d, %Y %H:%M") %></td>
+        <td>
+          <%= link_to edit_route_path(route), class: 'btn btn-light btn-sm' do %>
+            <span class="fa fa-file"></span>
+            Edit
+          <% end %>
+          <%= link_to route, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
+            <span class="fa fa-trash"></span>
+            Delete
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

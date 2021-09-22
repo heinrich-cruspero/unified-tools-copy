@@ -489,6 +489,14 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["sku"], name: "index_indaba_skus_on_sku"
   end
 
+  create_table "permission_route_actions", force: :cascade do |t|
+    t.bigint "permission_id"
+    t.bigint "route_action_id"
+    t.index ["permission_id", "route_action_id"], name: "index_permission_route_actions", unique: true
+    t.index ["permission_id"], name: "index_permission_route_actions_on_permission_id"
+    t.index ["route_action_id"], name: "index_permission_route_actions_on_route_action_id"
+  end
+
   create_table "permissions", force: :cascade do |t|
     t.string "name"
     t.integer "authorizable_id"
@@ -561,6 +569,8 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
   add_foreign_key "book_export_template_field_mappings", "book_field_mappings"
   add_foreign_key "book_field_mapping_permissions", "book_field_mappings"
   add_foreign_key "book_field_mapping_permissions", "permissions"
+  add_foreign_key "permission_route_actions", "permissions"
+  add_foreign_key "permission_route_actions", "route_actions"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end

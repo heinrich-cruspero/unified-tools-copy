@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ##
-class FeatureController < ApplicationController
+class FeaturesController < ApplicationController
   before_action :set_feature, only: %i[edit update destroy]
 
   def index
@@ -11,15 +11,15 @@ class FeatureController < ApplicationController
 
   def new
     authorize Feature
-    @features = Feature.new
+    @feature = Feature.new
   end
 
   def create
     authorize Feature
-    @features = Feature.new(feature_params)
+    @feature = Feature.new(feature_params)
 
     respond_to do |format|
-      if @features.save
+      if @feature.save
         format.html do
           redirect_to features_path,
                       notice: 'Feature was successfully created.'
@@ -54,7 +54,7 @@ class FeatureController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to features_path,
-                    notice: 'Permission Type was successfully destroyed.'
+                    notice: 'Feature was successfully destroyed.'
       end
     end
   end

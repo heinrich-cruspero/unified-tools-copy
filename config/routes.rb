@@ -60,10 +60,14 @@ Rails.application.routes.draw do
 
   resources :roles
 
-  resources :permission_types
+  resources :features
+
+  resources :routes
+
+  resources :route_actions
 
   resources :permissions
-  
+
   resources :users, only: %i[index edit update delete]
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

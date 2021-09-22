@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def update
     authorize User
-  
+
     respond_to do |format|
       if @user.update(user_params)
         format.html do

@@ -1,0 +1,38 @@
+<%= form_with(model: route, local: true, id: :permission_form) do |form| %>
+  <% if route.errors.any? %>
+    
+      <% route.errors.full_messages.each do |message| %>
+        <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
+          <%= message.html_safe %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+    
+  <% end %>
+
+  <div class="form-group row">
+    <label for="permission_name" class="col-sm-1 col-form-label">
+      Path *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :path, required: true, class: "form-control" %>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  
+  <div class="form-group row">
+    <label class="col-sm-1 col-form-label">Feature</label>
+    <div class="col-sm-3">
+      <%= form.collection_select :feature_id, Feature.all, :id, :name, { include_blank: "None" }, {class: "form-control"} %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= form.submit "Save" %>
+      </div>
+    </div>
+  </div>
+<% end %>
