@@ -36,8 +36,9 @@ class Permission < ApplicationRecord
     message: "- Route Actions can't be blank."
   }
 
+  validates_uniqueness_of :authorizable_id, scope: :authorizable_type
+
   validate :field_mappings_uniqueness
-  validate :user_or_role_has_one_permission
   validate :route_actions_uniqueness
 
   def authorizable_string
@@ -71,9 +72,4 @@ class Permission < ApplicationRecord
     errors.add(:base, 'Duplicate Route Actions not allowed.')
   end
 
-  def user_or_role_has_one_permission
-    return unless authorizable.permissions.exists?
-
-    errors.add(:base, 'User/Role already has a permission.')
-  end
 end

@@ -8,14 +8,15 @@ class RouteAction < ApplicationRecord
            foreign_key: 'route_action_id'
   has_many :permissions, through: :permission_route_actions
 
-  validates :route, presence: true
+  validates :route, :action, presence: true
+  validates_uniqueness_of :action, scope: :route_id
 
   enum action: %i[
     list view create_record edit_record
     update_record destroy_record export
   ]
 
-  def route_path
-    route.path
+  def name
+    "#{route.path} - #{action}"
   end
 end

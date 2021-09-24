@@ -58,6 +58,18 @@
         </td>
       </tr>
       <tr>
+        <td>Route Actions</td>
+        <td>
+          <ul class="list-group">
+            <% @permission.route_actions.each do |route_action| %>
+              <li class="list-group-item">
+                <%= route_action.name %>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <tr>
         <td>Created At</td>
         <td><%= @permission.created_at %></td>
       </tr>

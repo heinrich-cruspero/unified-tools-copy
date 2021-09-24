@@ -33,6 +33,9 @@
           <% unless user.permissions.empty? %>
             <ul class="list-group">
               <li class="list-group-item">
+                <%= link_to user.permissions.first do %>
+                  <span class="fa fa-search-plus"></span>
+                <% end %>
                 <%= user.permissions.first.name %>
               </li>
             </ul>

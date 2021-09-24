@@ -35,6 +35,9 @@
           <% unless role.permissions.empty? %>
             <ul class="list-group">
               <li class="list-group-item">
+                <%= link_to role.permissions.first do %>
+                  <span class="fa fa-search-plus"></span>
+                <% end %>
                 <%= role.permissions.first.name %>
               </li>
             </ul>

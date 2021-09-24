@@ -503,7 +503,7 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.string "authorizable_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["authorizable_type", "authorizable_id"], name: "index_permissions_on_authorizable_type_and_authorizable_id"
+    t.index ["authorizable_type", "authorizable_id"], name: "index_permissions_on_authorizable_type_and_authorizable_id", unique: true
     t.index ["name", "authorizable_type", "authorizable_id"], name: "index_permission_authorizable", unique: true
     t.index ["name"], name: "index_permissions_on_name", unique: true
   end
@@ -529,7 +529,7 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.integer "action", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["id", "route_id"], name: "index_route_actions_on_id_and_route_id", unique: true
+    t.index ["route_id", "action"], name: "index_route_actions_on_route_id_and_action", unique: true
     t.index ["route_id"], name: "index_route_actions_on_route_id"
   end
 

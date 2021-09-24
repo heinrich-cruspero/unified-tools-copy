@@ -18,7 +18,8 @@ class CreatePermissions < ActiveRecord::Migration[6.0]
               [ :name, :authorizable_type, :authorizable_id ], 
               unique: true,
               name: "index_permission_authorizable"
-    add_index :permissions, [ :authorizable_type, :authorizable_id ]
+    add_index :permissions, [ :authorizable_type, :authorizable_id ],
+              unique: true
 
     add_index(:book_field_mapping_permissions,
       [ :permission_id, :book_field_mapping_id ],

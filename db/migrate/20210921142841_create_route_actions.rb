@@ -12,7 +12,7 @@ class CreateRouteActions < ActiveRecord::Migration[6.0]
       t.references :route_action, foreign_key: true
     end
 
-    add_index :route_actions, [ :id, :route_id ], unique: true
+    add_index :route_actions, [ :route_id, :action ], unique: true
     add_index(:permission_route_actions,
       [ :permission_id, :route_action_id ],
       unique: true,
