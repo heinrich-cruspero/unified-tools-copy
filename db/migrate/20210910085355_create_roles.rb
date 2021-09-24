@@ -1,5 +1,5 @@
 class CreateRoles < ActiveRecord::Migration[6.0]
-  def change
+  def up
     create_table :roles do |t|
       t.string :name
       t.index [:name], unique: true
@@ -16,5 +16,21 @@ class CreateRoles < ActiveRecord::Migration[6.0]
       unique: true,
       name: "index_user_roles"  
     )
+
+    %i[User Admin StoreManager].each do |role|
+      Role.find_or_create_by(
+        name: role
+      )
+    end
+
+    User.all.each do |user|
+      user.roles << Role.where(name: "Admin")
+    end
+  end
+
+  def down
+    remove_index :user_roles, name: "index_user_roles"
+    drop_table :user_roles
+    drop_table :roles
   end
 end

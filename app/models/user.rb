@@ -7,7 +7,8 @@ class User < ApplicationRecord
 
   has_many :user_roles,
            inverse_of: :user,
-           foreign_key: 'user_id'
+           foreign_key: 'user_id',
+           dependent: :destroy
   has_many :roles, through: :user_roles
 
   has_many :permissions, as: :authorizable, dependent: :destroy
@@ -16,16 +17,21 @@ class User < ApplicationRecord
 
   enum role: %i[User Admin]
 
-  scope :admin_users, -> { where(role: :Admin) }
-  scope :user_users, -> { where(role: :User) }
+  scope :admin_users, -> { includes(:roles).where(roles: { name: 'Admin' }) }
+  scope :user_users, -> { includes(:roles).where(roles: { name: 'User' }) }
+  scope :store_manager_users, -> { includes(:roles).where(roles: { name: 'StoreManager' }) }
 
   # rubocop:disable Naming/PredicateName
   def is_user?
-    role == 'User'
+    roles.exists?(name: 'User')
   end
 
   def is_admin?
-    role == 'Admin'
+    roles.exists?(name: 'Admin')
+  end
+
+  def is_store_manager?
+    roles.exists?(name: 'StoreManager')
   end
   # rubocop:enable Naming/PredicateName
 
@@ -35,9 +41,11 @@ class User < ApplicationRecord
 
     user ||= User.create(
       email: data['email'],
-      password: Devise.friendly_token[0, 20],
-      role: :Admin
+      password: Devise.friendly_token[0, 20]
     )
+
+    user.roles << Role.where(name: 'Admin')
+
     user
   end
 

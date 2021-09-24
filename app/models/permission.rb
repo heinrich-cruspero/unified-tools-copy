@@ -38,6 +38,7 @@ class Permission < ApplicationRecord
 
   validate :field_mappings_uniqueness
   validate :user_or_role_has_one_permission
+  validate :route_actions_uniqueness
 
   def authorizable_string
     authorizable&.to_s

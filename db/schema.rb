@@ -558,11 +558,9 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.integer "role", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["role"], name: "index_users_on_role"
   end
 
   add_foreign_key "book_export_template_field_mappings", "book_export_templates"
