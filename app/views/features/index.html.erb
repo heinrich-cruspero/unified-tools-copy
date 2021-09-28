@@ -1,15 +1,9 @@
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link" href="<%= permissions_path %>">Permissions</a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link active" href="<%= features_path %>">Features</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="<%= routes_path %>">Routes</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="<%= route_actions_path %>">Route Actions</a>
   </li>
 </ul>
 <div class="row mt-3 mb-3">
@@ -45,9 +39,7 @@
         <td>
           <ul class="list-group">
             <% feature.routes.each do |route| %>
-                <% route.route_actions.each do |route_action| %>
-                    <li class="list-group-item"><%= route.path %> - <%= route_action.action %></li>
-                <% end %>
+              <li class="list-group-item"><%= route.controller_action %></li>
             <% end %>
           </ul>
         </td>

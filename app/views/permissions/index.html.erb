@@ -1,18 +1,9 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" href="<%= permissions_path %>">Permissions</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="<%= features_path %>">Features</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="<%= routes_path %>">Routes</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="<%= route_actions_path %>">Route Actions</a>
-  </li>
-</ul>
-<div class="row mt-3 mb-3">
+<div class="row">
+  <div class="col-sm">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+      <h1 class="h2">Permissions</h1>
+    </div>
+  </div>
   <div class="col-sm">
     <div class="btn-toolbar mb-2 mb-md-0 float-right">
       <div class="btn-group mr-2">
@@ -28,7 +19,6 @@
 <table class="table table-bordered">
   <thead class="thead-light">
     <tr>
-      <th style="width: 10%">Name</th>
       <th style="width: 15%">Authorizable</th>
       <th style="width: 20%">Book Export Fields</th>
       <th style="width: 15%">Route Actions</th>
@@ -41,7 +31,6 @@
   <tbody>
     <% @permissions.each do |permission| %>
       <tr>
-        <td><%= permission.name %></td>
         <td>
           <%= permission.authorizable_type == 'Role'? permission.authorizable.name : permission.authorizable.email %>
         </td>
@@ -54,11 +43,7 @@
         </td>
         <td>
           <ul class="list-group">
-            <% permission.route_actions.each do |route_action| %>
-              <li class="list-group-item">
-                <%= route_action.name %>
-              </li>
-            <% end %>
+            
           </ul>
         </td>
         <td><%= permission.created_at.strftime("%B %d, %Y %H:%M") %></td>

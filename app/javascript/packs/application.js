@@ -34,6 +34,7 @@ require("../custom/combine_shipment_data_table")
 require("../custom/indaba_sku_data_table")
 require("../custom/permission")
 require("../custom/user")
+require("../custom/feature")
 
 
 import "@fortawesome/fontawesome-free/css/all.css";

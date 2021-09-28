@@ -64,8 +64,6 @@ Rails.application.routes.draw do
 
   resources :routes
 
-  resources :route_actions
-
   resources :permissions
 
   resources :users, only: %i[index edit update delete]

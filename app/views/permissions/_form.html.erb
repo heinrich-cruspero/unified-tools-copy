@@ -45,19 +45,7 @@
   </div>
   <div class="form-group row border-top pt-3">
     <label class="col-sm-1 col-form-label">Route Actions</label>
-    <div class="col-sm-11">
-      <div id="permission-route-actions">
-        <%= form.fields_for :permission_route_actions do |route_action| %>
-          <%= render 'permission_route_actions', f: route_action %>
-        <% end %>
-
-      </div>
-      <div id="hidden"></div>
-      <div id="removed"></div>
-      <div class="add-route-actions">
-        <%= link_to_add_fields "Add Field", form, :permission_route_actions %>
-      </div>
-    </div>
+    
   </div>
   <div class="form-group row">
     <div class="col-sm-2">

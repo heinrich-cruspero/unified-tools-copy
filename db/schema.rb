@@ -170,14 +170,6 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["name"], name: "index_book_export_templates_on_name", unique: true
   end
 
-  create_table "book_field_mapping_permissions", force: :cascade do |t|
-    t.bigint "permission_id"
-    t.bigint "book_field_mapping_id"
-    t.index ["book_field_mapping_id"], name: "index_book_field_mapping_permissions_on_book_field_mapping_id"
-    t.index ["permission_id", "book_field_mapping_id"], name: "index_book_field_mapping_permissions", unique: true
-    t.index ["permission_id"], name: "index_book_field_mapping_permissions_on_permission_id"
-  end
-
   create_table "book_field_mappings", force: :cascade do |t|
     t.string "display_name", null: false
     t.string "lookup_field", null: false
@@ -470,6 +462,14 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "feature_routes", force: :cascade do |t|
+    t.bigint "feature_id"
+    t.bigint "route_id"
+    t.index ["feature_id", "route_id"], name: "index_feature_routes", unique: true
+    t.index ["feature_id"], name: "index_feature_routes_on_feature_id"
+    t.index ["route_id"], name: "index_feature_routes_on_route_id"
+  end
+
   create_table "features", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -489,23 +489,13 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["sku"], name: "index_indaba_skus_on_sku"
   end
 
-  create_table "permission_route_actions", force: :cascade do |t|
-    t.bigint "permission_id"
-    t.bigint "route_action_id"
-    t.index ["permission_id", "route_action_id"], name: "index_permission_route_actions", unique: true
-    t.index ["permission_id"], name: "index_permission_route_actions_on_permission_id"
-    t.index ["route_action_id"], name: "index_permission_route_actions_on_route_action_id"
-  end
-
   create_table "permissions", force: :cascade do |t|
-    t.string "name"
     t.integer "authorizable_id"
     t.string "authorizable_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["authorizable_type", "authorizable_id"], name: "index_permission_authorizable", unique: true
     t.index ["authorizable_type", "authorizable_id"], name: "index_permissions_on_authorizable_type_and_authorizable_id", unique: true
-    t.index ["name", "authorizable_type", "authorizable_id"], name: "index_permission_authorizable", unique: true
-    t.index ["name"], name: "index_permissions_on_name", unique: true
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -524,22 +514,13 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
-  create_table "route_actions", force: :cascade do |t|
-    t.bigint "route_id"
-    t.integer "action", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["route_id", "action"], name: "index_route_actions_on_route_id_and_action", unique: true
-    t.index ["route_id"], name: "index_route_actions_on_route_id"
-  end
-
   create_table "routes", force: :cascade do |t|
-    t.string "path"
-    t.integer "feature_id"
+    t.string "controller_name"
+    t.string "action_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["feature_id"], name: "index_routes_on_feature_id"
-    t.index ["id", "feature_id"], name: "index_routes_on_id_and_feature_id", unique: true
+    t.index ["action_name"], name: "index_routes_on_action_name"
+    t.index ["controller_name"], name: "index_routes_on_controller_name"
   end
 
   create_table "user_roles", id: false, force: :cascade do |t|
@@ -565,10 +546,8 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
 
   add_foreign_key "book_export_template_field_mappings", "book_export_templates"
   add_foreign_key "book_export_template_field_mappings", "book_field_mappings"
-  add_foreign_key "book_field_mapping_permissions", "book_field_mappings"
-  add_foreign_key "book_field_mapping_permissions", "permissions"
-  add_foreign_key "permission_route_actions", "permissions"
-  add_foreign_key "permission_route_actions", "route_actions"
+  add_foreign_key "feature_routes", "features"
+  add_foreign_key "feature_routes", "routes"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end

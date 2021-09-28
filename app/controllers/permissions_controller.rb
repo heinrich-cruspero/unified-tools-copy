@@ -71,13 +71,10 @@ class PermissionsController < ApplicationController
     @permission = Permission.find(params[:id])
   end
 
-  # TODO: route_action params
   def permission_params
     params.require(:permission).permit(:name, :authorizable_string,
                                        book_field_mapping_permissions_attributes: %i[
                                          id book_field_mapping_id _destroy
-                                       ], permission_route_actions_attributes: %i[
-                                         id route_action_id _destroy
                                        ])
   end
 end

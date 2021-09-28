@@ -1,0 +1,9 @@
+<div class="nested-fields mt-2 mb-3">
+    <div class="field">
+        <%= f.collection_select :route_id, Route.order(:controller_name).all,:id, :controller_action, {}, {class: "field-select"} %>
+        
+        <span class="fa fa-arrows-alt ml-1"></span>&nbsp;
+        <%= f.hidden_field :_destroy %>
+        <%= link_to "Remove", "#", class: 'remove_fields' %>
+    </div>
+</div>

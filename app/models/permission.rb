@@ -14,14 +14,6 @@ class Permission < ApplicationRecord
   accepts_nested_attributes_for :book_field_mapping_permissions,
                                 allow_destroy: true
 
-  has_many :permission_route_actions,
-           inverse_of: :permission,
-           foreign_key: 'permission_id',
-           dependent: :destroy
-  has_many :route_actions, through: :permission_route_actions
-  accepts_nested_attributes_for :permission_route_actions,
-                                allow_destroy: true
-
   validates :name, presence: true, uniqueness: {
     message: '- Permission name has already been taken.'
   }
@@ -32,14 +24,9 @@ class Permission < ApplicationRecord
     message: "- Book Export Fields can't be blank."
   }
 
-  validates :permission_route_actions, presence: {
-    message: "- Route Actions can't be blank."
-  }
-
   validates_uniqueness_of :authorizable_id, scope: :authorizable_type
 
   validate :field_mappings_uniqueness
-  validate :route_actions_uniqueness
 
   def authorizable_string
     authorizable&.to_s
@@ -60,16 +47,6 @@ class Permission < ApplicationRecord
     return unless field_mappings.uniq.length != field_mappings.length
 
     errors.add(:base, 'Duplicate Book Export Fields not allowed.')
-  end
-
-  def route_actions_uniqueness
-    route_actions = []
-    permission_route_actions.each do |rec|
-      route_actions << rec.route_action_id unless rec.marked_for_destruction?
-    end
-    return unless route_actions.uniq.length != route_actions.length
-
-    errors.add(:base, 'Duplicate Route Actions not allowed.')
   end
 
 end

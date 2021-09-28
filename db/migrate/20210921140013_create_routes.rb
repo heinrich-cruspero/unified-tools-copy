@@ -1,13 +1,23 @@
 class CreateRoutes < ActiveRecord::Migration[6.0]
   def change
     create_table :routes do |t|
-      t.string :path
-      t.integer :feature_id
+      t.string :controller_name
+      t.string :action_name
 
-      t.index [:feature_id]
+      t.index [:controller_name]
+      t.index [:action_name]
       t.timestamps
     end
 
-    add_index :routes, [ :id, :feature_id ], unique: true
+    create_table(:feature_routes) do |t|
+      t.references :feature, foreign_key: true
+      t.references :route, foreign_key: true
+    end
+
+    add_index(:feature_routes,
+      [ :feature_id, :route_id ],
+      unique: true,
+      name: "index_feature_routes"
+    )
   end
 end
