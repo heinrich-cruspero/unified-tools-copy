@@ -6,47 +6,35 @@ class Permission < ApplicationRecord
              polymorphic: true,
              optional: true
 
-  has_many :book_field_mapping_permissions,
-           inverse_of: :permission,
-           foreign_key: 'permission_id',
-           dependent: :destroy
-  has_many :book_field_mappings, through: :book_field_mapping_permissions
-  accepts_nested_attributes_for :book_field_mapping_permissions,
-                                allow_destroy: true
+  belongs_to :permissible,
+             polymorphic: true,
+             optional: true
 
-  validates :name, presence: true, uniqueness: {
-    message: '- Permission name has already been taken.'
-  }
   validates :authorizable, presence: {
     message: "- Authorizable can't be blank."
   }
-  validates :book_field_mapping_permissions, presence: {
-    message: "- Book Export Fields can't be blank."
+
+  validates :permissible, presence: {
+    message: "- Permissible can't be blank."
   }
 
-  validates_uniqueness_of :authorizable_id, scope: :authorizable_type
+  validates :authorizable_id, uniqueness: { scope: %i[
+    authorizable_type permissible_id permissible_type
+  ], message: '- Permission already exists for this user/role.' }
 
-  validate :field_mappings_uniqueness
-
-  def authorizable_string
-    authorizable&.to_s
+  def authorizable_obj
+    authorizable&.to_global_id
   end
 
-  def authorizable_string=(string)
-    type, id = string.split(':')
-    self.authorizable = type.constantize.find(id)
+  def authorizable_obj=(authorizable_gid)
+    self.authorizable = GlobalID::Locator.locate authorizable_gid
   end
 
-  private
-
-  def field_mappings_uniqueness
-    field_mappings = []
-    book_field_mapping_permissions.each do |rec|
-      field_mappings << rec.book_field_mapping_id unless rec.marked_for_destruction?
-    end
-    return unless field_mappings.uniq.length != field_mappings.length
-
-    errors.add(:base, 'Duplicate Book Export Fields not allowed.')
+  def permissible_obj
+    permissible&.to_global_id
   end
 
+  def permissible_obj=(permissible_gid)
+    self.permissible = GlobalID::Locator.locate permissible_gid
+  end
 end

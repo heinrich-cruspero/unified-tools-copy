@@ -34,35 +34,15 @@
         <td><%= @permission.id %></td>
       </tr>
       <tr>
-        <td>Name</td>
-        <td><%= @permission.name %></td>
-      </tr>
-      <tr>
-        <td>Authorizable ID</td>
-        <td><%= @permission.authorizable_id %></td>
-      </tr>
-      <tr>
-        <td>Authorizable Type</td>
-        <td><%= @permission.authorizable_type %></td>
-      </tr>
-      <tr>
-        <td>Book Export Fields</td>
+        <td>Authorizable</td>
         <td>
-          <ul class="list-group">
-            <% @permission.book_field_mappings.each do |field_mapping| %>
-              <li class="list-group-item">
-                <%= field_mapping.display_name %>
-              </li>
-            <% end %>
-          </ul>
+          <b><%= @permission.authorizable_type%></b>: <%= @permission.authorizable.to_s %>
         </td>
       </tr>
       <tr>
-        <td>Route Actions</td>
+        <td>Permissible</td>
         <td>
-          <ul class="list-group">
-            
-          </ul>
+          <b><%= @permission.permissible_type %></b>: <%= @permission.permissible.to_s %>
         </td>
       </tr>
       <tr>

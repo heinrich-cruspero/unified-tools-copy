@@ -39,7 +39,7 @@
         <td>
           <ul class="list-group">
             <% feature.routes.each do |route| %>
-              <li class="list-group-item"><%= route.controller_action %></li>
+              <li class="list-group-item"><%= route.to_s %></li>
             <% end %>
           </ul>
         </td>

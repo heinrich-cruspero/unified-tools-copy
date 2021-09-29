@@ -12,6 +12,8 @@ class Feature < ApplicationRecord
   accepts_nested_attributes_for :feature_routes,
                                 allow_destroy: true
 
+  has_many :permissions, as: :permissible
+
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
 
@@ -20,6 +22,10 @@ class Feature < ApplicationRecord
   }
 
   validate :routes_uniqueness
+
+  def to_s
+    name.to_s
+  end
 
   private
 

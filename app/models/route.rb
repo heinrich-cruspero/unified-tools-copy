@@ -7,13 +7,15 @@ class Route < ApplicationRecord
            foreign_key: 'route_id'
   has_many :features, through: :feature_routes
 
+  has_many :permissions, as: :permissible
+
   validates_uniqueness_of :action_name, scope: :controller_name
 
   def feature
     features.exists? ? features.first : nil
   end
 
-  def controller_action
+  def to_s
     "#{controller_name}##{action_name}"
   end
 end

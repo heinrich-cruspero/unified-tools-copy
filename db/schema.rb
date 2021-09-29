@@ -492,10 +492,11 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
   create_table "permissions", force: :cascade do |t|
     t.integer "authorizable_id"
     t.string "authorizable_type"
+    t.integer "permissible_id"
+    t.string "permissible_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["authorizable_type", "authorizable_id"], name: "index_permission_authorizable", unique: true
-    t.index ["authorizable_type", "authorizable_id"], name: "index_permissions_on_authorizable_type_and_authorizable_id", unique: true
+    t.index ["authorizable_id", "authorizable_type", "permissible_id", "permissible_type"], name: "index_permissions", unique: true
   end
 
   create_table "pg_search_documents", force: :cascade do |t|

@@ -13,39 +13,63 @@
   <% end %>
 
   <div class="form-group row">
-    <label for="permission_name" class="col-sm-1 col-form-label">
-      Name *
-    </label>
+    <label class="col-sm-1 col-form-label pt-0">Authorizable</label>
     <div class="col-sm-3">
-      <%= form.text_field :name, required: true, class: "form-control" %>
-    </div>
-    <div class="col-sm-3"></div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-1 col-form-label">Authorizable</label>
-    <div class="col-sm-3">
-      <%= form.grouped_collection_select :authorizable_string, [User, Role], :all, :model_name, :to_s, :name, {}, { class: "form-control"} %>
-    </div>
-  </div>
-  <div class="form-group row row border-top pt-3">
-    <label class="col-sm-1 col-form-label">Book Export Fields</label>
-    <div class="col-sm-11">
-      <div id="permission-field-mappings">
-        <%= form.fields_for :book_field_mapping_permissions do |field_mapping| %>
-          <%= render 'book_field_mapping_permissions', f: field_mapping %>
-        <% end %>
-
+      <input type="hidden" class="authorizable_type" value="<%= permission.authorizable_type.nil? ? nil : permission.authorizable_type.downcase %>">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input permission-authorizable-checkbox" type="radio" name="authorizable_options" value="user" id="userCheck">
+        <label class="form-check-label" for="userCheck">
+          User
+        </label>
       </div>
-      <div id="hidden"></div>
-      <div id="removed"></div>
-      <div class="add-book-field-mappings">
-        <%= link_to_add_fields "Add Field", form, :book_field_mapping_permissions %>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input permission-authorizable-checkbox" type="radio" name="authorizable_options" value="role" id="roleCheck" checked>
+        <label class="form-check-label" for="roleCheck">
+          Role
+        </label>
       </div>
+      <div class="authorizable-select user mt-3">
+        <%= form.collection_select :authorizable_obj, User.all, :to_global_id, :to_s, {}, { class: "select-field user-select" } %>
+      </div>
+      <div class="authorizable-select role mt-3">
+        <%= form.collection_select :authorizable_obj, Role.all, :to_global_id, :to_s, {}, { class: "select-field role-select" } %>
+      </div>
+      
     </div>
   </div>
   <div class="form-group row border-top pt-3">
-    <label class="col-sm-1 col-form-label">Route Actions</label>
-    
+    <label class="col-sm-1 col-form-label pt-0">Permissible</label>
+    <div class="col-sm-3">
+      <input type="hidden" class="permissible_type" value="<%= permission.permissible_type.nil? ? nil : permission.permissible_type.downcase %>">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input permission-permissible-checkbox" type="radio" name="permissible_options" value="feature" id="featureCheck" checked>
+        <label class="form-check-label" for="featureCheck">
+          Feature
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input permission-permissible-checkbox" type="radio" name="permissible_options" value="route" id="routeCheck">
+        <label class="form-check-label" for="routeCheck">
+          Routes
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input permission-permissible-checkbox" type="radio" name="permissible_options" value="bookfieldmapping" id="bookexportfieldCheck">
+        <label class="form-check-label" for="bookexportfieldCheck">
+          Book Export Field
+        </label>
+      </div>
+      <div class="permissible-select feature mt-3">
+        <%= form.collection_select :permissible_obj, Feature.all, :to_global_id, :to_s, {}, { class: "select-field feature-select" }%>
+      </div>
+      <div class="permissible-select route mt-3">
+        <%= form.collection_select :permissible_obj, Route.all, :to_global_id, :to_s, {}, { class: "select-field route-select" }%>
+      </div>
+      <div class="permissible-select bookfieldmapping mt-3">
+        <%= form.collection_select :permissible_obj, BookFieldMapping.all, :to_global_id, :to_s, {}, { class: "select-field bookfieldmapping-select" }%>
+      </div>
+      
+    </div>
   </div>
   <div class="form-group row">
     <div class="col-sm-2">

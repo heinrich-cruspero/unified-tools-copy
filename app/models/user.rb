@@ -49,7 +49,15 @@ class User < ApplicationRecord
     user
   end
 
-  def name
-    email
+  def to_s
+    email.to_s
+  end
+
+  def permission_types
+    permissions.select(
+      'permissible_type'
+    ).group(
+      'permissible_type'
+    ).order(:permissible_type)
   end
 end

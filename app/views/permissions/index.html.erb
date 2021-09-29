@@ -19,11 +19,11 @@
 <table class="table table-bordered">
   <thead class="thead-light">
     <tr>
+      <th style="width: 5%">ID</th>
       <th style="width: 15%">Authorizable</th>
-      <th style="width: 20%">Book Export Fields</th>
-      <th style="width: 15%">Route Actions</th>
-      <th style="width: 10%">Created At</th>
-      <th style="width: 10%">Updated At</th>
+      <th style="width: 15%">Permissible</th>
+      <th style="width: 15%">Created At</th>
+      <th style="width: 15%">Updated At</th>
       <th style="width: 20%">Action</th>
     </tr>
   </thead>
@@ -32,22 +32,20 @@
     <% @permissions.each do |permission| %>
       <tr>
         <td>
-          <%= permission.authorizable_type == 'Role'? permission.authorizable.name : permission.authorizable.email %>
+          <%= permission.id %>
         </td>
         <td>
-          <ul class="list-group">
-            <% permission.book_field_mappings.each do |field_mapping| %>
-              <li class="list-group-item"><%= field_mapping.display_name %></li>
-            <% end %>
-          </ul>
+          <b><%= permission.authorizable_type%></b>: <%= permission.authorizable.to_s %>
         </td>
         <td>
-          <ul class="list-group">
-            
-          </ul>
+          <b><%= permission.permissible_type%></b>: <%= permission.permissible.to_s %>
         </td>
-        <td><%= permission.created_at.strftime("%B %d, %Y %H:%M") %></td>
-        <td><%= permission.updated_at.strftime("%B %d, %Y %H:%M") %></td>
+        <td>
+          <%= permission.created_at.strftime("%B %d, %Y %H:%M") %>
+        </td>
+        <td>
+          <%= permission.updated_at.strftime("%B %d, %Y %H:%M") %>
+        </td>
         <td>
           <%= link_to permission, class: 'btn btn-light btn-sm', type: 'button' do %>
             <span class="fa fa-search-plus"></span>

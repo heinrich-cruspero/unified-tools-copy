@@ -66,7 +66,7 @@ class FeaturesController < ApplicationController
   end
 
   def feature_params
-    params.require(:feature).permit(:name, :description, 
+    params.require(:feature).permit(:name, :description,
                                     feature_routes_attributes: %i[
                                       id route_id _destroy
                                     ])

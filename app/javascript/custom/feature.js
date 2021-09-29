@@ -1,4 +1,6 @@
 $( document ).on('turbolinks:load', function() {
+    // TODO: searchable route dynamic add
+
     $(".add-routes").on('click', '.add_fields', function(event){
         let regexp, time;
         time = new Date().getTime();

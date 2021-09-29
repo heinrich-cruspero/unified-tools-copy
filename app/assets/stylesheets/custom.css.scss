@@ -495,3 +495,13 @@ table.records_table th {
 .chart #chart-1, .chart #chart-2, .chart #chart-3{
   display: inline-block;
 }
+
+.ul-permission li a{
+  padding-left: 0px !important;
+  background: none !important;
+}
+
+.ul-permission {
+  list-style-type: none;
+  padding-left: 10px !important;
+}

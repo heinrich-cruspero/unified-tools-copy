@@ -2,6 +2,6 @@
 
 ##
 class FeatureRoute < ApplicationRecord
-    belongs_to :feature
-    belongs_to :route
+  belongs_to :feature
+  belongs_to :route
 end

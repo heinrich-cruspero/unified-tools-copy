@@ -6,7 +6,7 @@ class PermissionsController < ApplicationController
 
   def index
     authorize Permission
-    @permissions = Permission.all
+    @permissions = Permission.all.order(:id)
   end
 
   def show
@@ -21,7 +21,6 @@ class PermissionsController < ApplicationController
   def create
     authorize Permission
     @permission = Permission.new(permission_params)
-
     respond_to do |format|
       if @permission.save
         format.html do
@@ -40,11 +39,10 @@ class PermissionsController < ApplicationController
 
   def update
     authorize Permission
-
     respond_to do |format|
       if @permission.update(permission_params)
         format.html do
-          redirect_to permissions_path,
+          redirect_to @permission,
                       notice: 'Permission was successfully updated.'
         end
       else
@@ -72,9 +70,6 @@ class PermissionsController < ApplicationController
   end
 
   def permission_params
-    params.require(:permission).permit(:name, :authorizable_string,
-                                       book_field_mapping_permissions_attributes: %i[
-                                         id book_field_mapping_id _destroy
-                                       ])
+    params.require(:permission).permit(:name, :authorizable_obj, :permissible_obj)
   end
 end

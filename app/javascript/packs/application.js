@@ -19,6 +19,7 @@ require("datatables.net");
 require("datatables.net-bs4");
 require("chartkick");
 require("chart.js");
+require("selectize");
 
 require("../custom/sidebar")
 require("../custom/amazon_table")
