@@ -9,8 +9,10 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  def edit
+  def show
     authorize User
+    @user = User.find(params[:id])
+    @permission = Permission.new(authorizable: @user)
   end
 
   def update
@@ -19,7 +21,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html do
-          redirect_to users_path,
+          redirect_to @user,
                       notice: 'User was successfully updated'
         end
       else

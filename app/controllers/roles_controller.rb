@@ -2,20 +2,22 @@
 
 ##
 class RolesController < ApplicationController
-  before_action :set_role, only: %i[edit update destroy]
+  before_action :set_role, only: %i[show edit update destroy]
 
   def index
     authorize Role
     @roles = Role.all
+    @role = Role.new
+  end
+
+  def show
+    authorize Role
+    @permission = Permission.new(authorizable: @role)
   end
 
   def new
     authorize Role
     @role = Role.new
-  end
-
-  def edit
-    authorize Role
   end
 
   def update
@@ -40,7 +42,7 @@ class RolesController < ApplicationController
     respond_to do |format|
       if @role.save
         format.html do
-          redirect_to roles_path,
+          redirect_to @role,
                       notice: 'Role was successfully created.'
         end
       else

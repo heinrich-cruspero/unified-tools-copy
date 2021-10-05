@@ -11,17 +11,16 @@
   <% end %>
 
   <div class="form-group row">
-    <label for="user_email" class="col-sm-1 col-form-label">
+    <label for="user_email" class="col-sm-3 col-form-label">
       Email
     </label>
-    <div class="col-sm-3">
+    <div class="col-sm-9">
       <%= form.text_field :email, readonly: true, required: true, class: "form-control" %>
     </div>
-    <div class="col-sm-3"></div>
   </div>
   <div class="form-group row">
-    <label class="col-sm-1 col-form-label">Roles *</label>
-    <div class="col-sm-6">
+    <label class="col-sm-3 col-form-label">Roles *</label>
+    <div class="col-sm-9">
       <%= form.collection_check_boxes(:role_ids, Role.all, :id, :name) do |p| %>
         <div class="form-check">
           <%= p.check_box(class: "form-check-input user-role-checkbox") %>

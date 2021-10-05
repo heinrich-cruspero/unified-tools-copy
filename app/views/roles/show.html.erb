@@ -4,10 +4,10 @@
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#permissionModal">
               <span class="fa fa-plus"></span> Add Permission
             </button>
-            <button type="button" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#editUserModal">
+            <button type="button" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#editRoleModal">
               <span class="fa fa-edit"></span> Edit
             </button>
-            <%= link_to users_path, class:"btn btn-secondary ml-2" do %>
+            <%= link_to roles_path, class:"btn btn-secondary ml-2" do %>
                 <span class="fa fa-list"> </span>
                 Return to List
             <% end %>
@@ -18,41 +18,29 @@
 <table class="table table-bordered mt-3">
   <thead class="thead-light">
     <tr>
-      <th colspan="5">User</th>
+      <th colspan="5">Role</th>
     </tr>
   </thead>
 
   <tbody>
       <tr>
         <td>ID</td>
-        <td><%= @user.id %></td>
+        <td><%= @role.id %></td>
       </tr>
       <tr>
-        <td>Email</td>
-        <td><%= @user.email %></td>
-      </tr>
-      <tr>
-        <td>Roles</td>
-        <td>
-          <ul class="list-group">
-            <% @user.roles.each do |role| %>
-              <li class="list-group-item">
-                <%= role.to_s %>
-              </li>
-            <% end %>
-          </ul>
-        </td>
+        <td>Name</td>
+        <td><%= @role.name %></td>
       </tr>
       <tr>
         <td>Permissions</td>
         <td>
-          <% unless @user.permissions.empty? %>
+          <% unless @role.permissions.empty? %>
             <ul class="list-group">
-              <% @user.permission_types.each do |permission_type| %>
+              <% @role.permission_types.each do |permission_type| %>
                 <li class="list-group-item">
                   <b><%= permission_type.permissible_type %></b>
                   <ul class="ul-permission">
-                    <% @user.permissions.where(
+                    <% @role.permissions.where(
                           permissible_type: permission_type.permissible_type
                         ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
                       <li>
@@ -74,15 +62,15 @@
       </tr>
       <tr>
         <td>Created At</td>
-        <td><%= @user.created_at %></td>
+        <td><%= @role.created_at %></td>
       </tr>
       <tr>
         <td>Updated At</td>
-        <td><%= @user.updated_at %></td>
+        <td><%= @role.updated_at %></td>
       </tr>
     
   </tbody>
 </table>
 
 <%= render '/permissions/new_permission_modal' %>
-<%= render 'edit_user_modal' %>
+<%= render 'edit_role_modal' %>

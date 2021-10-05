@@ -36,13 +36,28 @@
       <tr>
         <td>Authorizable</td>
         <td>
-          <b><%= @permission.authorizable_type%></b>: <%= @permission.authorizable.to_s %>
+          <%= link_to @permission.authorizable do %>
+            <span class="fa fa-search-plus"></span>
+          <% end %>
+          <%= @permission.authorizable.to_s %>
+        </td>
+      </tr>
+      <tr>
+        <td>Authorizable Type</td>
+        <td>
+          <%= @permission.authorizable_type%>
         </td>
       </tr>
       <tr>
         <td>Permissible</td>
         <td>
-          <b><%= @permission.permissible_type %></b>: <%= @permission.permissible.to_s %>
+          <%= @permission.permissible.to_s %>
+        </td>
+      </tr>
+      <tr>
+        <td>Permissible Type</td>
+        <td>
+          <%= @permission.permissible_type %>
         </td>
       </tr>
       <tr>

@@ -12,9 +12,9 @@
     
   <% end %>
 
-  <div class="form-group row justify-content-start">
-    <label class="col-sm-1 col-form-label pt-0">Authorizable</label>
-    <div class="col-sm-3">
+  <div class="form-group row">
+    <label class="col-sm-12 col-form-label pt-0"><h5>Authorizable</h5></label>
+    <div class="col-sm-12">
       <input type="hidden" class="authorizable_type" value="<%= permission.authorizable_type.nil? ? nil : permission.authorizable_type.downcase %>">
       <div class="form-check form-check-inline">
         <input class="form-check-input permission-authorizable-checkbox" type="radio" name="authorizable_options" value="user" id="userCheck">
@@ -38,8 +38,8 @@
     </div>
   </div>
   <div class="form-group row border-top pt-3">
-    <label class="col-sm-1 col-form-label pt-0">Permissible</label>
-    <div class="col-sm-3">
+    <label class="col-sm-12 col-form-label pt-0"><h5>Permissible</h5></label>
+    <div class="col-sm-12">
       <input type="hidden" class="permissible_type" value="<%= permission.permissible_type.nil? ? nil : permission.permissible_type.downcase %>">
       <div class="form-check form-check-inline">
         <input class="form-check-input permission-permissible-checkbox" type="radio" name="permissible_options" value="feature" id="featureCheck" checked>
@@ -72,7 +72,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <div class="col-sm-2">
+    <div class="col-sm-12">
       <div class="actions">
         <%= form.submit "Save" %>
       </div>

@@ -6,7 +6,7 @@ class PermissionsController < ApplicationController
 
   def index
     authorize Permission
-    @permissions = Permission.all.order(:id)
+    @permissions = Permission.all.order(:authorizable_type, :authorizable_id)
   end
 
   def show
@@ -24,11 +24,14 @@ class PermissionsController < ApplicationController
     respond_to do |format|
       if @permission.save
         format.html do
-          redirect_to permissions_path,
+          redirect_to @permission.authorizable,
                       notice: 'Permission was successfully created.'
         end
       else
-        format.html { render :new }
+        format.html do
+          redirect_to @permission.authorizable,
+                      flash: { error: @permission.errors.full_messages.to_sentence }
+        end
       end
     end
   end
@@ -42,7 +45,7 @@ class PermissionsController < ApplicationController
     respond_to do |format|
       if @permission.update(permission_params)
         format.html do
-          redirect_to @permission,
+          redirect_to @permission.authorizable,
                       notice: 'Permission was successfully updated.'
         end
       else
@@ -54,11 +57,12 @@ class PermissionsController < ApplicationController
   def destroy
     authorize Permission
 
+    authorizable = @permission.authorizable
     @permission.destroy
     respond_to do |format|
       format.html do
-        redirect_to permissions_path,
-                    notice: 'Permissions was sucessfully destroyed.'
+        redirect_to authorizable,
+                    notice: 'Permission was sucessfully destroyed.'
       end
     end
   end
