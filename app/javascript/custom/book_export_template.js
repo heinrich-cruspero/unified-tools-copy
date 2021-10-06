@@ -1,4 +1,5 @@
 $( document ).on('turbolinks:load', function() {
+    $('.field-select').selectize();
     if ($('#field-mappings').length) {
       $("#field-mappings").sortable({
         update: function(event, ui){
@@ -34,6 +35,7 @@ $( document ).on('turbolinks:load', function() {
       regexp = new RegExp($(this).data('id'), 'g');
       $('#field-mappings').append($(this).data('fields').replace(regexp, time));
       $('#field-mappings').sortable("refresh");
+      $("#field-mappings .nested-fields").last().find('.field-select').selectize();
       update_pos()
       return event.preventDefault();
     })
