@@ -70,7 +70,7 @@ Rails.application.routes.draw do
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   resources :users, only: %i[index show update delete]
-  
+
   root to: 'home#dashboard'
 end
 # rubocop:enable  Metrics/BlockLength

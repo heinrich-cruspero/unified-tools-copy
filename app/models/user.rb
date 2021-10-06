@@ -44,9 +44,7 @@ class User < ApplicationRecord
       password: Devise.friendly_token[0, 20]
     )
 
-    unless user.roles.exists?(name: 'Admin')
-      user.roles << Role.where(name: 'Admin')
-    end
+    user.roles << Role.where(name: 'Admin') unless user.roles.exists?(name: 'Admin')
 
     user
   end
