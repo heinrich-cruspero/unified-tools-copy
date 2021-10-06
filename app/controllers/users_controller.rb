@@ -2,7 +2,7 @@
 
 ##
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[edit update destroy]
+  before_action :set_user, only: %i[show update destroy]
 
   def index
     authorize User
@@ -11,7 +11,6 @@ class UsersController < ApplicationController
 
   def show
     authorize User
-    @user = User.find(params[:id])
     @permission = Permission.new(authorizable: @user)
   end
 

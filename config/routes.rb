@@ -66,10 +66,11 @@ Rails.application.routes.draw do
 
   resources :permissions
 
-  resources :users, only: %i[index show edit update delete]
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
+  resources :users, only: %i[index show update delete]
+  
   root to: 'home#dashboard'
 end
 # rubocop:enable  Metrics/BlockLength
