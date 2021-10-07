@@ -20,7 +20,7 @@
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+    <% @users.each_with_index do |user, index| %>
       <tr>
         <td><%= user.email %></td>
         <td>
@@ -32,23 +32,33 @@
         </td>
         <td>
           <% unless user.permissions.empty? %>
-            <ul class="list-group">
+            <div id="accordion<%=index%>">
               <% user.permission_types.each do |permission_type| %>
-                <li class="list-group-item">
-                  <b><%= permission_type.permissible_type %></b>
-                  <ul class="ul-permission">
-                    <% user.permissions.where(
-                          permissible_type: permission_type.permissible_type
-                        ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
-                      <li>
-                        <span class="fa fa-chevron-right"></span>
-                        &nbsp<%= permission.permissible.to_s %>
-                      </li>
-                    <% end %>
-                  </ul>
-                </li>
+                <div class="card">
+                  <div class="card-header" id="header<%=index%><%= permission_type.permissible_type %>">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#<%= permission_type.permissible_type %><%=index%>" aria-expanded="true" aria-controls="collapseOne">
+                        <b><%= permission_type.permissible_type %></b>
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="<%= permission_type.permissible_type %><%=index%>" class="collapse" aria-labelledby="heading<%= permission_type.permissible_type %>" data-parent="#accordion<%=index%>">
+                    <div class="card-body">
+                      <ul class="ul-permission">
+                        <% user.permissions.where(
+                              permissible_type: permission_type.permissible_type
+                            ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
+                          <li>
+                            <span class="fa fa-chevron-right"></span>
+                            &nbsp<%= permission.permissible.to_s %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               <% end %>
-            </ul>
+            </div>
           <% end %>
         </td>
         <td><%= user.created_at.strftime("%B %d, %Y %H:%M") %></td>
@@ -57,10 +67,6 @@
           <%= link_to user, class: 'btn btn-light btn-sm', type: 'button' do %>
             <span class="fa fa-search-plus"></span>
             Show
-          <% end %>
-          <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
-            <span class="fa fa-trash"></span>
-            Delete
           <% end %>
         </td>
       </tr>

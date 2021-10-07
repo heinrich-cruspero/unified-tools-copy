@@ -69,7 +69,7 @@ Rails.application.routes.draw do
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  resources :users, only: %i[index show update delete]
+  resources :users, only: %i[index show update]
 
   root to: 'home#dashboard'
 end

@@ -29,10 +29,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    authorize User
-  end
-
   private
 
   def set_user

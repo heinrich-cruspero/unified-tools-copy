@@ -47,28 +47,38 @@
         <td>Permissions</td>
         <td>
           <% unless @user.permissions.empty? %>
-            <ul class="list-group">
+            <div id="accordion">
               <% @user.permission_types.each do |permission_type| %>
-                <li class="list-group-item">
-                  <b><%= permission_type.permissible_type %></b>
-                  <ul class="ul-permission">
-                    <% @user.permissions.where(
-                          permissible_type: permission_type.permissible_type
-                        ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
-                      <li>
-                        <%= link_to permission do %>
-                          <span class="fa fa-search-plus"></span>
+                <div class="card">
+                  <div class="card-header" id="header<%= permission_type.permissible_type %>">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#<%= permission_type.permissible_type %>" aria-expanded="true" aria-controls="collapseOne">
+                        <b><%= permission_type.permissible_type %></b>
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="<%= permission_type.permissible_type %>" class="collapse show" aria-labelledby="heading<%= permission_type.permissible_type %>" data-parent="#accordion">
+                    <div class="card-body">
+                      <ul class="ul-permission">
+                        <% @user.permissions.where(
+                              permissible_type: permission_type.permissible_type
+                            ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
+                          <li>
+                            <%= link_to permission do %>
+                              <span class="fa fa-search-plus"></span>
+                            <% end %>
+                            <%= link_to permission, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                              <span class="fa fa-trash"></span>
+                            <% end %>
+                            &nbsp<%= permission.permissible.to_s %>
+                          </li>
                         <% end %>
-                        <%= link_to permission, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <span class="fa fa-trash"></span>
-                        <% end %>
-                        &nbsp<%= permission.permissible.to_s %>
-                      </li>
-                    <% end %>
-                  </ul>
-                </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               <% end %>
-            </ul>
+            </div>
           <% end %>
         </td>
       </tr>
