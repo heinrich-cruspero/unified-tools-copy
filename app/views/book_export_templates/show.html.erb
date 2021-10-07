@@ -1,9 +1,11 @@
 <div class="row">
     <div class="col-sm">
         <div class="float-right">
-            <%= link_to use_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
-              <span class="fa fa-chevron-right"></span>
-              Use
+            <% if policy(BookExportTemplate).use? %>
+              <%= link_to use_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-chevron-right"></span>
+                Use
+              <% end %>
             <% end %>
             <%= link_to edit_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
               <span class="fa fa-file"></span>

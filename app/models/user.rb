@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   has_many :permissions, as: :authorizable, dependent: :destroy
 
+  has_many :book_export_templates
+
   validates :email, presence: true
 
   enum role: %i[User Admin]
@@ -53,10 +55,47 @@ class User < ApplicationRecord
   end
 
   def permission_types
+    # Used for grouping types in the view (BookFieldMapping, Route, Feature)
     permissions.select(
       'permissible_type'
     ).group(
       'permissible_type'
     ).order(:permissible_type)
   end
+
+  def route_permissions
+    routes = permissions.where(permissible_type: 'Route').collect do |permission|
+      permission.permissible.to_s
+    end
+
+    permissions.where(permissible_type: 'Feature').each do |permission|
+      routes.unshift(
+        *permission.permissible.routes.collect(&:to_s)
+      )
+    end
+
+    routes
+  end
+
+  # rubocop:disable Naming/PredicateName
+  def has_permission(controller, action)
+    return true if is_admin?
+
+    controller = controller.name.pluralize.underscore
+    action = action.to_s.chomp('?')
+    controller_action = "#{controller}##{action}"
+
+    route_permissions.include?(controller_action)
+  end
+  # rubocop:enable Naming/PredicateName
+
+  def book_field_mapping_ids
+    book_field_mapping_ids = []
+    permissions.where(permissible_type: 'BookFieldMapping').each do |permission|
+      book_field_mapping_ids << permission.permissible.id
+    end
+    book_field_mapping_ids
+  end
+
+  # TODO: remove field from template if removed permission
 end

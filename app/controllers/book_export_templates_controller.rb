@@ -3,10 +3,11 @@
 ##
 class BookExportTemplatesController < ApplicationController
   before_action :set_book_export_template, only: %i[show edit update destroy]
+  before_action :set_book_field_mappings, only: %i[edit new]
 
   def index
     authorize BookExportTemplate
-    @book_export_templates = BookExportTemplate.all
+    @book_export_templates = policy_scope(BookExportTemplate)
   end
 
   def show
@@ -94,12 +95,16 @@ class BookExportTemplatesController < ApplicationController
 
   private
 
+  def set_book_field_mappings
+    @book_field_mappings = policy_scope(BookFieldMapping)
+  end
+
   def set_book_export_template
     @book_export_template = BookExportTemplate.find(params[:id])
   end
 
   def book_export_template_params
-    params.require(:book_export_template).permit(:name,
+    params.require(:book_export_template).permit(:name, :user_id,
                                                  book_export_template_field_mappings_attributes: %i[
                                                    id book_field_mapping_id position _destroy
                                                  ])

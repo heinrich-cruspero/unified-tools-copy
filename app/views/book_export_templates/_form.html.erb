@@ -3,6 +3,8 @@
   <div class="form-group row">
     <label for="book_export_template_name" class="col-sm-1 col-form-label">Name *</label>
     <div class="col-sm-3">
+      
+      <%= form.hidden_field :user_id, value: "#{current_user.id}" %>
       <%= form.text_field :name, required: true, class: "form-control" %>
     </div>
     <div class="col-sm-3"></div>

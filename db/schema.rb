@@ -167,7 +167,9 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["name"], name: "index_book_export_templates_on_name", unique: true
+    t.index ["user_id"], name: "index_book_export_templates_on_user_id"
   end
 
   create_table "book_field_mappings", force: :cascade do |t|
@@ -547,6 +549,7 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
 
   add_foreign_key "book_export_template_field_mappings", "book_export_templates"
   add_foreign_key "book_export_template_field_mappings", "book_field_mappings"
+  add_foreign_key "book_export_templates", "users"
   add_foreign_key "feature_routes", "features"
   add_foreign_key "feature_routes", "routes"
   add_foreign_key "user_roles", "roles"
