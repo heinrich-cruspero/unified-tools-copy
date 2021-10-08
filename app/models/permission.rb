@@ -22,6 +22,8 @@ class Permission < ApplicationRecord
     authorizable_type permissible_id permissible_type
   ], message: '- Permission already exists for this user/role.' }
 
+  after_update :update_template_field_mappings
+
   def authorizable_obj
     authorizable&.to_global_id
   end
@@ -36,5 +38,9 @@ class Permission < ApplicationRecord
 
   def permissible_obj=(permissible_gid)
     self.permissible = GlobalID::Locator.locate permissible_gid
+  end
+
+  def update_template_field_mappings
+    # TODO
   end
 end

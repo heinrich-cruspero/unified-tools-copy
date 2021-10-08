@@ -6,65 +6,85 @@
   </div>
   <ul class="list-unstyled components">
     <li>
-      <% ean = Book.last.ean %>
-      <a href="<%= details_book_path(ean) unless ean.nil? %>" target= "_blank">
-        <i class="fas fa-book"></i>
-        Book Details
-      </a>
+      <% if policy(Book).detail_guides? %>
+        <% ean = Book.last.ean %>
+        <a href="<%= details_book_path(ean) unless ean.nil? %>" target= "_blank">
+          <i class="fas fa-book"></i>
+          Book Details
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= books_path %>">
-        <i class="fas fa-book"></i>
-        Books
-      </a>
+      <% if policy(Book).index? %>
+        <a href="<%= books_path %>">
+          <i class="fas fa-book"></i>
+          Books
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= book_export_templates_path %>">
-        <i class="fas fa-list-ul"></i>
-        Book Export Templates
-      </a>
+      <% if policy(BookExportTemplate).index? %>
+        <a href="<%= book_export_templates_path %>">
+          <i class="fas fa-list-ul"></i>
+          Book Export Templates
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= book_field_mappings_path %>">
-        <i class="fas fa-list-ul"></i>
-        Book Export Fields
-      </a>
+      <% if policy(BookFieldMapping).index? %>
+        <a href="<%= book_field_mappings_path %>">
+          <i class="fas fa-list-ul"></i>
+          Book Export Fields
+        </a>
+      <% end %>
     </li>
     <li>
-      <a id="amazonShipmentsLink" href="<%= amazon_shipments_path %>">
-        <i class="fas fa-dolly-flatbed"></i>
-        Amazon Shipments
-      </a>
+      <% if policy(AmazonShipment).index? %>
+        <a id="amazonShipmentsLink" href="<%= amazon_shipments_path %>">
+          <i class="fas fa-dolly-flatbed"></i>
+          Amazon Shipments
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= amazon_orders_path %>">
-        <i class="fas fa-dolly-flatbed"></i>
-        Amazon Orders
-      </a>
+      <% if policy(AmazonOrder).index? %>
+        <a href="<%= amazon_orders_path %>">
+          <i class="fas fa-dolly-flatbed"></i>
+          Amazon Orders
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= amazon_order_items_path %>">
-        <i class="fas fa-dolly-flatbed"></i>
-        Amazon Order Items
-      </a>
+      <% if policy(AmazonOrderItem).index? %>
+        <a href="<%= amazon_order_items_path %>">
+          <i class="fas fa-dolly-flatbed"></i>
+          Amazon Order Items
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= features_path %>">
-        <i class="fas fa-tags"></i>
-        Features
-      </a>
+      <% if policy(Feature).index? %>
+        <a href="<%= features_path %>">
+          <i class="fas fa-tags"></i>
+          Features
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= users_path %>">
-        <i class="fas fa-user"></i>
-        Users
-      </a>
+      <% if policy(User).index? %>
+        <a href="<%= users_path %>">
+          <i class="fas fa-user"></i>
+          Users
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= roles_path %>">
-        <i class="fas fa-users"></i>
-        Roles
-      </a>
+      <% if policy(Role).index? %>
+        <a href="<%= roles_path %>">
+          <i class="fas fa-users"></i>
+          Roles
+        </a>
+      <% end %>
     </li>
   </ul>
 </nav>

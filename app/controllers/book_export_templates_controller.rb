@@ -11,7 +11,7 @@ class BookExportTemplatesController < ApplicationController
   end
 
   def show
-    authorize BookExportTemplate
+    authorize @book_export_template
   end
 
   def new
@@ -21,7 +21,7 @@ class BookExportTemplatesController < ApplicationController
   end
 
   def edit
-    authorize BookExportTemplate
+    authorize @book_export_template
   end
 
   def create
@@ -44,7 +44,7 @@ class BookExportTemplatesController < ApplicationController
   end
 
   def update
-    authorize BookExportTemplate
+    authorize @book_export_template
     respond_to do |format|
       if @book_export_template.update(
         book_export_template_params
@@ -100,7 +100,7 @@ class BookExportTemplatesController < ApplicationController
   end
 
   def set_book_export_template
-    @book_export_template = BookExportTemplate.find(params[:id])
+    @book_export_template = policy_scope(BookExportTemplate).find_by(id: params[:id])
   end
 
   def book_export_template_params

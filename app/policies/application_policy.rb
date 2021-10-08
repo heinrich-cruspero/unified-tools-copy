@@ -10,31 +10,38 @@ class ApplicationPolicy
   end
 
   def index?
-    user.is_admin?
+    user.is_admin? || user.has_permission(
+      record, __method__)
   end
 
   def show?
-    user.is_admin?
+    user.is_admin? || user.has_permission(
+      record, __method__)
   end
 
   def create?
-    user.is_admin?
+    user.is_admin? || user.has_permission(
+      record, __method__)
   end
 
   def new?
-    create?
+    create? || user.has_permission(
+      record, __method__)
   end
 
   def update?
-    user.is_admin?
+    user.is_admin? || user.has_permission(
+      record, __method__)
   end
 
   def edit?
-    update?
+    update? || user.has_permission(
+      record, __method__)
   end
 
   def destroy?
-    user.is_admin?
+    user.is_admin? || user.has_permission(
+      record, __method__)
   end
 
   ##

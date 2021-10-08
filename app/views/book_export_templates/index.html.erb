@@ -48,28 +48,20 @@
           <td><%= book_export_template.created_at.strftime("%B %d, %Y %H:%M") %></td>
           <td><%= book_export_template.updated_at.strftime("%B %d, %Y %H:%M") %></td>
           <td>
-            <% if policy(BookExportTemplate).show? %>
-              <%= link_to book_export_template, class: 'btn btn-light btn-sm', type: 'button' do %>
-                <span class="fa fa-search-plus"></span>
-                Show
-              <% end %>
+            <%= link_to book_export_template, class: 'btn btn-light btn-sm', type: 'button' do %>
+              <span class="fa fa-search-plus"></span>
+              Show
             <% end %>
-            <% if policy(BookExportTemplate).edit? %>
-              <%= link_to edit_book_export_template_path(book_export_template), class: 'btn btn-light btn-sm' do %>
-                <span class="fa fa-file"></span>
-                Edit
-              <% end %>
+            <%= link_to edit_book_export_template_path(book_export_template), class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-file"></span>
+              Edit
             <% end %>
-            <% if policy(BookExportTemplate).destroy? %>
-              <%= link_to book_export_template, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
-                <span class="fa fa-trash"></span>
-                Delete
-              <% end %>
+            <%= link_to book_export_template, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-trash"></span>
+              Delete
             <% end %>
-            <% if policy(BookExportTemplate).use? %>
-              <%= link_to use_book_export_template_path(book_export_template), method: :get, class: 'btn btn-light btn-sm' do %>
-                <i class="fa fa-chevron-right"></i>&nbsp;Use
-              <% end %>
+            <%= link_to use_book_export_template_path(book_export_template), method: :get, class: 'btn btn-light btn-sm' do %>
+              <i class="fa fa-chevron-right"></i>&nbsp;Use
             <% end %>
           </td>
         </tr>
