@@ -12,7 +12,7 @@
     
   <% end %>
 
-  <div class="form-group row">
+  <div class="form-group row d-none">
     <label class="col-sm-12 col-form-label pt-0"><h5>Authorizable</h5></label>
     <div class="col-sm-12">
       <input type="hidden" class="authorizable_type" value="<%= permission.authorizable_type.nil? ? nil : permission.authorizable_type.downcase %>">
@@ -33,11 +33,10 @@
       </div>
       <div class="authorizable-select role mt-3">
         <%= form.collection_select :authorizable_obj, Role.all, :to_global_id, :to_s, {}, { class: "select-field role-select modal-permission-form-select" } %>
-      </div>
-      
+      </div> 
     </div>
   </div>
-  <div class="form-group row border-top pt-3">
+  <div class="form-group row pt-3">
     <label class="col-sm-12 col-form-label pt-0"><h5>Permissible</h5></label>
     <div class="col-sm-12">
       <input type="hidden" class="permissible_type" value="<%= permission.permissible_type.nil? ? nil : permission.permissible_type.downcase %>">
