@@ -4,11 +4,6 @@
 class PermissionsController < ApplicationController
   before_action :set_permission, only: %i[show edit update destroy]
 
-  def index
-    authorize Permission
-    @permissions = Permission.all.order(:authorizable_type, :authorizable_id)
-  end
-
   def show
     authorize Permission
   end

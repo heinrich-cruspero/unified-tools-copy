@@ -13,10 +13,6 @@
               <span class="fa fa-trash"></span>
               Delete
             <% end %>
-            <%= link_to permissions_path, class:"btn btn-secondary ml-2" do %>
-                <span class="fa fa-list"> </span>
-                Return to List
-            <% end %>
         </div>
     </div>
 </div>
@@ -45,12 +41,15 @@
       <tr>
         <td>Authorizable Type</td>
         <td>
-          <%= @permission.authorizable_type%>
+          <%= @permission.authorizable_type %>
         </td>
       </tr>
       <tr>
         <td>Permissible</td>
         <td>
+          <%= link_to @permission.permissible do %>
+            <span class="fa fa-search-plus"></span>
+          <% end %>
           <%= @permission.permissible.to_s %>
         </td>
       </tr>
@@ -60,6 +59,21 @@
           <%= @permission.permissible_type %>
         </td>
       </tr>
+      <% if @permission.permissible_type == 'Feature' %>
+        <tr>
+          <td>Routes</td>
+          <td>
+            <ul class="ul-permission">
+              <% @permission.permissible.routes.each do |route| %>
+                <li>
+                  <span class="fa fa-chevron-right"></span>
+                  &nbsp<%= route.to_s %>
+                </li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
       <tr>
         <td>Created At</td>
         <td><%= @permission.created_at %></td>

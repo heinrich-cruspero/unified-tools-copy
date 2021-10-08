@@ -71,6 +71,16 @@
                               <span class="fa fa-trash"></span>
                             <% end %>
                             &nbsp<%= permission.permissible.to_s %>
+                            <% if permission_type.permissible_type == 'Feature' %>
+                              <ul class="ul-permission mt-1">
+                                <% permission.permissible.routes.each do |route| %>
+                                  <li>
+                                    <span class="fa fa-chevron-right"></span>
+                                    &nbsp<%= route.to_s %>
+                                  </li>
+                                <% end %>
+                              </ul>
+                            <% end %>
                           </li>
                         <% end %>
                       </ul>

@@ -2,11 +2,15 @@
 
 ##
 class FeaturesController < ApplicationController
-  before_action :set_feature, only: %i[edit update destroy]
+  before_action :set_feature, only: %i[show edit update destroy]
 
   def index
     authorize Feature
     @features = Feature.all
+  end
+
+  def show
+    authorize Feature
   end
 
   def new
@@ -21,7 +25,7 @@ class FeaturesController < ApplicationController
     respond_to do |format|
       if @feature.save
         format.html do
-          redirect_to features_path,
+          redirect_to @feature,
                       notice: 'Feature was successfully created.'
         end
       else
@@ -39,7 +43,7 @@ class FeaturesController < ApplicationController
     respond_to do |format|
       if @feature.update(feature_params)
         format.html do
-          redirect_to features_path,
+          redirect_to @feature,
                       notice: 'Feature was successfully updated.'
         end
       else

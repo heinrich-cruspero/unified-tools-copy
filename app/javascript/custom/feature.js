@@ -1,5 +1,4 @@
 $( document ).on('turbolinks:load', function() {
-    // TODO: searchable route dynamic add
     $(".route-select-field").selectize();
 
     $(".add-routes").on('click', '.add_fields', function(event){

@@ -500,11 +500,20 @@ table.records_table th {
 }
 
 .modal-permission-content {
-  height: 60vh;
+  height: 570px;
 }
 
 .selectize-control {
   width: 74%;
   display: inline-block;
   vertical-align: middle;
+}
+
+.modal-permission-form-select {
+  width: 100% !important;
+}
+
+.modal-permission-submit {
+  position: absolute;
+  bottom: 0;
 }
