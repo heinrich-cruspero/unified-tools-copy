@@ -67,7 +67,12 @@
       <div class="permissible-select bookfieldmapping mt-3">
         <%= form.collection_select :permissible_obj, BookFieldMapping.all, :to_global_id, :to_s, {}, { class: "select-field bookfieldmapping-select modal-permission-form-select" }%>
       </div>
-      
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-12 col-form-label pt-0"><h6>Has Access</h6></label>
+    <div class="col-sm-12">
+      <%= form.check_box(:has_access) %>
     </div>
   </div>
   <div class="form-group row modal-permission-submit">

@@ -496,6 +496,7 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.string "authorizable_type"
     t.integer "permissible_id"
     t.string "permissible_type"
+    t.boolean "has_access", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["authorizable_id", "authorizable_type", "permissible_id", "permissible_type"], name: "index_permissions", unique: true

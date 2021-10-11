@@ -90,12 +90,28 @@ class User < ApplicationRecord
   # rubocop:enable Naming/PredicateName
 
   def book_field_mapping_ids
-    book_field_mapping_ids = []
-    permissions.where(permissible_type: 'BookFieldMapping').each do |permission|
-      book_field_mapping_ids << permission.permissible.id
+    # get role allowed book_field_mappings
+    role_fields = []
+    roles.each do |role|
+      role.permissions.where(
+        permissible_type: 'BookFieldMapping', has_access: true
+      ).each do |permission|
+        role_fields << permission.permissible.id
+      end
     end
-    book_field_mapping_ids
-  end
 
-  # TODO: remove field from template if removed permission
+    # get user allowed book_field_mappings
+    user_fields = []
+    permissions.where(permissible_type: 'BookFieldMapping', has_access: true).each do |permission|
+      user_fields << permission.permissible.id
+    end
+
+    no_access_fields = []
+    permissions.where(permissible_type: 'BookFieldMapping', has_access: false).each do |permission|
+      no_access_fields << permission.permissible.id
+    end
+
+    has_access_fields = (role_fields + user_fields).uniq
+    has_access_fields.reject { |field| no_access_fields.include? field }
+  end
 end

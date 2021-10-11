@@ -6,7 +6,7 @@ class RolesController < ApplicationController
 
   def index
     authorize Role
-    @roles = Role.all
+    @roles = Role.where.not(name: 'SuperAdmin')
     @role = Role.new
   end
 

@@ -69,6 +69,6 @@ class PermissionsController < ApplicationController
   end
 
   def permission_params
-    params.require(:permission).permit(:name, :authorizable_obj, :permissible_obj)
+    params.require(:permission).permit(:name, :authorizable_obj, :permissible_obj, :has_access)
   end
 end

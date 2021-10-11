@@ -29,17 +29,18 @@
       </tr>
       <tr>
         <td>Email</td>
-        <td><%= @user.email %></td>
+        <td>
+          <p class="font-weight-bold">
+            <%= @user.email %>
+          </p>
+        </td>
       </tr>
       <tr>
         <td>Roles</td>
         <td>
-          <ul class="list-group">
-            <% @user.roles.each do |role| %>
-              <li class="list-group-item">
-                <%= role.to_s %>
-              </li>
-            <% end %>
+          <% @user.roles.each do |role| %>
+            <p class="font-weight-bold"><%= role.to_s %></p>
+          <% end %>
           </ul>
         </td>
       </tr>
@@ -47,43 +48,57 @@
         <td>Permissions</td>
         <td>
           <% unless @user.permissions.empty? %>
-            <div id="accordion">
+            <div>
               <% @user.permission_types.each do |permission_type| %>
                 <div class="card">
                   <div class="card-header" id="header<%= permission_type.permissible_type %>">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#<%= permission_type.permissible_type %>" aria-expanded="true" aria-controls="collapseOne">
-                        <b><%= permission_type.permissible_type %></b>
-                      </button>
-                    </h5>
+                    <p class="font-weight-bold"><%= permission_type.permissible_type %></p>
                   </div>
-                  <div id="<%= permission_type.permissible_type %>" class="collapse show" aria-labelledby="heading<%= permission_type.permissible_type %>" data-parent="#accordion">
+                  <div id="<%= permission_type.permissible_type %>">
                     <div class="card-body">
-                      <ul class="ul-permission">
-                        <% @user.permissions.where(
-                              permissible_type: permission_type.permissible_type
-                            ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
-                          <li>
-                            <%= link_to permission do %>
-                              <span class="fa fa-search-plus"></span>
-                            <% end %>
-                            <%= link_to permission, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                              <span class="fa fa-trash"></span>
-                            <% end %>
-                            &nbsp<%= permission.permissible.to_s %>
-                            <% if permission_type.permissible_type == 'Feature' %>
-                              <ul class="ul-permission mt-1">
-                                <% permission.permissible.routes.each do |route| %>
-                                  <li>
-                                    <span class="fa fa-chevron-right"></span>
-                                    &nbsp<%= route.to_s %>
-                                  </li>
+                      <table class="table table-sm table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col" style="width: 5%" class="text-center">Access</th>
+                            <th scope="col" style="width: 95%"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @user.permissions.where(
+                                permissible_type: permission_type.permissible_type
+                              ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
+                            <tr>
+                              <td class="text-center">
+                                <% if permission.has_access? %>
+                                  <span class="fa fa-check-circle text-success"></span>
+                                <% else %>
+                                  <span class="fa fa-minus-circle text-danger"></span>
                                 <% end %>
-                              </ul>
-                            <% end %>
-                          </li>
-                        <% end %>
-                      </ul>
+                              </td>
+                              <td>
+                                <%= link_to permission do %>
+                                  <span class="fa fa-search-plus"></span>
+                                <% end %>
+                                <%= link_to permission, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                  <span class="fa fa-trash"></span>
+                                <% end %>
+                                &nbsp<%= permission.permissible.to_s %>
+                                
+                                <% if permission_type.permissible_type == 'Feature' %>
+                                  <ul class="ul-permission mt-1 mb-0">
+                                    <% permission.permissible.routes.each do |route| %>
+                                      <li>
+                                        <span class="fa fa-chevron-right"></span>
+                                        &nbsp<%= route.to_s %>
+                                      </li>
+                                    <% end %>
+                                  </ul>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>

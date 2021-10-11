@@ -3,7 +3,7 @@
 ##
 class BookExportTemplatesController < ApplicationController
   before_action :set_book_export_template, only: %i[show edit update destroy]
-  before_action :set_book_field_mappings, only: %i[edit new]
+  before_action :set_book_field_mappings, only: %i[edit new create]
 
   def index
     authorize BookExportTemplate

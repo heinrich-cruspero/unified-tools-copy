@@ -5,6 +5,7 @@ class CreatePermissions < ActiveRecord::Migration[6.0]
       t.string :authorizable_type
       t.integer :permissible_id
       t.string :permissible_type
+      t.boolean :has_access, default: true
 
       t.timestamps
     end
