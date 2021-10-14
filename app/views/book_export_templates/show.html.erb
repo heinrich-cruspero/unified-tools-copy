@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm">
         <div class="float-right">
-            <% if policy(BookExportTemplate).use? %>
+            <% if BookExportTemplatePolicy.new(current_user, BookExportTemplate).use? %>
               <%= link_to use_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
                 <span class="fa fa-chevron-right"></span>
                 Use

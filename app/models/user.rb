@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ##
+# rubocop:disable Metrics/ClassLength
 class User < ApplicationRecord
   devise :timeoutable, :database_authenticatable, :trackable,
          :omniauthable, omniauth_providers: [:google_oauth2]
@@ -35,6 +36,10 @@ class User < ApplicationRecord
   def is_store_manager?
     roles.exists?(name: 'StoreManager')
   end
+
+  def is_super_admin?
+    roles.exists?(name: 'SuperAdmin')
+  end
   # rubocop:enable Naming/PredicateName
 
   def self.from_omniauth(access_token)
@@ -63,27 +68,74 @@ class User < ApplicationRecord
     ).order(:permissible_type)
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def route_permissions
-    routes = permissions.where(permissible_type: 'Route').collect do |permission|
-      permission.permissible.to_s
+    role_routes = []
+    roles.each do |role|
+      role.permissions.where(
+        permissible_type: %w[Feature Route],
+        has_access: true
+      ).each do |permission|
+        if permission.permissible_type == 'Feature'
+          role_routes.unshift(
+            *permission.permissible.routes.collect(&:to_s)
+          )
+        else
+          role_routes.unshift(
+            *permission.permissible.to_s
+          )
+        end
+      end
     end
 
-    permissions.where(permissible_type: 'Feature').each do |permission|
-      routes.unshift(
-        *permission.permissible.routes.collect(&:to_s)
-      )
+    user_routes = []
+    permissions.where(
+      permissible_type: %w[Feature Route],
+      has_access: true
+    ).each do |permission|
+      if permission.permissible_type == 'Feature'
+        user_routes.unshift(
+          *permission.permissible.routes.collect(&:to_s)
+        )
+      else
+        user_routes.unshift(
+          *permission.permissible.to_s
+        )
+      end
     end
 
-    routes
+    no_access_routes = []
+    permissions.where(
+      permissible_type: %w[Feature Route],
+      has_access: false
+    ).each do |permission|
+      if permission.permissible_type == 'Feature'
+        no_access_routes.unshift(
+          *permission.permissible.routes.collect(&:to_s)
+        )
+      else
+        no_access_routes.unshift(
+          *permission.permissible.to_s
+        )
+      end
+    end
+
+    has_access_routes = (role_routes + user_routes).uniq
+    has_access_routes.reject { |route| no_access_routes.include?(route) }
   end
+  # rubocop: enable Metrics/CyclomaticComplexity
 
   # rubocop:disable Naming/PredicateName
-  def has_permission(controller, action)
-    return true if is_admin?
+  def has_permission(record, action, route_permissions)
+    return true if is_super_admin?
 
-    controller = controller.name.pluralize.underscore
+    record = if record.is_a?(Class)
+               record.name.pluralize.underscore
+             else
+               record.class.name.pluralize.underscore
+             end
     action = action.to_s.chomp('?')
-    controller_action = "#{controller}##{action}"
+    controller_action = "#{record}##{action}"
 
     route_permissions.include?(controller_action)
   end
@@ -115,3 +167,4 @@ class User < ApplicationRecord
     has_access_fields.reject { |field| no_access_fields.include? field }
   end
 end
+# rubocop:enable Metrics/ClassLength

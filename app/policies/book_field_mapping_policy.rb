@@ -10,7 +10,7 @@ class BookFieldMappingPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user.is_admin?
+      if user.is_super_admin?
         scope.all
       elsif user.is_store_manager?
         scope.where(id: user.book_field_mapping_ids)

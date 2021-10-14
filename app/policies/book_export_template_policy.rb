@@ -7,10 +7,11 @@ class BookExportTemplatePolicy < ApplicationPolicy
     def initialize(user, scope)
       @user = user
       @scope = scope
+      # @route_permissions = user.route_permissions
     end
 
     def resolve
-      if user.is_admin?
+      if user.is_super_admin?
         scope.all
       elsif user.is_store_manager?
         scope.where(user: user)
@@ -22,39 +23,9 @@ class BookExportTemplatePolicy < ApplicationPolicy
     attr_reader :user, :scope
   end
 
-  def index?
-    user.is_admin? || (user.is_store_manager? && user.has_permission(
-      BookExportTemplate, __method__
-    ))
-  end
-
-  def show?
-    user.is_admin? || (user.is_store_manager? && user.has_permission(
-      BookExportTemplate, __method__
-    ))
-  end
-
-  def create?
-    user.is_admin? || (user.is_store_manager? && user.has_permission(
-      BookExportTemplate, __method__
-    ))
-  end
-
-  def update?
-    user.is_admin? || (user.is_store_manager? && user.has_permission(
-      BookExportTemplate, __method__
-    ))
-  end
-
-  def destroy?
-    user.is_admin? || (user.is_store_manager? && user.has_permission(
-      BookExportTemplate, __method__
-    ))
-  end
-
   def use?
-    user.is_admin? || (user.is_store_manager? && user.has_permission(
-      BookExportTemplate, __method__
-    ))
+    user.is_super_admin? || user.has_permission(
+      BookExportTemplate, __method__, @route_permissions
+    )
   end
 end

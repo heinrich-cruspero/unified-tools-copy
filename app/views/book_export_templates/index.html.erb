@@ -4,7 +4,7 @@
       <h1 class="h2">Book Export Templates</h1>
     </div>
   </div>
-  <% if policy(BookExportTemplate).new? %>
+  <% if BookExportTemplatePolicy.new(current_user, BookExportTemplate).new? %>
     <div class="col-sm">
       <div class="btn-toolbar mb-2 mb-md-0 float-right">
         <div class="btn-group mr-2">
