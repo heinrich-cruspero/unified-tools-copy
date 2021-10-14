@@ -7,6 +7,7 @@ class BookExportTemplatePolicy < ApplicationPolicy
     def initialize(user, scope)
       @user = user
       @scope = scope
+      # @route_permissions = user.route_permissions
     end
 
     def resolve
