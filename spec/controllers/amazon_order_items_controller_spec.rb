@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AmazonOrdersController, type: :controller do
-  let(:admin) { create(:user, :admin) }
+  let(:admin) { create(:user, :super_admin) }
   let(:amazon_order_items) { create_list(:amazon_order_items, 5) }
 
   before(:each) do

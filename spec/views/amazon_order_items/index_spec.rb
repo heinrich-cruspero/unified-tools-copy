@@ -6,11 +6,12 @@ RSpec.describe 'Amazon order items index page spec', type: :feature do
   before do
     Rails.application.env_config['devise.mapping'] = Devise.mappings[:user] # If using Devise
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
+    user = create(:user, :super_admin)
+    login_as(user, scope: :user)
   end
 
   scenario '#index page' do
     visit amazon_order_items_path
-    click_link 'Sign in with Google'
     expect(page).to have_content('Amazon Order Items')
     expect(page).to have_css(
       'table[data-source="/amazon_order_items.json?filters%5Bbuy_out%'\

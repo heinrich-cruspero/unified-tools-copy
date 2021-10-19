@@ -4,10 +4,16 @@ require 'faker'
 
 FactoryBot.define do
   factory :user do
-    role { 0 }
+    roles { Role.where(name: 'User') }
     email { Faker::Internet.email }
     trait :admin do
-      role { :Admin }
+      roles { Role.where(name: 'Admin') }
+    end
+    trait :super_admin do
+      roles { Role.where(name: 'SuperAdmin') }
+    end
+    trait :store_manager do
+      roles { Role.where(name: 'StoreManager') }
     end
   end
 end

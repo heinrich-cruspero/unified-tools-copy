@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Permission, type: :model do
   context 'validation tests' do
-    let(:role) { create(:role, name: 'Admin') }
+    let(:role) { Role.find_by(name: 'Admin') }
     let(:field_mapping) { create(:book_field_mapping, display_name: 'EAN', lookup_field: 'ean') }
     let(:permission) { build(:permission, authorizable: role, permissible: field_mapping) }
 

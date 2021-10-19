@@ -18,8 +18,6 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
-  enum role: %i[User Admin]
-
   scope :admin_users, -> { includes(:roles).where(roles: { name: 'Admin' }) }
   scope :user_users, -> { includes(:roles).where(roles: { name: 'User' }) }
   scope :store_manager_users, -> { includes(:roles).where(roles: { name: 'StoreManager' }) }
@@ -49,7 +47,7 @@ class User < ApplicationRecord
     user ||= User.create(
       email: data['email'],
       password: Devise.friendly_token[0, 20],
-      roles: Role.where(name: 'Admin')
+      roles: Role.where(name: 'User')
     )
 
     user
