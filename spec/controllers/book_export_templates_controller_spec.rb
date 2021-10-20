@@ -22,9 +22,9 @@ RSpec.describe BookExportTemplatesController,
   end
   let(:template) do
     create(
-      :book_export_template, name: 'Template 1', 
-      book_field_mappings: [field_mapping_1],
-      user: user
+      :book_export_template, name: 'Template 1',
+                             book_field_mappings: [field_mapping_1],
+                             user: user
     )
   end
 
@@ -40,10 +40,10 @@ RSpec.describe BookExportTemplatesController,
     end
 
     it 'returns a success response on new' do
-      post :create, params: { 
+      post :create, params: {
         book_export_template: {
-          name: 'Template', 
-          book_field_mapping_ids: [field_mapping_1.id] 
+          name: 'Template',
+          book_field_mapping_ids: [field_mapping_1.id]
         }
       }
       expect(response.code).to eq('200')

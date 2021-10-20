@@ -8,11 +8,11 @@ RSpec.describe PermissionsController, type: :controller do
   before(:each) do
     sign_in user
   end
-  
+
   let(:route) { create(:route) }
-  let(:shipments_route) { create(:route, controller_name: 'Shipments', action_name: 'index')}
+  let(:shipments_route) { create(:route, controller_name: 'Shipments', action_name: 'index') }
   let(:feature) { create(:feature, routes: [route]) }
-  let(:shipments_feature) { create(:feature, routes: [shipments_route])}
+  let(:shipments_feature) { create(:feature, routes: [shipments_route]) }
   let(:permission) { create(:permission, authorizable: user, permissible: feature) }
 
   describe 'index' do

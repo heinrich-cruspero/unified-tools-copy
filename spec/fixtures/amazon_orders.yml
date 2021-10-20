@@ -1,0 +1,4 @@
+amazon_order:
+  amazon_order_id: 1
+  status: done
+  order_total: 100

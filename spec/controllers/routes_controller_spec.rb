@@ -9,8 +9,8 @@ RSpec.describe RoutesController, type: :controller do
   end
 
   let(:route1) { create(:route) }
-  let(:route2) { create(:route, action_name: 'details')}
-  let(:route3) { create(:route, action_name: 'detail_guides')}
+  let(:route2) { create(:route, action_name: 'details') }
+  let(:route3) { create(:route, action_name: 'detail_guides') }
 
   describe 'index' do
     it 'returns a found response' do

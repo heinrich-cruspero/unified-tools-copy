@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'book_export_templates/index', type: :view do
-  
   before(:each) do
     template = BookExportTemplate.new(name: 'Template')
     template.book_export_template_field_mappings.build(

@@ -6,7 +6,7 @@
   </div>
   <ul class="list-unstyled components">
     <li>
-      <% if BookPolicy.new(current_user, Book).detail_guides? %>
+      <% if BookPolicy.new(current_user, Book).details? %>
         <% ean = Book.last.ean %>
         <a href="<%= details_book_path(ean) unless ean.nil? %>" target= "_blank">
           <i class="fas fa-book"></i>

@@ -14,7 +14,9 @@ class User < ApplicationRecord
 
   has_many :permissions, as: :authorizable, dependent: :destroy
 
-  has_many :book_export_templates
+  has_many :book_export_templates,
+           inverse_of: :user,
+           foreign_key: 'user_id'
 
   validates :email, presence: true
 
