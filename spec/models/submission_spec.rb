@@ -3,5 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Submission, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { create(:user) }
+  let(:submission) { create(:submission, user: user) }
+
+  it 'is valid with valid attributes' do
+    expect(submission).to be_valid
+  end
+
+  it 'validates required attributes' do
+    submission.company_name = nil
+    expect(submission).not_to be_valid
+  end
 end
