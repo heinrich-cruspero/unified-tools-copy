@@ -1,0 +1,121 @@
+<%= form_for(@submission) do |form| %>
+  <% if @submission.errors.any? %>
+    
+      <% @submission.errors.full_messages.each do |message| %>
+        <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
+          <%= message.html_safe %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+    
+  <% end %>
+
+  <div class="form-group row">
+    <label for="company_name" class="col-sm-1 col-form-label">
+      Company Name *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :company_name, placeholder: "Your company name ex. Reddie Bookstore", required: true, class: "form-control" %>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="form-group row">
+    <label for="seller_name" class="col-sm-1 col-form-label">
+      Seller Name *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :seller_name, placeholder: "Sellers marketplace seller name ex. Recycle-A-Textbook", required: true, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="quantity" class="col-sm-1 col-form-label">
+      Quantity *
+    </label>
+    <div class="col-sm-3">
+      <%= form.number_field :quantity, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="isbn" class="col-sm-1 col-form-label">
+      ISBN *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :isbn, required: true, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="source_name" class="col-sm-1 col-form-label">
+      Source Name *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :source_name, placeholder: "Sellers actual name ex. Joe Black", required: true, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="source_address" class="col-sm-1 col-form-label">
+      Source Address *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_area :source_address, required: true, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="source_phone" class="col-sm-1 col-form-label">
+      Source Phone *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :source_phone, required: true, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="source_email" class="col-sm-1 col-form-label">
+      Source Email *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_field :source_email, required: true, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="notes" class="col-sm-1 col-form-label">
+      Notes *
+    </label>
+    <div class="col-sm-3">
+      <%= form.text_area :notes, required: true, class: "form-control" %>
+    </div>
+  </div>
+  <% if current_user.is_super_admin? || current_user.is_admin? %>
+    <div class="form-group row">
+      <label for="status" class="col-sm-1 col-form-label">
+        Status *
+      </label>
+      <div class="col-sm-3">
+        <%= form.select :status, Submission.statuses.map {|k, v| [k.humanize.capitalize, k.to_sym]}, {}, {class: "form-control"} %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="counterfeits" class="col-sm-1 col-form-label">
+        Counterfeits *
+      </label>
+      <div class="col-sm-3">
+        <%= form.select :counterfeits, [["Yes", true], ["No", false]], {:prompt => 'Select One'}, {class: "form-control"} %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="counterfeits" class="col-sm-1 col-form-label">
+        Approved *
+      </label>
+      <div class="col-sm-3">
+        <%= form.check_box :approved %>
+      </div>
+    </div>
+  <% end %>
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= form.submit "Save" %>
+      </div>
+    </div>
+  </div>
+<% end %>

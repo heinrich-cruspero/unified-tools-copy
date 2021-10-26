@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-sm">
+        <div class="float-right">
+            <%= link_to edit_submission_path(@submission), class: 'btn btn-secondary ml-2' do %>
+              <span class="fa fa-file"></span>
+              Edit
+            <% end %>
+            <%= link_to new_submission_path, class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-plus"></span>
+                New
+            <% end %>
+            <%= link_to @submission, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ml-2' do %>
+              <span class="fa fa-trash"></span>
+              Delete
+            <% end %>
+            <%= link_to submissions_path, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-list"> </span>
+                Return to List
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered mt-3">
+  <thead class="thead-light">
+    <tr>
+      <th colspan="5">Submission</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td>User</td>
+        <td><%= @submission.user.email %></td>
+      </tr>
+      <tr>
+        <td>Company Name</td>
+        <td><%= @submission.company_name %></td>
+      </tr>
+      <tr>
+        <td>Seller Name</td>
+        <td><%= @submission.seller_name %></td>
+      </tr>
+      <tr>
+        <td>Quantity</td>
+        <td><%= @submission.quantity %></td>
+      </tr>
+      <tr>
+        <td>Isbn</td>
+        <td><%= @submission.isbn %></td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td><%= @submission.status %></td>
+      </tr>
+      <tr>
+        <td>Counterfeits</td>
+        <td><%= @submission.counterfeits %></td>
+      </tr>
+      <tr>
+        <td>Source Name</td>
+        <td><%= @submission.source_name %></td>
+      </tr>
+      <tr>
+        <td>Source Address</td>
+        <td><%= @submission.source_address %></td>
+      </tr>
+      <tr>
+        <td>Source Phone</td>
+        <td><%= @submission.source_phone %></td>
+      </tr>
+      <tr>
+        <td>Source Email</td>
+        <td><%= @submission.source_email %></td>
+      </tr>
+      <tr>
+        <td>Notes</td>
+        <td><%= @submission.notes %></td>
+      </tr>
+      <tr>
+        <td>Approved</td>
+        <td><%= @submission.approved %></td>
+      </tr>
+      <tr>
+        <td>Created At</td>
+        <td><%= @submission.created_at %></td>
+      </tr>
+      <tr>
+        <td>Updated At</td>
+        <td><%= @submission.updated_at %></td>
+      </tr>
+    
+  </tbody>
+</table>

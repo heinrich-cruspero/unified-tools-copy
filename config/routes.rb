@@ -2,6 +2,7 @@
 
 # rubocop:disable  Metrics/BlockLength
 Rails.application.routes.draw do
+  resources :submissions
   resources :book_field_mappings
   resources :book_export_templates do
     member do

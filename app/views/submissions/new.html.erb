@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-sm">
+        <h2>New Submiision</h2>
+    </div>
+    <div class="col-sm">
+        <div class="float-right">
+            <%= link_to new_submission_path, class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-plus"></span>
+                New
+            <% end %>
+            <%= link_to submissions_path, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-list"> </span>
+                Return to List
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm border-top p-3">
+        <%= render 'form', book_field_mapping: @book_field_mapping %>
+    </div>
+</div>
