@@ -63,14 +63,6 @@
       <% end %>
     </li>
     <li>
-      <% if FeaturePolicy.new(current_user, Feature).index? %>
-        <a href="<%= features_path %>">
-          <i class="fas fa-tags"></i>
-          Features
-        </a>
-      <% end %>
-    </li>
-    <li>
       <% if UserPolicy.new(current_user, User).index? %>
         <a href="<%= users_path %>">
           <i class="fas fa-user"></i>
@@ -83,6 +75,14 @@
         <a href="<%= roles_path %>">
           <i class="fas fa-users"></i>
           Roles
+        </a>
+      <% end %>
+    </li>
+    <li>
+      <% if FeaturePolicy.new(current_user, Feature).index? %>
+        <a href="<%= features_path %>">
+          <i class="fas fa-tags"></i>
+          Features
         </a>
       <% end %>
     </li>
