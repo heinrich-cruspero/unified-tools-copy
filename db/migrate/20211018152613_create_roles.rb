@@ -17,7 +17,7 @@ class CreateRoles < ActiveRecord::Migration[6.0]
       name: "index_user_roles"  
     )
 
-    %i[User Admin StoreManager].each do |role|
+    %i[SuperAdmin Admin User StoreManager].each do |role|
       Role.find_or_create_by(
         name: role
       )
