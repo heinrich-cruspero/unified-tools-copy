@@ -4,6 +4,7 @@ require 'rails_helper'
 require 'faker'
 
 RSpec.describe PermissionsController, type: :controller do
+  fixtures :roles
   let(:user) { create(:user) }
   before(:each) do
     sign_in user

@@ -40,15 +40,18 @@
         </td>
       </tr>
       <tr>
+        <td>Description</td>
+        <td>
+          <%= @feature.description %>
+        </td>
+      </tr>
+      <tr>
         <td>Routes</td>
         <td>
           <ul class="ul-permission">
             <% @feature.routes.each do |route| %>
-                <li>
-                    <%= link_to route do %>
-                        <span class="fa fa-search-plus"></span>
-                    <% end %>
-                    &nbsp<%= route.to_s %>
+                <li>  
+                  <i class="fa fa-chevron-right"></i>&nbsp;<%= route.to_s %>
                 </li>
             <% end %>
           </ul>

@@ -15,7 +15,6 @@ class Feature < ApplicationRecord
   has_many :permissions, as: :permissible
 
   validates :name, presence: true, uniqueness: true
-  validates :description, presence: true
 
   validates :feature_routes, presence: {
     message: "- Routes can't be blank."

@@ -4,6 +4,7 @@ require 'rails_helper'
 require 'faker'
 
 RSpec.describe FeaturesController, type: :controller do
+  fixtures :roles
   before(:each) do
     sign_in create(:user)
   end
@@ -29,7 +30,7 @@ RSpec.describe FeaturesController, type: :controller do
     end
 
     it 'returns a success response on new' do
-      get :new, params: { name: 'Shipments', description: 'isbn', routes: [route1] }
+      get :new, params: { name: 'Shipments', description: 'Shipments', routes: [route1] }
       expect(response.code).to eq('302')
     end
 

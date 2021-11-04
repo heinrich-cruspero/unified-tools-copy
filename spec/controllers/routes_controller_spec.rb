@@ -4,6 +4,7 @@ require 'rails_helper'
 require 'faker'
 
 RSpec.describe RoutesController, type: :controller do
+  fixtures :roles
   before(:each) do
     sign_in create(:user)
   end

@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Permission, type: :model do
+  fixtures :roles
   context 'validation tests' do
     let(:role) { Role.find_by(name: 'Admin') }
     let(:field_mapping) { create(:book_field_mapping, display_name: 'EAN', lookup_field: 'ean') }

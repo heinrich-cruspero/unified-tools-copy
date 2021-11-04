@@ -6,7 +6,8 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @users = User.all
+    # @users = User.all
+    @users = User.user_search(params[:search_term], params[:sort_field])
   end
 
   def show

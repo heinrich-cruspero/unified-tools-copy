@@ -5,6 +5,7 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe AmazonShipmentPolicy do
+  fixtures :roles
   subject { AmazonShipmentPolicy.new(user, amazon_shipment) }
 
   let(:amazon_shipment) { create(:amazon_shipment) }

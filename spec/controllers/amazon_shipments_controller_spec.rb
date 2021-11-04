@@ -4,6 +4,7 @@ require 'rails_helper'
 require 'faker'
 
 RSpec.describe AmazonShipmentsController, type: :controller do
+  fixtures :roles
   let(:admin) { create(:user) }
   before(:each) do
     sign_in admin

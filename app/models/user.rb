@@ -24,6 +24,26 @@ class User < ApplicationRecord
   scope :user_users, -> { includes(:roles).where(roles: { name: 'User' }) }
   scope :store_manager_users, -> { includes(:roles).where(roles: { name: 'StoreManager' }) }
 
+  def self.user_search(search_term, sort_field)
+    results = if search_term.nil? || search_term.empty?
+                User.all
+              else
+                User.joins(:roles).where(
+                  'email iLIKE :search_term OR roles.name iLIKE :search_term',
+                  { search_term: "%#{search_term}%" }
+                )
+              end
+
+    case sort_field
+    when 'email'
+      results = results.order(:email)
+    when 'role'
+      results = results.includes(:roles).order('roles.name')
+    end
+
+    results
+  end
+
   # rubocop:disable Naming/PredicateName
   def is_user?
     roles.exists?(name: 'User')

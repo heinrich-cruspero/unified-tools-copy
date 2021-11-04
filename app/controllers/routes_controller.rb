@@ -9,10 +9,6 @@ class RoutesController < ApplicationController
     @routes = Route.order(:controller_name).all
   end
 
-  def show
-    authorize Route
-  end
-
   private
 
   def set_route

@@ -5,6 +5,7 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe FeaturePolicy do
+  fixtures :roles
   subject { FeaturePolicy.new(user, feature) }
 
   let(:index_route) do

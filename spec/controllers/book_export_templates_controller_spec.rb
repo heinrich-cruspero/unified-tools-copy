@@ -5,6 +5,7 @@ require 'faker'
 # rubocop:disable Metrics/BlockLength
 RSpec.describe BookExportTemplatesController,
                type: :controller do
+  fixtures :roles
   let(:user) { create(:user, :super_admin) }
   before(:each) do
     sign_in user

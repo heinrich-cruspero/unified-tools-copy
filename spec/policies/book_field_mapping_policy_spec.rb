@@ -5,6 +5,7 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe BookFieldMappingPolicy do
+  fixtures :roles
   subject { BookFieldMappingPolicy.new(user, book_field_mapping) }
 
   let(:book_field_mapping) do

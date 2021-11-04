@@ -5,6 +5,7 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe BookExportTemplatePolicy do
+  fixtures :roles
   subject { BookExportTemplatePolicy.new(user, book_export_template) }
 
   let(:some_user) { create(:user, :super_admin) }

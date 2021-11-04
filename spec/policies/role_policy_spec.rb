@@ -5,6 +5,7 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe RolePolicy do
+  fixtures :roles
   subject { RolePolicy.new(user, role) }
 
   let(:role) { Role.find_by(name: 'StoreManager') }

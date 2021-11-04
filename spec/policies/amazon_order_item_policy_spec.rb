@@ -5,6 +5,7 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe AmazonOrderItemPolicy do
+  fixtures :roles
   subject { AmazonOrderItemPolicy.new(user, amazon_order_item) }
 
   let(:amazon_order_item) do

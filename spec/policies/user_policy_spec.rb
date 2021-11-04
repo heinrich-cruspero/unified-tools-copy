@@ -5,6 +5,7 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe UserPolicy do
+  fixtures :roles
   subject { UserPolicy.new(user, users) }
 
   let(:users) { create(:user) }
