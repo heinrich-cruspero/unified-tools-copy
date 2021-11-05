@@ -7,13 +7,12 @@ class BookExportTemplatePolicy < ApplicationPolicy
     def initialize(user, scope)
       @user = user
       @scope = scope
-      # @route_permissions = user.route_permissions
     end
 
     def resolve
       if user.is_super_admin?
         scope.all
-      elsif user.is_store_manager?
+      else
         scope.where(user: user)
       end
     end
