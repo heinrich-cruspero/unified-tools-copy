@@ -53,7 +53,8 @@
                         <thead>
                           <tr>
                             <th scope="col" style="width: 5%" class="text-center">Access</th>
-                            <th scope="col" style="width: 95%"></th>
+                            <th scope="col" style="width: 90%"></th>
+                            <th scope="col" style="width: 5%"></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -69,13 +70,7 @@
                                 <% end %>
                               </td>
                               <td>
-                                <%= link_to permission do %>
-                                  <span class="fa fa-search-plus"></span>
-                                <% end %>
-                                <%= link_to permission, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                                  <span class="fa fa-trash"></span>
-                                <% end %>
-                                &nbsp<%= permission.permissible.to_s %>
+                                &nbsp;<%= permission.permissible.to_s %>
                                 
                                 <% if permission_type.permissible_type == 'Feature' %>
                                   <ul class="ul-permission mt-1 mb-0">
@@ -86,6 +81,11 @@
                                       </li>
                                     <% end %>
                                   </ul>
+                                <% end %>
+                              </td>
+                              <td class="text-center">
+                                <%= link_to permission, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                  <span class="fa fa-trash text-danger"></span>
                                 <% end %>
                               </td>
                             </tr>

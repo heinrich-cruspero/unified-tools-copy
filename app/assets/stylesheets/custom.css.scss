@@ -521,3 +521,7 @@ table.records_table th {
 .selectize-input input {
   width: 30% !important;
 }
+
+.collapse-btn:focus {
+  box-shadow: none !important;
+}

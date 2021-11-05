@@ -4,15 +4,6 @@
 class PermissionsController < ApplicationController
   before_action :set_permission, only: %i[show edit update destroy]
 
-  def show
-    authorize Permission
-  end
-
-  def new
-    authorize Permission
-    @permission = Permission.new
-  end
-
   def create
     authorize Permission
     @permission = Permission.new(permission_params)
@@ -27,24 +18,6 @@ class PermissionsController < ApplicationController
           redirect_to @permission.authorizable,
                       flash: { error: @permission.errors.full_messages.to_sentence }
         end
-      end
-    end
-  end
-
-  def edit
-    authorize Permission
-  end
-
-  def update
-    authorize Permission
-    respond_to do |format|
-      if @permission.update(permission_params)
-        format.html do
-          redirect_to @permission.authorizable,
-                      notice: 'Permission was successfully updated.'
-        end
-      else
-        format.html { render :edit }
       end
     end
   end

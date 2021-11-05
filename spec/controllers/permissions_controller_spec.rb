@@ -16,22 +16,7 @@ RSpec.describe PermissionsController, type: :controller do
   let(:shipments_feature) { create(:feature, routes: [shipments_route]) }
   let(:permission) { create(:permission, authorizable: user, permissible: feature) }
 
-  describe 'index' do
-    it 'returns a success response on show page' do
-      get :show, params: { id: permission.id }
-      expect(response.code).to eq('302')
-    end
-
-    it 'returns a success response on new' do
-      get :new, params: { authorizable: user, permissible: shipments_feature }
-      expect(response.code).to eq('302')
-    end
-
-    it 'returns a success response on edit page' do
-      get :edit, params: { id: permission.id }
-      expect(response.code).to eq('302')
-    end
-
+  describe 'delete' do
     it 'returns a success response on delete' do
       delete :destroy, params: { id: permission.id }
       expect(response.code).to eq('302')
