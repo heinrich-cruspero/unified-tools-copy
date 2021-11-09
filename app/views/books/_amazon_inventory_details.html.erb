@@ -6,6 +6,7 @@
     <label class="col-detail title">TQ</label>
     <label class="col-detail title">FBAQ</label>
     <label class="col-detail title">Inbound</label>
+    <label class="col-detail title">PendQ</label>
     <label class="col-detail title">ORQC</label>
     <label class="col-detail title">ORQT</label>
     <label class="col-detail title">FBAWQ</label>
@@ -35,6 +36,12 @@
             <p class="title title-sm">Inbound</p>
             <div>
                 <%= number_with_delimiter(@book.inbq) %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">PendQ</p>
+            <div>
+                <%= number_with_delimiter(@book.valore_pending_order) %>
             </div>
         </div>
         <div class="col-detail">
