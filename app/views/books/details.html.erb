@@ -73,26 +73,30 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <div class="text-center mt-4">
-          <h4>Historic Amazon Prices</h4>
-      </div>
-      <div class="section-loader" id="amazon-prices-spinner"></div>
-      <div id="amazon-prices-div">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="text-center mt-4">
-          <h4>Historic Amazon Sales Rank</h4>
-      </div>
-      <div class="section-loader" id="sales-rank-spinner"></div>
-      <div id="sales-rank-div">
+  <% if BookPolicy.new(current_user, Book).amazon_prices_history? %>
+    <div class="row">
+      <div class="col">
+        <div class="text-center mt-4">
+            <h4>Historic Amazon Prices</h4>
+        </div>
+        <div class="section-loader" id="amazon-prices-spinner"></div>
+        <div id="amazon-prices-div">
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
+  <% if BookPolicy.new(current_user, Book).sales_rank_history? %>
+    <div class="row">
+      <div class="col">
+        <div class="text-center mt-4">
+            <h4>Historic Amazon Sales Rank</h4>
+        </div>
+        <div class="section-loader" id="sales-rank-spinner"></div>
+        <div id="sales-rank-div">
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <%= render 'history_modal' %>
