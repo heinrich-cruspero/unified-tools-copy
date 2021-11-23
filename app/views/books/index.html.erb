@@ -5,15 +5,6 @@
     </div>
   </div>
   <div class="col-sm">
-    <% if BookExportTemplatePolicy.new(current_user, BookExportTemplate).index? %>
-      <div class="btn-toolbar mb-2 mb-md-0 float-right">
-        <div class="btn-grp mr-2">
-          <%= button_to book_export_templates_path, method: :get, class: "btn btn-secondary" do %>
-            <i class="fa fa-plus"></i>&nbsp;Export
-          <% end %>
-        </div>
-      </div>
-    <% end %>
     <% if BookPolicy.new(current_user, Book).link_oe_isbn? %>
       <div class="btn-toolbar mb-2 mb-md-0 float-right">
         <div class="btn-grp mr-2">
