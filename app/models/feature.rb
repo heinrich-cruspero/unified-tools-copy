@@ -12,7 +12,8 @@ class Feature < ApplicationRecord
   accepts_nested_attributes_for :feature_routes,
                                 allow_destroy: true
 
-  has_many :permissions, as: :permissible
+  has_many :permissions, as: :permissible,
+                         dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 

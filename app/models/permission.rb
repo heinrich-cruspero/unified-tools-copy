@@ -40,7 +40,6 @@ class Permission < ApplicationRecord
     self.permissible = GlobalID::Locator.locate permissible_gid
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def update_user_template_fields
     # Remove fields from existing templates if permission removed
 
@@ -72,5 +71,4 @@ class Permission < ApplicationRecord
       end
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 end
