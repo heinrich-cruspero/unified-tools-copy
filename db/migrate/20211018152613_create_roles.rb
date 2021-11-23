@@ -17,14 +17,14 @@ class CreateRoles < ActiveRecord::Migration[6.0]
       name: "index_user_roles"  
     )
 
-    %i[SuperAdmin Admin User StoreManager].each do |role|
+    %i[SuperAdmin Admin User StoreManager Accounting].each do |role|
       Role.find_or_create_by(
         name: role
       )
     end
 
     User.all.each do |user|
-      user.roles << Role.where(name: "Admin")
+      user.roles << Role.where(name: "User")
     end
   end
 

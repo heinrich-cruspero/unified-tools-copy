@@ -60,6 +60,10 @@ class User < ApplicationRecord
   def is_super_admin?
     roles.exists?(name: 'SuperAdmin')
   end
+
+  def is_accounting?
+    roles.exists?(name: 'Accounting')
+  end
   # rubocop:enable Naming/PredicateName
 
   def self.from_omniauth(access_token)
