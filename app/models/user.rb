@@ -2,7 +2,7 @@
 
 ##
 class User < ApplicationRecord
-  devise :database_authenticatable, :trackable,
+  devise :timeoutable, :database_authenticatable, :trackable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   validates :email, presence: true

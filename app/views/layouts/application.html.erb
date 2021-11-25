@@ -25,8 +25,8 @@
           <div class="main-content">
             <% flash.each do |key, value| %>
               <% next if value.blank? %>
-              <div class="<%= flash_class(key) %>">
-                <%= value %>
+              <div class="<%= flash_class(key) %> mt-2">
+                <%= value unless value == true %>
               </div>
             <% end %>
             <%= yield %>
