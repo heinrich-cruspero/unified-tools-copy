@@ -3,7 +3,9 @@
 ##
 class AmazonOrderPolicy < ApplicationPolicy
   def order_associated_items?
-    user.index?
+    user.is_super_admin? || user.has_permission(
+      record, __method__, @route_permissions
+    )
   end
 
   def export?
