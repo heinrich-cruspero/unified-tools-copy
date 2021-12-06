@@ -10,16 +10,24 @@ class BookExportTemplatePolicy < ApplicationPolicy
     end
 
     def resolve
-      if user.is_super_admin?
-        scope.all
-      else
-        scope.where(user: user)
-      end
+      scope.all
     end
 
     private
 
     attr_reader :user, :scope
+  end
+
+  def update?
+    user.is_super_admin? || user.id == record.user_id
+  end
+
+  def edit?
+    update?
+  end
+
+  def destroy?
+    update?
   end
 
   def use?
