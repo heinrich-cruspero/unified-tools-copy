@@ -47,7 +47,7 @@ class BookExportTemplatesController < ApplicationController
     authorize @book_export_template
     respond_to do |format|
       if @book_export_template.update(
-        book_export_template_params
+        book_export_template_params.except(:user_id)
       )
         format.html do
           redirect_to @book_export_template,
@@ -73,23 +73,36 @@ class BookExportTemplatesController < ApplicationController
 
   def use
     authorize BookExportTemplate
-    return if request.format.html?
 
-    ids = if params[:book_ids].present?
-            params[:book_ids].split(/[\r\n]+/)
-          else
-            Book.parse_csv(params[:csv_file])
-          end
-    params[:ids] = ids
-    respond_to do |format|
-      format.html
-      format.csv do
-        params.delete :csv_file
-        params.permit!
-        CsvDownloadJob.perform_later(params, 'BookExportDatatable', 'books.csv',
-                                     current_user.id)
-        head :ok
+    # validate allowed fields before further processing
+    # to prevent unecessary export when user does
+    # not have permissions to any field in the template
+    template = BookExportTemplate.find(params[:id])
+    field_mappings = BookFieldMappingPolicy::Scope.new(
+      current_user, BookFieldMapping
+    ).resolve
+    if template.book_field_mappings.any? { |field_mapping| field_mappings.include? field_mapping }
+      return if request.format.html?
+
+      ids = if params[:book_ids].present?
+              params[:book_ids].split(/[\r\n]+/)
+            else
+              Book.parse_csv(params[:csv_file])
+            end
+      params[:ids] = ids
+      params[:user_id] = current_user.id
+      respond_to do |format|
+        format.html
+        format.csv do
+          params.delete :csv_file
+          params.permit!
+          CsvDownloadJob.perform_later(params, 'BookExportDatatable', 'books.csv')
+          head :ok
+        end
       end
+    else
+      flash[:alert] = 'You do not have permission to any of the fields in the template.'
+      redirect_to action: :index
     end
   end
 

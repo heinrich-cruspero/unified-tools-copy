@@ -32,9 +32,12 @@ class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
   def template_keys
     attributes = %w[]
     template = BookExportTemplate.find(params[:id])
+    user_field_mappings = field_mappings
     template.book_field_mappings.each do |field|
-      attributes << field.lookup_field.to_sym
-      @display_name_keys[field.lookup_field.to_sym] = field.display_name
+      if user_field_mappings.include?(field)
+        attributes << field.lookup_field.to_sym
+        @display_name_keys[field.lookup_field.to_sym] = field.display_name
+      end
     end
     attributes
   end
@@ -46,5 +49,10 @@ class BookExportDatatable < AjaxDatatablesRails::ActiveRecord
       cols[display_name] = { source: "Book.#{attr}" }
     end
     cols
+  end
+
+  def field_mappings
+    current_user = User.find(params[:user_id])
+    BookFieldMappingPolicy::Scope.new(current_user, BookFieldMapping).resolve
   end
 end
