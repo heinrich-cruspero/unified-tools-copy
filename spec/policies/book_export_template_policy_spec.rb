@@ -87,12 +87,13 @@ RSpec.describe BookExportTemplatePolicy do
       store_manager_role = Role.find_by(name: 'StoreManager')
       create(:permission, authorizable: store_manager_role, permissible: feature, has_access: true)
     end
+    
     it { should permit(:index) }
-    it { should permit(:edit) }
+    it { should_not permit(:edit) }
     it { should permit(:show) }
     it { should permit(:create) }
     it { should permit(:new) }
-    it { should permit(:destroy) }
+    it { should_not permit(:destroy) }
     it { should permit(:use) }
   end
 
@@ -102,11 +103,11 @@ RSpec.describe BookExportTemplatePolicy do
       create(:permission, authorizable: user, permissible: feature, has_access: true)
     end
     it { should permit(:index) }
-    it { should permit(:edit) }
+    it { should_not permit(:edit) }
     it { should permit(:show) }
     it { should permit(:create) }
     it { should permit(:new) }
-    it { should permit(:destroy) }
+    it { should_not permit(:destroy) }
     it { should permit(:use) }
   end
 
@@ -146,9 +147,9 @@ RSpec.describe BookExportTemplatePolicy do
       user.roles.destroy_all
       user.roles << Role.find_by(name: 'StoreManager')
       create(:permission, authorizable: user, permissible: use_route, has_access: false)
-      create(:permission, authorizable: user, permissible: destroy_route, has_access: true)
+      create(:permission, authorizable: user, permissible: new_route, has_access: true)
       should_not permit(:use)
-      should permit(:destroy)
+      should permit(:new)
     end
   end
 
@@ -159,9 +160,33 @@ RSpec.describe BookExportTemplatePolicy do
                                     book_field_mappings: [field],
                                     user: user)
     end
-    it 'should only be able limit and can only access their own templates' do
+    it 'should be able to view all existing templates' do
       templates = Pundit.policy_scope!(user, BookExportTemplate)
-      expect(templates.include?(book_export_template)).to eq(false)
+      expect(templates.include?(book_export_template)).to eq(true)
+    end
+
+    it 'should be able to only view and use other templates' do
+      create(:permission, authorizable: user, permissible: feature, has_access: true)
+
+      should_not permit(:edit)
+      should permit(:show)
+      should permit(:create)
+      should permit(:new)
+      should_not permit(:destroy)
+      should permit(:use)
+    end
+  end
+
+  context 'for a user that is SuperAdmin' do
+    let(:user) { create(:user, :super_admin) }
+
+    it 'should be able to have all permission to other templates' do
+      should permit(:edit)
+      should permit(:show)
+      should permit(:create)
+      should permit(:new)
+      should permit(:destroy)
+      should permit(:use)
     end
   end
 end
