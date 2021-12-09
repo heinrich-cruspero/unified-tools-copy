@@ -16,7 +16,6 @@ class BookExportTemplate < ApplicationRecord
   belongs_to :user
 
   validates :name, presence: true, uniqueness: {
-    scope: :user_id,
     message: '- Template name has already been taken.'
   }
   validates :book_export_template_field_mappings, presence: {
