@@ -7,34 +7,49 @@ class ApplicationPolicy
   def initialize(user, record)
     @user = user
     @record = record
+    @route_permissions = user.route_permissions
   end
 
   def index?
-    user.is_admin?
+    user.is_super_admin? || user.has_permission(
+      record, __method__, @route_permissions
+    )
   end
 
   def show?
-    user.is_admin?
+    user.is_super_admin? || user.has_permission(
+      record, __method__, @route_permissions
+    )
   end
 
   def create?
-    user.is_admin?
+    user.is_super_admin? || user.has_permission(
+      record, __method__, @route_permissions
+    )
   end
 
   def new?
-    create?
+    create? || user.has_permission(
+      record.class, __method__, @route_permissions
+    )
   end
 
   def update?
-    user.is_admin?
+    user.is_super_admin? || user.has_permission(
+      record, __method__, @route_permissions
+    )
   end
 
   def edit?
-    update?
+    update? || user.has_permission(
+      record, __method__, @route_permissions
+    )
   end
 
   def destroy?
-    user.is_admin?
+    user.is_super_admin? || user.has_permission(
+      record, __method__, @route_permissions
+    )
   end
 
   ##
@@ -47,7 +62,7 @@ class ApplicationPolicy
     end
 
     def resolve
-      scope.all if user.is_admin?
+      scope.all if user.is_super_admin?
     end
   end
 end

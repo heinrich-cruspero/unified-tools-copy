@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_13_062023) do
+ActiveRecord::Schema.define(version: 2021_10_19_143612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,7 +167,9 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
     t.index ["name"], name: "index_book_export_templates_on_name", unique: true
+    t.index ["user_id"], name: "index_book_export_templates_on_user_id"
   end
 
   create_table "book_field_mappings", force: :cascade do |t|
@@ -462,6 +464,22 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "feature_routes", force: :cascade do |t|
+    t.bigint "feature_id"
+    t.bigint "route_id"
+    t.index ["feature_id", "route_id"], name: "index_feature_routes", unique: true
+    t.index ["feature_id"], name: "index_feature_routes_on_feature_id"
+    t.index ["route_id"], name: "index_feature_routes_on_route_id"
+  end
+
+  create_table "features", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_features_on_name", unique: true
+  end
+
   create_table "indaba_skus", force: :cascade do |t|
     t.bigint "amazon_shipment_id", null: false
     t.string "sku", null: false
@@ -473,6 +491,17 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.index ["sku"], name: "index_indaba_skus_on_sku"
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.integer "authorizable_id"
+    t.string "authorizable_type"
+    t.integer "permissible_id"
+    t.string "permissible_type"
+    t.boolean "has_access", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["authorizable_id", "authorizable_type", "permissible_id", "permissible_type"], name: "index_permissions", unique: true
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text "content"
     t.string "searchable_type"
@@ -480,6 +509,30 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_roles_on_name", unique: true
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.string "controller_name"
+    t.string "action_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["action_name"], name: "index_routes_on_action_name"
+    t.index ["controller_name"], name: "index_routes_on_controller_name"
+  end
+
+  create_table "user_roles", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_user_roles", unique: true
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -490,13 +543,16 @@ ActiveRecord::Schema.define(version: 2021_10_13_062023) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.integer "role", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["role"], name: "index_users_on_role"
   end
 
   add_foreign_key "book_export_template_field_mappings", "book_export_templates"
   add_foreign_key "book_export_template_field_mappings", "book_field_mappings"
+  add_foreign_key "book_export_templates", "users"
+  add_foreign_key "feature_routes", "features"
+  add_foreign_key "feature_routes", "routes"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end

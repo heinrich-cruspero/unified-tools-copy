@@ -1,0 +1,116 @@
+<div class="row">
+    <div class="col-sm">
+        <div class="float-right">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#permissionModal">
+              <span class="fa fa-plus"></span> Add Permission
+            </button>
+            <button type="button" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#editRoleModal">
+              <span class="fa fa-edit"></span> Edit
+            </button>
+            <%= link_to roles_path, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-list"> </span>
+                Return to List
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered mt-3">
+  <thead class="thead-light">
+    <tr>
+      <th colspan="5">Role</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td>ID</td>
+        <td><%= @role.id %></td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>
+          <p class="font-weight-bold">
+            <%= @role.name %>
+          </P>
+        </td>
+      </tr>
+      <tr>
+        <td>Permissions</td>
+        <td>
+          <% unless @role.permissions.empty? %>
+            <div>
+              <% @role.permission_types.each do |permission_type| %>
+                <div class="card">
+                  <div class="card-header" id="header<%= permission_type.permissible_type %>">
+                    <h6 class="mb-0">
+                      <b><%= permission_type.permissible_type %></b>
+                    </h6>
+                  </div>
+                  <div id="<%= permission_type.permissible_type %>">
+                    <div class="card-body">
+                      <table class="table table-sm table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col" style="width: 5%" class="text-center">Access</th>
+                            <th scope="col" style="width: 90%"></th>
+                            <th scope="col" style="width: 5%"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @role.permissions.where(
+                                permissible_type: permission_type.permissible_type
+                              ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
+                            <tr>
+                              <td class="text-center">
+                                <% if permission.has_access? %>
+                                  <span class="fa fa-check-circle text-success"></span>
+                                <% else %>
+                                  <span class="fa fa-minus-circle text-danger"></span>
+                                <% end %>
+                              </td>
+                              <td>
+                                &nbsp;<%= permission.permissible.to_s %>
+                                
+                                <% if permission_type.permissible_type == 'Feature' %>
+                                  <ul class="ul-permission mt-1 mb-0">
+                                    <% permission.permissible.routes.each do |route| %>
+                                      <li>
+                                        <span class="fa fa-chevron-right"></span>
+                                        &nbsp<%= route.to_s %>
+                                      </li>
+                                    <% end %>
+                                  </ul>
+                                <% end %>
+                              </td>
+                              <td class="text-center">
+                                <%= link_to permission, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                  <span class="fa fa-trash text-danger"></span>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>Created At</td>
+        <td><%= @role.created_at %></td>
+      </tr>
+      <tr>
+        <td>Updated At</td>
+        <td><%= @role.updated_at %></td>
+      </tr>
+    
+  </tbody>
+</table>
+
+<%= render '/permissions/new_permission_modal' %>
+<%= render 'edit_role_modal' %>

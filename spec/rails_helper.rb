@@ -78,6 +78,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include FactoryBot::Syntax::Methods
+  config.include Warden::Test::Helpers
 
   ActiveJob::Base.queue_adapter = :test
   ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true

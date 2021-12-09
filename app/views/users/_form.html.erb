@@ -1,0 +1,40 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+      <% user.errors.full_messages.each do |message| %>
+        <div id="error_explanation" class="alert alert-warning alert-dismissable fade show" role="alert">
+          <%= message.html_safe %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+  <% end %>
+
+  <div class="form-group row">
+    <label for="user_email" class="col-sm-3 col-form-label">
+      Email
+    </label>
+    <div class="col-sm-9">
+      <%= form.text_field :email, readonly: true, required: true, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label">Roles *</label>
+    <div class="col-sm-9">
+      <%= form.collection_check_boxes(:role_ids, Role.where.not(name: 'SuperAdmin'), :id, :name) do |p| %>
+        <div class="form-check">
+          <%= p.check_box(class: "form-check-input user-role-checkbox") %>
+          <%= p.label(class: "form-check-label") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= form.submit "Save", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

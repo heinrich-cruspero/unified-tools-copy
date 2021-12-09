@@ -4,12 +4,13 @@ require 'rails_helper'
 
 RSpec.describe BookExportTemplate, type: :model do
   context 'validation tests' do
-    let(:template) { build(:book_export_template) }
+    let(:user) { create(:user) }
+    let(:template) { build(:book_export_template, user: user) }
 
     let(:field_1) { create(:book_field_mapping, display_name: 'EAN', lookup_field: 'ean') }
     let(:field_2) { create(:book_field_mapping, display_name: 'ISBN', lookup_field: 'isbn') }
     let(:field_3) { create(:book_field_mapping, display_name: 'OE_ISBN', lookup_field: 'oe_isbn') }
-    let(:existing_template) { build(:book_export_template, name: 'template1') }
+    let(:existing_template) { build(:book_export_template, name: 'template1', user: user) }
 
     it 'ensures name presence' do
       template.name = nil

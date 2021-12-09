@@ -1,21 +1,27 @@
 <div class="row">
     <div class="col-sm">
         <div class="float-right">
-            <%= link_to use_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
-              <span class="fa fa-chevron-right"></span>
-              Use
+            <% if BookExportTemplatePolicy.new(current_user, BookExportTemplate).use? %>
+              <%= link_to use_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-chevron-right"></span>
+                Use
+              <% end %>
             <% end %>
-            <%= link_to edit_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
-              <span class="fa fa-file"></span>
-              Edit
+            <% if BookExportTemplatePolicy.new(current_user, @book_export_template).update? %>
+              <%= link_to edit_book_export_template_path(@book_export_template), class: 'btn btn-secondary ml-2' do %>
+                <span class="fa fa-file"></span>
+                Edit
+              <% end %>
             <% end %>
             <%= link_to new_book_export_template_path, class: 'btn btn-secondary ml-2' do %>
                 <span class="fa fa-plus"></span>
                 New
             <% end %>
-            <%= link_to @book_export_template, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ml-2' do %>
-              <span class="fa fa-trash"></span>
-              Delete
+            <% if BookExportTemplatePolicy.new(current_user, @book_export_template).update? %>
+              <%= link_to @book_export_template, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ml-2' do %>
+                <span class="fa fa-trash"></span>
+                Delete
+              <% end %>
             <% end %>
             <%= link_to book_export_templates_path, class:"btn btn-secondary ml-2" do %>
                 <span class="fa fa-list"> </span>
@@ -36,6 +42,10 @@
       <tr>
         <td>ID</td>
         <td><%= @book_export_template.id %></td>
+      </tr>
+      <tr>
+        <td>Owner</td>
+        <td><%= @book_export_template.user.email %></td>
       </tr>
       <tr>
         <td>Name</td>

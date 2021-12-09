@@ -3,9 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Amazon Shipments Import', type: :feature do
+  fixtures :roles
+
   before do
     Rails.application.env_config['devise.mapping'] = Devise.mappings[:user] # If using Devise
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
+    user = create(:user, :super_admin)
+    login_as(user, scope: :user)
   end
 
   let(:header) { 'SKU' }
@@ -23,14 +27,12 @@ RSpec.describe 'Amazon Shipments Import', type: :feature do
 
   scenario '#delete page' do
     visit amazon_shipments_path
-    click_link 'Sign in with Google'
     click_link 'Delete'
     expect(page).to have_content('Amazon Shipments Delete Quantities')
   end
 
   scenario '#delete page do invalid upload' do
     visit amazon_shipments_path
-    click_link 'Sign in with Google'
     click_link 'Delete'
     expect(page).to have_content('Amazon Shipments Delete Quantities')
     click_button 'Upload'
@@ -39,7 +41,6 @@ RSpec.describe 'Amazon Shipments Import', type: :feature do
 
   scenario '#delete page do valid upload with unfound sku' do
     visit amazon_shipments_path
-    click_link 'Sign in with Google'
     click_link 'Delete'
     attach_file('csv_file', file_path)
     click_button 'Upload'
@@ -55,7 +56,6 @@ RSpec.describe 'Amazon Shipments Import', type: :feature do
     )
 
     visit amazon_shipments_path
-    click_link 'Sign in with Google'
     click_link 'Delete'
     attach_file('csv_file', file_path)
     click_button 'Upload'

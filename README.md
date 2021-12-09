@@ -9,6 +9,9 @@
 # Running of Test Scripts using Rspec
 1. run `rspec`
 
+# Running of task for generating/updating Route records
+1. run `rails permission:routes`
+
 # Google API Setup
 
 1. Go to 'https://console.developers.google.com'

@@ -6,47 +6,85 @@
   </div>
   <ul class="list-unstyled components">
     <li>
-      <% ean = Book.last.ean %>
-      <a href="<%= details_book_path(ean) unless ean.nil? %>" target= "_blank">
-        <i class="fas fa-book"></i>
-        Book Details
-      </a>
+      <% if BookPolicy.new(current_user, Book).details? %>
+        <% ean = Book.last.ean %>
+        <a href="<%= details_book_path(ean) unless ean.nil? %>" target= "_blank">
+          <i class="fas fa-book"></i>
+          Book Details
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= books_path %>">
-        <i class="fas fa-book"></i>
-        Books
-      </a>
+      <% if BookPolicy.new(current_user, Book).index? %>
+        <a href="<%= books_path %>">
+          <i class="fas fa-book"></i>
+          Books
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= book_export_templates_path %>">
-        <i class="fas fa-list-ul"></i>
-        Book Export Templates
-      </a>
+      <% if BookExportTemplatePolicy.new(current_user, BookExportTemplate).index? %>
+        <a href="<%= book_export_templates_path %>">
+          <i class="fas fa-list-ul"></i>
+          Book Export Templates
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= book_field_mappings_path %>">
-        <i class="fas fa-list-ul"></i>
-        Book Export Fields
-      </a>
+      <% if BookFieldMappingPolicy.new(current_user, BookFieldMapping).index? %>
+        <a href="<%= book_field_mappings_path %>">
+          <i class="fas fa-list-ul"></i>
+          Book Export Fields
+        </a>
+      <% end %>
     </li>
     <li>
-      <a id="amazonShipmentsLink" href="<%= amazon_shipments_path %>">
-        <i class="fas fa-dolly-flatbed"></i>
-        Amazon Shipments
-      </a>
+      <% if AmazonShipmentPolicy.new(current_user, AmazonShipment).index? %>
+        <a id="amazonShipmentsLink" href="<%= amazon_shipments_path %>">
+          <i class="fas fa-dolly-flatbed"></i>
+          Amazon Shipments
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= amazon_orders_path %>">
-        <i class="fas fa-dolly-flatbed"></i>
-        Amazon Orders
-      </a>
+      <% if AmazonOrderPolicy.new(current_user, AmazonOrder).index? %>
+        <a href="<%= amazon_orders_path %>">
+          <i class="fas fa-dolly-flatbed"></i>
+          Amazon Orders
+        </a>
+      <% end %>
     </li>
     <li>
-      <a href="<%= amazon_order_items_path %>">
-        <i class="fas fa-dolly-flatbed"></i>
-        Amazon Order Items
-      </a>
+      <% if AmazonOrderItemPolicy.new(current_user, AmazonOrderItem).index? %>
+        <a href="<%= amazon_order_items_path %>">
+          <i class="fas fa-dolly-flatbed"></i>
+          Amazon Order Items
+        </a>
+      <% end %>
+    </li>
+    <li>
+      <% if UserPolicy.new(current_user, User).index? %>
+        <a href="<%= users_path %>">
+          <i class="fas fa-user"></i>
+          Users
+        </a>
+      <% end %>
+    </li>
+    <li>
+      <% if RolePolicy.new(current_user, Role).index? %>
+        <a href="<%= roles_path %>">
+          <i class="fas fa-users"></i>
+          Roles
+        </a>
+      <% end %>
+    </li>
+    <li>
+      <% if FeaturePolicy.new(current_user, Feature).index? %>
+        <a href="<%= features_path %>">
+          <i class="fas fa-tags"></i>
+          Features
+        </a>
+      <% end %>
     </li>
   </ul>
 </nav>

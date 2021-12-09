@@ -5,21 +5,27 @@
     </div>
   </div>
   <div class="col-sm">
-    <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
-      <div class="btn-group mr-2">
-        <a class="btn btn btn-secondary" href="<%= import_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Import</a>
+    <% if AmazonShipmentPolicy.new(current_user, AmazonShipment).import? %>
+      <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
+        <div class="btn-group mr-2">
+          <a class="btn btn btn-secondary" href="<%= import_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Import</a>
+        </div>
       </div>
-    </div>
-    <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
-      <div class="btn-group mr-2">
-        <a class="btn btn btn-danger" href="<%= delete_skus_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Delete</a>
+    <% end %>
+    <% if AmazonShipmentPolicy.new(current_user, AmazonShipment).delete_skus? %>
+      <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
+        <div class="btn-group mr-2">
+          <a class="btn btn btn-danger" href="<%= delete_skus_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Delete</a>
+        </div>
       </div>
-    </div>
-    <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
-      <div class="btn-group mr-2">
-        <a href="<%= amazon_shipments_path(format: :csv, filter: @filter_option) %>" id="export-amazon-shipments-submit-button" class="btn btn-secondary csv-btn">Export to CSV</a>
+    <% end %>
+    <% if AmazonShipmentPolicy.new(current_user, AmazonShipment).export? %>
+      <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
+        <div class="btn-group mr-2">
+          <a href="<%= amazon_shipments_path(format: :csv, filter: @filter_option) %>" id="export-amazon-shipments-submit-button" class="btn btn-secondary csv-btn">Export to CSV</a>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
 <div class="row">
@@ -28,8 +34,12 @@
       <a role="button" class="btn <% if @filter_option.nil? %> btn-outline-secondary <% else %> btn-secondary <% end %> amazon-shipment-filter-button" href="<%= amazon_shipments_path %>">Standard</a>
       <a role="button" class="btn <% if @filter_option == "pending" %> btn-outline-secondary <% else %> btn-secondary <% end %>amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'pending') %>">Pending</a>
       <a role="button" class="btn <% if @filter_option == "twenty_days_pending" %> btn-outline-secondary <% else %> btn-secondary <% end %>amazon-shipment-filter-button" href="<%= amazon_shipments_path(nil, filter: 'twenty_days_pending') %>">20 Days Pending</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= combine_amazon_shipments_path %>">Combine Shipments</a>
-      <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
+      <% if AmazonShipmentPolicy.new(current_user, AmazonShipment).combine? %>
+        <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= combine_amazon_shipments_path %>">Combine Shipments</a>
+      <% end %>
+      <% if AmazonShipmentPolicy.new(current_user, AmazonShipment).indaba_skus? %>
+        <a role="button" class="btn btn-secondary amazon-shipment-filter-button" href="<%= indaba_skus_amazon_shipments_path %>">Indaba SKU Level</a>
+      <% end %>
     </div>
   </div>
 </div>

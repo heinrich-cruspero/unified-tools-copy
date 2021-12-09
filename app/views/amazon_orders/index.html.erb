@@ -5,17 +5,19 @@
     </div>
   </div>
   <div class="col-12 col-sm-12 col-md-12 col-lg-8 mb-3">
-    <div class="btn-toolbar mb-2 md-0 float-right">
-      <div class="btn-group ml-2">
-        <a class="btn btn btn-secondary" href="<%= export_amazon_orders_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Export</a>
+    <% if AmazonOrderPolicy.new(current_user, AmazonOrder).export? %>
+      <div class="btn-toolbar mb-2 md-0 float-right">
+        <div class="btn-group ml-2">
+          <a class="btn btn btn-secondary" href="<%= export_amazon_orders_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Export</a>
+        </div>
       </div>
-    </div>
-
-    <div class="btn-toolbar mb-2 md-0 float-right">
-      <div class="btn-group ml-2">
-        <a class="btn btn btn-secondary" href="<%= amazon_orders_path(format: :csv, filters: {purchase_start_date: @purchase_start_date, purchase_end_date: @purchase_end_date} ) %>" id="export-order-items-button"><i class="fa fa-plus"></i>&nbsp;Export All</a>
+    
+      <div class="btn-toolbar mb-2 md-0 float-right">
+        <div class="btn-group ml-2">
+          <a class="btn btn btn-secondary" href="<%= amazon_orders_path(format: :csv, filters: {purchase_start_date: @purchase_start_date, purchase_end_date: @purchase_end_date} ) %>" id="export-order-items-button"><i class="fa fa-plus"></i>&nbsp;Export All</a>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="btn-toolbar mb-2 md-0 float-left date-range-filter">
       <div class="input-group">
