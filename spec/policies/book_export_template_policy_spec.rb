@@ -87,7 +87,7 @@ RSpec.describe BookExportTemplatePolicy do
       store_manager_role = Role.find_by(name: 'StoreManager')
       create(:permission, authorizable: store_manager_role, permissible: feature, has_access: true)
     end
-    
+
     it { should permit(:index) }
     it { should_not permit(:edit) }
     it { should permit(:show) }

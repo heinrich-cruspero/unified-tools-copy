@@ -46,9 +46,7 @@ class BookExportTemplatesController < ApplicationController
   def update
     authorize @book_export_template
     respond_to do |format|
-      if @book_export_template.update(
-        book_export_template_params.except(:user_id)
-      )
+      if @book_export_template.update(book_export_template_params.except(:user_id))
         format.html do
           redirect_to @book_export_template,
                       notice: 'Book export template was successfully updated.'
@@ -73,7 +71,6 @@ class BookExportTemplatesController < ApplicationController
 
   def use
     authorize BookExportTemplate
-
     # validate allowed fields before further processing
     # to prevent unecessary export when user does
     # not have permissions to any field in the template
