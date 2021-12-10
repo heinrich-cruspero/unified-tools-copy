@@ -4,16 +4,18 @@
       <h1 class="h2">Listing Guide Imports</h1>
     </div>
   </div>
-  <div class="col-sm">
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
-        <div class="btn-group mr-2">
-            <%= link_to new_guide_import_path, class: 'btn btn-primary', type: 'button' do %>
-                <span class="fa fa-plus"></span>
-                New Guide Import
-            <% end %>
-        </div>
+  <% if GuideImportPolicy.new(current_user, GuideImport).new? %>
+    <div class="col-sm">
+      <div class="btn-toolbar mb-2 mb-md-0 float-right">
+          <div class="btn-group mr-2">
+              <%= link_to new_guide_import_path, class: 'btn btn-primary', type: 'button' do %>
+                  <span class="fa fa-plus"></span>
+                  New Guide Import
+              <% end %>
+          </div>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
 
 <table class="table table-bordered">

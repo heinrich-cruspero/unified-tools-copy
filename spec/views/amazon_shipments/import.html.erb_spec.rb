@@ -29,13 +29,13 @@ RSpec.describe 'Amazon Shipments Import', type: :feature do
 
   scenario '#import page' do
     visit amazon_shipments_path
-    click_link 'Import'
+    first("#import-amazon-shipment").click
     expect(page).to have_content('Amazon Shipments Import')
   end
 
   scenario '#import page do invalid upload' do
     visit amazon_shipments_path
-    click_link 'Import'
+    first("#import-amazon-shipment").click
     expect(page).to have_content('Amazon Shipments Import')
     click_button 'Upload'
     expect(page).to have_content('Missing csv file.')
@@ -43,7 +43,7 @@ RSpec.describe 'Amazon Shipments Import', type: :feature do
 
   scenario '#import page do valid upload' do
     visit amazon_shipments_path
-    click_link 'Import'
+    first("#import-amazon-shipment").click
     expect(page).to have_content('Amazon Shipments Import')
     attach_file('csv_file', file_path)
     click_button 'Upload'
