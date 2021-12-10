@@ -6,6 +6,9 @@ class BookFieldMapping < ApplicationRecord
            inverse_of: :book_field_mapping,
            foreign_key: 'book_field_mapping_id'
   has_many :book_export_templates, through: :book_export_template_field_mappings
+
+  has_many :permissions, as: :permissible
+
   validates :display_name, :lookup_field, presence: true, uniqueness: true
   validate :field_belongs_to_book
 
@@ -15,6 +18,10 @@ class BookFieldMapping < ApplicationRecord
        oe_yearly_fbaz_sold_quantity oe_yearly_main_sold_quantity
        amazon_orders_7ds amazon_orders_30ds amazon_orders_90ds
        amazon_orders_180ds_sale amazon_orders_180ds_rental oe_qa_jan_rank]
+  end
+
+  def to_s
+    display_name.to_s
   end
 
   private

@@ -19,6 +19,7 @@ require("datatables.net");
 require("datatables.net-bs4");
 require("chartkick");
 require("chart.js");
+require("selectize");
 
 require("../custom/sidebar")
 require("../custom/amazon_table")
@@ -32,6 +33,9 @@ require("../custom/amazon_associated_items")
 require("../custom/amazon_shipment_data_table")
 require("../custom/combine_shipment_data_table")
 require("../custom/indaba_sku_data_table")
+require("../custom/permission")
+require("../custom/user")
+require("../custom/feature")
 
 
 import "@fortawesome/fontawesome-free/css/all.css";

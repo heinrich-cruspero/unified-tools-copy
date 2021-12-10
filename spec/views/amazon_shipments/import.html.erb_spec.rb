@@ -6,6 +6,8 @@ RSpec.describe 'Amazon Shipments Import', type: :feature do
   before do
     Rails.application.env_config['devise.mapping'] = Devise.mappings[:user] # If using Devise
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
+    user = create(:user, :super_admin)
+    login_as(user, scope: :user)
   end
 
   let(:header) { 'ISBN, AZ SKU, Qty, Ship ID, SKU, Condition' }
@@ -27,14 +29,12 @@ RSpec.describe 'Amazon Shipments Import', type: :feature do
 
   scenario '#import page' do
     visit amazon_shipments_path
-    click_link 'Sign in with Google'
     click_link 'Import'
     expect(page).to have_content('Amazon Shipments Import')
   end
 
   scenario '#import page do invalid upload' do
     visit amazon_shipments_path
-    click_link 'Sign in with Google'
     click_link 'Import'
     expect(page).to have_content('Amazon Shipments Import')
     click_button 'Upload'
@@ -43,7 +43,6 @@ RSpec.describe 'Amazon Shipments Import', type: :feature do
 
   scenario '#import page do valid upload' do
     visit amazon_shipments_path
-    click_link 'Sign in with Google'
     click_link 'Import'
     expect(page).to have_content('Amazon Shipments Import')
     attach_file('csv_file', file_path)

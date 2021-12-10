@@ -1,8 +1,8 @@
-<div class="nested-fields mt-2 mb-3">
+<div class="nested-fields mt-1 mb-1">
     <div class="field">
         
         <%= f.hidden_field :position, class: "field-position" %>
-        <%= f.collection_select :book_field_mapping_id, BookFieldMapping.order(:display_name).all,:id, :display_name, {}, {class: "field-select"} %>
+        <%= f.collection_select :book_field_mapping_id, @book_field_mappings.order(:display_name).all,:id, :display_name, {}, {class: "field-select"} %>
         
         <span class="fa fa-arrows-alt ml-1"></span>&nbsp;
         <%= f.hidden_field :_destroy %>

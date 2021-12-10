@@ -12,7 +12,7 @@ class CsvDownloadJob < ApplicationJob
     params = args[0]
     datatable_class = args[1]
     file_name = args[2]
-    user_id = args[3]
+    user_id = params[:user_id]
 
     params[:length] = '-1'
     params = ActionController::Parameters.new(params)

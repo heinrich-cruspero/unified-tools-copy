@@ -1,0 +1,8 @@
+role1:
+  name: SuperAdmin
+role2:
+  name: Admin
+role3:
+  name: StoreManager
+role4:
+  name: User

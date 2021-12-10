@@ -388,13 +388,6 @@ table.dataTable {
   top: 10px;
 }
 
-.field-select {
-  padding: 5px 35px 5px 5px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  height: 34px;
-}
-
 @media only screen and (max-width: 768px) {
   .paging_full_numbers {
     .paginate_button {
@@ -494,4 +487,41 @@ table.records_table th {
 }
 .chart #chart-1, .chart #chart-2, .chart #chart-3{
   display: inline-block;
+}
+
+.ul-permission li a{
+  padding-left: 0px !important;
+  background: none !important;
+}
+
+.ul-permission {
+  list-style-type: none;
+  padding-left: 10px !important;
+}
+
+.modal-permission-content {
+  height: 420px;
+}
+
+.selectize-control {
+  width: 74%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.modal-permission-form-select {
+  width: 100% !important;
+}
+
+.modal-permission-submit {
+  position: absolute;
+  bottom: 0;
+}
+
+.selectize-input input {
+  width: 30% !important;
+}
+
+.collapse-btn:focus {
+  box-shadow: none !important;
 }

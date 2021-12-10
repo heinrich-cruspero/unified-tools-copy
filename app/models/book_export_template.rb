@@ -13,6 +13,8 @@ class BookExportTemplate < ApplicationRecord
   accepts_nested_attributes_for :book_export_template_field_mappings,
                                 allow_destroy: true
 
+  belongs_to :user
+
   validates :name, presence: true, uniqueness: {
     message: '- Template name has already been taken.'
   }

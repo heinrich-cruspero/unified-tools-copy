@@ -5,27 +5,24 @@
     </div>
   </div>
   <div class="col-sm">
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
-      <div class="btn-grp mr-2">
-        <%= button_to book_export_templates_path, method: :get, class: "btn btn-secondary" do %>
-          <i class="fa fa-plus"></i>&nbsp;Export
-        <% end %>
+    <% if BookPolicy.new(current_user, Book).link_oe_isbn? %>
+      <div class="btn-toolbar mb-2 mb-md-0 float-right">
+        <div class="btn-grp mr-2">
+          <%= button_to link_oe_isbn_books_path, method: :get, class: "btn btn-secondary" do %>
+            Link OE ISBN
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
-      <div class="btn-grp mr-2">
-        <%= button_to link_oe_isbn_books_path, method: :get, class: "btn btn-secondary" do %>
-          Link OE ISBN
-        <% end %>
+    <% end %>
+    <% if BookPolicy.new(current_user, Book).add_isbn? %>
+      <div class="btn-toolbar mb-2 mb-md-0 float-right">
+        <div class="btn-grp mr-2">
+          <%= button_to add_isbn_books_path, method: :get, class: "btn btn-secondary" do %>
+            Add ISBN
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="btn-toolbar mb-2 mb-md-0 float-right">
-      <div class="btn-grp mr-2">
-        <%= button_to add_isbn_books_path, method: :get, class: "btn btn-secondary" do %>
-          Add ISBN
-        <% end %>
-      </div>
-    </div>
+    <% end %>
   </div>
 </div>
 <div class="row">
