@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_19_143612) do
+ActiveRecord::Schema.define(version: 2021_11_16_103647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2021_10_19_143612) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "charge_type"
+    t.float "original_item_price", default: 0.0, null: false
     t.index ["action_date"], name: "index_amazon_order_items_on_action_date"
     t.index ["amazon_order_id"], name: "index_amazon_order_items_on_amazon_order_id"
     t.index ["asin"], name: "index_amazon_order_items_on_asin"
@@ -72,6 +73,7 @@ ActiveRecord::Schema.define(version: 2021_10_19_143612) do
     t.string "country_code"
     t.integer "market_place"
     t.boolean "currency_converted", default: false, null: false
+    t.float "original_order_total", default: 0.0, null: false
     t.index ["amazon_order_id"], name: "index_amazon_orders_on_amazon_order_id", unique: true
     t.index ["city"], name: "index_amazon_orders_on_city"
     t.index ["country_code"], name: "index_amazon_orders_on_country_code"
