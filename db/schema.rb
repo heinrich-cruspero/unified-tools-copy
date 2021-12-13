@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_103647) do
+ActiveRecord::Schema.define(version: 2021_12_13_160619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,14 +172,6 @@ ActiveRecord::Schema.define(version: 2021_11_16_103647) do
     t.bigint "user_id", null: false
     t.index ["name"], name: "index_book_export_templates_on_name", unique: true
     t.index ["user_id"], name: "index_book_export_templates_on_user_id"
-  end
-
-  create_table "book_field_mapping_permissions", force: :cascade do |t|
-    t.bigint "permission_id"
-    t.bigint "book_field_mapping_id"
-    t.index ["book_field_mapping_id"], name: "index_book_field_mapping_permissions_on_book_field_mapping_id"
-    t.index ["permission_id", "book_field_mapping_id"], name: "index_book_field_mapping_permissions", unique: true
-    t.index ["permission_id"], name: "index_book_field_mapping_permissions_on_permission_id"
   end
 
   create_table "book_field_mappings", force: :cascade do |t|

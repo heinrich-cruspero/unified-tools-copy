@@ -10,10 +10,10 @@
     <%= form_tag(submissions_path, method: :get, class: 'form-inline') do %>
       
       <div class="form-group">
-        <small class="form-text text-muted">
-          Sort by
-        </small>
         <% if current_user.is_super_admin? || current_user.is_admin? %>
+          <small class="form-text text-muted">
+            Sort by
+          </small>
           <%= select_tag :sort_field, options_for_select([['Created At', 'created_at'],
                                                     ['Company Name', 'company_name'],
                                                     ['Seller Name', 'seller_name'],
@@ -28,13 +28,15 @@
                                                     ['Notes', 'notes'],
                                                     ['Approved', 'approved']],
                                                     params[:sort_field]), class: 'form-control m-2' %>
-        
+          <small class="form-text text-muted">
+            Approved
+          </small>
           <%= select_tag :approved, options_for_select(
-            [true,false],params[:approved]), include_blank: "Approved", class: 'form-control m-2' %>
+            [true,false],params[:approved]), include_blank: "All", class: 'form-control m-2' %>
         <% end %>
         <%= text_field_tag :search_term, params[:search_term], placeholder: 'Search', class: 'form-control m-2' %>
         <%= submit_tag 'Submit', class: 'btn btn-primary m-2' %>
-        <%= submit_tag 'Export', class: 'btn btn-secondary m-2' %>
+        <a href="<%= submissions_path(format: :csv)%>" id="export-submissions-button" class="btn btn-secondary m-2">Export</a>
       </div>
     <% end %>
   </div>
@@ -138,3 +140,5 @@
 </table>
 <%= will_paginate @submissions %>
 <br>
+
+<%= render 'shared/block_modal' %>

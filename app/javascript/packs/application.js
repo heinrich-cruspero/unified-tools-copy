@@ -36,6 +36,7 @@ require("../custom/permission")
 require("../custom/user")
 require("../custom/feature")
 require("../custom/guide_import")
+require("../custom/submission")
 
 
 import "@fortawesome/fontawesome-free/css/all.css";

@@ -6,27 +6,35 @@ class SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[show edit update destroy]
 
   def index
-    if current_user.is_super_admin? || current_user.is_admin?
-      @submissions = policy_scope(Submission.admin_search(
-                                    params[:search_term],
-                                    params[:approved],
-                                    (params[:sort_field].nil? ? 'created_at' : params[:sort_field]),
-                                    params[:page],
-                                    (params['commit'] == 'Export')
-                                  ))
-    else
-      @submissions = policy_scope(Submission.user_search(
-                                    params[:search_term],
-                                    params[:page],
-                                    (params['commit'] == 'Export')
-                                  ))
-    end
-
-    if params['commit'] == 'Export'
-      send_data @submissions.to_csv(current_user), filename: "submissions-#{Date.today}.csv"
-    end
-
     authorize Submission
+
+    @submissions = policy_scope(Submission.search(
+                                params[:search_term],
+                                params[:approved],
+                                params[:sort_field],
+                                params[:page],
+                                current_user.id,
+                                false))
+
+    if current_user.is_super_admin? || current_user.is_admin?
+      datatable = 'SubmissionsAdminViewDatatable'
+    else
+      datatable = 'SubmissionsUserViewDatatable'
+    end
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        params.permit!
+        params[:user_id] = current_user.id
+        
+        CsvDownloadJob.perform_later(
+          params, datatable, 'submissions.csv', current_user.id
+        )
+        
+        head :ok
+      end
+    end
   end
 
   def show
