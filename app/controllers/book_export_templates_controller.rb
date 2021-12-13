@@ -93,7 +93,7 @@ class BookExportTemplatesController < ApplicationController
         format.csv do
           params.delete :csv_file
           params.permit!
-          CsvDownloadJob.perform_later(params, 'BookExportDatatable', 'books.csv')
+          CsvDownloadJob.perform_later(params, 'BookExportDatatable', 'books.csv', current_user.id)
           head :ok
         end
       end
