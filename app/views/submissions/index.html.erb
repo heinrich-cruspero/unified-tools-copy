@@ -98,7 +98,13 @@
             <td><%= submission.source_phone %></td>
             <td><%= submission.source_email %></td>
             <td><%= submission.notes %></td>
-            <td><%= submission.approved %></td>
+            <td>
+              <% if submission.approved? %>
+                <span class="fa fa-check-circle text-success"></span>
+              <% else %>
+                <span class="fa fa-minus-circle text-danger"></span>
+              <% end %>
+            </td>
             <td>
               <%= link_to submission, class: 'btn btn-light btn-sm', type: 'button' do %>
                 <span class="fa fa-search-plus"></span>

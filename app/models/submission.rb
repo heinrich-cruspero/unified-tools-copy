@@ -7,8 +7,7 @@ class Submission < ApplicationRecord
   belongs_to :user
 
   validates :company_name, :seller_name, :quantity, :isbn,
-            :source_name, :source_address, :source_phone,
-            :source_email, presence: true
+            :source_name, presence: true
 
   enum status: %i[Pending Whitelisted Blacklisted]
 
@@ -53,7 +52,7 @@ class Submission < ApplicationRecord
   end
 
   def self.to_csv(current_user)
-    attributes = if current_user.is_admin?
+    attributes = if current_user.is_admin? || current_user.is_super_admin?
                    %w[company_name seller_name quantity isbn status counterfeits
                       source_name source_address source_phone source_email
                       notes approved]
