@@ -31,10 +31,10 @@
   </div>
   <div class="form-group row">
     <label for="quantity" class="col-sm-1 col-form-label">
-      Quantity
+      Quantity *
     </label>
     <div class="col-sm-3">
-      <%= form.number_field :quantity, class: "form-control" %>
+      <%= form.number_field :quantity, required: true, class: "form-control" %>
     </div>
   </div>
   <div class="form-group row">
@@ -55,26 +55,26 @@
   </div>
   <div class="form-group row">
     <label for="source_address" class="col-sm-1 col-form-label">
-      Source Address
+      Source Address *
     </label>
     <div class="col-sm-3">
-      <%= form.text_area :source_address, class: "form-control" %>
+      <%= form.text_area :source_address, required: true, class: "form-control" %>
     </div>
   </div>
   <div class="form-group row">
     <label for="source_phone" class="col-sm-1 col-form-label">
-      Source Phone
+      Source Phone *
     </label>
     <div class="col-sm-3">
-      <%= form.text_field :source_phone, class: "form-control" %>
+      <%= form.text_field :source_phone, required: true, class: "form-control" %>
     </div>
   </div>
   <div class="form-group row">
     <label for="source_email" class="col-sm-1 col-form-label">
-      Source Email
+      Source Email *
     </label>
     <div class="col-sm-3">
-      <%= form.text_field :source_email, class: "form-control" %>
+      <%= form.text_field :source_email, required: true, class: "form-control" %>
     </div>
   </div>
   <div class="form-group row">

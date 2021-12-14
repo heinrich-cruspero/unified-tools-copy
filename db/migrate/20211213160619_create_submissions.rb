@@ -8,9 +8,9 @@ class CreateSubmissions < ActiveRecord::Migration[6.0]
       t.string :isbn, null: false
       t.boolean :counterfeits, null: false, default: false
       t.string :source_name, null: false
-      t.string :source_address
-      t.string :source_phone
-      t.string :source_email
+      t.string :source_address, null: false
+      t.string :source_phone, null: false
+      t.string :source_email, null: false
       t.text :notes
       t.boolean :approved, default: false
       t.integer :status, default: 0

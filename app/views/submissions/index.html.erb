@@ -35,6 +35,7 @@
             [true,false],params[:approved]), include_blank: "All", class: 'form-control m-2' %>
         <% end %>
         <%= text_field_tag :search_term, params[:search_term], placeholder: 'Search', class: 'form-control m-2' %>
+        <a href="<%= submissions_path %>" id="submissions-clear-filters" class="btn" ><i class="fa fa-times"></i></a>
         <%= submit_tag 'Submit', class: 'btn btn-primary m-2' %>
         <a href="<%= submissions_path(format: :csv)%>" id="export-submissions-button" class="btn btn-secondary m-2">Export</a>
       </div>
@@ -56,6 +57,7 @@
   <thead class="thead-light">
     <tr>
       <% if current_user.is_super_admin? || current_user.is_admin? %>
+        <th>User</th>
         <th>Company</th>
         <th>Seller Name</th>
         <th>Quantity</th>
@@ -83,13 +85,14 @@
       <% @submissions.each do |submission| %>
         <tr>
           <% if current_user.is_super_admin? || current_user.is_admin? %>
+            <td><%= submission.user.email %></td>
             <td><%= submission.company_name %></td>
             <td><%= submission.seller_name %></td>
             <td><%= submission.quantity %></td>
             <td><%= submission.isbn %></td>
-            <% if submission.status == 'Blacklisted' %>
+            <% if submission.status == 'blacklisted' %>
               <td class="text-danger"><%= submission.status %></td>
-            <% elsif submission.status == 'Whitelisted' %>
+            <% elsif submission.status == 'whitelisted' %>
               <td class="text-success"><%= submission.status %></td>
             <% else %>
               <td class="text-warning"><%= submission.status %></td>
