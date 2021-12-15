@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="row mb-3">
-  <div class="col-6">
+  <div class="col-12">
     <%= form_tag(submissions_path, method: :get, class: 'form-inline') do %>
       
       <div class="form-group">
@@ -38,109 +38,105 @@
         <a href="<%= submissions_path %>" id="submissions-clear-filters" class="btn" ><i class="fa fa-times"></i></a>
         <%= submit_tag 'Submit', class: 'btn btn-primary m-2' %>
         <a href="<%= submissions_path(format: :csv)%>" id="export-submissions-button" class="btn btn-secondary m-2">Export</a>
-      </div>
-    <% end %>
-  </div>
-  <div class="col-6">
-    <div class="btn-toolbar float-right">
-      <div class="btn-group mr-2">
         <%= link_to new_submission_path, class: 'btn btn-secondary m-2' do %>
           <span class="fa fa-plus"></span>
           New
         <% end %>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
 
-<table class="table table-bordered">
-  <thead class="thead-light">
-    <tr>
-      <% if current_user.is_super_admin? || current_user.is_admin? %>
-        <th>User</th>
-        <th>Company</th>
-        <th>Seller Name</th>
-        <th>Quantity</th>
-        <th>Isbn</th>
-        <th>Status</th>
-        <th>Counterfeits</th>
-        <th>Source Name</th>
-        <th>Source Address</th>
-        <th>Source Phone</th>
-        <th>Source Email</th>
-        <th>Notes</th>
-        <th>Approved</th>
-        <th>Action</th>
-      <% else %>
-        <th>Company</th>
-        <th>Seller Name</th>
-        <th>Status</th>
-        <th>Notes</th>
-      <% end %>
-    </tr>
-  </thead>
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <% if current_user.is_super_admin? || current_user.is_admin? %>
+          <th>User</th>
+          <th>Company</th>
+          <th>Seller Name</th>
+          <th>Quantity</th>
+          <th>Isbn</th>
+          <th>Status</th>
+          <th>Counterfeits</th>
+          <th>Source Name</th>
+          <th>Source Address</th>
+          <th>Source Phone</th>
+          <th>Source Email</th>
+          <th>Notes</th>
+          <th>Approved</th>
+          <th>Action</th>
+        <% else %>
+          <th>Company</th>
+          <th>Seller Name</th>
+          <th>Status</th>
+          <th>Notes</th>
+        <% end %>
+      </tr>
+    </thead>
 
-  <tbody>
-    <% unless @submissions.blank? %>
-      <% @submissions.each do |submission| %>
-        <tr>
-          <% if current_user.is_super_admin? || current_user.is_admin? %>
-            <td><%= submission.user.email %></td>
-            <td><%= submission.company_name %></td>
-            <td><%= submission.seller_name %></td>
-            <td><%= submission.quantity %></td>
-            <td><%= submission.isbn %></td>
-            <% if submission.status == 'blacklisted' %>
-              <td class="text-danger"><%= submission.status %></td>
-            <% elsif submission.status == 'whitelisted' %>
-              <td class="text-success"><%= submission.status %></td>
-            <% else %>
-              <td class="text-warning"><%= submission.status %></td>
-            <% end %>
-            <td><%= submission.counterfeits %></td>
-            <td><%= submission.source_name %></td>
-            <td><%= submission.source_address %></td>
-            <td><%= submission.source_phone %></td>
-            <td><%= submission.source_email %></td>
-            <td><%= submission.notes %></td>
-            <td>
-              <% if submission.approved? %>
-                <span class="fa fa-check-circle text-success"></span>
+    <tbody>
+      <% unless @submissions.blank? %>
+        <% @submissions.each do |submission| %>
+          <tr>
+            <% if current_user.is_super_admin? || current_user.is_admin? %>
+              <td><%= submission.user.email %></td>
+              <td><%= submission.company_name %></td>
+              <td><%= submission.seller_name %></td>
+              <td><%= submission.quantity %></td>
+              <td><%= submission.isbn %></td>
+              <% if submission.status == 'blacklisted' %>
+                <td class="text-danger"><%= submission.status %></td>
+              <% elsif submission.status == 'whitelisted' %>
+                <td class="text-success"><%= submission.status %></td>
               <% else %>
-                <span class="fa fa-minus-circle text-danger"></span>
+                <td class="text-warning"><%= submission.status %></td>
               <% end %>
-            </td>
-            <td>
-              <%= link_to submission, class: 'btn btn-light btn-sm', type: 'button' do %>
-                <span class="fa fa-search-plus"></span>
-                Show
-              <% end %>
-              <%= link_to edit_submission_path(submission), class: 'btn btn-light btn-sm' do %>
-                <span class="fa fa-file"></span>
-                Edit
-              <% end %>
-              <%= link_to submission, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
-                <span class="fa fa-trash"></span>
-                Delete
-              <% end %>
-            </td>
-          <% else %>
-            <td><%= submission.company_name %></td>
-            <td><%= submission.seller_name %></td>
-            <% if submission.status == 'Blacklisted' %>
-              <td class="text-danger"><%= submission.status %></td>
-            <% elsif submission.status == 'Whitelisted' %>
-              <td class="text-success"><%= submission.status %></td>
+              <td><%= submission.counterfeits %></td>
+              <td><%= submission.source_name %></td>
+              <td><%= submission.source_address %></td>
+              <td><%= submission.source_phone %></td>
+              <td><%= submission.source_email %></td>
+              <td><%= submission.notes %></td>
+              <td>
+                <% if submission.approved? %>
+                  <span class="fa fa-check-circle text-success"></span>
+                <% else %>
+                  <span class="fa fa-minus-circle text-danger"></span>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to submission, class: 'btn btn-light btn-sm', type: 'button' do %>
+                  <span class="fa fa-search-plus"></span>
+                  Show
+                <% end %>
+                <%= link_to edit_submission_path(submission), class: 'btn btn-light btn-sm' do %>
+                  <span class="fa fa-file"></span>
+                  Edit
+                <% end %>
+                <%= link_to submission, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
+                  <span class="fa fa-trash"></span>
+                  Delete
+                <% end %>
+              </td>
             <% else %>
-              <td class="text-warning"><%= submission.status %></td>
+              <td><%= submission.company_name %></td>
+              <td><%= submission.seller_name %></td>
+              <% if submission.status == 'blacklisted' %>
+                <td class="text-danger"><%= submission.status %></td>
+              <% elsif submission.status == 'whitelisted' %>
+                <td class="text-success"><%= submission.status %></td>
+              <% else %>
+                <td class="text-warning"><%= submission.status %></td>
+              <% end %>
+              <td><%= submission.notes %></td>
             <% end %>
-            <td><%= submission.notes %></td>
-          <% end %>
-        </tr>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 <%= will_paginate @submissions %>
 <br>
 

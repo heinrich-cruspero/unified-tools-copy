@@ -7,30 +7,32 @@
   </li>
 </ul>
 
-<table class="table table-bordered mt-3">
-  <thead class="thead-light">
-    <tr>
-      <th style="width: 10%">Feature</th>
-      <th style="width: 15%">Controller</th>
-      <th style="width: 15%">Action</th>
-      <th style="width: 20%">Created At</th>
-      <th style="width: 20%">Updated At</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @routes.each do |route| %>
+<div class="table-responsive">
+  <table class="table table-bordered mt-3">
+    <thead class="thead-light">
       <tr>
-        <td>
-            <% unless route.feature.nil? %>
-                <%= route.feature.name %>
-            <% end %>
-        </td>
-        <td><%= route.controller_name %></td>
-        <td><%= route.action_name %></td>
-        <td><%= route.created_at.strftime("%B %d, %Y %H:%M") %></td>
-        <td><%= route.updated_at.strftime("%B %d, %Y %H:%M") %></td>
+        <th style="width: 10%">Feature</th>
+        <th style="width: 15%">Controller</th>
+        <th style="width: 15%">Action</th>
+        <th style="width: 20%">Created At</th>
+        <th style="width: 20%">Updated At</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @routes.each do |route| %>
+        <tr>
+          <td>
+              <% unless route.feature.nil? %>
+                  <%= route.feature.name %>
+              <% end %>
+          </td>
+          <td><%= route.controller_name %></td>
+          <td><%= route.action_name %></td>
+          <td><%= route.created_at.strftime("%B %d, %Y %H:%M") %></td>
+          <td><%= route.updated_at.strftime("%B %d, %Y %H:%M") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -19,47 +19,49 @@
   </div>
 </div>
 
-<table class="table table-bordered">
-  <thead class="thead-light">
-    <tr>
-      <th style="width: 10%">Name</th>
-      <th style="width: 20%">Description</th>
-      <th style="width: 20%">Routes</th>
-      <th style="width: 15%">Created At</th>
-      <th style="width: 15%">Updated At</th>
-      <th style="width: 20%">Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @features.each do |feature| %>
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="thead-light">
       <tr>
-        <td><%= feature.name %></td>
-        <td><%= feature.description %></td>
-        <td>
-          <ul class="list-group">
-            <% feature.routes.each do |route| %>
-              <li class="list-group-item"><%= route.to_s %></li>
-            <% end %>
-          </ul>
-        </td>
-        <td><%= feature.created_at.strftime("%B %d, %Y %H:%M") %></td>
-        <td><%= feature.updated_at.strftime("%B %d, %Y %H:%M") %></td>
-        <td>
-          <%= link_to feature, class: 'btn btn-light btn-sm' do %>
-            <span class="fa fa-search-plus"></span>
-            Show
-          <% end %>
-          <%= link_to edit_feature_path(feature), class: 'btn btn-light btn-sm' do %>
-            <span class="fa fa-file"></span>
-            Edit
-          <% end %>
-          <%= link_to feature, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
-            <span class="fa fa-trash"></span>
-            Delete
-          <% end %>
-        </td>
+        <th style="width: 10%">Name</th>
+        <th style="width: 20%">Description</th>
+        <th style="width: 20%">Routes</th>
+        <th style="width: 15%">Created At</th>
+        <th style="width: 15%">Updated At</th>
+        <th style="width: 20%">Action</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @features.each do |feature| %>
+        <tr>
+          <td><%= feature.name %></td>
+          <td><%= feature.description %></td>
+          <td>
+            <ul class="list-group">
+              <% feature.routes.each do |route| %>
+                <li class="list-group-item"><%= route.to_s %></li>
+              <% end %>
+            </ul>
+          </td>
+          <td><%= feature.created_at.strftime("%B %d, %Y %H:%M") %></td>
+          <td><%= feature.updated_at.strftime("%B %d, %Y %H:%M") %></td>
+          <td>
+            <%= link_to feature, class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-search-plus"></span>
+              Show
+            <% end %>
+            <%= link_to edit_feature_path(feature), class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-file"></span>
+              Edit
+            <% end %>
+            <%= link_to feature, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-trash"></span>
+              Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

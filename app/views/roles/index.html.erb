@@ -15,67 +15,69 @@
   </div>
 </div>
 
-<table class="table table-bordered">
-  <thead class="thead-light">
-    <tr>
-      <th style="width: 10%">Name</th>
-      <th style="width: 30%">Permissions</th>
-      <th style="width: 20%">Created At</th>
-      <th style="width: 20%">Updated At</th>
-      <th style="width: 20%">Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @roles.each_with_index do |role, index| %>
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="thead-light">
       <tr>
-        <td><%= role.name %></td>
-        <td>
-          <% unless role.permissions.empty? %>
-            <div id="accordion<%=index%>">
-              <% role.permission_types.each do |permission_type| %>
-                <div class="card">
-                  <div class="card-header" id="header<%=index%><%= permission_type.permissible_type %>">
-                    <h5 class="mb-0">
-                      <button class="btn collapse-btn" data-toggle="collapse" data-target="#<%= permission_type.permissible_type %><%=index%>" aria-expanded="true" aria-controls="collapseOne">
-                        <b><%= permission_type.permissible_type %></b>
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="<%= permission_type.permissible_type %><%=index%>" class="collapse" aria-labelledby="heading<%= permission_type.permissible_type %>" data-parent="#accordion<%=index%>">
-                    <div class="card-body">
-                      <ul class="ul-permission">
-                        <% role.permissions.where(
-                              permissible_type: permission_type.permissible_type
-                            ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
-                          <li>
-                            <span class="fa fa-chevron-right"></span>
-                            &nbsp<%= permission.permissible.to_s %>
-                          </li>
-                        <% end %>
-                      </ul>
+        <th style="width: 10%">Name</th>
+        <th style="width: 30%">Permissions</th>
+        <th style="width: 20%">Created At</th>
+        <th style="width: 20%">Updated At</th>
+        <th style="width: 20%">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @roles.each_with_index do |role, index| %>
+        <tr>
+          <td><%= role.name %></td>
+          <td>
+            <% unless role.permissions.empty? %>
+              <div id="accordion<%=index%>">
+                <% role.permission_types.each do |permission_type| %>
+                  <div class="card">
+                    <div class="card-header" id="header<%=index%><%= permission_type.permissible_type %>">
+                      <h5 class="mb-0">
+                        <button class="btn collapse-btn" data-toggle="collapse" data-target="#<%= permission_type.permissible_type %><%=index%>" aria-expanded="true" aria-controls="collapseOne">
+                          <b><%= permission_type.permissible_type %></b>
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="<%= permission_type.permissible_type %><%=index%>" class="collapse" aria-labelledby="heading<%= permission_type.permissible_type %>" data-parent="#accordion<%=index%>">
+                      <div class="card-body">
+                        <ul class="ul-permission">
+                          <% role.permissions.where(
+                                permissible_type: permission_type.permissible_type
+                              ).sort_by{|p| p.permissible.to_s}.each do |permission| %>
+                            <li>
+                              <span class="fa fa-chevron-right"></span>
+                              &nbsp<%= permission.permissible.to_s %>
+                            </li>
+                          <% end %>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
-        </td>
-        <td><%= role.created_at.strftime("%B %d, %Y %H:%M") %></td>
-        <td><%= role.updated_at.strftime("%B %d, %Y %H:%M") %></td>
-        <td>
-          <%= link_to role, class: 'btn btn-light btn-sm' do %>
-            <span class="fa fa-search-plus"></span>
-            Show
-          <% end %>
-          <%= link_to role, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
-            <span class="fa fa-trash"></span>
-            Delete
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+                <% end %>
+              </div>
+            <% end %>
+          </td>
+          <td><%= role.created_at.strftime("%B %d, %Y %H:%M") %></td>
+          <td><%= role.updated_at.strftime("%B %d, %Y %H:%M") %></td>
+          <td>
+            <%= link_to role, class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-search-plus"></span>
+              Show
+            <% end %>
+            <%= link_to role, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-trash"></span>
+              Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%= render 'new_role_modal' %>
