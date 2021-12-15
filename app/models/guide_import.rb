@@ -12,7 +12,6 @@ class GuideImport
                         :uploaded_at, :effective_date, :expiration_date
 
   validate :effective_date_before_expiration_date
-  validate :correct_document_type
 
   def self.guide_imports
     datawh_service = DatawhService.new
@@ -39,23 +38,10 @@ class GuideImport
         effective_date}_#{expiration_date}_#{file.original_filename.squish.tr(' ', '_')}"
   end
 
-  def insert_to_datawh
-    datawh_service = DatawhService.new
-    res = datawh_service.insert_into_guide_imports(guide_provider_id.to_i, file_name,
-                                                   uploaded_at, effective_date, expiration_date)
-    datawh_service.close
-    res.first['id']
-  end
-
   def effective_date_before_expiration_date
     return unless effective_date >= expiration_date
 
     errors.add(:expiration_date, 'must be greater than the effective_date')
   end
 
-  def correct_document_type
-    return if file.content_type.in?(%w[text/csv application/x-dbf])
-
-    errors.add(:file, 'Must be a valid CSV file.')
-  end
 end
