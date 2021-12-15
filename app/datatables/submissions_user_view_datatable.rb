@@ -25,13 +25,19 @@ class SubmissionsUserViewDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records(*)
-    Submission.search(
-      params[:search_term],
-      params[:approved],
-      params[:sort_field],
-      params[:page],
-      params[:user_id],
-      false)
+    current_user = User.find(params[:user_id])
+
+    SubmissionPolicy::Scope.new(
+      current_user, 
+      Submission.search(
+        params[:search_term],
+        params[:approved],
+        params[:sort_field],
+        params[:page],
+        params[:user_id],
+        false
+      )
+    ).resolve
   end
 
 end

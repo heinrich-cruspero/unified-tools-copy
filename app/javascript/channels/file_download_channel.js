@@ -26,5 +26,5 @@ $( document ).on('turbolinks:load', function() {
   $('#export-amazon-shipments-submit-button').on('click', file_download_channel);
   $('#export-combined-shipments-submit-button').on('click', file_download_channel);
   $('#export-indaba-sku-submit-button').on('click', file_download_channel);
-  $('#export-submissions-button').on('click', file_download_channel);
+  $('.export-submissions-button').on('click', file_download_channel);
 });

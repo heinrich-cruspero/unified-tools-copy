@@ -5,7 +5,7 @@ require 'will_paginate/array'
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[show edit update destroy]
 
-  def index
+  def admin_index
     authorize Submission
 
     @submissions = policy_scope(Submission.search(
@@ -16,11 +16,31 @@ class SubmissionsController < ApplicationController
                                 current_user.id,
                                 false))
 
-    if current_user.is_super_admin? || current_user.is_admin?
-      datatable = 'SubmissionsAdminViewDatatable'
-    else
-      datatable = 'SubmissionsUserViewDatatable'
+    respond_to do |format|
+      format.html
+      format.csv do
+        params.permit!
+        params[:user_id] = current_user.id
+        
+        CsvDownloadJob.perform_later(
+          params, 'SubmissionsAdminViewDatatable', 'submissions.csv', current_user.id
+        )
+        
+        head :ok
+      end
     end
+  end
+
+  def user_index
+    authorize Submission
+
+    @submissions = policy_scope(Submission.search(
+                                params[:search_term],
+                                params[:approved],
+                                params[:sort_field],
+                                params[:page],
+                                current_user.id,
+                                false))
 
     respond_to do |format|
       format.html
@@ -29,7 +49,7 @@ class SubmissionsController < ApplicationController
         params[:user_id] = current_user.id
         
         CsvDownloadJob.perform_later(
-          params, datatable, 'submissions.csv', current_user.id
+          params, 'SubmissionsUserViewDatatable', 'submissions.csv', current_user.id
         )
         
         head :ok
@@ -57,7 +77,7 @@ class SubmissionsController < ApplicationController
 
     respond_to do |format|
       if @submission.save
-        format.html { redirect_to submissions_path, notice: 'Submission was successfully created.' }
+        format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
       else
         format.html { render :new }
       end
@@ -68,7 +88,7 @@ class SubmissionsController < ApplicationController
     authorize @submission
 
     respond_to do |format|
-      if @submission.update(submission_params)
+      if @submission.update(submission_params.except(:user_id))
         format.html { redirect_to @submission, notice: 'Submission was successfully updated.' }
       else
         format.html { render :edit }
@@ -81,7 +101,7 @@ class SubmissionsController < ApplicationController
 
     @submission.destroy
     respond_to do |format|
-      format.html { redirect_to submissions_url, notice: 'Submission was successfully destroyed.' }
+      format.html { redirect_to admin_submissions_path, notice: 'Submission was successfully destroyed.' }
     end
   end
 

@@ -15,11 +15,10 @@ class Submission < ApplicationRecord
   def self.search(search_term, approved, sort_field, page, user_id, export)
     current_user = User.find(user_id)
 
-    results = SubmissionPolicy::Scope.new(
-      current_user, Submission).resolve
+    results = Submission.all
     
     unless search_term.nil? || search_term.empty?
-      if current_user.is_super_admin? || current_user.is_admin?
+      if SubmissionPolicy.new(current_user, Submission).admin_index?
         results = results.where('company_name iLIKE :search_term OR
           seller_name iLIKE :search_term OR
           isbn iLIKE :search_term OR
@@ -31,8 +30,8 @@ class Submission < ApplicationRecord
         { search_term: "%#{search_term}%" })
 
       else
-        results = Submission.where('company_name iLIKE :search_term OR
-          seller_name iLIKE :search_term',
+        results = Submission.where(
+          'company_name iLIKE :search_term OR seller_name iLIKE :search_term',
          { search_term: "%#{search_term}%" }).order(:company_name)
       end
     end

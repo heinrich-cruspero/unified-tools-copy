@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-sm">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+      <h1 class="h2">Submissions</h1>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-12">
+    <%= form_tag(admin_submissions_path, method: :get, class: 'form-inline') do %>
+      
+      <div class="form-group">
+        
+        <small class="form-text text-muted">
+          Sort by
+        </small>
+        <%= select_tag :sort_field, options_for_select([['Created At', 'created_at'],
+                                                  ['Company Name', 'company_name'],
+                                                  ['Seller Name', 'seller_name'],
+                                                  ['Quantity', 'quantity'],
+                                                  ['Isbn', 'isbn'],
+                                                  ['Status', 'status'],
+                                                  ['Counterfeits', 'counterfeits'],
+                                                  ['Source Name', 'source_name'],
+                                                  ['Source Address', 'source_address'],
+                                                  ['Source Phone', 'source_phone'],
+                                                  ['Source Email', 'source_email'],
+                                                  ['Notes', 'notes'],
+                                                  ['Approved', 'approved']],
+                                                  params[:sort_field]), class: 'form-control m-2' %>
+        <small class="form-text text-muted">
+          Approved
+        </small>
+        <%= select_tag :approved, options_for_select(
+          [true,false],params[:approved]), include_blank: "All", class: 'form-control m-2' %>
+        
+        <%= text_field_tag :search_term, params[:search_term], placeholder: 'Search', class: 'form-control m-2' %>
+        <a href="<%= admin_submissions_path %>" id="submissions-clear-filters" class="btn" ><i class="fa fa-times"></i></a>
+        
+        <%= submit_tag 'Submit', class: 'btn btn-primary m-2' %>
+        <a href="<%= admin_submissions_path(format: :csv)%>" class="btn btn-secondary m-2 export-submissions-button">Export</a>
+        <%= link_to new_submission_path, class: 'btn btn-secondary m-2' do %>
+          <span class="fa fa-plus"></span>
+          New
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th>User</th>
+        <th>Company</th>
+        <th>Seller Name</th>
+        <th>Quantity</th>
+        <th>Isbn</th>
+        <th>Status</th>
+        <th>Counterfeits</th>
+        <th>Source Name</th>
+        <th>Source Address</th>
+        <th>Source Phone</th>
+        <th>Source Email</th>
+        <th>Notes</th>
+        <th>Approved</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% unless @submissions.blank? %>
+        <% @submissions.each do |submission| %>
+          <tr>
+            <td><%= submission.user.email %></td>
+            <td><%= submission.company_name %></td>
+            <td><%= submission.seller_name %></td>
+            <td><%= submission.quantity %></td>
+            <td><%= submission.isbn %></td>
+            <% if submission.status == 'blacklisted' %>
+              <td class="text-danger"><%= submission.status %></td>
+            <% elsif submission.status == 'whitelisted' %>
+              <td class="text-success"><%= submission.status %></td>
+            <% else %>
+              <td class="text-warning"><%= submission.status %></td>
+            <% end %>
+            <td><%= submission.counterfeits %></td>
+            <td><%= submission.source_name %></td>
+            <td><%= submission.source_address %></td>
+            <td><%= submission.source_phone %></td>
+            <td><%= submission.source_email %></td>
+            <td><%= submission.notes %></td>
+            <td>
+              <% if submission.approved? %>
+                <span class="fa fa-check-circle text-success"></span>
+              <% else %>
+                <span class="fa fa-minus-circle text-danger"></span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to submission, class: 'btn btn-light btn-sm', type: 'button' do %>
+                <span class="fa fa-search-plus"></span>
+                Show
+              <% end %>
+              <%= link_to edit_submission_path(submission), class: 'btn btn-light btn-sm' do %>
+                <span class="fa fa-file"></span>
+                Edit
+              <% end %>
+              <%= link_to submission, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
+                <span class="fa fa-trash"></span>
+                Delete
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= will_paginate @submissions %>
+<br>
+
+<%= render 'shared/block_modal' %>

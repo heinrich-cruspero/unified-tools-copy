@@ -95,11 +95,18 @@
       <% end %>
     </li>
     <li>
-      <% if SubmissionPolicy.new(current_user, Submission).index? %>
-        <a href="<%= submissions_path %>">
+      <% if SubmissionPolicy.new(current_user, Submission).admin_index? %>
+        <a href="<%= admin_submissions_path %>">
           <i class="fas fa-list-ul"></i>
           Submissions
         </a>
+      <% else %>
+        <% if SubmissionPolicy.new(current_user, Submission).user_index? %>
+          <a href="<%= user_submissions_path %>">
+            <i class="fas fa-list-ul"></i>
+            Submissions
+          </a>
+        <% end %>
       <% end %>
     </li>
   </ul>

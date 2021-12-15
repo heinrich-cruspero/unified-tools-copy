@@ -8,9 +8,18 @@
                 <span class="fa fa-plus"></span>
                 New
             <% end %>
-            <%= link_to submissions_path, class:"btn btn-secondary ml-2" do %>
+            <% if SubmissionPolicy.new(current_user, Submission).admin_index? %>
+              <%= link_to admin_submissions_path, class:"btn btn-secondary ml-2" do %>
                 <span class="fa fa-list"> </span>
                 Return to List
+              <% end %>
+            <% else %>
+              <% if SubmissionPolicy.new(current_user, Submission).user_index? %>
+                <%= link_to user_submissions_path, class:"btn btn-secondary ml-2" do %>
+                    <span class="fa fa-list"> </span>
+                    Return to List
+                <% end %>
+              <% end %>
             <% end %>
         </div>
     </div>
