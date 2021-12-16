@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :submissions do
     collection do
       get 'admin', :to => 'submissions#admin_index'
-      get 'user', :to => 'submissions#user_index'
     end
   end
   resources :book_field_mappings

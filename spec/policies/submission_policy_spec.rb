@@ -14,6 +14,12 @@ RSpec.describe SubmissionPolicy do
     create(:route, :index,
            controller_name: Submission.name.pluralize.underscore)
   end
+
+  let(:admin_index_route) do
+    create(:route, action_name: 'admin_index',
+           controller_name: Submission.name.pluralize.underscore)
+  end
+
   let(:show_route) do
     create(:route, :show,
            controller_name: Submission.name.pluralize.underscore)
@@ -41,7 +47,7 @@ RSpec.describe SubmissionPolicy do
 
   let(:feature) do
     create(:feature, name: 'Submission',
-                     routes: [index_route, show_route, create_route,
+                     routes: [admin_index_route, index_route, show_route, create_route,
                               new_route, update_route, edit_route,
                               destroy_route])
   end
@@ -119,6 +125,7 @@ RSpec.describe SubmissionPolicy do
       user.roles.destroy_all
       user.roles << Role.find_by(name: 'StoreManager')
       create(:permission, authorizable: user, permissible: edit_route, has_access: false)
+      create(:permission, authorizable: user, permissible: admin_index_route, has_access: true)
       create(:permission, authorizable: user, permissible: destroy_route, has_access: true)
       should_not permit(:edit)
       should permit(:destroy)

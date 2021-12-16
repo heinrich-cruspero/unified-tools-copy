@@ -31,7 +31,7 @@ class CsvDownloadJob < ApplicationJob
         generate_book_export_csv(params, datatable, write_stream)
       else
         datatable.records.each do |order_item|
-          record_map = datatable.record_map(order_item)
+          record_map = datatable.record_map(order_item).except(:DT_RowId)
           write_stream << CSV.generate_line(record_map.values)
         end
       end

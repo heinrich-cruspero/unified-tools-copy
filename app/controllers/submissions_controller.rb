@@ -5,25 +5,20 @@ require 'will_paginate/array'
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[show edit update destroy]
 
-  def admin_index
+  def index
     authorize Submission
 
-    @submissions = policy_scope(Submission.search(
-                                params[:search_term],
-                                params[:approved],
-                                params[:sort_field],
-                                params[:page],
-                                current_user.id,
-                                false))
-
+    params[:user_id] = current_user.id
     respond_to do |format|
       format.html
+      format.json { render json: SubmissionsDatatable.new(params) }
+      
       format.csv do
         params.permit!
         params[:user_id] = current_user.id
-        
+
         CsvDownloadJob.perform_later(
-          params, 'SubmissionsAdminViewDatatable', 'submissions.csv', current_user.id
+          params, 'SubmissionsDatatable', 'submissions.csv', current_user.id
         )
         
         head :ok
@@ -31,25 +26,25 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  def user_index
+  def admin_index
     authorize Submission
 
-    @submissions = policy_scope(Submission.search(
-                                params[:search_term],
-                                params[:approved],
-                                params[:sort_field],
-                                params[:page],
-                                current_user.id,
-                                false))
-
+    params[:user_id] = current_user.id
     respond_to do |format|
+      filters = params[:filters] || {}
+
+      @approved = filters[:approved]
+      @status = filters[:status]
+
       format.html
+      format.json { render json: SubmissionsAdminViewDatatable.new(params) }
       format.csv do
         params.permit!
         params[:user_id] = current_user.id
         
         CsvDownloadJob.perform_later(
-          params, 'SubmissionsUserViewDatatable', 'submissions.csv', current_user.id
+          params, 'SubmissionsAdminViewDatatable', 
+          'submissions.csv', current_user.id
         )
         
         head :ok

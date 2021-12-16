@@ -4,9 +4,11 @@
     </div>
     <div class="col-sm">
         <div class="float-right">
-            <%= link_to new_submission_path, class: 'btn btn-secondary ml-2' do %>
-                <span class="fa fa-plus"></span>
-                New
+            <% if SubmissionPolicy.new(current_user, Submission).new? %>
+              <%= link_to new_submission_path, class: 'btn btn-secondary ml-2' do %>
+                  <span class="fa fa-plus"></span>
+                  New
+              <% end %>
             <% end %>
             <% if SubmissionPolicy.new(current_user, Submission).admin_index? %>
               <%= link_to admin_submissions_path, class:"btn btn-secondary ml-2" do %>
@@ -14,8 +16,8 @@
                 Return to List
               <% end %>
             <% else %>
-              <% if SubmissionPolicy.new(current_user, Submission).user_index? %>
-                <%= link_to user_submissions_path, class:"btn btn-secondary ml-2" do %>
+              <% if SubmissionPolicy.new(current_user, Submission).index? %>
+                <%= link_to submissions_path, class:"btn btn-secondary ml-2" do %>
                     <span class="fa fa-list"> </span>
                     Return to List
                 <% end %>
