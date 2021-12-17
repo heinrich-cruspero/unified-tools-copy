@@ -15,21 +15,10 @@ function file_import_channel(){
 
       $("#blockModal").modal('hide');
       $(".alert").remove();
-      // for the upload_guide_import_job usage
-      if (data.success == true) {
-        $(".main-content").prepend(
-          "<div class='alert alert-info'>Processed imported file.</div>"
-        );
-      } else if (data.success == false) {
-        $(".main-content").prepend(
-          "<div class='alert alert-warning'>Failed to process file. Please try again.</div>"
-        );
-      } else {
-        // other jobs
-        $(".main-content").prepend(
-          "<div class='alert alert-info'>Processed imported file.</div>"
-        );
-      }
+
+      $(".main-content").prepend(
+        "<div class='alert alert-info'>Processed imported file.</div>"
+      );
       
       consumer.disconnect()
     }

@@ -42,17 +42,10 @@ class UploadGuideImportJob < ApplicationJob
 
       ActionCable.server.broadcast(
         "file_import_channel:#{user_id}",
-        {
-          success: true
-        }
+        {}
       )
     else
-      ActionCable.server.broadcast(
-        "file_import_channel:#{user_id}",
-        {
-          success: false
-        }
-      )
+      raise "#{self.class} - Failed to upload guide import file to S3."
     end
   end
 end
