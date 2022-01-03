@@ -21,7 +21,7 @@ class Submission < ApplicationRecord
       submissions = submissions.where(approved: approved)
     end
 
-    unless statuses.empty?
+    unless statuses.blank?
       submissions = submissions.where(status: statuses)
     end
     

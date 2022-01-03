@@ -8,6 +8,11 @@ class SubmissionsController < ApplicationController
   def index
     authorize Submission
 
+    if current_user.is_super_admin? || SubmissionPolicy.new(
+      current_user, Submission).admin_index?
+      redirect_to admin_submissions_path
+    end
+
     params[:user_id] = current_user.id
     respond_to do |format|
       format.html
@@ -72,7 +77,7 @@ class SubmissionsController < ApplicationController
 
     respond_to do |format|
       if @submission.save
-        format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
+        format.html { redirect_to submissions_path, notice: 'Submission was successfully created.' }
       else
         format.html { render :new }
       end

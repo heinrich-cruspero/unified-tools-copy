@@ -8,6 +8,7 @@
 <div class="row mb-3">
   <div class="col-sm">
     <div class="btn-toolbar mb-2 md-0 mr-2 float-left ">
+      <% @status = [] if @status.blank? %>
       <% if @approved == "0" %>
         <a href="<%= admin_submissions_path(filters: {approved: nil, status: @status}) %>" class="btn btn-danger">Approved</a>
       <% elsif @approved == "1" %>
