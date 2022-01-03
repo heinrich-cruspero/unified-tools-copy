@@ -17,7 +17,7 @@ function file_import_channel(){
       $(".alert").remove();
 
       $(".main-content").prepend(
-        "<div class='alert alert-info'>Processed imported file.</div>"
+        "<div class='alert alert-"+ data.type + "'>" + data.message + "</div>"
       );
       
       consumer.disconnect()
