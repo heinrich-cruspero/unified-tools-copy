@@ -12,6 +12,7 @@ class UploadGuideImportJob < ApplicationJob
     begin
       user_id = args[0]
       guide_import = args[1]
+      s3_file_name = args[2]
       file_name = guide_import["file_name"]
 
       s3 = Aws::S3::Resource.new(
@@ -19,7 +20,7 @@ class UploadGuideImportJob < ApplicationJob
       )
       bucket = Rails.application.credentials[Rails.env.to_sym][:datawh_s3][:bucket_name]
 
-      key = "#{Rails.env}/pending/#{file_name}"
+      key = "#{Rails.env}/pending/#{s3_file_name}"
       obj = s3.bucket(bucket).object(key)
 
       upload_ok = obj.upload_file(Rails.root.join('tmp', file_name))
