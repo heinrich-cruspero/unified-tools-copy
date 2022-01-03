@@ -188,6 +188,7 @@ class DatawhService
               gi.effective_date, gi.expiration_date, gi.imported
         FROM guide_imports gi
       LEFT JOIN guide_providers gp ON gi.guide_provider_id = gp.id
+      ORDER BY gi.id DESC
       "
     )
   end
