@@ -2,8 +2,8 @@ class SubmissionsDatatable < AjaxDatatablesRails::ActiveRecord
 
     def view_columns
       @view_columns ||= {
-        company_name: { source: "Submission.company_name", searchable: true },
-        seller_name: { source: "Submission.seller_name", searchable: true },
+        company_name: { source: "Submission.company_name" },
+        seller_name: { source: "Submission.seller_name" },
         status: { source: "Submission.status" },
         notes: { source: "Submission.notes" }
       }
@@ -25,12 +25,9 @@ class SubmissionsDatatable < AjaxDatatablesRails::ActiveRecord
     end
   
     def get_raw_records(*)
-      current_user = User.find(params[:user_id])
-  
-      SubmissionPolicy::Scope.new(
-        current_user, 
-        Submission
-      ).resolve
+      Submission.user_search(
+        params[:search_term]
+      )
     end
   
   end

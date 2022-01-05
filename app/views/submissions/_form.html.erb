@@ -85,7 +85,7 @@
       <%= form.text_area :notes, class: "form-control" %>
     </div>
   </div>
-  <% if current_user.is_super_admin? || current_user.is_admin? %>
+  <% if current_user.is_super_admin? || SubmissionPolicy.new(current_user, Submission).admin_index? %>
     <div class="form-group row">
       <label for="status" class="col-sm-1 col-form-label">
         Status *

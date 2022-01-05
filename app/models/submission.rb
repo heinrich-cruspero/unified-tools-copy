@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'will_paginate'
+
 ##
 class Submission < ApplicationRecord
   self.per_page = 10
@@ -26,5 +28,16 @@ class Submission < ApplicationRecord
     end
     
     submissions
+  end
+
+  def self.user_search(search_term)
+    results = none
+
+    unless search_term.nil? || search_term.empty?
+      results = Submission.where(approved: true)
+                .where('company_name iLIKE :search_term OR seller_name iLIKE :search_term', {:search_term => "%#{search_term}%"})
+                .order(:company_name)
+    end
+    results
   end
 end

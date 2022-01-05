@@ -42,12 +42,7 @@ class SubmissionsAdminViewDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records(*)
-    current_user = User.find(params[:user_id])
-
-    SubmissionPolicy::Scope.new(
-      current_user, 
-      Submission.admin_index(params[:filters])
-    ).resolve
+    Submission.admin_index(params[:filters])
   end
 
 end

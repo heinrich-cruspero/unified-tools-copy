@@ -7,11 +7,19 @@
 </div>
 <div class="row mb-3">
   <div class="col-sm">
-    <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
-      <div class="btn-group mr-1">
-        <a href="<%= submissions_path(format: :csv)%>" id="export-submissions-button" class="btn btn-secondary m-2">Export</a>
-      </div>
+    <div class="btn-toolbar mb-2 md-0 mr-2 float-left ">
+      <%= form_tag(submissions_path, method: :get, class: 'form-inline') do %>
+        <%= text_field_tag :search_term, params[:search_term], placeholder: 'Search', class: 'form-control m-2' %>
+        <%= submit_tag 'Search', class: 'btn btn-primary m-2' %>
+      <% end %>
     </div>
+    <% if SubmissionPolicy.new(current_user, Submission).export? %>
+      <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
+        <div class="btn-group mr-1">
+          <a href="<%= export_submissions_path(format: :csv, search_term: params[:search_term])%>" id="export-submissions-button" class="btn btn-secondary m-2">Export</a>
+        </div>
+      </div>
+    <% end %>
     <% if SubmissionPolicy.new(current_user, Submission).new? %>
       <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
         <div class="btn-group mr-1">
@@ -25,17 +33,30 @@
   </div>
 </div>
 
-<table id="submissions_datatable" class="table table-striped table-hover" data-source="<%= submissions_path(format: :json) %>">
-  <thead>
-    <tr>
-      <th>Company Name</th>
-      <th>Seller Name</th>
-      <th>Status</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+<div class="table-responsive thead-dark table-striped table-hover">
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th style="width: 20%">Company Name</th>
+        <th style="width: 20%">Seller Name</th>
+        <th style="width: 20%">Status</th>
+        <th style="width: 40%">Notes</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @submissions.each do |submission| %>
+        <tr>
+          <td><%= submission.company_name %></td>
+          <td><%= submission.seller_name %></td>
+          <td><%= submission.status %></td>
+          <td><%= submission.notes %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= will_paginate @submissions %>
 
 <%= render 'shared/block_modal' %>

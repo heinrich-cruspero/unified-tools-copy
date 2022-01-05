@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'will_paginate/array'
 ##
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[show edit update destroy]
@@ -8,19 +7,16 @@ class SubmissionsController < ApplicationController
   def index
     authorize Submission
 
-    if current_user.is_super_admin? || SubmissionPolicy.new(
-      current_user, Submission).admin_index?
-      redirect_to admin_submissions_path
-    end
+    @submissions = Submission.user_search(params[:search_term])
+    @submissions = @submissions.paginate(page: params[:page])
+  end
 
-    params[:user_id] = current_user.id
+  def export
+    authorize Submission
+
     respond_to do |format|
-      format.html
-      format.json { render json: SubmissionsDatatable.new(params) }
-      
       format.csv do
         params.permit!
-        params[:user_id] = current_user.id
 
         CsvDownloadJob.perform_later(
           params, 'SubmissionsDatatable', 'submissions.csv', current_user.id
@@ -43,9 +39,18 @@ class SubmissionsController < ApplicationController
 
       format.html
       format.json { render json: SubmissionsAdminViewDatatable.new(params) }
+    end
+  end
+
+  def admin_export
+    respond_to do |format|
+      filters = params[:filters] || {}
+
+      @approved = filters[:approved]
+      @status = filters[:status]
+
       format.csv do
         params.permit!
-        params[:user_id] = current_user.id
         
         CsvDownloadJob.perform_later(
           params, 'SubmissionsAdminViewDatatable', 
