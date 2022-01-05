@@ -34,7 +34,9 @@ class GuideImport
   end
 
   def build_s3_filename
-    "#{Time.now.utc.iso8601}_#{name}_#{
+    upload_date = Time.now.utc.iso8601
+    self.uploaded_at = upload_date
+    "#{upload_date}_#{name}_#{
         effective_date}_#{expiration_date}_#{file.original_filename.squish.tr(' ', '_')}"
   end
 

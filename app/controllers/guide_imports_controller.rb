@@ -22,7 +22,6 @@ class GuideImportsController < ApplicationController
     authorize GuideImport
 
     @guide_import = GuideImport.new(guide_import_params)
-    @guide_import.uploaded_at = Date.today.strftime('%Y-%m-%d')
 
     guide_provider = @guide_providers.select do |data|
       data['name'] if data['id'] == guide_import_params[:guide_provider_id]
@@ -30,7 +29,6 @@ class GuideImportsController < ApplicationController
     @guide_import.name = guide_provider.first.nil? ? nil : guide_provider.first['name']
     s3_file_name = @guide_import.build_s3_filename
     @guide_import.file_name = @guide_import.file.original_filename
-    
     if @guide_import.valid?
       File.open(Rails.root.join('tmp', @guide_import.file_name), 'wb') do |file|
         file.write(@guide_import.file.read)
