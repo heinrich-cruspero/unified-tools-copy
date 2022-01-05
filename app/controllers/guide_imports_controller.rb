@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'will_paginate/array'
+
 ##
 class GuideImportsController < ApplicationController
   before_action :guide_providers, only: %i[new create_upload]
@@ -7,6 +9,7 @@ class GuideImportsController < ApplicationController
   def index
     authorize GuideImport
     @guide_imports = GuideImport.guide_imports
+    @guide_imports = @guide_imports.paginate(per_page: 20, page: params[:page])
   end
 
   def new
