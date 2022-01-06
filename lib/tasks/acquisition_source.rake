@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 namespace :acquisition_source do
-  desc "Import Submissions from Acquisition Source repo db"
+  desc 'Import Submissions from Acquisition Source repo db'
 
   task submissions: :environment do
     desc 'Usage: rails acquisition_source:submissions'
@@ -20,18 +22,15 @@ namespace :acquisition_source do
         FROM submissions s
         INNER JOIN users u ON u.id = s.user_id
       ")
-    
-    submissions.each do |submission|
-      user = User.find_by(email: submission["email"])
 
-      if user.nil?
-        user = User.create!(email: submission["email"])
-      end
-      submission.store("user_id", user.id)
-      Submission.create!(submission.except("email"))
+    submissions.each do |submission|
+      user = User.find_by(email: submission['email'])
+
+      user = User.create!(email: submission['email']) if user.nil?
+      submission.store('user_id', user.id)
+      Submission.create!(submission.except('email'))
     end
 
-    puts "Created Submissions"
+    puts 'Created Submissions'
   end
-
 end

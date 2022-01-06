@@ -1,19 +1,21 @@
-class SubmissionsAdminViewDatatable < AjaxDatatablesRails::ActiveRecord
+# frozen_string_literal: true
 
+###
+class SubmissionsAdminViewDatatable < AjaxDatatablesRails::ActiveRecord
   def view_columns
     @view_columns ||= {
-      company_name: { source: "Submission.company_name", searchable: true },
-      seller_name: { source: "Submission.seller_name", searchable: true },
-      quantity: { source: "Submission.quantity" },
-      isbn: { source: "Submission.isbn", searchable: true },
-      status: { source: "Submission.status" },
-      counterfeits: { source: "Submission.counterfeits" },
-      source_name: { source: "Submission.source_name", searchable: true },
-      source_address: { source: "Submission.source_address", searchable: true },
-      source_phone: { source: "Submission.source_phone", searchable: true },
-      source_email: { source: "Submission.source_email", searchable: true },
-      notes: { source: "Submission.notes", searchable: true },
-      approved: { source: "Submission.approved" }
+      company_name: { source: 'Submission.company_name', searchable: true },
+      seller_name: { source: 'Submission.seller_name', searchable: true },
+      quantity: { source: 'Submission.quantity' },
+      isbn: { source: 'Submission.isbn', searchable: true },
+      status: { source: 'Submission.status' },
+      counterfeits: { source: 'Submission.counterfeits' },
+      source_name: { source: 'Submission.source_name', searchable: true },
+      source_address: { source: 'Submission.source_address', searchable: true },
+      source_phone: { source: 'Submission.source_phone', searchable: true },
+      source_email: { source: 'Submission.source_email', searchable: true },
+      notes: { source: 'Submission.notes', searchable: true },
+      approved: { source: 'Submission.approved' }
     }
   end
 
@@ -44,5 +46,4 @@ class SubmissionsAdminViewDatatable < AjaxDatatablesRails::ActiveRecord
   def get_raw_records(*)
     Submission.admin_index(params[:filters])
   end
-
 end

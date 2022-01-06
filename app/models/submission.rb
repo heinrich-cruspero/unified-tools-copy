@@ -9,24 +9,20 @@ class Submission < ApplicationRecord
   belongs_to :user
 
   validates :company_name, :seller_name, :quantity, :isbn,
-            :source_name, :source_address, :source_phone, 
+            :source_name, :source_address, :source_phone,
             :source_email, presence: true
 
-  enum status: ['pending', 'whitelisted', 'blacklisted']
+  enum status: %w[pending whitelisted blacklisted]
 
   def self.admin_index(params)
     submissions = Submission.all
     approved = params[:approved]
     statuses = params[:status]
-    
-    if !approved.empty?
-      submissions = submissions.where(approved: approved)
-    end
 
-    unless statuses.blank?
-      submissions = submissions.where(status: statuses)
-    end
-    
+    submissions = submissions.where(approved: approved) unless approved.empty?
+
+    submissions = submissions.where(status: statuses) unless statuses.blank?
+
     submissions
   end
 
@@ -35,8 +31,8 @@ class Submission < ApplicationRecord
 
     unless search_term.nil? || search_term.empty?
       results = Submission.where(approved: true)
-                .where('company_name iLIKE :search_term OR seller_name iLIKE :search_term', {:search_term => "%#{search_term}%"})
-                .order(:company_name)
+                          .where('company_name iLIKE :search_term OR seller_name iLIKE :search_term', { search_term: "%#{search_term}%" })
+                          .order(:company_name)
     end
     results
   end

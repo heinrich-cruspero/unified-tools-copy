@@ -4,8 +4,8 @@
 Rails.application.routes.draw do
   resources :submissions do
     collection do
-      get 'admin', :to => 'submissions#admin_index'
-      get 'admin/export', :to => 'submissions#admin_export'
+      get 'admin', to: 'submissions#admin_index'
+      get 'admin/export', to: 'submissions#admin_export'
       get 'export'
     end
   end

@@ -17,7 +17,7 @@ RSpec.describe SubmissionPolicy do
 
   let(:admin_index_route) do
     create(:route, action_name: 'admin_index',
-           controller_name: Submission.name.pluralize.underscore)
+                   controller_name: Submission.name.pluralize.underscore)
   end
 
   let(:show_route) do

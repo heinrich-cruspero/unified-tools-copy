@@ -279,7 +279,7 @@ RSpec.describe 'Home Dashboard', type: :feature do
     submissions_route = create(:route, :index,
                                controller_name: Submission.name.pluralize.underscore)
     submissions_user_route = create(:route, action_name: 'admin_index',
-                                controller_name: Submission.name.pluralize.underscore)
+                                            controller_name: Submission.name.pluralize.underscore)
 
     create(:permission, authorizable: user, permissible: submissions_route, has_access: true)
     create(:permission, authorizable: user, permissible: submissions_user_route, has_access: true)

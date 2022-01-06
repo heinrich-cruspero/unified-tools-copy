@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-##
+###
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[show edit update destroy]
 
@@ -21,7 +21,7 @@ class SubmissionsController < ApplicationController
         CsvDownloadJob.perform_later(
           params, 'SubmissionsDatatable', 'submissions.csv', current_user.id
         )
-        
+
         head :ok
       end
     end
@@ -51,12 +51,12 @@ class SubmissionsController < ApplicationController
 
       format.csv do
         params.permit!
-        
+
         CsvDownloadJob.perform_later(
-          params, 'SubmissionsAdminViewDatatable', 
+          params, 'SubmissionsAdminViewDatatable',
           'submissions.csv', current_user.id
         )
-        
+
         head :ok
       end
     end
@@ -106,7 +106,9 @@ class SubmissionsController < ApplicationController
 
     @submission.destroy
     respond_to do |format|
-      format.html { redirect_to admin_submissions_path, notice: 'Submission was successfully destroyed.' }
+      format.html do
+        redirect_to admin_submissions_path, notice: 'Submission was successfully destroyed.'
+      end
     end
   end
 
