@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   include Pundit
   after_action :verify_authorized, unless: :devise_controller?
+  impersonates :user
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from Pundit::NotDefinedError, with: :user_not_authorized

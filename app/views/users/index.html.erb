@@ -85,6 +85,12 @@
             <span class="fa fa-search-plus"></span>
             Show
           <% end %>
+          <% if user != true_user %>
+            <%= link_to impersonate_user_path(user), method: :post, class: 'btn btn-light btn-sm', type: 'button' do %>
+              <span class="fa fa-user-circle"></span>
+              Sign in as
+            <% end %>
+          <% end %>
         </td>
       </tr>
     <% end %>

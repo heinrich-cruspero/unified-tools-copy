@@ -1,8 +1,18 @@
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-2">
+<nav class="navbar navbar-expand-lg navbar-right navbar-dark sticky-top bg-dark flex-md-nowrap p-2">
   <button type="button" id="sidebarCollapse" class="btn btn-dark btn-collapsable">
   <i class="fas fa-bars"></i>
   </button>
-  <ul class="navbar-nav px-3">
+  <ul class="navbar-nav ml-auto px-3">
+    <% if current_user != true_user %>
+      <li class="nav-item text-nowrap">
+        <span class="navbar-text">
+          You <strong>(<%= true_user.email %>)</strong> are signed in as <strong><%= current_user.email %></strong> |
+        </span>
+      </li>
+      <li>
+        <%= link_to "Back to Main User |", stop_impersonating_users_path, method: :post, class: 'nav-link' %>
+      </li>
+    <% end %>
     <li class="nav-item text-nowrap">
       <%=  link_to "Sign Out", destroy_user_session_path, method: "delete", class: 'nav-link' %>
     </li>
