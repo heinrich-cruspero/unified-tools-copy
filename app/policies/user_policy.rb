@@ -3,9 +3,7 @@
 ##
 class UserPolicy < ApplicationPolicy
   def impersonate?
-    user.is_super_admin? || user.has_permission(
-      record, __method__, @route_permissions
-    )
+    user.is_super_admin?
   end
 
   def stop_impersonating?
