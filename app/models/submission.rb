@@ -31,9 +31,26 @@ class Submission < ApplicationRecord
 
     unless search_term.nil? || search_term.empty?
       results = Submission.where(approved: true)
-                          .where('company_name iLIKE :search_term OR seller_name iLIKE :search_term', { search_term: "%#{search_term}%" })
+                          .where(
+                            'company_name iLIKE :search_term
+                            OR seller_name iLIKE :search_term', {
+                              search_term: "%#{search_term}%"
+                            }
+                          )
                           .order(:company_name)
     end
     results
+  end
+
+  def self.to_csv
+    attributes = %w[company_name seller_name status]
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |submission|
+        csv << attributes.map { |attr| submission.send(attr) }
+      end
+    end
   end
 end

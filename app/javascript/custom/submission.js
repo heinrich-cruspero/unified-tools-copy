@@ -71,22 +71,6 @@ $(document).on('turbolinks:load', function() {
         }
     });
 
-    // Users
-    $('#export-submissions-button').on('click', function (e) {
-        e.preventDefault();
-        
-        const url = $(this).attr('href')
-        const params = $.param($('#submissions_datatable').DataTable().ajax.params());
-        const delimiter = url.includes('?') ? '&' : '?';
-        
-        $.get(url + delimiter + params);
-
-        $('#blockModal').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-    });
-
     // ADMIN
     $('#export-admin-submissions-button').on('click', function (e) {
         e.preventDefault();

@@ -11,15 +11,11 @@
       <%= form_tag(submissions_path, method: :get, class: 'form-inline') do %>
         <%= text_field_tag :search_term, params[:search_term], placeholder: 'Search', class: 'form-control m-2' %>
         <%= submit_tag 'Search', class: 'btn btn-primary m-2' %>
+        <% if SubmissionPolicy.new(current_user, Submission).export? %>
+          <a href="<%= export_submissions_path(format: :csv, search_term: params[:search_term])%>" class="btn btn-secondary m-2">Export</a>
+        <% end %>
       <% end %>
     </div>
-    <% if SubmissionPolicy.new(current_user, Submission).export? %>
-      <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
-        <div class="btn-group mr-1">
-          <a href="<%= export_submissions_path(format: :csv, search_term: params[:search_term])%>" id="export-submissions-button" class="btn btn-secondary m-2">Export</a>
-        </div>
-      </div>
-    <% end %>
     <% if SubmissionPolicy.new(current_user, Submission).new? %>
       <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
         <div class="btn-group mr-1">

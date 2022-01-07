@@ -15,14 +15,11 @@ class SubmissionsController < ApplicationController
     authorize Submission
 
     respond_to do |format|
+      @submissions = Submission.user_search(params[:search_term])
       format.csv do
         params.permit!
 
-        CsvDownloadJob.perform_later(
-          params, 'SubmissionsDatatable', 'submissions.csv', current_user.id
-        )
-
-        head :ok
+        send_data @submissions.to_csv, filename: "submissions-#{Date.today}.csv"
       end
     end
   end
