@@ -199,25 +199,19 @@ class DatawhService
     )
   end
 
-  def insert_into_guide_imports(guide_provider_id, file_name,
+  # rubocop:disable Metrics/ParameterLists
+  def insert_into_guide_imports(guide_provider_id, s3_url, file_name,
                                 uploaded_at, effective_date, expiration_date)
 
     @connection.exec("
-      INSERT INTO guide_imports(guide_provider_id, file_name,
+      INSERT INTO guide_imports(guide_provider_id, s3_url, file_name,
                                 uploaded_at, effective_date, expiration_date, created_at)
-      VALUES(#{guide_provider_id}, '#{file_name}', '#{uploaded_at}',
+      VALUES(#{guide_provider_id}, '#{s3_url}', '#{file_name}', '#{uploaded_at}',
               '#{effective_date}', '#{expiration_date}', NOW())
       RETURNING id
     ")
   end
-
-  def update_guide_import_s3_url(id, s3_url)
-    @connection.exec("
-      UPDATE guide_imports
-      SET s3_url='#{s3_url}'
-      WHERE id=#{id}
-    ")
-  end
+  # rubocop:enable Metrics/ParameterLists
 
   def close
     @connection.close

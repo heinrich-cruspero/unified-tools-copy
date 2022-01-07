@@ -28,16 +28,22 @@ class GuideImport
   end
 
   def self.headers
-    valid_headers = %w[isbn author title edition publisher
-                       binding new_wholesale_price used_wholesale_price]
-    valid_headers
+    %w[isbn author title edition publisher
+       binding new_wholesale_price used_wholesale_price]
   end
 
   def build_s3_filename
     upload_date = Time.now.utc.iso8601
     self.uploaded_at = upload_date
     "#{upload_date}_#{name}_#{
-        effective_date}_#{expiration_date}_#{file.original_filename.squish.tr(' ', '_')}"
+        effective_date}_#{expiration_date}_#{file_name}"
+  end
+
+  def build_filename
+    "#{effective_date.tr('-',
+                         '_')}__#{expiration_date.tr('-',
+                                                     '_')}_#{file.original_filename.squish.tr(' ',
+                                                                                              '_')}"
   end
 
   def effective_date_before_expiration_date
@@ -45,5 +51,4 @@ class GuideImport
 
     errors.add(:expiration_date, 'must be greater than the effective_date')
   end
-
 end

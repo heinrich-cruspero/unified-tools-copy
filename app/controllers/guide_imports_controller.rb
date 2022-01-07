@@ -30,13 +30,13 @@ class GuideImportsController < ApplicationController
       data['name'] if data['id'] == guide_import_params[:guide_provider_id]
     end
     @guide_import.name = guide_provider.first.nil? ? nil : guide_provider.first['name']
+    @guide_import.file_name = @guide_import.build_filename
     s3_file_name = @guide_import.build_s3_filename
-    @guide_import.file_name = @guide_import.file.original_filename
     if @guide_import.valid?
       File.open(Rails.root.join('tmp', @guide_import.file_name), 'wb') do |file|
         file.write(@guide_import.file.read)
       end
-      
+
       UploadGuideImportJob.perform_later(
         current_user.id, @guide_import.as_json, s3_file_name
       )
