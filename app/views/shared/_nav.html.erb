@@ -4,13 +4,8 @@
   </button>
   <ul class="navbar-nav ml-auto px-3">
     <% if current_user != true_user %>
-      <li class="nav-item text-nowrap">
-        <span class="navbar-text">
-          You <strong>(<%= true_user.email %>)</strong> are signed in as <strong><%= current_user.email %></strong> |
-        </span>
-      </li>
       <li>
-        <%= link_to "Back to Main User |", stop_impersonating_users_path, method: :post, class: 'nav-link' %>
+        <%= link_to "Stop Impersonating #{current_user.email}", stop_impersonating_users_path, method: :post, class: 'nav-link' %>
       </li>
     <% end %>
     <li class="nav-item text-nowrap">
