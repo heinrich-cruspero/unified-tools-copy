@@ -69,7 +69,10 @@ Rails.application.routes.draw do
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  resources :users, only: %i[index show update]
+  resources :users, only: %i[index show update] do
+    post :impersonate, on: :member
+    post :stop_impersonating, on: :collection
+  end
 
   root to: 'home#dashboard'
 end

@@ -30,6 +30,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def impersonate
+    authorize User
+
+    user = User.find(params[:id])
+    impersonate_user(user)
+    redirect_to root_path, notice: "You #{true_user.email} is signed in as user #{user.email}"
+  end
+
+  def stop_impersonating
+    authorize User
+
+    stop_impersonating_user
+    redirect_to root_path
+  end
+
   private
 
   def set_user

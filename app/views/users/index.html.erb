@@ -81,9 +81,17 @@
         <td><%= user.created_at.strftime("%B %d, %Y %H:%M") %></td>
         <td><%= user.updated_at.strftime("%B %d, %Y %H:%M") %></td>
         <td>
-          <%= link_to user, class: 'btn btn-light btn-sm', type: 'button' do %>
-            <span class="fa fa-search-plus"></span>
-            Show
+          <% if UserPolicy.new(current_user, User).show? %>
+            <%= link_to user, class: 'btn btn-light btn-sm', type: 'button' do %>
+              <span class="fa fa-search-plus"></span>
+              Show
+            <% end %>
+          <% end %>
+          <% if current_user != user && current_user.is_super_admin? %>
+            <%= link_to impersonate_user_path(user), method: :post, class: 'btn btn-light btn-sm', type: 'button' do %>
+              <span class="fa fa-user-circle"></span>
+              Impersonate
+            <% end %>
           <% end %>
         </td>
       </tr>
