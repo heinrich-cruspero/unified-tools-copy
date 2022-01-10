@@ -4,7 +4,7 @@ require 'will_paginate/array'
 
 ##
 class GuideImportsController < ApplicationController
-  before_action :guide_providers, only: %i[new create_upload]
+  before_action :guide_providers, only: %i[new create]
 
   def index
     authorize GuideImport
@@ -21,7 +21,7 @@ class GuideImportsController < ApplicationController
     end
   end
 
-  def create_upload
+  def create
     authorize GuideImport
 
     @guide_import = GuideImport.new(guide_import_params)

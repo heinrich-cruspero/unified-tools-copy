@@ -253,7 +253,7 @@ RSpec.describe 'Home Dashboard', type: :feature do
   scenario '#for a user with permission to Guide Import' do
     user = create(:user)
     guide_imports_route = create(:route, action_name: 'index',
-                         controller_name: GuideImport.name.pluralize.underscore)
+                                         controller_name: GuideImport.name.pluralize.underscore)
 
     create(:permission, authorizable: user, permissible: guide_imports_route, has_access: true)
     login_as(user, scope: :user)

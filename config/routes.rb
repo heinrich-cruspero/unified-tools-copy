@@ -26,11 +26,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :guide_imports, only: %i[index new] do
-    collection do
-      post 'create_upload'
-    end
-  end
+  resources :guide_imports, only: %i[index new create]
 
   resources :books, only: %i[index details] do
     member do
