@@ -86,5 +86,13 @@
         </a>
       <% end %>
     </li>
+    <li>
+      <% if GuideImportPolicy.new(current_user, GuideImport).index? %>
+        <a href="<%= guide_imports_path %>">
+          <i class="fas fa-file-import"></i>
+          Guide Imports
+        </a>
+      <% end %>
+    </li>
   </ul>
 </nav>

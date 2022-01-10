@@ -1,0 +1,43 @@
+<%= form_tag(guide_imports_path, id: 'guide-import-form', multipart: true) do %>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">
+            Guide Provider *
+        </label>
+        <div class="col-sm-3">
+            <%= select_tag 'guide_import[guide_provider_id]', options_for_select(@guide_providers_data, params['guide_import[guide_provider_id]']), {class: "field-select"} %>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">
+            Effective Date *
+        </label>
+        <div class="col-sm-3">
+            <%= date_field_tag 'guide_import[effective_date]', '', required: true %>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">
+            Expiration Date *
+        </label>
+        <div class="col-sm-3">
+            <%= date_field_tag 'guide_import[expiration_date]', '', required: true %>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">
+            File Upload *
+        </label>
+        <div class="col-sm-3">
+            <%= file_field_tag 'guide_import[file]', required: true, class: 'mb-3' %>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <div class="actions">
+                <%= submit_tag "Save", class: 'btn btn-success', data: { disable_with: false } %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<%= render 'shared/block_modal' %>

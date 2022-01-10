@@ -8,7 +8,7 @@
     <% if AmazonShipmentPolicy.new(current_user, AmazonShipment).import? %>
       <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
         <div class="btn-group mr-2">
-          <a class="btn btn btn-secondary" href="<%= import_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Import</a>
+          <a id="import-amazon-shipment" class="btn btn btn-secondary" href="<%= import_amazon_shipments_path %>" role="button"><i class="fa fa-plus"></i>&nbsp;Import</a>
         </div>
       </div>
     <% end %>

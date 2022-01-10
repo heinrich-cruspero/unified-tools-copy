@@ -182,6 +182,37 @@ class DatawhService
     )
   end
 
+  def guide_imports
+    @connection.exec(
+      "SELECT gi.id, gi.file_name, gp.name, gi.created_at,
+              gi.effective_date, gi.expiration_date, gi.imported
+        FROM guide_imports gi
+      LEFT JOIN guide_providers gp ON gi.guide_provider_id = gp.id
+      ORDER BY gi.id DESC
+      "
+    )
+  end
+
+  def guide_providers
+    @connection.exec(
+      'SELECT id, name FROM guide_providers'
+    )
+  end
+
+  # rubocop:disable Metrics/ParameterLists
+  def insert_into_guide_imports(guide_provider_id, s3_url, file_name,
+                                uploaded_at, effective_date, expiration_date)
+
+    @connection.exec("
+      INSERT INTO guide_imports(guide_provider_id, s3_url, file_name,
+                                uploaded_at, effective_date, expiration_date, created_at)
+      VALUES(#{guide_provider_id}, '#{s3_url}', '#{file_name}', '#{uploaded_at}',
+              '#{effective_date}', '#{expiration_date}', NOW())
+      RETURNING id
+    ")
+  end
+  # rubocop:enable Metrics/ParameterLists
+
   def close
     @connection.close
   end

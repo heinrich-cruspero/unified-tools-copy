@@ -15,7 +15,11 @@ function file_import_channel(){
 
       $("#blockModal").modal('hide');
       $(".alert").remove();
-      $(".main-content").prepend("<div class='alert alert-info'>Processed imported file.</div>");
+
+      $(".main-content").prepend(
+        "<div class='alert alert-"+ data.type + "'>" + data.message + "</div>"
+      );
+      
       consumer.disconnect()
     }
   });
@@ -23,4 +27,5 @@ function file_import_channel(){
 
 $( document ).on('turbolinks:load', function() {
   $('#add-isbn-form').on('submit', file_import_channel);
+  $('#guide-import-form').on('submit', file_import_channel);
 });

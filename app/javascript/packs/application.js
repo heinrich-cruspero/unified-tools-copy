@@ -13,7 +13,6 @@ require("bootstrap");
 require("bootstrap-table");
 require("bootstrap-daterangepicker");
 require("moment");
-require("bootstrap-daterangepicker");
 require("@fortawesome/fontawesome-free");
 require("datatables.net");
 require("datatables.net-bs4");
@@ -36,6 +35,7 @@ require("../custom/indaba_sku_data_table")
 require("../custom/permission")
 require("../custom/user")
 require("../custom/feature")
+require("../custom/guide_import")
 
 
 import "@fortawesome/fontawesome-free/css/all.css";

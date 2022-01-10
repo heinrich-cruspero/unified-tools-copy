@@ -20,7 +20,8 @@ class AddIsbnCsvJob < ApplicationJob
 
     ActionCable.server.broadcast(
       "file_import_channel:#{user_id}",
-      {}
+      message: 'Processed imported file.',
+      type: 'info'
     )
   end
 end
