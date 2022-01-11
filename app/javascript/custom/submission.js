@@ -17,25 +17,6 @@ $(document).on('turbolinks:load', function() {
         }
     });
 
-    // Users
-    $('#submissions_datatable').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "scrollX": true,
-        "order": [[1, "desc"]],
-        "columnDefs": [
-            {"className": "dt-center", "targets": "_all"}
-          ],
-        "ajax": $('#submissions_datatable').data('source'),
-        "pagingType": "full_numbers",
-        "columns": [
-            {"data": "company_name"},
-            {"data": "seller_name"},
-            {"data": "status"},
-            {"data": "notes"}
-        ]
-    });
-
     // ADMIN
     let submissions_admin_datatable = $('#submissions_admin_datatable').DataTable({
         "processing": true,
