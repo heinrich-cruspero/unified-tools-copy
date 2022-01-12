@@ -9,13 +9,9 @@ class SubmissionsController < ApplicationController
 
     @submissions = Submission.user_search(params[:search_term])
     @submissions = @submissions.paginate(page: params[:page])
-  end
-
-  def export
-    authorize Submission
 
     respond_to do |format|
-      @submissions = Submission.user_search(params[:search_term])
+      format.html
       format.csv do
         params.permit!
 
@@ -36,16 +32,6 @@ class SubmissionsController < ApplicationController
 
       format.html
       format.json { render json: SubmissionsAdminViewDatatable.new(params) }
-    end
-  end
-
-  def admin_export
-    respond_to do |format|
-      filters = params[:filters] || {}
-
-      @approved = filters[:approved]
-      @status = filters[:status]
-
       format.csv do
         params.permit!
 

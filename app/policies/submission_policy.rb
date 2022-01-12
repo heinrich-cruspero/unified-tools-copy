@@ -22,12 +22,6 @@ class SubmissionPolicy < ApplicationPolicy
     )
   end
 
-  def admin_export?
-    admin_index? && user.has_permission(
-      Submission, __method__, @route_permissions
-    )
-  end
-
   def show?
     admin_index?
   end
@@ -44,12 +38,6 @@ class SubmissionPolicy < ApplicationPolicy
 
   def destroy?
     admin_index? && user.has_permission(
-      Submission, __method__, @route_permissions
-    )
-  end
-
-  def export?
-    user.is_super_admin? || user.has_permission(
       Submission, __method__, @route_permissions
     )
   end
