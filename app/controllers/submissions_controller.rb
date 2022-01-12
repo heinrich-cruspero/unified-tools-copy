@@ -31,12 +31,12 @@ class SubmissionsController < ApplicationController
       @status = filters[:status]
 
       format.html
-      format.json { render json: SubmissionsAdminViewDatatable.new(params) }
+      format.json { render json: SubmissionsAdminDatatable.new(params) }
       format.csv do
         params.permit!
 
         CsvDownloadJob.perform_later(
-          params, 'SubmissionsAdminViewDatatable',
+          params, 'SubmissionsAdminDatatable',
           'submissions.csv', current_user.id
         )
 

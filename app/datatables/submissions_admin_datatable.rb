@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ###
-class SubmissionsAdminViewDatatable < AjaxDatatablesRails::ActiveRecord
+class SubmissionsAdminDatatable < AjaxDatatablesRails::ActiveRecord
   def view_columns
     @view_columns ||= {
       company_name: { source: 'Submission.company_name', searchable: true },

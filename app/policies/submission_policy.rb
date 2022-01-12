@@ -21,24 +21,4 @@ class SubmissionPolicy < ApplicationPolicy
       Submission, __method__, @route_permissions
     )
   end
-
-  def show?
-    admin_index?
-  end
-
-  def update?
-    admin_index? && user.has_permission(
-      Submission, __method__, @route_permissions
-    )
-  end
-
-  def edit?
-    update?
-  end
-
-  def destroy?
-    admin_index? && user.has_permission(
-      Submission, __method__, @route_permissions
-    )
-  end
 end
