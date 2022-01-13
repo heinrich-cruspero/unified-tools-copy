@@ -65,6 +65,12 @@ class SubmissionsController < ApplicationController
 
     respond_to do |format|
       if @submission.save
+        has_admin_policy = SubmissionPolicy.new(current_user, Submission).admin_index?
+        if has_admin_policy
+          format.html do
+            redirect_to admin_submissions_path, notice: 'Submission was successfully created.'
+          end
+        end
         format.html { redirect_to submissions_path, notice: 'Submission was successfully created.' }
       else
         format.html { render :new }

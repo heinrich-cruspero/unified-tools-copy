@@ -535,7 +535,7 @@ ActiveRecord::Schema.define(version: 2021_12_13_160619) do
     t.string "seller_name", null: false
     t.integer "quantity", default: 0, null: false
     t.string "isbn", null: false
-    t.boolean "counterfeits", default: false, null: false
+    t.boolean "counterfeits"
     t.string "source_name", null: false
     t.string "source_address", null: false
     t.string "source_phone", null: false

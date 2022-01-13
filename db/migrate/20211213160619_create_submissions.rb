@@ -6,7 +6,7 @@ class CreateSubmissions < ActiveRecord::Migration[6.0]
       t.string :seller_name, null: false
       t.integer :quantity, null: false, default: 0
       t.string :isbn, null: false
-      t.boolean :counterfeits, null: false, default: false
+      t.boolean :counterfeits
       t.string :source_name, null: false
       t.string :source_address, null: false
       t.string :source_phone, null: false
