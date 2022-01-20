@@ -37,7 +37,7 @@ class GuideImportsController < ApplicationController
         file.write(@guide_import.file.read)
       end
 
-      UploadGuideImportJob.perform_later(
+      UploadGuideImportJob.perform_now(
         current_user.id, @guide_import.as_json, s3_file_name
       )
 
