@@ -31,6 +31,7 @@ $( document ).on('turbolinks:load', function() {
             {"data": "QaLow"},
             {"data": "YLow"},
             {"data": "QaFBALow"},
+            {"data": "NewBox"},
             {"data": "30SQF"},
             {"data": "30SPF"},
             {"data": "30RQF"},
