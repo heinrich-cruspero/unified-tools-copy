@@ -26,7 +26,8 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
       QaLow: { source: 'AmazonShipment.qa_low', searchable: false },
       YLow: { source: 'AmazonShipment.yearly_low', searchable: false },
       QaFBALow: { source: 'AmazonShipment.qa_fba_low', searchable: false },
-      NewBox: { source: 'Books.new_box', searchable: false },
+      NewBox: { source: 'Book.new_box', searchable: false },
+      AZNew: { source: 'Book.amazon_price', searchable: false },
       "30SQF": { source: 'AmazonShipment.monthly_sqf', searchable: false },
       "30SPF": { source: 'AmazonShipment.monthly_spf', searchable: false },
       "30RQF": { source: 'AmazonShipment.monthly_rqf', searchable: false },
@@ -84,6 +85,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
           books.publication_date,
           books.weight,
           books.new_box,
+          books.amazon_price,
           amazon_shipment_files.name,
           amazon_shipment_files.date
         "
@@ -126,6 +128,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
           books.publication_date,
           books.weight,
           books.new_box,
+          books.amazon_price,
           amazon_shipment_files.name,
           amazon_shipment_files.date
         "
@@ -156,6 +159,7 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
       YLow: record.yearly_low,
       QaFBALow: record.qa_fba_low,
       NewBox: record.new_box,
+      AZNew: record.amazon_price,
       "30SQF": record.monthly_sqf,
       "30SPF": record.monthly_spf,
       "30RQF": record.monthly_rqf,
