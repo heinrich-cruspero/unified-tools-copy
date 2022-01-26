@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-sm">
+        <h2>New Submiision</h2>
+    </div>
+    <div class="col-sm">
+        <div class="float-right">
+            <% if SubmissionPolicy.new(current_user, Submission).new? %>
+              <%= link_to new_submission_path, class: 'btn btn-secondary ml-2' do %>
+                  <span class="fa fa-plus"></span>
+                  New
+              <% end %>
+            <% end %>
+            <% if SubmissionPolicy.new(current_user, Submission).admin_index? %>
+              <%= link_to admin_submissions_path, class:"btn btn-secondary ml-2" do %>
+                <span class="fa fa-list"> </span>
+                Return to List
+              <% end %>
+            <% else %>
+              <% if SubmissionPolicy.new(current_user, Submission).index? %>
+                <%= link_to submissions_path, class:"btn btn-secondary ml-2" do %>
+                    <span class="fa fa-list"> </span>
+                    Return to List
+                <% end %>
+              <% end %>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm border-top p-3">
+        <%= render 'form', book_field_mapping: @book_field_mapping %>
+    </div>
+</div>

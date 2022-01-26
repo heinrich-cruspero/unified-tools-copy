@@ -2,6 +2,11 @@
 
 # rubocop:disable  Metrics/BlockLength
 Rails.application.routes.draw do
+  resources :submissions do
+    collection do
+      get 'admin', to: 'submissions#admin_index'
+    end
+  end
   resources :book_field_mappings
   resources :book_export_templates do
     member do

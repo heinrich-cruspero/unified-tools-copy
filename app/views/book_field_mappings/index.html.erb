@@ -16,39 +16,41 @@
   </div>
 </div>
 
-<table class="table table-bordered">
-  <thead class="thead-light">
-    <tr>
-      <th style="width: 10%">Display Name</th>
-      <th style="width: 50%">Lookup Field</th>
-      <th style="width: 10%">Created At</th>
-      <th style="width: 10%">Updated At</th>
-      <th style="width: 20%">Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @book_field_mappings.each do |book_field_mapping| %>
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="thead-light">
       <tr>
-        <td><%= book_field_mapping.display_name %></td>
-        <td><%= book_field_mapping.lookup_field %></td>
-        <td><%= book_field_mapping.created_at.strftime("%B %d, %Y %H:%M") %></td>
-        <td><%= book_field_mapping.updated_at.strftime("%B %d, %Y %H:%M") %></td>
-        <td>
-          <%= link_to book_field_mapping, class: 'btn btn-light btn-sm', type: 'button' do %>
-            <span class="fa fa-search-plus"></span>
-            Show
-          <% end %>
-          <%= link_to edit_book_field_mapping_path(book_field_mapping), class: 'btn btn-light btn-sm' do %>
-            <span class="fa fa-file"></span>
-            Edit
-          <% end %>
-          <%= link_to book_field_mapping, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
-            <span class="fa fa-trash"></span>
-            Delete
-          <% end %>
-        </td>
+        <th style="width: 10%">Display Name</th>
+        <th style="width: 50%">Lookup Field</th>
+        <th style="width: 10%">Created At</th>
+        <th style="width: 10%">Updated At</th>
+        <th style="width: 20%">Action</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @book_field_mappings.each do |book_field_mapping| %>
+        <tr>
+          <td><%= book_field_mapping.display_name %></td>
+          <td><%= book_field_mapping.lookup_field %></td>
+          <td><%= book_field_mapping.created_at.strftime("%B %d, %Y %H:%M") %></td>
+          <td><%= book_field_mapping.updated_at.strftime("%B %d, %Y %H:%M") %></td>
+          <td>
+            <%= link_to book_field_mapping, class: 'btn btn-light btn-sm', type: 'button' do %>
+              <span class="fa fa-search-plus"></span>
+              Show
+            <% end %>
+            <%= link_to edit_book_field_mapping_path(book_field_mapping), class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-file"></span>
+              Edit
+            <% end %>
+            <%= link_to book_field_mapping, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light btn-sm' do %>
+              <span class="fa fa-trash"></span>
+              Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

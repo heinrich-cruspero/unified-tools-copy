@@ -94,5 +94,18 @@
         </a>
       <% end %>
     </li>
+    <li>
+      <% if SubmissionPolicy.new(current_user, Submission).admin_index? %>
+        <a href="<%= admin_submissions_path %>">
+          <i class="fas fa-list-ul"></i>
+          Submissions
+        </a>
+      <% elsif SubmissionPolicy.new(current_user, Submission).index? %>
+        <a href="<%= submissions_path %>">
+          <i class="fas fa-list-ul"></i>
+          Submissions
+        </a>
+      <% end %>
+    </li>
   </ul>
 </nav>

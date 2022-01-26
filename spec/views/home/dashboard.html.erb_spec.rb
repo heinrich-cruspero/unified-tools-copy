@@ -273,5 +273,32 @@ RSpec.describe 'Home Dashboard', type: :feature do
       expect(page).to have_selector(:link_or_button, 'Guide Imports')
     end
   end
+
+  scenario '#for a user with permission to Submissions' do
+    user = create(:user)
+    submissions_route = create(:route, :index,
+                               controller_name: Submission.name.pluralize.underscore)
+    submissions_user_route = create(:route, action_name: 'admin_index',
+                                            controller_name: Submission.name.pluralize.underscore)
+
+    create(:permission, authorizable: user, permissible: submissions_route, has_access: true)
+    create(:permission, authorizable: user, permissible: submissions_user_route, has_access: true)
+    login_as(user, scope: :user)
+    visit root_path
+
+    within 'nav#sidebar' do
+      expect(page).not_to have_selector(:link_or_button, 'Books')
+      expect(page).not_to have_selector(:link_or_button, 'Book Details')
+      expect(page).not_to have_selector(:link_or_button, 'Book Export Templates')
+      expect(page).not_to have_selector(:link_or_button, 'Book Export Fields')
+      expect(page).not_to have_selector(:link_or_button, 'Amazon Shipments')
+      expect(page).not_to have_selector(:link_or_button, 'Amazon Orders')
+      expect(page).not_to have_selector(:link_or_button, 'Amazon Order Items')
+      expect(page).not_to have_selector(:link_or_button, 'Features')
+      expect(page).not_to have_selector(:link_or_button, 'Users')
+      expect(page).not_to have_selector(:link_or_button, 'Roles')
+      expect(page).to have_selector(:link_or_button, 'Submissions')
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength

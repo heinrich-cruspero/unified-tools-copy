@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-sm">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
+      <h1 class="h2">Submissions</h1>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-sm">
+    <div class="btn-toolbar mb-2 md-0 mr-2 float-left ">
+      <% @status = [] if @status.blank? %>
+      <% if @approved == "0" %>
+        <a href="<%= admin_submissions_path(filters: {approved: nil, status: @status}) %>" class="btn btn-danger">Approved</a>
+      <% elsif @approved == "1" %>
+        <a href="<%= admin_submissions_path(filters: {approved: 0, status: @status}) %>" class="btn btn-success">Approved</a>
+      <% else %>
+        <a href="<%= admin_submissions_path(filters: {approved: 1, status: @status}) %>" class="btn btn-secondary">Approved</a>
+      <% end %>
+    </div>
+    <div class="btn-toolbar ml-2 mb-2 md-0 float-left ">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="col-form-label">Status:</label>
+        </div>
+        <%# Status Filter %>
+        <div class="align-self-end text-center col-lg-2 col-md-6">
+          <%= select_tag 'status[]', options_for_select(Submission.statuses.map { |k, v| [k, k]}, @status ), { multiple: true, class: "admin-status-select-field" } %>
+        </div>
+      </div>
+    </div>
+    <div class="btn-toolbar mb-2 md-0 float-left ">
+      <a href="<%= admin_submissions_path %>" id="submissions-clear-filters" class="btn" ><i class="fa fa-times"></i></a>
+    </div>
+    <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
+      <div class="btn-group mr-1">
+        <a href="<%= admin_submissions_path(format: :csv, filters: { approved: @approved, status: @status })%>" id="export-admin-submissions-button" class="btn btn-secondary m-2">Export</a>
+      </div>
+    </div>
+    <% if SubmissionPolicy.new(current_user, Submission).new? %>
+      <div class="btn-toolbar mb-2 mt-2 mb-md-0 float-right">
+        <div class="btn-group mr-1">
+          <%= link_to new_submission_path, class: 'btn btn-secondary m-2' do %>
+            <span class="fa fa-plus"></span>
+            New
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<table id="submissions_admin_datatable" class="table table-striped table-hover" data-source="<%= admin_submissions_path(format: :json, filters: { approved: @approved, status: @status }) %>">
+  <thead>
+    <tr>
+      <th>Company Name</th>
+      <th>Seller Name</th>
+      <th>Quantity</th>
+      <th>ISBN</th>
+      <th>Status</th>
+      <th>Counterfeits</th>
+      <th>Source Name</th>
+      <th>Source Address</th>
+      <th>Source Phone</th>
+      <th>Source Email</th>
+      <th>Notes</th>
+      <th>Approved</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<%= render 'shared/block_modal' %>

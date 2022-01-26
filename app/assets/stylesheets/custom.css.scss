@@ -525,3 +525,20 @@ table.records_table th {
 .collapse-btn:focus {
   box-shadow: none !important;
 }
+
+#submissions_admin_datatable > tbody > tr:hover {
+  cursor: pointer
+}
+
+.admin-status-select-field .selectize-input {
+  width: 300px !important;
+  height: 40px !important;
+}
+
+.admin-status-select-field .selectize-input input{
+  width: 4px !important;
+}
+
+.dt-center {
+  text-align: center;
+}

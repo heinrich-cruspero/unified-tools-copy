@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_103647) do
+ActiveRecord::Schema.define(version: 2021_12_13_160619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -529,6 +529,25 @@ ActiveRecord::Schema.define(version: 2021_11_16_103647) do
     t.index ["controller_name"], name: "index_routes_on_controller_name"
   end
 
+  create_table "submissions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "company_name", null: false
+    t.string "seller_name", null: false
+    t.integer "quantity", default: 0, null: false
+    t.string "isbn", null: false
+    t.boolean "counterfeits"
+    t.string "source_name", null: false
+    t.string "source_address", null: false
+    t.string "source_phone", null: false
+    t.string "source_email", null: false
+    t.text "notes"
+    t.boolean "approved", default: false
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_submissions_on_user_id"
+  end
+
   create_table "user_roles", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "role_id"
@@ -555,6 +574,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_103647) do
   add_foreign_key "book_export_templates", "users"
   add_foreign_key "feature_routes", "features"
   add_foreign_key "feature_routes", "routes"
+  add_foreign_key "submissions", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end
