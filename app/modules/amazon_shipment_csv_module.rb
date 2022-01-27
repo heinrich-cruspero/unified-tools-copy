@@ -38,6 +38,8 @@ module AmazonShipmentCsvModule
           qa_low: book.qa_low,
           yearly_low: book.yearly_low,
           qa_fba_low: book.qa_fba_low,
+          new_box: book.new_box,
+          amazon_price: book.amazon_price,
           monthly_sqf: book.monthly_sqf,
           monthly_spf: book.monthly_spf,
           monthly_rqf: book.monthly_rqf,
