@@ -12,9 +12,6 @@
 # Running of task for generating/updating Route records
 1. run `rails permission:routes`
 
-# Running of task for importing Submission records
-1. run `rails acquisition_source:submissions`
-
 # Google API Setup
 
 1. Go to 'https://console.developers.google.com'
@@ -96,20 +93,3 @@
         username:
         password:
         port:
-
-## Acquisition Source DB
-    development:
-        acquisition_source_db:
-            host:
-            database:
-            username:
-            password:
-            port:
-
-    production:
-        acquisition_source_db:
-            host:
-            database:
-            username:
-            password:
-            port:
