@@ -92,7 +92,6 @@ class User < ApplicationRecord
     ).order(:permissible_type)
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def route_permissions
     role_routes = []
     roles.each do |role|
@@ -147,7 +146,6 @@ class User < ApplicationRecord
     has_access_routes = (role_routes + user_routes).uniq
     has_access_routes.reject { |route| no_access_routes.include?(route) }
   end
-  # rubocop: enable Metrics/CyclomaticComplexity
 
   # rubocop:disable Naming/PredicateName
   def has_permission(record, action, route_permissions)

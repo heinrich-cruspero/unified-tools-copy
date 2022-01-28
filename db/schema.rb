@@ -123,8 +123,8 @@ ActiveRecord::Schema.define(version: 2022_01_27_074812) do
     t.decimal "monthly_rpf", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "new_box"
-    t.decimal "amazon_price"
+    t.decimal "new_box", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "amazon_price", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["amazon_shipment_file_id"], name: "index_amazon_shipments_on_amazon_shipment_file_id"
     t.index ["az_sku"], name: "index_amazon_shipments_on_az_sku"
     t.index ["book_id"], name: "index_amazon_shipments_on_book_id"

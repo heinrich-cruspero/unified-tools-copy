@@ -75,6 +75,8 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
           amazon_shipments.qa_low,
           amazon_shipments.yearly_low,
           amazon_shipments.qa_fba_low,
+          amazon_shipments.new_box,
+          amazon_shipments.amazon_price,
           amazon_shipments.monthly_sqf,
           amazon_shipments.monthly_spf,
           amazon_shipments.monthly_rqf,
@@ -84,8 +86,6 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
           books.publisher,
           books.publication_date,
           books.weight,
-          amazon_shipments.new_box,
-          amazon_shipments.amazon_price,
           amazon_shipment_files.name,
           amazon_shipment_files.date
         "
@@ -118,6 +118,8 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
           amazon_shipments.qa_low,
           amazon_shipments.yearly_low,
           amazon_shipments.qa_fba_low,
+          amazon_shipments.new_box,
+          amazon_shipments.amazon_price,
           amazon_shipments.monthly_sqf,
           amazon_shipments.monthly_spf,
           amazon_shipments.monthly_rqf,
@@ -127,8 +129,6 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
           books.publisher,
           books.publication_date,
           books.weight,
-          amazon_shipments.new_box,
-          amazon_shipments.amazon_price,
           amazon_shipment_files.name,
           amazon_shipment_files.date
         "

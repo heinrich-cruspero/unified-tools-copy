@@ -40,10 +40,8 @@ module AmazonShipmentCsvModule
           qa_fba_low: book.qa_fba_low,
           new_box: book.new_box,
           amazon_price: book.amazon_price,
-          monthly_sqf: book.monthly_sqf,
-          monthly_spf: book.monthly_spf,
-          monthly_rqf: book.monthly_rqf,
-          monthly_rpf: book.monthly_rpf,
+          monthly_sqf: book.monthly_sqf, monthly_spf: book.monthly_spf,
+          monthly_rqf: book.monthly_rqf, monthly_rpf: book.monthly_rpf,
           one_year_highest_wholesale_price: book.one_year_highest_wholesale_price,
           two_years_wh_max: book.two_years_wh_max
         )
