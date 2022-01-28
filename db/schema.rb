@@ -15,15 +15,6 @@ ActiveRecord::Schema.define(version: 2022_01_27_074812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "all_restocks", force: :cascade do |t|
-    t.string "isbn"
-    t.integer "quantity"
-    t.float "average_price"
-    t.float "lowest_price"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "amazon_inventories", force: :cascade do |t|
     t.string "isbn", null: false
     t.string "condition", null: false
@@ -477,71 +468,6 @@ ActiveRecord::Schema.define(version: 2022_01_27_074812) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "direct_movers", force: :cascade do |t|
-    t.string "ean"
-    t.string "isbn"
-    t.string "author"
-    t.string "title"
-    t.float "list_price"
-    t.integer "sum_quantity"
-    t.float "max_price"
-    t.float "avg_price"
-    t.string "competitors"
-    t.integer "fbaq"
-    t.integer "inbq"
-    t.float "email_price"
-    t.float "amazon_ca_listing"
-    t.float "pricing_custom_2"
-    t.integer "weekly_direct_qty_main"
-    t.float "weekly_spf"
-    t.float "weekly_rpf"
-    t.integer "weekly_sqf"
-    t.integer "weekly_rqf"
-    t.integer "total_quantity_supplier"
-    t.integer "total_quantity"
-    t.integer "one_day_all"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "fba_main_directs", force: :cascade do |t|
-    t.string "isbn"
-    t.integer "tqs"
-    t.integer "tq"
-    t.integer "fbaq"
-    t.integer "orqt"
-    t.string "author"
-    t.string "title"
-    t.string "edition"
-    t.string "grade"
-    t.string "status"
-    t.date "stat_date"
-    t.float "list"
-    t.float "mbs_wh"
-    t.float "texas_wh"
-    t.float "nbc_wh"
-    t.float "pc3"
-    t.float "low"
-    t.float "fba_low"
-    t.float "rent"
-    t.integer "jan_rank"
-    t.integer "aug_rank"
-    t.integer "sales_rank"
-    t.string "publisher"
-    t.date "pub_date"
-    t.integer "sqf7"
-    t.float "spf7"
-    t.integer "rqf7"
-    t.float "rpf7"
-    t.integer "sqda7"
-    t.float "spda7"
-    t.integer "sqdm7"
-    t.float "spdm7"
-    t.float "qa_rent"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "feature_routes", force: :cascade do |t|
     t.bigint "feature_id"
     t.bigint "route_id"
@@ -587,32 +513,6 @@ ActiveRecord::Schema.define(version: 2022_01_27_074812) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id"
-  end
-
-  create_table "report_top_monthlies", force: :cascade do |t|
-    t.integer "bzjq"
-    t.integer "rcbwq"
-    t.integer "rcbq"
-    t.integer "inbq"
-    t.string "isbn"
-    t.string "author"
-    t.string "title"
-    t.string "edition"
-    t.float "total"
-    t.integer "sqf30"
-    t.float "spf30"
-    t.integer "rqf30"
-    t.float "rpf30"
-    t.string "status"
-    t.date "stat_date"
-    t.float "low"
-    t.float "rent_vs_list"
-    t.float "w"
-    t.float "nw"
-    t.integer "sales_rank"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["isbn"], name: "index_report_top_monthlies_on_isbn"
   end
 
   create_table "roles", force: :cascade do |t|

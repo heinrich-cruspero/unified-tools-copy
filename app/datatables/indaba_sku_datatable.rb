@@ -26,8 +26,8 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
       QaLow: { source: 'AmazonShipment.qa_low', searchable: false },
       YLow: { source: 'AmazonShipment.yearly_low', searchable: false },
       QaFBALow: { source: 'AmazonShipment.qa_fba_low', searchable: false },
-      NewBox: { source: 'Book.new_box', searchable: false },
-      AZNew: { source: 'Book.amazon_price', searchable: false },
+      NewBox: { source: 'AmazonShipment.new_box', searchable: false },
+      AZNew: { source: 'AmazonShipment.amazon_price', searchable: false },
       "30SQF": { source: 'AmazonShipment.monthly_sqf', searchable: false },
       "30SPF": { source: 'AmazonShipment.monthly_spf', searchable: false },
       "30RQF": { source: 'AmazonShipment.monthly_rqf', searchable: false },
@@ -84,8 +84,8 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
           books.publisher,
           books.publication_date,
           books.weight,
-          books.new_box,
-          books.amazon_price,
+          amazon_shipments.new_box,
+          amazon_shipments.amazon_price,
           amazon_shipment_files.name,
           amazon_shipment_files.date
         "
@@ -127,8 +127,8 @@ class IndabaSkuDatatable < AjaxDatatablesRails::ActiveRecord
           books.publisher,
           books.publication_date,
           books.weight,
-          books.new_box,
-          books.amazon_price,
+          amazon_shipments.new_box,
+          amazon_shipments.amazon_price,
           amazon_shipment_files.name,
           amazon_shipment_files.date
         "
