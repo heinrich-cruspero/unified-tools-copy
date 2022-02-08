@@ -50,6 +50,9 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
       },
       action_date: {
         source: 'AmazonOrderItem.action_date', searchable: false
+      },
+      purchase_date: {
+        source: 'AmazonOrder.purchase_date', searchable: false
       }
     }
   end
@@ -81,7 +84,8 @@ class AmazonOrderItemDatatable < AjaxDatatablesRails::ActiveRecord
       expired: record.expired,
       due_date: record.due_date,
       charge_type: record.charge_type,
-      action_date: record.action_date
+      action_date: record.action_date,
+      purchase_date: record.amazon_order.purchase_date.strftime('%Y-%m-%d')
     }
   end
 end

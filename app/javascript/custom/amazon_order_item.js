@@ -5,6 +5,7 @@ $( document ).on('turbolinks:load', function() {
         "scrollX": true,
         "ajax": $('#amazon-order-items-datatable').data('source'),
         "pagingType": "full_numbers",
+        "order": [[ 15, "desc" ]],
         "columns": [
             {"data": "amazon_order_id"},
             {"data": "order_item_id"},
@@ -20,7 +21,8 @@ $( document ).on('turbolinks:load', function() {
             {"data": "expired"},
             {"data": "due_date"},
             {"data": "charge_type"},
-            {"data": "action_date"}
+            {"data": "action_date"},
+            {"data": "purchase_date"}
         ]
     });
 
