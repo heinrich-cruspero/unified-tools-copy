@@ -12,7 +12,7 @@ class Book < ApplicationRecord
 
   def default_image_url
     default = 'blank_book_image.png'
-    s3_img_url = "https://s3.amazonaws.com/books-data/eans/#{ean}/images/medium.jpg"
+    s3_img_url = "https://dlttr395hpb39.cloudfront.net/eans/#{ean}/images/medium.jpg"
     response = HTTParty.get(s3_img_url)
     response.code == 200 ? s3_img_url : default
   end
