@@ -46,10 +46,8 @@
 
                 <% end %>
                 NE: 
-                <% if @book.ne_isbn? %>
-                    <%= link_to "#{@book.ne_isbn}", details_book_path(:id => @book.ne_isbn), method: :get, class: 'text-info' %>
-                <% else %>
-
+                <% @book.ne_books.each do |ne_book| %>
+                    <%= link_to "#{ne_book.isbn}", details_book_path(:id => ne_book.isbn), method: :get, class: 'text-info' %>
                 <% end %>
             </div>
         </div>

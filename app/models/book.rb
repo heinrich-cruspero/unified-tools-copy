@@ -410,5 +410,9 @@ class Book < ApplicationRecord
     end
     data
   end
+
+  def ne_books
+    Book.where(oe_isbn: isbn)
+  end
 end
 # rubocop:enable  Metrics/ClassLength
