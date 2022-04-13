@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_27_074812) do
+ActiveRecord::Schema.define(version: 2022_04_13_193315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -448,6 +448,7 @@ ActiveRecord::Schema.define(version: 2022_01_27_074812) do
     t.datetime "last_pa_scan"
     t.integer "ninety_rc", default: 0, null: false
     t.integer "yearly_rc", default: 0, null: false
+    t.integer "otbq", default: 0, null: false
     t.index ["ean"], name: "index_books_on_ean"
     t.index ["isbn"], name: "index_books_on_isbn"
     t.index ["last_pa_scan"], name: "index_books_on_last_pa_scan"

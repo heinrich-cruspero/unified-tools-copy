@@ -15,6 +15,7 @@
     <label class="col-detail title">BO%</label>
     <label class="col-detail title">RQ</label>
     <label class="col-detail title">R%</label>
+    <label class="col-detail title">OTBQ</label>
 </div>
 
 <% unless @book.nil? %>
@@ -90,6 +91,12 @@
             <p class="title title-sm">R%</p>
             <div>
                 <%= @book.returns_percentage %>
+            </div>
+        </div>
+        <div class="col-detail">
+            <p class="title title-sm">OTBQ</p>
+            <div>
+                <%= @book.otbq %>
             </div>
         </div>
     </div>
